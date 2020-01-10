@@ -1,6 +1,8 @@
 # FRC-2020
 Code for the 2020 FIRST Robotics Competition!
 
+TODO: Setup engineering log + scripts to generate beauty
+
 # Git explained
 
 ## Git Branch Structure
