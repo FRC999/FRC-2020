@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.ManualDrivingCommand;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -25,6 +26,7 @@ import frc.robot.subsystems.DriveSubsystem;
 public class Robot extends TimedRobot {
   public static OI oi = new OI();  //Operator Input
   public static DriveSubsystem driveSubsystem = new DriveSubsystem();
+  public static ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
   public static ManualDrivingCommand manualDrivingCommand = new ManualDrivingCommand(); //FOR CHOOSER TESTING
   public boolean TestBool = false;
   Command autonomousCommand;
