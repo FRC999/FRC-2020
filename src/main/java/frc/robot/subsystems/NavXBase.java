@@ -10,14 +10,14 @@ package frc.robot.subsystems;
 import com.kauailabs.navx.frc.*;
 import edu.wpi.first.wpilibj.SPI;
 
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
  * This is a class that manages a NavX. Copy-paste it, whatever The methods are
- * corrected to the robot orientation TODO: Have the methods return the correct
+ * corrected to the robot orientation TODO: Have the methods return the correct axis
  * axis for their name: ie, correct for NavX orientation
  */
-public class NavXBase extends SubsystemBase {
+public class NavXBase extends Subsystem {
     AHRS NavX;
 
     /**
@@ -37,7 +37,7 @@ public class NavXBase extends SubsystemBase {
     }
 
     @Override
-    public void periodic() {
+    public void initDefaultCommand() {
         // runs every scheduler run
     }
 
