@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.witchcraft;
+package frc.robot.subsystems;
 
 import com.kauailabs.navx.frc.*;
 import edu.wpi.first.wpilibj.SPI;
