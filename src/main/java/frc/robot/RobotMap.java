@@ -22,7 +22,14 @@ public class RobotMap {
    public static int backLeftDriveMotorController = 2;
    public static int frontRightDriveMotorController = 3;
    public static int backRightDriveMotorController = 4;
-   
+
+
+   public static int kShooterMotorID1 = 5;
+   public static int kShooterMotorID2 = 6;
+   public static int panMotorID = 7;
+   public static int tiltMotorID = 8;
+
+
    //Driver Input Devices
    public static int leftJoystickPort = 0;
 
