@@ -3,6 +3,22 @@ Code for the 2020 FIRST Robotics Competition!
 
 # Git explained
 
+The "Pro Git" book is an excellent piece of free documentation for Git.  I highly recommend you read it, because if you do, you will have a comprehensive knowlage of git.  
+
+TODO: Add link to book
+
+## Git for the busy Gits who won't read the book
+Git has four main types of objects that I am going to talk about: trees, commits, branches, and blobs.  A blob is a file: git keeps track of them (and most other objects) by making a hash of them, which is a way to assign a unique identifier to a file based solely on its content.  Remember that word, hash: git hashes a lot of things.
+
+So, a tree is the directory structure: think of it as a tree, whose base is the root direction (get it, root?), and the branches are subdirectories, with the leaves being blobs (files).  Now, remember how I said that git tracks objects by their hashes?  Well, what that means is that if a file is unchanged, git will not store another copy: rather, git will just reference the previous copy.
+
+(It's worth noting that just doing that is inefficient: after all, changing one character in a large file will drastically change the hash, and so the large file would be stored all over again.  Git has a quite clever way of packing those together: it's called packing, and it's what is going on whenever git talks about deltas)
+
+Now, the next up in the hierarchy of git objects is the commit.  A commit contains a pointer to a tree, but it also states what commit it is based on, who committed it and when, and a custom message that they would have added.  Commits are what you work with a lot in git: while trees and blobs are good to know about, because they are how git works, it's important to understand commits as well.  However, the author is getting tired, and so they won't go further.
+
+TODO: expand on the above, and explain branches and such
+
+
 ## Git Branch Structure
 This git repository is designed to allow us to track the various states of confidence
 that we have in code with more fidelity than simply "completed" and "in progress".
