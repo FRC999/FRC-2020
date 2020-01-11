@@ -9,7 +9,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-public class UpdateSmartDashboard extends CommandGroup {
+public class UpdateAllSmartDashboard extends CommandGroup {
   /**
    * Add your docs here.
    */
@@ -24,7 +24,7 @@ public class UpdateSmartDashboard extends CommandGroup {
     // e.g. addParallel(new Command1());
     // addSequential(new Command2());
     // Command1 and Command2 will run in parallel.
-    addParallel(new UpdateSmartDashboard());
+    addParallel(new UpdateNavXSmartDashboard());
 
     // A command group will require all of the subsystems that each member
     // would require.
