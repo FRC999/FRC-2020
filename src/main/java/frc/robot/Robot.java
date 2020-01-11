@@ -24,13 +24,14 @@ import frc.robot.subsystems.ShooterSubsystem;
  * project.
  */
 public class Robot extends TimedRobot {
-  public static OI oi = new OI();  //Operator Input
   public static DriveSubsystem driveSubsystem = new DriveSubsystem();
   public static ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
   public static ManualDrivingCommand manualDrivingCommand = new ManualDrivingCommand(); //FOR CHOOSER TESTING
   public boolean TestBool = false;
   Command autonomousCommand;
   SendableChooser<Command> chooser = new SendableChooser<>();
+  public static OI oi = new OI();  //Operator Input
+
 
   /**
    * This function is run when the robot is first started up and should be

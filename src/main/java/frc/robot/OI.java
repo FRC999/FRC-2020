@@ -28,7 +28,7 @@ public class OI {
  
  
   public OI(){ //All Commands
-    leftTrigger.whenPressed(new ManualShooterCommandGroup());
+    leftTrigger.whenPressed(new ManualShoot());
     leftTrigger.whenReleased(new ManualEndShoot());
   }
 

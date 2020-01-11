@@ -11,9 +11,9 @@ public class ShooterSubsystem extends Subsystem {
    * Creates a new ExampleSubsystem.
    */
 
-public PWMTalonSRX shooterMotor = new PWMTalonSRX(RobotMap.kShooterMotorID);
-public PWMTalonSRX panMotor = new PWMTalonSRX(RobotMap.panMotorID);
-public PWMTalonSRX tiltMotor = new PWMTalonSRX(RobotMap.tiltMotorID);
+static PWMTalonSRX shooterMotor = new PWMTalonSRX(RobotMap.kShooterMotorID);
+static PWMTalonSRX panMotor = new PWMTalonSRX(RobotMap.panMotorID);
+static PWMTalonSRX tiltMotor = new PWMTalonSRX(RobotMap.tiltMotorID);
 
   double shooterSpeed = 0.5;
 
@@ -22,7 +22,9 @@ public PWMTalonSRX tiltMotor = new PWMTalonSRX(RobotMap.tiltMotorID);
   }
 
   public void shoot(){
+    System.out.println("Shooting");
     shooterMotor.set(shooterSpeed);
+    System.out.println("After Shooting");
   }
 
   public void pan(){
