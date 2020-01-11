@@ -10,6 +10,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
+import frc.robot.commands.UpdateSmartDashboard;
 
 /**
  * Add your docs here.
@@ -25,14 +26,14 @@ public class SmartDashboardSubsystem extends Subsystem {
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
-    // setDefaultCommand(new MySpecialCommand());
+    setDefaultCommand(new UpdateSmartDashboard());
   }
-  public void updateNavxValues(){
+  public void updateNavXValues(){
     SmartDashboard.putNumber("NavX Pitch", Robot.navX.getPitch());
     SmartDashboard.putNumber("Navx Roll", Robot.navX.getRoll());
     SmartDashboard.putNumber("NavX Yaw", Robot.navX.getYaw());
   }
   public void updateAllDisplays(){
-    updateNavxValues();
+    updateNavXValues();
   }
 }
