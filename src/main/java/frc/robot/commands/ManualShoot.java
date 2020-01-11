@@ -18,7 +18,7 @@ public class ManualShoot extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    System.out.println("Executing Command");
+    System.out.println("Executing Command"); //For testing purposes
     Robot.shooterSubsystem.shoot();
   }
 
