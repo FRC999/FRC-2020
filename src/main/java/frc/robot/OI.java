@@ -8,6 +8,9 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.buttons.Button;
+import frc.robot.commands.*;
 
 /**
  * OPERATOR INPUT
@@ -21,8 +24,8 @@ public class OI {
   // You create one by telling it which joystick it's on and which button
   // number it is.
   public Joystick leftJoystick = new Joystick(RobotMap.leftJoystickPort);
-  // Button button = new JoystickButton(stick, buttonNumber);
-
+   Button showEncoderButton = new JoystickButton(leftJoystick, 1);
+   Button zeroEncoderButton = new JoystickButton(leftJoystick, 2);
   // There are a few additional built in buttons you can use. Additionally,
   // by subclassing Button you can create custom triggers and bind those to
   // commands the same as any other Button.
@@ -42,4 +45,11 @@ public class OI {
   // Start the command when the button is released and let it run the command
   // until it is finished as determined by it's isFinished method.
   // button.whenReleased(new ExampleCommand());
+
+  public OI(){
+showEncoderButton.whenPressed(new DisplayDriveEncodersCommand());
+zeroEncoderButton.whenPressed(new ZeroEncoderCommand());
+
+  }
+
 }

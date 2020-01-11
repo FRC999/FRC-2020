@@ -51,11 +51,21 @@ public void ManualDrive(double move, double turn){
   drive.arcadeDrive(move, turn);
 }
 
-public void ZeroDriveEncoders(){ 
+public  void ZeroDriveEncoders(){ 
  frontLeftDriveTalonSRX.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
  frontLeftDriveTalonSRX.setSelectedSensorPosition(0);
  frontRightDriveTalonSRX.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
  frontRightDriveTalonSRX.setSelectedSensorPosition(0);
+}
+
+public  int getLeftEncoder()
+{return frontLeftDriveTalonSRX.getSelectedSensorPosition();
+
+}
+
+public  int getRightEncoder()
+{return frontRightDriveTalonSRX.getSelectedSensorPosition();
+
 }
 
 public void DriveTrainCoastMode(){ 
