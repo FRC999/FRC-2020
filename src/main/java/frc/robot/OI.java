@@ -8,6 +8,8 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import frc.robot.commands.*;
 
 /**
  * OPERATOR INPUT
@@ -21,6 +23,19 @@ public class OI {
   // You create one by telling it which joystick it's on and which button
   // number it is.
   public Joystick leftJoystick = new Joystick(RobotMap.leftJoystickPort);
+  public JoystickButton leftTrigger = new JoystickButton(leftJoystick, 1);
+ 
+ 
+ 
+  public OI(){ //All Commands
+    leftTrigger.whenPressed(new ManualShoot());
+    leftTrigger.whenReleased(new ManualEndShoot());
+  }
+
+
+
+
+
   // Button button = new JoystickButton(stick, buttonNumber);
 
   // There are a few additional built in buttons you can use. Additionally,

@@ -1,10 +1,8 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
-import edu.wpi.first.wpilibj.*;
 import frc.robot.RobotMap;
-import frc.robot.commands.ManualShooterCommand;
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class ShooterSubsystem extends Subsystem {
@@ -12,15 +10,20 @@ public class ShooterSubsystem extends Subsystem {
    * Creates a new ExampleSubsystem.
    */
 
-public PWMTalonSRX shooterMotor = new PWMTalonSRX(RobotMap.kShooterMotorID);
-public PWMTalonSRX panMotor = new PWMTalonSRX(RobotMap.panMotorID);
-public PWMTalonSRX tiltMotor = new PWMTalonSRX(RobotMap.tiltMotorID);
+static WPI_TalonSRX shooterMotor = new WPI_TalonSRX(RobotMap.kShooterMotorID);
+static WPI_TalonSRX panMotor = new WPI_TalonSRX(RobotMap.panMotorID);
+static WPI_TalonSRX tiltMotor = new WPI_TalonSRX(RobotMap.tiltMotorID);
+
+  double shooterSpeed = 0.5;
 
   public void standby(){
-
+    shooterMotor.set(0);
   }
 
   public void shoot(){
+    System.out.println("Shooting");
+    shooterMotor.set(shooterSpeed);
+    System.out.println("After Shooting");
   }
 
   public void pan(){
@@ -33,7 +36,6 @@ public PWMTalonSRX tiltMotor = new PWMTalonSRX(RobotMap.tiltMotorID);
 
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
-    setDefaultCommand(new ManualShooterCommand());
   }
 
 }
