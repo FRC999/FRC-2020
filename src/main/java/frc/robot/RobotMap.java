@@ -24,10 +24,9 @@ public class RobotMap {
    public static int backRightDriveMotorController = 4;
 
 
-   public static int kShooterMotorID1 = 5;
-   public static int kShooterMotorID2 = 6;
-   public static int panMotorID = 7;
-   public static int tiltMotorID = 8;
+   public static int kShooterMotorID = 5;
+   public static int panMotorID = 6;
+   public static int tiltMotorID = 7;
 
 
    //Driver Input Devices
