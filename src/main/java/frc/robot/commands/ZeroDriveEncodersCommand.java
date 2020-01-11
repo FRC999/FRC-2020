@@ -11,8 +11,8 @@ import edu.wpi.first.wpilibj.command.Command;
 
 import frc.robot.Robot;
 
-public class ZeroEncoderCommand extends Command {
-  public ZeroEncoderCommand() {
+public class ZeroDriveEncodersCommand extends Command {
+  public ZeroDriveEncodersCommand() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(Robot.driveSubsystem);

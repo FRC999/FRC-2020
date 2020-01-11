@@ -48,7 +48,7 @@ public class OI {
 
   public OI(){
 showEncoderButton.whenPressed(new DisplayDriveEncodersCommand());
-zeroEncoderButton.whenPressed(new ZeroEncoderCommand());
+zeroEncoderButton.whenPressed(new ZeroDriveEncodersCommand());
 
   }
 

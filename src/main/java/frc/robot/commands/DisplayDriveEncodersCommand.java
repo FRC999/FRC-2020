@@ -10,8 +10,8 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class EncoderDisplayCommand extends Command {
-  public EncoderDisplayCommand() {
+public class DisplayDriveEncodersCommand extends Command {
+  public DisplayDriveEncodersCommand() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(Robot.driveSubsystem);
