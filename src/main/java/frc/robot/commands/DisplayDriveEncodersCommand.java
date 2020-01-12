@@ -8,6 +8,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 
 public class DisplayDriveEncodersCommand extends Command {
@@ -25,7 +26,8 @@ public class DisplayDriveEncodersCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-  System.out.println("left:" +Robot.driveSubsystem.getLeftEncoder() +" right: " +Robot.driveSubsystem.getRightEncoder());
+  SmartDashboard.putNumber("left encoder", Robot.driveSubsystem.getLeftEncoder());
+  SmartDashboard.putNumber("right encoder", Robot.driveSubsystem.getRightEncoder());
   }
 
   // Make this return true when this Command no longer needs to run execute()
