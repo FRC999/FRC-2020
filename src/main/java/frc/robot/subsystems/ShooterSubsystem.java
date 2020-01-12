@@ -21,9 +21,7 @@ static WPI_TalonSRX tiltMotor = new WPI_TalonSRX(RobotMap.tiltMotorID);
   }
 
   public void shoot(){
-    System.out.println("Shooting");
     shooterMotor.set(shooterSpeed);
-    System.out.println("After Shooting");
   }
 
   public void pan(){
