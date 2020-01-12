@@ -58,6 +58,14 @@ public void ZeroDriveEncoders(){
  frontRightDriveTalonSRX.setSelectedSensorPosition(0);
 }
 
+public int getLeftEncoder() {
+  return frontLeftDriveTalonSRX.getSelectedSensorPosition();
+}
+public int getRightEncoder() {
+  return frontRightDriveTalonSRX.getSelectedSensorPosition();
+}
+
+
 public void DriveTrainCoastMode(){ 
   frontLeftDriveTalonSRX.setNeutralMode(NeutralMode.Coast);  
   backLeftDriveTalonSRX.setNeutralMode(NeutralMode.Coast);
