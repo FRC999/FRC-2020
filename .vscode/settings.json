@@ -11,5 +11,10 @@
     "**/.project": true,
     "**/.settings": true,
     "**/.factorypath": true
-  }
+  },
+  "cSpell.words": [
+    "subclassing",
+    "teleop",
+    "teleoperated"
+  ]
 }

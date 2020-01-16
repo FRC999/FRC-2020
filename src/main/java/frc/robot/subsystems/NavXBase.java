@@ -14,8 +14,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
  * This is a class that manages a NavX. Copy-paste it, whatever The methods are
- * corrected to the robot orientation TODO: Have the methods return the correct axis
- * axis for their name: ie, correct for NavX orientation
+ * corrected to the robot orientation TODO: Have the methods return the correct
+ * axis axis for their name: ie, correct for NavX orientation
  */
 public class NavXBase extends Subsystem {
     AHRS NavX;
