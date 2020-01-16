@@ -17,11 +17,19 @@ public class RobotMap {
   // For example to map the left and right motors, you could define the
   // following variables to use with your drivetrain subsystem.
 
+<<<<<<< HEAD
   // Drivetrain Motor Controllers
   public static int frontLeftDriveMotorController = 1;
   public static int backLeftDriveMotorController = 2;
   public static int frontRightDriveMotorController = 3;
   public static int backRightDriveMotorController = 4;
+=======
+  //Drivetrain Motor Controllers
+   public static int frontLeftDriveMotorController = 1;
+   public static int backLeftDriveMotorController = 2;
+   public static int frontRightDriveMotorController = 4;
+   public static int backRightDriveMotorController = 3;
+>>>>>>> sid
 
   public static int kShooterMotorID = 5;
   public static int panMotorID = 6;
