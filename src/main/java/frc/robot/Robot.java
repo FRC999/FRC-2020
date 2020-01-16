@@ -35,6 +35,8 @@ public class Robot extends TimedRobot {
   public static OI oi = new OI();  //Operator Input
   Command autonomousCommand;
   SendableChooser<Command> chooser = new SendableChooser<>();
+  public static OI oi = new OI();  //Operator Input
+
 
   /**
    * This function is run when the robot is first started up and should be
