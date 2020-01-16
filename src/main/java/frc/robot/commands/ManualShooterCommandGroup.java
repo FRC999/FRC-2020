@@ -1,25 +1,25 @@
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.robot.Robot;
 
-public class ManualShooterCommand extends Command {
-  public ManualShooterCommand() {
+public class ManualShooterCommandGroup extends CommandGroup {
+  public ManualShooterCommandGroup() {
     // Use requires() here to declare subsystem dependencies
     requires(Robot.shooterSubsystem);
-  
+    addSequential(new ManualShoot());
+
   }
 
   // Called just before this Command runs the first time
   @Override
+
   protected void initialize() {
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    //Read joystick values
-
   }
 
   // Make this return true when this Command no longer needs to run execute()
