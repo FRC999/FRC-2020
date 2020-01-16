@@ -7,7 +7,7 @@ public class ManualShoot extends Command {
   public ManualShoot() {
     // Use requires() here to declare subsystem dependencies
     requires(Robot.shooterSubsystem);
-  
+
   }
 
   // Called just before this Command runs the first time
@@ -18,16 +18,14 @@ public class ManualShoot extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    System.out.println("Executing Command"); //For testing purposes
     Robot.shooterSubsystem.shoot();
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-      return true;
+    return true;
   }
-
 
   // Called once after isFinished returns true
   @Override

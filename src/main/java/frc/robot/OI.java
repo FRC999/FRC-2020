@@ -12,9 +12,10 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.robot.commands.*;
 
 /**
- * OPERATOR INPUT
- * This class is the glue that binds the controls on the physical operator
- * interface to the commands and command groups that allow control of the robot.
+ * OPERATOR INPUT 
+ * This class is the glue that binds the controls on the physical
+ * operator interface to the commands and command groups that allow control of
+ * the robot.
  */
 public class OI {
   //// CREATING BUTTONS
@@ -24,17 +25,11 @@ public class OI {
   // number it is.
   public Joystick leftJoystick = new Joystick(RobotMap.leftJoystickPort);
   public JoystickButton leftTrigger = new JoystickButton(leftJoystick, 1);
- 
- 
- 
-  public OI(){ //All Commands
+
+  public OI() { // Setup All Commands Here
     leftTrigger.whenPressed(new ManualShoot());
     leftTrigger.whenReleased(new ManualEndShoot());
   }
-
-
-
-
 
   // Button button = new JoystickButton(stick, buttonNumber);
 
@@ -44,7 +39,7 @@ public class OI {
 
   //// TRIGGERING COMMANDS WITH BUTTONS
   // Once you have a button, it's trivial to bind it to a button in one of
-  // three ways:
+  // three ways: (note: do this the RobotMap constructor, above)
 
   // Start the command when the button is pressed and let it run the command
   // until it is finished as determined by it's isFinished method.
