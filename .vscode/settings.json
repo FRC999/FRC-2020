@@ -13,8 +13,14 @@
     "**/.factorypath": true
   },
   "cSpell.words": [
+    "canutils",
+    "ctre",
+    "linuxathena",
     "subclassing",
+    "submodule",
     "teleop",
-    "teleoperated"
+    "teleoperated",
+    "windowsx",
+    "wpiapi"
   ]
 }
