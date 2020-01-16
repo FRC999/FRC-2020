@@ -20,8 +20,8 @@ public class RobotMap {
   //Drivetrain Motor Controllers
    public static int frontLeftDriveMotorController = 1;
    public static int backLeftDriveMotorController = 2;
-   public static int frontRightDriveMotorController = 3;
-   public static int backRightDriveMotorController = 4;
+   public static int frontRightDriveMotorController = 4;
+   public static int backRightDriveMotorController = 3;
 
 
    public static int kShooterMotorID = 5;
