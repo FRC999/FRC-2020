@@ -10,12 +10,11 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-
 public class ManualDrivingCommand extends Command {
+
   public ManualDrivingCommand() {
     // Use requires() here to declare subsystem dependencies
     requires(Robot.driveSubsystem);
-  
   }
 
   // Called just before this Command runs the first time
@@ -26,7 +25,7 @@ public class ManualDrivingCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    //Read joystick values
+    // Read joystick values
     double move = Robot.oi.leftJoystick.getY() * -1; // inverts sign for Y axis
     double turn = Robot.oi.leftJoystick.getX();
     Robot.driveSubsystem.ManualDrive(move, turn);
