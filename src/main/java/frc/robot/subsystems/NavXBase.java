@@ -43,7 +43,7 @@ public class NavXBase extends Subsystem {
 
     /**
      * Gets the pitch of the robot (X axis rotation) (pitch is rotation around the
-     * horisontal axis perpendicular to straight forward)
+     * horizontal axis perpendicular to straight forward)
      * 
      * @return The pitch of the robot
      */
