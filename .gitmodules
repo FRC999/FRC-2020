@@ -1,5 +1,0 @@
-[submodule "Witchcraft"]
-	path = src/main/java/frc/robot/witchcraft
-	url = https://github.com/FRC999/Witchcraft.git
-	branch = master
-	update = merge
