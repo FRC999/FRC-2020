@@ -7,7 +7,7 @@ public class ManualShooterCommandGroup extends CommandGroup {
   public ManualShooterCommandGroup() {
     // Use requires() here to declare subsystem dependencies
     requires(Robot.shooterSubsystem);
-    addSequential(new ManualShoot());
+    addSequential(new ManualShootCommand());
 
   }
 

@@ -29,9 +29,9 @@ public class SmartDashboardSubsystem extends Subsystem {
     setDefaultCommand(new UpdateAllSmartDashboard());
   }
   public void updateNavXValues(){
-    SmartDashboard.putNumber("NavX Pitch", Robot.navX.getPitch());
-    SmartDashboard.putNumber("Navx Roll", Robot.navX.getRoll());
-    SmartDashboard.putNumber("NavX Yaw", Robot.navX.getYaw());
+    SmartDashboard.putNumber("NavX Pitch", Robot.navXSubsystem.getPitch());
+    SmartDashboard.putNumber("Navx Roll", Robot.navXSubsystem.getRoll());
+    SmartDashboard.putNumber("NavX Yaw", Robot.navXSubsystem.getYaw());
   }
   public void updateAllDisplays(){
     updateNavXValues();

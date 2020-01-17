@@ -8,14 +8,13 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 
-public class DisplayDriveEncodersCommand extends Command {
-  public DisplayDriveEncodersCommand() {
+public class ZeroYawCommand extends Command {
+  public ZeroYawCommand() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.driveSubsystem);
+    requires(Robot.navXSubsystem);
   }
 
   // Called just before this Command runs the first time
@@ -26,16 +25,12 @@ public class DisplayDriveEncodersCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-  //SmartDashboard.putNumber("left encoder", Robot.driveSubsystem.getLeftEncoder());
-  //SmartDashboard.putNumber("right encoder", Robot.driveSubsystem.getRightEncoder());
-  System.out.println("left encoder" + Robot.driveSubsystem.getLeftEncoder());
-
-}
+    Robot.navXSubsystem.zeroYaw();
+  }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-   
     return true;
   }
 

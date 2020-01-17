@@ -17,13 +17,13 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  * corrected to the robot orientation TODO: Have the methods return the correct
  * axis axis for their name: ie, correct for NavX orientation
  */
-public class NavXBase extends Subsystem {
+public class NavXSubsystem extends Subsystem {
     AHRS NavX;
 
     /**
      * This constructs the navx: it may throw an exception if the NavX is not found
      */
-    public NavXBase() {// PUT ARGUMENTS WHEN WE NEED THEM
+    public NavXSubsystem() {// PUT ARGUMENTS WHEN WE NEED THEM
         try {
             NavX = new AHRS(SPI.Port.kMXP);// TODO: Check port num
         } catch (RuntimeException ex) {
