@@ -27,6 +27,7 @@ public class DriveForwardCommand extends Command {
   @Override
   protected void initialize() {
     //This is to allow me to use the same command for the first and second leg
+    // This is only called before the command is run the first time!!!
     startPoint = driveSubsystem.getLeftEncoder();
   }
 
