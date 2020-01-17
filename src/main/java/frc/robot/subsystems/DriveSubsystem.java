@@ -18,7 +18,7 @@ import frc.robot.RobotMap;
 import frc.robot.commands.ManualDrivingCommand;
 
 /**
- * Add your docs here.
+ * Add your docs here. TODO: Add docs
  */
 public class DriveSubsystem extends Subsystem {
   // Put methods for controlling this subsystem
@@ -37,12 +37,6 @@ public class DriveSubsystem extends Subsystem {
   public static DifferentialDrive drive = new DifferentialDrive(leftDriveMotorGroup, rightDriveMotorGroup);
 
   public void ManualDrive(double move, double turn) {
-
-    /*
-     * // Testing Mode //Slow things down for testing mode.... Comment out when not
-     * testing if (move > 0.25) { move = 0.25; } if (turn > 0.25) { turn = 0.25; }
-     * // End Testing Mode
-     */
     drive.arcadeDrive(move, turn);
   }
 
@@ -59,6 +53,16 @@ public class DriveSubsystem extends Subsystem {
     frontLeftDriveTalonSRX.setSelectedSensorPosition(0);
     frontRightDriveTalonSRX.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
     frontRightDriveTalonSRX.setSelectedSensorPosition(0);
+  }
+
+  public int getLeftEncoder() {
+    return frontLeftDriveTalonSRX.getSelectedSensorPosition();
+
+  }
+
+  public int getRightEncoder() {
+    return frontRightDriveTalonSRX.getSelectedSensorPosition();
+
   }
 
   public void DriveTrainCoastMode() {
