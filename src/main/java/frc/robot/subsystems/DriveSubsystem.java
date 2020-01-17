@@ -43,8 +43,15 @@ public class DriveSubsystem extends Subsystem {
      * testing if (move > 0.25) { move = 0.25; } if (turn > 0.25) { turn = 0.25; }
      * // End Testing Mode
      */
-
     drive.arcadeDrive(move, turn);
+  }
+
+  public int getLeftEncoder() {
+    return frontLeftDriveTalonSRX.getSelectedSensorPosition();
+  }
+
+  public int getRightEncoder() {
+    return frontRightDriveTalonSRX.getSelectedSensorPosition();
   }
 
   public void ZeroDriveEncoders() {
