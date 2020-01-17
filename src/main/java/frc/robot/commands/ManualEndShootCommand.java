@@ -3,8 +3,8 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class ManualEndShoot extends Command {
-  public ManualEndShoot() {
+public class ManualEndShootCommand extends Command {
+  public ManualEndShootCommand() {
     // Use requires() here to declare subsystem dependencies
     requires(Robot.shooterSubsystem);
 

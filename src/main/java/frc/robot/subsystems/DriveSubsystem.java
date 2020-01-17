@@ -14,6 +14,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
 import frc.robot.commands.ManualDrivingCommand;
 
@@ -38,7 +39,7 @@ public class DriveSubsystem extends Subsystem {
 
   public void ManualDrive(double move, double turn) {
     drive.arcadeDrive(move, turn);
-    System.out.println("DRIVING!");
+    updateEncodersDisplay();
   }
 
   public void ZeroDriveEncoders() {
@@ -77,6 +78,11 @@ public class DriveSubsystem extends Subsystem {
     backLeftDriveTalonSRX.setNeutralMode(NeutralMode.Brake);
     frontRightDriveTalonSRX.setNeutralMode(NeutralMode.Brake);
     backRightDriveTalonSRX.setNeutralMode(NeutralMode.Brake);
+  }
+
+  public void updateEncodersDisplay(){
+    SmartDashboard.putNumber("left encoder", getLeftEncoder());
+    SmartDashboard.putNumber("right encoder", getRightEncoder());
   }
 
   @Override

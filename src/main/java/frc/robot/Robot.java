@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.ManualDrivingCommand;
 import frc.robot.subsystems.DriveSubsystem;
-import frc.robot.subsystems.NavXBase;
+import frc.robot.subsystems.NavXSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.SmartDashboardSubsystem;
 
@@ -29,8 +29,8 @@ public class Robot extends TimedRobot {
   public static DriveSubsystem driveSubsystem = new DriveSubsystem();
   public static ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
   public static ManualDrivingCommand manualDrivingCommand = new ManualDrivingCommand(); //FOR CHOOSER TESTING
-  public static SmartDashboardSubsystem smartDashboard = new SmartDashboardSubsystem();
-  public static NavXBase navX = new NavXBase();
+  public static SmartDashboardSubsystem smartDashboardSubsystem = new SmartDashboardSubsystem();
+  public static NavXSubsystem navXSubsystem = new NavXSubsystem();
   public boolean TestBool = false;
   public static OI oi = new OI();  //Operator Input
   Command autonomousCommand;
@@ -49,6 +49,7 @@ public class Robot extends TimedRobot {
     Robot.driveSubsystem.ResetDriveTrainControllers();
     Robot.driveSubsystem.ZeroDriveEncoders();
     Robot.driveSubsystem.DriveTrainBrakeMode();
+    Robot.navXSubsystem.zeroYaw();
   }
 
   /**
@@ -133,7 +134,6 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
-
   }
 
   /**
