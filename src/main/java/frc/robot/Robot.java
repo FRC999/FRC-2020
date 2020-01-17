@@ -35,7 +35,13 @@ public class Robot extends TimedRobot {
   public boolean TestBool = false;
   public static OI oi = new OI();  //Operator Input
   Command autonomousCommand;
-  SendableChooser<Command> chooser = new SendableChooser<>();
+
+  // Sendable choosers below
+  SendableChooser<Command> sendableCommandChooser = new SendableChooser<Command>();
+  SendableChooser<String> sendableStringChooser = new SendableChooser<String>();
+  SendableChooser<Integer> sendableIntegerChooser = new SendableChooser<Integer>();
+  SendableChooser<Double> sendableDoubleChooser = new SendableChooser<Double>();
+  // End sendable choosers
 
   /**
    * This function is run when the robot is first started up and should be used
@@ -43,9 +49,9 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    chooser.setDefaultOption("Default Auto", new RealSmartAutoCommand());
-    // chooser.addOption("My Auto", new MyAutoCommand());
-    SmartDashboard.putData("Auto mode", chooser);
+    sendableCommandChooser.setDefaultOption("Default Auto", new RealSmartAutoCommand());
+    sendableCommandChooser.addOption("Really Smart Auto", new RealSmartAutoCommand());
+    SmartDashboard.putData("Auto mode", sendab);
     SmartDashboard.putBoolean("Test Boolean", TestBool);
     Robot.driveSubsystem.ResetDriveTrainControllers();
     Robot.driveSubsystem.ZeroDriveEncoders();
@@ -96,7 +102,6 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     autonomousCommand = chooser.getSelected();
-
     /*
      * String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
      * switch(autoSelected) { case "My Auto": autonomousCommand = new
