@@ -32,10 +32,7 @@ public class ZeroDriveEncodersCommand extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    boolean retVal = false;
-    if (Robot.driveSubsystem.getLeftEncoder() == 0)
-    retVal = true;
-    return retVal;
+    return true;
   }
 
   // Called once after isFinished returns true

@@ -38,14 +38,7 @@ public class DriveSubsystem extends Subsystem {
 
   public void ManualDrive(double move, double turn) {
     drive.arcadeDrive(move, turn);
-  }
-
-  public int getLeftEncoder() {
-    return frontLeftDriveTalonSRX.getSelectedSensorPosition();
-  }
-
-  public int getRightEncoder() {
-    return frontRightDriveTalonSRX.getSelectedSensorPosition();
+    System.out.println("DRIVING!");
   }
 
   public void ZeroDriveEncoders() {
