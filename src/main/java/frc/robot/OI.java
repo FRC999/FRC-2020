@@ -28,6 +28,11 @@ public class OI {
   Button zeroEncoderButton = new JoystickButton(leftJoystick, 2);
   Button zeroYawButton = new JoystickButton(leftJoystick, 3);
   public JoystickButton leftTrigger = new JoystickButton(leftJoystick, 1);
+  public JoystickButton leftButton2 = new JoystickButton(leftJoystick, 2);
+  public JoystickButton leftButton3 = new JoystickButton(leftJoystick, 3);
+
+
+
 
   public OI() { // Setup All Commands Here
     leftTrigger.whenPressed(new ManualShootCommand());
@@ -35,6 +40,12 @@ public class OI {
     //showEncoderButton.whenPressed(new DisplayDriveEncodersCommand());
     zeroEncoderButton.whenPressed(new ZeroDriveEncodersCommand());
     zeroYawButton.whenPressed(new ZeroYawCommand());
+    
+    leftButton2.whenPressed(new IntakeInCommand());
+    leftButton2.whenReleased(new IntakeStandbyCommand());
+
+    leftButton3.whenPressed(new IntakeReverseCommand());
+    leftButton3.whenReleased(new IntakeStandbyCommand());
   }
 
   // Button button = new JoystickButton(stick, buttonNumber);
