@@ -20,10 +20,17 @@ public class RealSmartAutoCommand extends CommandGroup {
     // these will run in order.
 
     //What we want to do
+    
+    addSequential(new ZeroDriveEncodersCommand());
     addSequential(new ZeroYawCommand());
     addSequential(new DriveForwardCommand());
+    addSequential(new StopCommand());
     addSequential(new TurnAroundCommand());
+    addSequential(new StopCommand());
     addSequential(new DriveForwardCommand());
+    addSequential(new StopCommand());
+
+
     // To run multiple commands at the same time,
     // use addParallel()
     // e.g. addParallel(new Command1());
