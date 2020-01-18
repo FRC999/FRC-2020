@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.ManualDrivingCommand;
+import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.NavXSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
@@ -28,6 +29,7 @@ import frc.robot.subsystems.SmartDashboardSubsystem;
 public class Robot extends TimedRobot {
   public static DriveSubsystem driveSubsystem = new DriveSubsystem();
   public static ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
+  public static ClimberSubsystem climberSubsystem = new ClimberSubsystem();
   public static ManualDrivingCommand manualDrivingCommand = new ManualDrivingCommand(); //FOR CHOOSER TESTING
   public static SmartDashboardSubsystem smartDashboardSubsystem = new SmartDashboardSubsystem();
   public static NavXSubsystem navXSubsystem = new NavXSubsystem();
