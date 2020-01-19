@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.util.Color;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.I2C;
 import com.revrobotics.ColorSensorV3;
 
@@ -10,6 +11,41 @@ public class ControlPanelSubsystem extends Subsystem {
 
   private final I2C.Port i2cPort = I2C.Port.kOnboard;
   private final ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort);
+  
+  private Color targetColor;
+  private boolean receivedGameColor = false;
+
+  final Color blueColor = new Color(0,1,1);//number gotten from game manual + online converter
+  final Color greenColor = new Color(0,1,0);
+  final Color redColor = new Color(1,0,0);
+  final Color yellowColor = new Color(1,0,0);
+
+  public void updateTargetColor(){
+    targetColor = getGameTargetColor();
+
+  }
+  public Color getGameTargetColor(){
+    String gameData = DriverStation.getInstance().getGameSpecificMessage();
+    if(gameData.length() > 0){
+      receivedGameColor = true;
+      switch(gameData.charAt(0)){
+        case 'B' :
+          return redColor; 
+        case 'G' :
+          return yellowColor;
+        case 'R':
+          return blueColor;
+        case 'Y':
+          return greenColor;
+        default:
+          return null; //corrupt data! uh oh!
+      }
+    }
+    else {      
+      receivedGameColor = false;
+      return null;//we haven't gotten it yet
+    }
+  }
 
   @Override
   public void initDefaultCommand() {
