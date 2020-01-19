@@ -30,7 +30,11 @@ public class RobotMap {
   // Driver Input Devices
   public static int leftJoystickPort = 0;
 
-  // If you are using multiple modules, make sure to define both the port
+   public static int intakeMotor1ID = 8;
+   public static int intakeMotor2ID = 9;
+
+
+   // If you are using multiple modules, make sure to define both the port
   // number and the module. For example you with a rangefinder:
   // public static int rangefinderPort = 1;
   // public static int rangefinderModule = 1;

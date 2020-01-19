@@ -6,9 +6,6 @@ import frc.robot.RobotMap;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class ShooterSubsystem extends Subsystem {
-  /**
-   * Creates a new ExampleSubsystem.
-   */
 
   static WPI_TalonSRX shooterMotor = new WPI_TalonSRX(RobotMap.kShooterMotorID);
   static WPI_TalonSRX panMotor = new WPI_TalonSRX(RobotMap.panMotorID);
