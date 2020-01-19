@@ -35,6 +35,7 @@ public class Robot extends TimedRobot {
   public static NavXSubsystem navXSubsystem = new NavXSubsystem();
   public static IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   public boolean TestBool = false;
+  public static OI oi = new OI();
   Command autonomousCommand;
 
   // Sendable choosers below
@@ -52,7 +53,7 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     sendableCommandChooser.setDefaultOption("Default Auto", new RealSmartAutoCommand());
     sendableCommandChooser.addOption("Really Smart Auto", new RealSmartAutoCommand());
-    SmartDashboard.putData("Auto mode", sendab);
+    SmartDashboard.putData("Auto mode", sendableCommandChooser);
     SmartDashboard.putBoolean("Test Boolean", TestBool);
     Robot.driveSubsystem.ResetDriveTrainControllers();
     Robot.driveSubsystem.ZeroDriveEncoders();
@@ -102,7 +103,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    autonomousCommand = chooser.getSelected();
+    autonomousCommand = sendableCommandChooser.getSelected();
     /*
      * String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
      * switch(autoSelected) { case "My Auto": autonomousCommand = new
