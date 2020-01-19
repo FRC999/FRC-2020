@@ -24,9 +24,11 @@ public class OI {
   // You create one by telling it which joystick it's on and which button
   // number it is.
   public Joystick leftJoystick = new Joystick(RobotMap.leftJoystickPort);
-  Button showEncoderButton = new JoystickButton(leftJoystick, 1);
-  Button zeroEncoderButton = new JoystickButton(leftJoystick, 2);
-  Button zeroYawButton = new JoystickButton(leftJoystick, 3);
+  Button showEncoderButton = new JoystickButton(leftJoystick, 2);
+  Button zeroEncoderButton = new JoystickButton(leftJoystick, 3);
+  Button zeroYawButton = new JoystickButton(leftJoystick, 4);
+  Button climberExtendButton = new JoystickButton(leftJoystick, 5);
+  Button climberClimbButton = new JoystickButton(leftJoystick, 6);
   public JoystickButton leftTrigger = new JoystickButton(leftJoystick, 1);
   public JoystickButton leftButton2 = new JoystickButton(leftJoystick, 2);
   public JoystickButton leftButton3 = new JoystickButton(leftJoystick, 3);
@@ -46,6 +48,10 @@ public class OI {
 
     leftButton3.whenPressed(new IntakeReverseCommand());
     leftButton3.whenReleased(new IntakeStandbyCommand());
+    
+    climberExtendButton.whenPressed(new ManualClimberExtend());
+    climberClimbButton.whenPressed(new ManualClimberClimb());
+    climberClimbButton.whenReleased(new ManualClimberEndClimb());
   }
 
   // Button button = new JoystickButton(stick, buttonNumber);

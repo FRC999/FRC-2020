@@ -27,6 +27,10 @@ public class RobotMap {
   public static int panMotorID = 6;
   public static int tiltMotorID = 7;
 
+  public static int climberMotorID=10;
+  public static int climberSolenoid1Channel=11;
+  public static int climberSolenoid2Channel=12;
+
   // Driver Input Devices
   public static int leftJoystickPort = 0;
 
