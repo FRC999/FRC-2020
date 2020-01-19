@@ -71,6 +71,7 @@ public class DriveSubsystem extends Subsystem {
     backLeftDriveTalonSRX.configFactoryDefault();
     frontRightDriveTalonSRX.configFactoryDefault();
     backRightDriveTalonSRX.configFactoryDefault();
+    frontLeftDriveTalonSRX.setSensorPhase(true);
   }
 
   public void DriveTrainBrakeMode() {

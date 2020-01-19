@@ -10,7 +10,6 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.subsystems.DriveSubsystem;
-import frc.robot.subsystems.NavXSubsystem;
 
 public class TurnAroundCommand extends Command {
   DriveSubsystem driveSubsystem = Robot.driveSubsystem;

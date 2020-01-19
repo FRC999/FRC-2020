@@ -33,6 +33,9 @@ public class RobotMap {
    public static int intakeMotor1ID = 8;
    public static int intakeMotor2ID = 9;
 
+  //Closed loop constants
+  public final static int encoderUnitsPerShaftRotation = 4096;
+  public final static int encoderUnitsPerRobotRotation = 51711;
 
    // If you are using multiple modules, make sure to define both the port
   // number and the module. For example you with a rangefinder:
