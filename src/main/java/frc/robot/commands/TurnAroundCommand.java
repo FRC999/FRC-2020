@@ -10,45 +10,47 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.NavXSubsystem;
 
-public class DriveForwardCommand extends Command {
-  private static final int driveDistance = 49700;
-   
-  int startPoint;
-  public DriveForwardCommand() {
-    requires(Robot.driveSubsystem);
+public class TurnAroundCommand extends Command {
+  DriveSubsystem driveSubsystem = Robot.driveSubsystem;
+  static final double targetFacing = 170; // cannot be 180, as the system wraps around automatically to -180 after it hits 180
+  double testYaw = 0;
+  public TurnAroundCommand() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-
-    startPoint = 0;
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    //This is to allow me to use the same command for the first and second leg
-    // This is only called before the command is run the first time!!!
-    startPoint = Robot.driveSubsystem.getLeftEncoder();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.driveSubsystem.ManualDrive(.5, 0);
-    Robot.smartDashboardSubsystem.updateEncoderValue();
+    driveSubsystem.ManualDrive(0, .5);
+    Robot.smartDashboardSubsystem.updateNavXValues();
+
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    boolean retVal= false;
-    if((Robot.driveSubsystem.getLeftEncoder() >= driveDistance+startPoint) ||(Robot.driveSubsystem.getLeftEncoder() <= startPoint-driveDistance) ){
-      retVal = true;//exit method and command
+   boolean testVal= false;
+    if(((Robot.navXSubsystem.getYaw() >= targetFacing)||(Robot.navXSubsystem.getYaw() <= -targetFacing)) && (testYaw > Robot.navXSubsystem.getYaw()) ){
+       /* three conditions: 1 and 2, in the range around +-180; 3,
+       // that it just changed over from positive to negative. 
+       //We are assuming it goes clockwise; the NavX wraps from 180 degrees to -180.
+    */
+       testVal = true;
+      testYaw = 0;
     }
-    else
-    retVal = false;//keep going
-    
-    return retVal;
+    else 
+    { testYaw = Robot.navXSubsystem.getYaw();
+      testVal = false;}
+
+    return testVal;
   }
 
   // Called once after isFinished returns true

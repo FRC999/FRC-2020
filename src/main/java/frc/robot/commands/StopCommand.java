@@ -9,46 +9,28 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.subsystems.DriveSubsystem;
 
-public class DriveForwardCommand extends Command {
-  private static final int driveDistance = 49700;
-   
-  int startPoint;
-  public DriveForwardCommand() {
-    requires(Robot.driveSubsystem);
+public class StopCommand extends Command {
+  public StopCommand() {
     // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
-
-    startPoint = 0;
+     requires(Robot.driveSubsystem);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    //This is to allow me to use the same command for the first and second leg
-    // This is only called before the command is run the first time!!!
-    startPoint = Robot.driveSubsystem.getLeftEncoder();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.driveSubsystem.ManualDrive(.5, 0);
-    Robot.smartDashboardSubsystem.updateEncoderValue();
+    Robot.driveSubsystem.ManualDrive(0, 0);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    boolean retVal= false;
-    if((Robot.driveSubsystem.getLeftEncoder() >= driveDistance+startPoint) ||(Robot.driveSubsystem.getLeftEncoder() <= startPoint-driveDistance) ){
-      retVal = true;//exit method and command
-    }
-    else
-    retVal = false;//keep going
-    
-    return retVal;
+    return true;
   }
 
   // Called once after isFinished returns true

@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.ManualDrivingCommand;
+import frc.robot.commands.RealSmartAutoCommand;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.NavXSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -35,17 +36,23 @@ public class Robot extends TimedRobot {
   public static IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   public boolean TestBool = false;
   Command autonomousCommand;
-  SendableChooser<Command> chooser = new SendableChooser<>();
+
+  // Sendable choosers below
+  SendableChooser<Command> sendableCommandChooser = new SendableChooser<Command>();
+  SendableChooser<String> sendableStringChooser = new SendableChooser<String>();
+  SendableChooser<Integer> sendableIntegerChooser = new SendableChooser<Integer>();
+  SendableChooser<Double> sendableDoubleChooser = new SendableChooser<Double>();
+  // End sendable choosers
 
   /**
    * This function is run when the robot is first started up and should be used
    * for any initialization code.
-   */
+   Comment */
   @Override
   public void robotInit() {
-    chooser.setDefaultOption("Default Auto", new ManualDrivingCommand());
-    // chooser.addOption("My Auto", new MyAutoCommand());
-    SmartDashboard.putData("Auto mode", chooser);
+    sendableCommandChooser.setDefaultOption("Default Auto", new RealSmartAutoCommand());
+    sendableCommandChooser.addOption("Really Smart Auto", new RealSmartAutoCommand());
+    SmartDashboard.putData("Auto mode", sendab);
     SmartDashboard.putBoolean("Test Boolean", TestBool);
     Robot.driveSubsystem.ResetDriveTrainControllers();
     Robot.driveSubsystem.ZeroDriveEncoders();
@@ -96,7 +103,6 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     autonomousCommand = chooser.getSelected();
-
     /*
      * String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
      * switch(autoSelected) { case "My Auto": autonomousCommand = new

@@ -28,6 +28,11 @@ public class SmartDashboardSubsystem extends Subsystem {
     // Set the default command for a subsystem here.
     setDefaultCommand(new UpdateAllSmartDashboard());
   }
+
+  public void updateEncoderValue() {
+SmartDashboard.putNumber("left encoder",Robot.driveSubsystem.getLeftEncoder());
+  }
+
   public void updateNavXValues(){
     SmartDashboard.putNumber("NavX Pitch", Robot.navXSubsystem.getPitch());
     SmartDashboard.putNumber("Navx Roll", Robot.navXSubsystem.getRoll());
