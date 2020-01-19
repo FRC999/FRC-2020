@@ -2,8 +2,12 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.util.Color;
+import frc.robot.RobotMap;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.I2C;
+
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.revrobotics.ColorSensorV3;
 
 public class ControlPanelSubsystem extends Subsystem {
@@ -11,6 +15,8 @@ public class ControlPanelSubsystem extends Subsystem {
 
   private final I2C.Port i2cPort = I2C.Port.kOnboard;
   private final ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort);
+
+  private WPI_TalonSRX diskSpinnerTalon = new WPI_TalonSRX(RobotMap.diskSpinnerMotorID);
 
   private Color targetColor;
   private boolean receivedGameColor = false;
@@ -23,6 +29,26 @@ public class ControlPanelSubsystem extends Subsystem {
   final Color yellowColor = new Color(1, 0, 0);
 
   final double toleranceSize = .01;// tolerance size (in percent)
+  private boolean wasAligned = false;
+  private double spinSpeed = 0.5;
+
+
+  //NOTE:  Will be implementing Rotation Control as a command
+  public void spinToTargetColor(){
+    if(checkColorAlignment()){
+      diskSpinnerTalon.setNeutralMode(NeutralMode.Brake);
+      diskSpinnerTalon.set(0);
+      //TODO: Use actual motion profiling (note: maybe not, will definitely be very hard);
+    }
+    else{ 
+      diskSpinnerTalon.set(spinSpeed);
+    }
+
+    if(wasAligned != colorsAligned){//if alignment has changed since last check...
+      spinSpeed *= -.8; //Switch spin directions and decrease speed: we overshot
+    }
+    wasAligned = colorsAligned;
+  }
 
   /**
    * Update the color that we should be reading:
