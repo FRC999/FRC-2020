@@ -14,16 +14,33 @@ public class ControlPanelSubsystem extends Subsystem {
   
   private Color targetColor;
   private boolean receivedGameColor = false;
+  private boolean colorsAligned;
 
   final Color blueColor = new Color(0,1,1);//number gotten from game manual + online converter
   final Color greenColor = new Color(0,1,0);
   final Color redColor = new Color(1,0,0);
   final Color yellowColor = new Color(1,0,0);
 
-  public void updateTargetColor(){
+  final double toleranceSize = .01;//tolerance size (in percent)
+
+
+  /**
+   * Update the color that we should be reading: 
+   */
+  public void updateColorState(){
     targetColor = getGameTargetColor();
 
   }
+  
+  public boolean checkColorAlignment(){
+    if ()
+  }
+
+
+  /**
+   * Get what the game would like our sensor to read
+   * @return color that our sensor should read
+   */ 
   public Color getGameTargetColor(){
     String gameData = DriverStation.getInstance().getGameSpecificMessage();
     if(gameData.length() > 0){
