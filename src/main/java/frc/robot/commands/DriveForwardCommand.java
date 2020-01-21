@@ -9,7 +9,6 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.subsystems.DriveSubsystem;
 
 public class DriveForwardCommand extends Command {
   private static final int driveDistance = 49700;
