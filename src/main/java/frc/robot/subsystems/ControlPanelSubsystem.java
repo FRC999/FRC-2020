@@ -2,7 +2,12 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.util.Color;
+import frc.robot.RobotMap;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.I2C;
+
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.revrobotics.ColorSensorV3;
 
 public class ControlPanelSubsystem extends Subsystem {
@@ -11,70 +16,93 @@ public class ControlPanelSubsystem extends Subsystem {
   private final I2C.Port i2cPort = I2C.Port.kOnboard;
   private final ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort);
 
-  /**
-   * Returns the Color object of the color sensor
-   * 
-   * @return Current detected color object
-   */
-  public Color getColor() {
-    return colorSensor.getColor();
+  private WPI_TalonSRX diskSpinnerTalon = new WPI_TalonSRX(RobotMap.diskSpinnerMotorID);
+
+  private Color targetColor;
+  private boolean receivedGameColor = false;
+  private boolean colorsAligned = false;
+  private Color currentColor;
+
+  final Color blueColor = new Color(0, 1, 1);// number gotten from game manual + online converter
+  final Color greenColor = new Color(0, 1, 0);
+  final Color redColor = new Color(1, 0, 0);
+  final Color yellowColor = new Color(1, 0, 0);
+
+  final double toleranceSize = .01;// tolerance size (in percent)
+  private boolean wasAligned = false;
+  private double spinSpeed = 0.5;
+
+
+  //NOTE:  Will be implementing Rotation Control as a command
+  public void spinToTargetColor(){
+    if(checkColorAlignment()){
+      diskSpinnerTalon.setNeutralMode(NeutralMode.Brake);
+      diskSpinnerTalon.set(0);
+      //TODO: Use actual motion profiling (note: maybe not, will definitely be very hard);
+    }
+    else{ 
+      diskSpinnerTalon.set(spinSpeed);
+    }
+
+    if(wasAligned != colorsAligned){//if alignment has changed since last check...
+      spinSpeed *= -.8; //Switch spin directions and decrease speed: we overshot
+    }
+    wasAligned = colorsAligned;
   }
 
   /**
-   * Returns the value for the raw infrared light detected as a double
-   * 
-   * @return Raw infrared light value
+   * Update the color that we should be reading:
    */
-  public double getInfrared() {
-    return colorSensor.getIR();
+  public void updateColorState() {
+    targetColor = getGameTargetColor();
+    currentColor = colorSensor.getColor();
   }
 
   /**
-   * Returns the red value of the RGB for the color sensor as a double
-   * 
-   * @return Red value as double
+   * Checks whether the colors are aligned: null checked
+   * @return true if aligned: false otherwise
    */
-  public double getRed() {
-    return colorSensor.getColor().red;
+  public boolean checkColorAlignment(){
+    updateColorState();
+
+    //Quick null check:
+    if(targetColor == null || currentColor == null){return colorsAligned = false;}
+
+    if(//NOTE: Copy-paste is bad practice.  I am being a bad boy. -CMM
+      Math.abs(targetColor.red - currentColor.red) < toleranceSize &&
+      Math.abs(targetColor.green - currentColor.green) < toleranceSize &&
+      Math.abs(targetColor.blue - currentColor.blue) < toleranceSize)
+      {
+        return colorsAligned = true;
+    }
+    return colorsAligned = false;
   }
 
   /**
-   * Returns the green value of the RGB for the color sensor as a double
+   * Get what the game would like our sensor to read
    * 
-   * @return Green value as double
+   * @return color that our sensor should read
    */
-  public double getGreen() {
-    return colorSensor.getColor().green;
-  }
-
-  /**
-   * Returns the blue value of the RGB for the color sensor as a double
-   * 
-   * @return Blue value as double
-   */
-  public double getBlue() {
-    return colorSensor.getColor().blue;
-  }
-
-  /**
-   * Returns the RGB values of the detected color for the color sensor as doubles
-   * in the order of {Red,Green,Blue}
-   * 
-   * @return {R,G,B} values as a double array
-   */
-  public double[] getRGB() {
-    double[] temporaryArray = { colorSensor.getColor().red, colorSensor.getColor().green, colorSensor.getColor().blue };
-    return temporaryArray;
-  }
-
-  /**
-   * Returns the approximate distance from the color scanner (At a high value,
-   * color may not be accurate)
-   * 
-   * @return distance from color scanner from 0-2047
-   */
-  public int getProximity() {
-    return colorSensor.getProximity();
+  public Color getGameTargetColor() {
+    String gameData = DriverStation.getInstance().getGameSpecificMessage();
+    if (gameData.length() > 0) {
+      receivedGameColor = true;
+      switch (gameData.charAt(0)) {
+      case 'B':
+        return redColor;
+      case 'G':
+        return yellowColor;
+      case 'R':
+        return blueColor;
+      case 'Y':
+        return greenColor;
+      default:
+        return null; // corrupt data! uh oh!
+      }
+    } else {
+      receivedGameColor = false;
+      return null;// we haven't gotten it yet
+    }
   }
 
   @Override

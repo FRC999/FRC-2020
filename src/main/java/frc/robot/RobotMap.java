@@ -17,6 +17,8 @@ public class RobotMap {
   // For example to map the left and right motors, you could define the
   // following variables to use with your drivetrain subsystem.
 
+  //TODO: Mark all as final, to unlock marginal performance gain
+  
   // Drivetrain Motor Controllers
   public static int frontLeftDriveMotorController = 1;
   public static int backLeftDriveMotorController = 2;
@@ -26,6 +28,9 @@ public class RobotMap {
   public static int kShooterMotorID = 5;
   public static int panMotorID = 6;
   public static int tiltMotorID = 7;
+
+  //TODO: Get actual motor ID
+  public static final int diskSpinnerMotorID = -1;
 
   public static int climberMotorID=10;
   public static int climberSolenoid1Channel=11;
