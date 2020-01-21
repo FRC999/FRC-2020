@@ -9,6 +9,8 @@ import edu.wpi.first.wpilibj.I2C;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.revrobotics.ColorSensorV3;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import frc.robot.RobotMap;
 
 public class ControlPanelSubsystem extends Subsystem {
   // TODO: Find stuff for JE-PLG-149 motors so they can be used here
@@ -17,6 +19,7 @@ public class ControlPanelSubsystem extends Subsystem {
   private final ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort);
 
   private WPI_TalonSRX diskSpinnerTalon = new WPI_TalonSRX(RobotMap.diskSpinnerMotorID);
+  private DoubleSolenoid diskSpinnerSolenoid = new DoubleSolenoid(RobotMap.ColorWheelSolenoidForwardChannel,RobotMap.ColorWheelSolenoidReverseChannel);
 
   private Color targetColor;
   private boolean receivedGameColor = false;
@@ -49,7 +52,12 @@ public class ControlPanelSubsystem extends Subsystem {
     }
     wasAligned = colorsAligned;
   }
-
+/**Sets the value of this subsystem's DoubleSolenoid: kForward, kReverse, or kOff.  These are values of the enum DoubleSolenoid.Value. */
+ public void setSolenoid(DoubleSolenoid.Value val) {
+    diskSpinnerSolenoid.set(val);
+    
+ }
+  
   /**
    * Update the color that we should be reading:
    */
