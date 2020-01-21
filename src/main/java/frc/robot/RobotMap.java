@@ -32,6 +32,14 @@ public class RobotMap {
    //Driver Input Devices
    public static int leftJoystickPort = 0;
 
+   //PCM forward, reverse channels for doubleSolenoids
+   public static int ColorWheelSolenoidForwardChannel = 0;
+   public static int ColorWheelSolenoidReverseChannel = 1;
+   public static int IntakeSolenoidForwardChannel =2;
+   public static int IntakeSolenoidReverseChannel = 3;
+   public static int ClimberSolenoidForwardChannel = 4;
+   public static int ClimberSolenoidReverseChannel = 5;
+   
 
    // If you are using multiple modules, make sure to define both the port
   // number and the module. For example you with a rangefinder:
