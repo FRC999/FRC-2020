@@ -24,6 +24,7 @@ public class OI {
   // You create one by telling it which joystick it's on and which button
   // number it is.
   public Joystick leftJoystick = new Joystick(RobotMap.leftJoystickPort);
+  //Button showEncoderButton = new JoystickButton(leftJoystick, 1);
   Button showEncoderButton = new JoystickButton(leftJoystick, 2);
   Button zeroEncoderButton = new JoystickButton(leftJoystick, 3);
   Button zeroYawButton = new JoystickButton(leftJoystick, 4);

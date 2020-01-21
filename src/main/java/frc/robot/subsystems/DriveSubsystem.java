@@ -9,6 +9,10 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.RemoteSensorSource;
+import com.ctre.phoenix.motorcontrol.SensorTerm;
+import com.ctre.phoenix.motorcontrol.StatusFrame;
+import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
@@ -43,9 +47,9 @@ public class DriveSubsystem extends Subsystem {
   }
 
   public void ZeroDriveEncoders() {
-    frontLeftDriveTalonSRX.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
+    //frontLeftDriveTalonSRX.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
     frontLeftDriveTalonSRX.setSelectedSensorPosition(0);
-    frontRightDriveTalonSRX.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
+    //frontRightDriveTalonSRX.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
     frontRightDriveTalonSRX.setSelectedSensorPosition(0);
   }
 
@@ -71,8 +75,121 @@ public class DriveSubsystem extends Subsystem {
     backLeftDriveTalonSRX.configFactoryDefault();
     frontRightDriveTalonSRX.configFactoryDefault();
     backRightDriveTalonSRX.configFactoryDefault();
+    // ---- Configure Encoders ----
+    frontLeftDriveTalonSRX.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
+    //Change Magencoder phase to match motor direction
     frontLeftDriveTalonSRX.setSensorPhase(true);
-  }
+    frontRightDriveTalonSRX.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
+
+		// Configure the left Talon's selected sensor 
+		frontLeftDriveTalonSRX.configSelectedFeedbackSensor(	FeedbackDevice.CTRE_MagEncoder_Relative,				// Local Feedback Source
+													RobotMap.PID_PRIMARY,					// PID Slot for Source [0, 1]
+													RobotMap.configureTimeoutMs);					// Configuration Timeout
+
+		/* Configure the Remote Talon's selected sensor as a remote sensor for the right Talon */
+		frontRightDriveTalonSRX.configRemoteFeedbackFilter(frontLeftDriveTalonSRX.getDeviceID(),					// Device ID of Source
+												RemoteSensorSource.TalonSRX_SelectedSensor,	// Remote Feedback Source
+												RobotMap.REMOTE_0,							// Source number [0, 1]
+												RobotMap.configureTimeoutMs);						// Configuration Timeout
+		
+		/* Setup Sum signal to be used for Distance */
+		frontRightDriveTalonSRX.configSensorTerm(SensorTerm.Sum0, FeedbackDevice.RemoteSensor0, RobotMap.configureTimeoutMs);				// Feedback Device of Remote Talon
+		frontRightDriveTalonSRX.configSensorTerm(SensorTerm.Sum1, FeedbackDevice.CTRE_MagEncoder_Relative, RobotMap.configureTimeoutMs);	// Quadrature Encoder of current Talon
+		
+		/* Setup Difference signal to be used for Turn */
+		frontRightDriveTalonSRX.configSensorTerm(SensorTerm.Diff1, FeedbackDevice.RemoteSensor0, RobotMap.configureTimeoutMs);
+		frontRightDriveTalonSRX.configSensorTerm(SensorTerm.Diff0, FeedbackDevice.CTRE_MagEncoder_Relative, RobotMap.configureTimeoutMs);
+		
+		/* Configure Sum [Sum of both QuadEncoders] to be used for Primary PID Index */
+		frontRightDriveTalonSRX.configSelectedFeedbackSensor(	FeedbackDevice.SensorSum, 
+													RobotMap.PID_PRIMARY,
+													RobotMap.configureTimeoutMs);
+		
+		/* Scale Feedback by 0.5 to half the sum of Distance */
+		frontRightDriveTalonSRX.configSelectedFeedbackCoefficient(	0.5, 						// Coefficient
+														RobotMap.PID_PRIMARY,		// PID Slot of Source 
+														RobotMap.configureTimeoutMs);		// Configuration Timeout
+		
+		/* Configure Difference [Difference between both QuadEncoders] to be used for Auxiliary PID Index */
+		frontRightDriveTalonSRX.configSelectedFeedbackSensor(	FeedbackDevice.SensorDifference, 
+													RobotMap.PID_TURN, 
+													RobotMap.configureTimeoutMs);
+		
+		/* Scale the Feedback Sensor using a coefficient */
+		frontRightDriveTalonSRX.configSelectedFeedbackCoefficient(	1,
+														RobotMap.PID_TURN, 
+														RobotMap.configureTimeoutMs);
+		/* Configure output and sensor direction */
+		//frontLeftDriveTalonSRX.setInverted(false);
+		//frontLeftDriveTalonSRX.setSensorPhase(true);
+		//frontRightDriveTalonSRX.setInverted(true);
+		//frontRightDriveTalonSRX.setSensorPhase(true);
+		
+		/* Set status frame periods to ensure we don't have stale data */
+		frontRightDriveTalonSRX.setStatusFramePeriod(StatusFrame.Status_12_Feedback1, 20, RobotMap.configureTimeoutMs);
+		frontRightDriveTalonSRX.setStatusFramePeriod(StatusFrame.Status_13_Base_PIDF0, 20, RobotMap.configureTimeoutMs);
+		frontRightDriveTalonSRX.setStatusFramePeriod(StatusFrame.Status_14_Turn_PIDF1, 20, RobotMap.configureTimeoutMs);
+		frontRightDriveTalonSRX.setStatusFramePeriod(StatusFrame.Status_10_Targets, 20, RobotMap.configureTimeoutMs);
+		frontLeftDriveTalonSRX.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 5, RobotMap.configureTimeoutMs);
+
+		/* Configure motor neutral deadband */
+		frontRightDriveTalonSRX.configNeutralDeadband(RobotMap.NeutralDeadband, RobotMap.configureTimeoutMs);
+		frontLeftDriveTalonSRX.configNeutralDeadband(RobotMap.NeutralDeadband, RobotMap.configureTimeoutMs);
+		
+		/* Motion Magic Configurations */
+		frontRightDriveTalonSRX.configMotionAcceleration(2000, RobotMap.configureTimeoutMs);
+		frontRightDriveTalonSRX.configMotionCruiseVelocity(2000, RobotMap.configureTimeoutMs);
+
+		/**
+		 * Max out the peak output (for all modes).  
+		 * However you can limit the output of a given PID object with configClosedLoopPeakOutput().
+		 */
+		frontLeftDriveTalonSRX.configPeakOutputForward(+1.0, RobotMap.configureTimeoutMs);
+		frontLeftDriveTalonSRX.configPeakOutputReverse(-1.0, RobotMap.configureTimeoutMs);
+		frontRightDriveTalonSRX.configPeakOutputForward(+1.0, RobotMap.configureTimeoutMs);
+		frontRightDriveTalonSRX.configPeakOutputReverse(-1.0, RobotMap.configureTimeoutMs);
+
+		/* FPID Gains for distance servo */
+		frontRightDriveTalonSRX.config_kP(RobotMap.SLOT_0, RobotMap.P_0, RobotMap.configureTimeoutMs);
+		frontRightDriveTalonSRX.config_kI(RobotMap.SLOT_0, RobotMap.I_0, RobotMap.configureTimeoutMs);
+		frontRightDriveTalonSRX.config_kD(RobotMap.SLOT_0, RobotMap.D_0, RobotMap.configureTimeoutMs);
+		frontRightDriveTalonSRX.config_kF(RobotMap.SLOT_0, RobotMap.F_0, RobotMap.configureTimeoutMs);
+		frontRightDriveTalonSRX.config_IntegralZone(RobotMap.SLOT_0, RobotMap.Izone_0, RobotMap.configureTimeoutMs);
+		frontRightDriveTalonSRX.configClosedLoopPeakOutput(RobotMap.SLOT_0, RobotMap.PeakOutput_0, RobotMap.configureTimeoutMs);
+		frontRightDriveTalonSRX.configAllowableClosedloopError(RobotMap.SLOT_0, 0, RobotMap.configureTimeoutMs);
+
+		/* FPID Gains for turn servo */
+		frontRightDriveTalonSRX.config_kP(RobotMap.SLOT_1, RobotMap.P_1, RobotMap.configureTimeoutMs);
+		frontRightDriveTalonSRX.config_kI(RobotMap.SLOT_1, RobotMap.I_1, RobotMap.configureTimeoutMs);
+		frontRightDriveTalonSRX.config_kD(RobotMap.SLOT_1, RobotMap.D_1, RobotMap.configureTimeoutMs);
+		frontRightDriveTalonSRX.config_kF(RobotMap.SLOT_1, RobotMap.F_1, RobotMap.configureTimeoutMs);
+		frontRightDriveTalonSRX.config_IntegralZone(RobotMap.SLOT_1, RobotMap.Izone_1, RobotMap.configureTimeoutMs);
+		frontRightDriveTalonSRX.configClosedLoopPeakOutput(RobotMap.SLOT_1, RobotMap.PeakOutput_1, RobotMap.configureTimeoutMs);
+		frontRightDriveTalonSRX.configAllowableClosedloopError(RobotMap.SLOT_1, 0, RobotMap.configureTimeoutMs);
+
+		/**
+		 * 1ms per loop.  PID loop can be slowed down if need be.
+		 * For example,
+		 * - if sensor updates are too slow
+		 * - sensor deltas are very small per update, so derivative error never gets large enough to be useful.
+		 * - sensor movement is very slow causing the derivative error to be near zero.
+		 */
+		int closedLoopTimeMs = 1;
+		frontRightDriveTalonSRX.configClosedLoopPeriod(0, closedLoopTimeMs, RobotMap.configureTimeoutMs);
+		frontRightDriveTalonSRX.configClosedLoopPeriod(1, closedLoopTimeMs, RobotMap.configureTimeoutMs);
+
+		/**
+		 * configAuxPIDPolarity(boolean invert, int timeoutMs)
+		 * false means talon's local output is PID0 + PID1, and other side Talon is PID0 - PID1
+		 * true means talon's local output is PID0 - PID1, and other side Talon is PID0 + PID1
+		 */
+		frontRightDriveTalonSRX.configAuxPIDPolarity(false, RobotMap.configureTimeoutMs);
+
+		/* Initialize */
+		frontRightDriveTalonSRX.setStatusFramePeriod(StatusFrameEnhanced.Status_10_Targets, 10);
+
+
+  } // End Reset drivetrain controllers
 
   public void DriveTrainBrakeMode() {
     frontLeftDriveTalonSRX.setNeutralMode(NeutralMode.Brake);

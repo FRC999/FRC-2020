@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class ShooterSubsystem extends Subsystem {
 
-  static WPI_TalonSRX shooterMotor = new WPI_TalonSRX(RobotMap.kShooterMotorID);
+  static WPI_TalonSRX shooterMotor = new WPI_TalonSRX(RobotMap.shooterMotorID);
   static WPI_TalonSRX panMotor = new WPI_TalonSRX(RobotMap.panMotorID);
   static WPI_TalonSRX tiltMotor = new WPI_TalonSRX(RobotMap.tiltMotorID);
 
