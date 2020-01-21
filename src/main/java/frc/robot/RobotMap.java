@@ -54,6 +54,10 @@ public class RobotMap {
    public static int ClimberSolenoidForwardChannel = 4;
    public static int ClimberSolenoidReverseChannel = 5;
    
+   //channel for the ultrasonic sensor's analog input
+   public static int ultrasonicInputChannel = 0;
+   //constant conversion factor: ultrasonic sensor value to inches
+   public static double ultrasonicValueToInchesConversionFactor = 0.125;
    
   //Closed loop constants
   // How long we wait for a configuration change to happen before we give up and report a failure in miliseconds
