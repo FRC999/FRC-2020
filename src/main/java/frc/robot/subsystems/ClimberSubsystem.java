@@ -20,9 +20,9 @@ public class ClimberSubsystem extends Subsystem {
   // here. Call these from Commands.
 
 
-  static WPI_VictorSPX climberMotor = new WPI_VictorSPX(RobotMap.climberMotorID);
-  static Solenoid climberSolenoid1 = new Solenoid(RobotMap.climberSolenoid1Channel);
-  static Solenoid climberSolenoid2 = new Solenoid(RobotMap.climberSolenoid2Channel);
+  static WPI_VictorSPX climberMotor;// = new WPI_VictorSPX(RobotMap.climberMotorID);
+  static Solenoid climberSolenoid1;// = new Solenoid(RobotMap.climberSolenoid1Channel);
+  static Solenoid climberSolenoid2;// = new Solenoid(RobotMap.climberSolenoid2Channel);
 
     double climbSpeed = 0.5;
 
