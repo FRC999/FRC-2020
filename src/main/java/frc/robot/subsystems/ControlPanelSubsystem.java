@@ -1,11 +1,13 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SendableBuilder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 import frc.robot.RobotMap;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.I2C;
+import edu.wpi.first.wpilibj.Sendable;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -19,77 +21,91 @@ public class ControlPanelSubsystem extends Subsystem {
   private final ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort);
 
   private WPI_TalonSRX diskSpinnerTalon;// = new WPI_TalonSRX(RobotMap.diskSpinnerMotorID);
-  private DoubleSolenoid diskSpinnerSolenoid;// = new DoubleSolenoid(RobotMap.ColorWheelSolenoidForwardChannel,RobotMap.ColorWheelSolenoidReverseChannel);
+  private DoubleSolenoid diskSpinnerSolenoid;// = new
+                                             // DoubleSolenoid(RobotMap.ColorWheelSolenoidForwardChannel,RobotMap.ColorWheelSolenoidReverseChannel);
 
-  private Color targetColor;
+  private PanelColors targetColor;
   private boolean receivedGameColor = false;
   private boolean colorsAligned = false;
   private Color currentColor;
+  private PanelColors suspectedColor;
 
-  final Color blueColor = new Color(0, 1, 1);// number gotten from game manual + online converter
-  final Color greenColor = new Color(0, 1, 0);
-  final Color redColor = new Color(1, 0, 0);
-  final Color yellowColor = new Color(1, 0, 0);
-
-  final double toleranceSize = .01;// tolerance size (in percent)
+  static final double toleranceSize = .01;// tolerance size (in percent)
   private boolean wasAligned = false;
   private double spinSpeed = 0.5;
 
-  public void putSeenColor(){
+  public void putSeenColor() {
     updateColorState();
-    SmartDashboard.putNumber("Spotted Color: Red", currentColor.red*255);
-    SmartDashboard.putNumber("Spotted Color: Green", currentColor.green*255);
-    SmartDashboard.putNumber("Spotted Color: Blue", currentColor.blue*255);
+    SmartDashboard.putNumber("Spotted Color: Red", currentColor.red * 255);
+    SmartDashboard.putNumber("Spotted Color: Green", currentColor.green * 255);
+    SmartDashboard.putNumber("Spotted Color: Blue", currentColor.blue * 255);
+    SmartDashboard.putNumber("Spotted Distance: ", getProximity());
+    SmartDashboard.putString("SuspectedColor: ", suspectedColor.toString());
   }
 
-  //NOTE:  Will be implementing Rotation Control as a command
-  public void spinToTargetColor(){
-    if(checkColorAlignment()){
+  // NOTE: Will be implementing Rotation Control as a command
+  public void spinToTargetColor() {
+    if (checkColorAlignment()) {
       diskSpinnerTalon.setNeutralMode(NeutralMode.Brake);
       diskSpinnerTalon.set(0);
-      //TODO: Use actual motion profiling (note: maybe not, will definitely be very hard);
-    }
-    else{ 
+      // TODO: Use actual motion profiling (note: maybe not, will definitely be very
+      // hard);
+    } else {
       diskSpinnerTalon.set(spinSpeed);
     }
 
-    if(wasAligned != colorsAligned){//if alignment has changed since last check...
-      spinSpeed *= -.8; //Switch spin directions and decrease speed: we overshot
+    if (wasAligned != colorsAligned) {// if alignment has changed since last check...
+      spinSpeed *= -.8; // Switch spin directions and decrease speed: we overshot
     }
     wasAligned = colorsAligned;
   }
-/**Sets the value of this subsystem's DoubleSolenoid: kForward, kReverse, or kOff.  These are values of the enum DoubleSolenoid.Value. */
- public void setSolenoid(DoubleSolenoid.Value val) {
+
+  /**
+   * Sets the value of this subsystem's DoubleSolenoid: kForward, kReverse, or
+   * kOff. These are values of the enum DoubleSolenoid.Value.
+   */
+  public void setSolenoid(DoubleSolenoid.Value val) {
     diskSpinnerSolenoid.set(val);
-    
- }
-  
+
+  }
+
   /**
    * Update the color that we should be reading:
    */
   public void updateColorState() {
     targetColor = getGameTargetColor();
     currentColor = colorSensor.getColor();
+    suspectedColor = getSuspectedColor(currentColor);
+    
+  }
+  /**
+   * Converts from 'color' to 'PanelColor': assumes no overlap
+   * @param colour the color to check
+   * @return the determined color (may be null)
+   */
+  public PanelColors getSuspectedColor(Color colour){ //Mr. Wertz approved -CMM
+    for(PanelColors isItMe : PanelColors.values()){
+      if(isItMe.withinTolerance(colour.red, colour.green, colour.blue)){
+        return isItMe;
+      }
+    }
+    return null;
   }
 
   /**
    * Checks whether the colors are aligned: null checked
+   * 
    * @return true if aligned: false otherwise
    */
-  public boolean checkColorAlignment(){
+  public boolean checkColorAlignment() {
     updateColorState();
 
-    //Quick null check:
-    if(targetColor == null || currentColor == null){return colorsAligned = false;}
-
-    if(//NOTE: Copy-paste is bad practice.  I am being a bad boy. -CMM
-      Math.abs(targetColor.red - currentColor.red) < toleranceSize &&
-      Math.abs(targetColor.green - currentColor.green) < toleranceSize &&
-      Math.abs(targetColor.blue - currentColor.blue) < toleranceSize)
-      {
-        return colorsAligned = true;
+    // Quick null check:
+    if (targetColor == null || currentColor == null) {
+      return colorsAligned = false;
     }
-    return colorsAligned = false;
+    return targetColor.withinTolerance(currentColor.red, currentColor.blue, currentColor.green);
+
   }
 
   /**
@@ -97,19 +113,19 @@ public class ControlPanelSubsystem extends Subsystem {
    * 
    * @return color that our sensor should read
    */
-  public Color getGameTargetColor() {
+  public PanelColors getGameTargetColor() {
     String gameData = DriverStation.getInstance().getGameSpecificMessage();
     if (gameData.length() > 0) {
       receivedGameColor = true;
       switch (gameData.charAt(0)) {
       case 'B':
-        return redColor;
+        return PanelColors.red;
       case 'G':
-        return yellowColor;
+        return PanelColors.yellow;
       case 'R':
-        return blueColor;
+        return PanelColors.blue;
       case 'Y':
-        return greenColor;
+        return PanelColors.green;
       default:
         return null; // corrupt data! uh oh!
       }
@@ -129,9 +145,35 @@ public class ControlPanelSubsystem extends Subsystem {
     return colorSensor.getProximity();
   }
 
+  enum PanelColors {
+    blue(0, 1, 1), green(0, 1, 0), red(1, 0, 0), yellow(1, 0, 0);
+
+    // numbers gotten from game manual + online converter
+    final private double redVal, greenVal, blueVal;
+
+    PanelColors(int r, int g, int b) {
+      redVal = r;
+      greenVal = g;
+      blueVal = b;
+    }
+
+    Color getColor() {
+      return new Color(redVal, greenVal, blueVal);
+    }
+
+    boolean withinTolerance(double r, double g, double b) {
+      if (Math.abs(redVal - r) < toleranceSize 
+          && Math.abs(greenVal - g) < toleranceSize
+          && Math.abs(blueVal - b) < toleranceSize) {
+        return true;
+      }
+      return false;
+    }
+
+  }
+
   @Override
   public void initDefaultCommand() {
 
   }
-
 }
