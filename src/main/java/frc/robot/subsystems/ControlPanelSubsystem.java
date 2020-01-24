@@ -149,7 +149,9 @@ public class ControlPanelSubsystem extends Subsystem {
 
   enum PanelColors {
     blue(0, 1, 1), green(0, 1, 0), red(1, 0, 0), yellow(1, 0, 0);
-
+    //TODO: Find more accurate values, also reformat
+    //Maybe use HSV for tolerance check?
+    
     // numbers gotten from game manual + online converter
     final private double redVal, greenVal, blueVal;
 
