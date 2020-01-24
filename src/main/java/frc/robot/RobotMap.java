@@ -58,8 +58,10 @@ public class RobotMap {
   //Closed loop constants
   // How long we wait for a configuration change to happen before we give up and report a failure in miliseconds
   public final static int configureTimeoutMs = 30;
-  // How many encoder clicks per revolution
+  // How many encoder clicks per revolution (change to 2048 for falcon 500 encoders)
   public final static int encoderUnitsPerShaftRotation = 4096;
+  // Full motor output value
+  public final static int fullMotorOutput = 1023;
   // The difference between the left and right side encoder values when the robot is rotated 180 degrees
   public final static int encoderUnitsPerRobotRotation = 38585;
   // How many miliseconds between each closed loop call
@@ -68,6 +70,11 @@ public class RobotMap {
   public final static double NeutralDeadband = 0.001;
   // MotionMagic curve smoothing parameter [0 - 8]
   public final static int smoothing = 3;
+  // MotionMagic curve smoothing parameter [0 - 8]
+   public final static int cruiseVelocity = 2250;
+  // MotionMagic curve smoothing parameter [0 - 8]
+  public final static int acceleration = 2250;
+ 
 
   
   /**
@@ -83,21 +90,21 @@ public class RobotMap {
 	public final static Gains kGains_MotProf = new Gains( 1.0, 0.0,  0.0, 1023.0/6800.0,  400,  1.00 );
   */
 
-  // Closed loop PID parameter values
-  public final static double P_0 = 0;
+  // Closed loop PID parameter values TODO: replace F values with measured values
+  public final static double P_0 = 0.25 * fullMotorOutput / encoderUnitsPerShaftRotation;  // .25% motor output when error = one rotation
 	public final static double I_0 = 0;
 	public final static double D_0 = 0;
-	public final static double F_0 = 0;
-	public final static int Izone_0 = 0;
-  public final static double PeakOutput_0 = 0;
+	public final static double F_0 = 0.227;  // just a guesstimate
+	public final static int Izone_0 = 500;
+  public final static double PeakOutput_0 = 1;
 
   // Closed loop PID parameter values  
-  public final static double P_1 = 0;
+  public final static double P_1 = 0.25 * fullMotorOutput / encoderUnitsPerShaftRotation;  // .25% motor output when error = one rotation
 	public final static double I_1 = 0;
 	public final static double D_1 = 0;
-	public final static double F_1 = 0;
-	public final static int Izone_1 = 0;
-  public final static double PeakOutput_1 = 0;
+	public final static double F_1 = 0.227;  // just a guesstimate
+	public final static int Izone_1 = 500;
+  public final static double PeakOutput_1 = 1;
 
   // ---- Flat constants, you should not need to change these ---- 
 	// We allow either a 0 or 1 when selecting an ordinal for remote devices [You can have up to 2 devices assigned remotely to a talon/victor]
