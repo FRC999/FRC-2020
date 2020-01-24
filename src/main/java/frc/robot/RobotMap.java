@@ -66,6 +66,8 @@ public class RobotMap {
   public final static int closedLoopPeriodMs = 1;
 	// Motor neutral dead-band, set to the minimum 0.1%
   public final static double NeutralDeadband = 0.001;
+  // MotionMagic curve smoothing parameter [0 - 8]
+  public final static int smoothing = 3;
 
   
   /**
