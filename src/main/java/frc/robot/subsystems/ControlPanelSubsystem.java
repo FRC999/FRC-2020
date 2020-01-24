@@ -119,6 +119,16 @@ public class ControlPanelSubsystem extends Subsystem {
     }
   }
 
+  /**
+   * Returns the approximate distance from the color scanner (At a high value,
+   * color may not be accurate)
+   * 
+   * @return distance from color scanner from 0-2047
+   */
+  public int getProximity() {
+    return colorSensor.getProximity();
+  }
+
   @Override
   public void initDefaultCommand() {
 
