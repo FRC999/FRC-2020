@@ -40,7 +40,9 @@ public class ControlPanelSubsystem extends Subsystem {
     SmartDashboard.putNumber("Spotted Color: Green", currentColor.green * 255);
     SmartDashboard.putNumber("Spotted Color: Blue", currentColor.blue * 255);
     SmartDashboard.putNumber("Spotted Distance: ", getProximity());
-    SmartDashboard.putString("SuspectedColor: ", suspectedColor.toString());
+    if (suspectedColor != null){
+      SmartDashboard.putString("SuspectedColor: ", suspectedColor.toString());
+    }
   }
 
   // NOTE: Will be implementing Rotation Control as a command
