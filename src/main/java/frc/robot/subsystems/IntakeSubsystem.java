@@ -21,7 +21,7 @@ public class IntakeSubsystem extends Subsystem {
   static WPI_VictorSPX intakeMotor1 = new WPI_VictorSPX(RobotMap.intakeMotor1ID);
   static WPI_VictorSPX intakeMotor2 = new WPI_VictorSPX(RobotMap.intakeMotor2ID);
 
-  public static DoubleSolenoid intakeSolenoid = new DoubleSolenoid(RobotMap.IntakeSolenoidForwardChannel,RobotMap.IntakeSolenoidReverseChannel);
+  public static DoubleSolenoid intakeSolenoid ;//= new DoubleSolenoid(RobotMap.IntakeSolenoidForwardChannel,RobotMap.IntakeSolenoidReverseChannel);
 
   double intakeSpeed = 0.5;
 

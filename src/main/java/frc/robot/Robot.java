@@ -61,7 +61,8 @@ public class Robot extends TimedRobot {
     sendableCommandChooser.addOption("Really Smart Auto", new RealSmartAutoCommand());
     SmartDashboard.putData("Auto mode", sendableCommandChooser);
     SmartDashboard.putBoolean("Test Boolean", TestBool);
-    Robot.driveSubsystem.ResetDriveTrainControllers();
+    Robot.driveSubsystem.resetDriveTrainControllers(); 
+    Robot.driveSubsystem.configureDriveTrainControllersForSimpleMagic();
     Robot.driveSubsystem.ZeroDriveEncoders();
     Robot.driveSubsystem.DriveTrainBrakeMode();
     Robot.navXSubsystem.zeroYaw();

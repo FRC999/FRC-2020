@@ -50,8 +50,8 @@ public class ControlPanelSubsystem extends Subsystem {
     if (checkColorAlignment()) {
       diskSpinnerTalon.setNeutralMode(NeutralMode.Brake);
       diskSpinnerTalon.set(0);
-      // TODO: Use actual motion profiling (note: maybe not, will definitely be very
-      // hard);
+      // TODO: Use actual motion profiling (note: maybe not, will definitely be very hard)
+      // Use position MotionMagic... It is very good for this type of application
     } else {
       diskSpinnerTalon.set(spinSpeed);
     }

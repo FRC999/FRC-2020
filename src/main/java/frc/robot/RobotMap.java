@@ -16,36 +16,38 @@ package frc.robot;
 public class RobotMap {
   // For example to map the left and right motors, you could define the
   // following variables to use with your drivetrain subsystem.
-
-  //TODO: Mark all as final, to unlock marginal performance gain
   
   // Drivetrain Motor Controllers
-  public static int frontLeftDriveMotorController = 1;
-  public static int backLeftDriveMotorController = 2;
-  public static int frontRightDriveMotorController = 4;
-  public static int backRightDriveMotorController = 3;
+  public final static int frontLeftDriveMotorController = 1;
+  public final static int backLeftDriveMotorController = 2;
+  public final static int frontRightDriveMotorController = 4;
+  public final static int backRightDriveMotorController = 3;
 
   // Intake motor controllers
-  public static int intakeMotor1ID = 8;
-  public static int intakeMotor2ID = 9;
+  public final static int intakeMotor1Controller = 8;
+  public final static int intakeMotor2Controller = 9;
 
   // Shooter motor controllers
-  public static int shooterMotorID = 5;
-  public static int panMotorID = 6;
-  public static int tiltMotorID = 7;
+  public final static int shooterWheelMotorController = 5;
+  public final static int shooterPanMotorController = 6;
+  public final static int ShooterTiltMotorController = 7;
 
+  //Control panel constants
   //TODO: Get actual motor ID
   public static final int diskSpinnerMotorID = -1;
 
-  public static int climberMotorID=10;
-  //solenoid ids go from 0-8
- // public static int climberSolenoid1Channel=11;
- // public static int climberSolenoid2Channel=12;
+
+  // Climber constants
+  public final static int climberMotorController=10;
+  //public static int climberSolenoid1Channel=11;
+  //public static int climberSolenoid2Channel=12;
+
+
 
   // Driver Input Devices
-  public static int leftJoystickPort = 0;
+  public final static int leftJoystickPort = 0;
 
-  // *** Closed loop constants ***
+
 
    //PCM forward, reverse channels for doubleSolenoids
    public static int ColorWheelSolenoidForwardChannel = 0;
@@ -72,48 +74,56 @@ public class RobotMap {
    range formula: 5 * (measured voltage)/vi = range in mm
    5 * (measured voltage in volts)/ (5/1024) = (measured voltage * 1024) = range in mm */
    public static double ultrasonicValueToMMConversionFactor = 0.3175;
+
    
   //Closed loop constants
-  // How long we wait for a configuration change to happen before we give up and report a failure in miliseconds
+  // How long we wait for a configuration change to happen before we give up and report a failure in milliseconds
   public final static int configureTimeoutMs = 30;
-  // How many encoder clicks per revolution
+  // How many encoder clicks per revolution (change to 2048 for falcon 500 encoders)
   public final static int encoderUnitsPerShaftRotation = 4096;
+  // Full motor output value
+  public final static int fullMotorOutput = 1023;
   // The difference between the left and right side encoder values when the robot is rotated 180 degrees
   public final static int encoderUnitsPerRobotRotation = 38585;
-  // How many miliseconds between each closed loop call
+  // How many milliseconds between each closed loop call
   public final static int closedLoopPeriodMs = 1;
 	// Motor neutral dead-band, set to the minimum 0.1%
   public final static double NeutralDeadband = 0.001;
-
+  // MotionMagic curve smoothing parameter [0 - 8]
+  public final static int smoothing = 3;
+  // MotionMagic curve smoothing parameter [0 - 8]
+   public final static int cruiseVelocity = 2250;
+  // MotionMagic curve smoothing parameter [0 - 8]
+  public final static int acceleration = 2250;
   
-  /**
+  /** ------- EXAMPLE OF SOME GAINS SETTINGS FOR OTHER ROBOTS ------
 	 * PID Gains may have to be adjusted based on the responsiveness of control loop.
      * kF: 1023 represents output value to Talon at 100%, 6800 represents Velocity units at 100% output
      * Not all set of Gains are used in this project and may be removed as desired.
      * 
-	 * 	                                    			  kP   kI   kD   kF               Iz    PeakOut */
+	 * 	                                    	        		  kP   kI   kD   kF               Iz    PeakOut */
   /*
-	public final static Gains kGains_Distanc = new Gains( 0.1, 0.0,  0.0, 0.0,            100,  0.50 );
-	public final static Gains kGains_Turning = new Gains( 2.0, 0.0,  4.0, 0.0,            200,  1.00 );
-	public final static Gains kGains_Velocit = new Gains( 0.1, 0.0, 20.0, 1023.0/6800.0,  300,  0.50 );
-	public final static Gains kGains_MotProf = new Gains( 1.0, 0.0,  0.0, 1023.0/6800.0,  400,  1.00 );
+	public final static Gains kGains_Distance = new Gains( 0.1, 0.0,  0.0, 0.0,            100,  0.50 );
+	public final static Gains kGains_Turning  = new Gains( 2.0, 0.0,  4.0, 0.0,            200,  1.00 );
+	public final static Gains kGains_Velocity = new Gains( 0.1, 0.0, 20.0, 1023.0/6800.0,  300,  0.50 );
+	public final static Gains kGains_MotProf  = new Gains( 1.0, 0.0,  0.0, 1023.0/6800.0,  400,  1.00 );
   */
 
-  // Closed loop PID parameter values
-  public final static double P_0 = 0;
+  // Closed loop PID parameter values TODO: replace F values with measured values
+  public final static double P_0 = 0.25 * fullMotorOutput / encoderUnitsPerShaftRotation;  // .25% motor output when error = one rotation
 	public final static double I_0 = 0;
 	public final static double D_0 = 0;
-	public final static double F_0 = 0;
-	public final static int Izone_0 = 0;
-  public final static double PeakOutput_0 = 0;
+	public final static double F_0 = 0.227;  // just a guesstimate
+	public final static int Izone_0 = 500;
+  public final static double PeakOutput_0 = 1;
 
   // Closed loop PID parameter values  
-  public final static double P_1 = 0;
+  public final static double P_1 = 0.25 * fullMotorOutput / encoderUnitsPerShaftRotation;  // .25% motor output when error = one rotation
 	public final static double I_1 = 0;
 	public final static double D_1 = 0;
-	public final static double F_1 = 0;
-	public final static int Izone_1 = 0;
-  public final static double PeakOutput_1 = 0;
+	public final static double F_1 = 0.227;  // just a guesstimate
+	public final static int Izone_1 = 500;
+  public final static double PeakOutput_1 = 1;
 
   // ---- Flat constants, you should not need to change these ---- 
 	// We allow either a 0 or 1 when selecting an ordinal for remote devices [You can have up to 2 devices assigned remotely to a talon/victor]
@@ -128,7 +138,6 @@ public class RobotMap {
 	public final static int SLOT_2 = 2;
   public final static int SLOT_3 = 3;
   
-
   // ---- End closed loop parameter constants ----
 
   // If you are using multiple modules, make sure to define both the port
