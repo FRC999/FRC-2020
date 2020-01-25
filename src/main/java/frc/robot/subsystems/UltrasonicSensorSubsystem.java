@@ -9,6 +9,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.DigitalOutput;
 import frc.robot.RobotMap;
 
 /**
@@ -20,16 +21,44 @@ public class UltrasonicSensorSubsystem extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
-  private final AnalogInput ultrasonic = new AnalogInput(RobotMap.ultrasonicInputChannel);
+  private final AnalogInput ultrasonic1 = new AnalogInput(RobotMap.ultrasonicInputChannel1);
+  private final AnalogInput ultrasonic2 = new AnalogInput(RobotMap.ultrasonicInputChannel2);
+  //channel on the roborio section DIO, to trigger a reading from the ultrasonic sensor
+  private final DigitalOutput ultrasonicTrigger1 = new DigitalOutput(RobotMap.ultrasonicTriggerChannel1);
+  private final DigitalOutput ultrasonicTrigger2 = new DigitalOutput(RobotMap.ultrasonicTriggerChannel2);
+
+  /**sends a pulse to trigger sensor 1 to send in a new value. */
+  public void pulseSensor1() {
+      ultrasonicTrigger1.pulse(RobotMap.ultrasonicTriggerTime);
+  }
+    /**sends a pulse to trigger sensor 2 to send in a new value. */
+    public void pulseSensor2() {
+      ultrasonicTrigger1.pulse(RobotMap.ultrasonicTriggerTime);
+  }
 
   public double getDistanceInInches() {
-    double retVal = ultrasonic.getValue() * RobotMap.ultrasonicValueToInchesConversionFactor;
+    double retVal = ultrasonic1.getValue() * RobotMap.ultrasonicValueToInchesConversionFactor;
     return retVal;
   }
+  public double getSensor1DistanceInMM() {
+    double retVal = ultrasonic1.getValue() * RobotMap.ultrasonicValueToMMConversionFactor;
+    return retVal;
+  }
+
+public double getSensor2DistanceInMM() {
+  double retVal = ultrasonic2.getValue() * RobotMap.ultrasonicValueToMMConversionFactor;
+  return retVal;
+}
 
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
     // setDefaultCommand(new MySpecialCommand());
+
   }
+
+  /*private static class UltrasonicChecker extends Thread {
+@Override
+
+  } */
 }
