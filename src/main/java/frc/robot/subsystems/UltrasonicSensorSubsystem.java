@@ -33,7 +33,7 @@ public class UltrasonicSensorSubsystem extends Subsystem {
   }
     /**sends a pulse to trigger sensor 2 to send in a new value. */
     public void pulseSensor2() {
-      ultrasonicTrigger1.pulse(RobotMap.ultrasonicTriggerTime);
+      ultrasonicTrigger2.pulse(RobotMap.ultrasonicTriggerTime);
   }
 
   public double getDistanceInInches() {
@@ -50,11 +50,22 @@ public double getSensor2DistanceInMM() {
   return retVal;
 }
 
+
+public double getSensor1DistanceInRaw() {
+  double retVal = ultrasonic1.getValue();
+  return retVal;
+}
+
+public double getSensor2DistanceInRaw() {
+double retVal = ultrasonic2.getValue();
+return retVal;
+}
+
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
     // setDefaultCommand(new MySpecialCommand());
-
+      
   }
 
   /*private static class UltrasonicChecker extends Thread {

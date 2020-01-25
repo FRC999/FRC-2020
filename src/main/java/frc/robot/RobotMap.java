@@ -38,8 +38,9 @@ public class RobotMap {
   public static final int diskSpinnerMotorID = -1;
 
   public static int climberMotorID=10;
-  public static int climberSolenoid1Channel=11;
-  public static int climberSolenoid2Channel=12;
+  //solenoid ids go from 0-8
+ // public static int climberSolenoid1Channel=11;
+ // public static int climberSolenoid2Channel=12;
 
   // Driver Input Devices
   public static int leftJoystickPort = 0;
