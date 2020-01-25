@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 import frc.robot.commands.UpdateAllSmartDashboard;
+import frc.robot.subsystems.UltrasonicSensorSubsystem;
 
 /**
  * Add your docs here.
@@ -38,7 +39,14 @@ SmartDashboard.putNumber("left encoder",Robot.driveSubsystem.getLeftEncoder());
     SmartDashboard.putNumber("Navx Roll", Robot.navXSubsystem.getRoll());
     SmartDashboard.putNumber("NavX Yaw", Robot.navXSubsystem.getYaw());
   }
+  public void updateUltrasonicValues() {
+    SmartDashboard.putNumber("ultrasonic 1 raw value",Robot.ultrasonicSubsystem.getSensor1DistanceInRaw());
+    SmartDashboard.putNumber("ultrasonic 1 mm value",Robot.ultrasonicSubsystem.getSensor1DistanceInMM());
+    SmartDashboard.putNumber("ultrasonic 2 raw value",Robot.ultrasonicSubsystem.getSensor2DistanceInRaw());
+    SmartDashboard.putNumber("ultrasonic 2 mm value",Robot.ultrasonicSubsystem.getSensor2DistanceInMM());
+  }
   public void updateAllDisplays(){
     updateNavXValues();
+    updateUltrasonicValues();
   }
 }
