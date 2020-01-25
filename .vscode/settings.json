@@ -15,6 +15,9 @@
   "cSpell.words": [
     "canutils",
     "ctre",
+    "deadband",
+    "izone",
+    "leds",
     "linuxathena",
     "subclassing",
     "submodule",
@@ -22,5 +25,8 @@
     "teleoperated",
     "windowsx",
     "wpiapi"
+  ],
+  "cSpell.ignoreWords": [
+    "fpid"
   ]
 }

@@ -26,8 +26,7 @@ import frc.robot.commands.ManualDrivingCommand;
  * Add your docs here. TODO: Add docs
  */
 public class DriveSubsystem extends Subsystem {
-  // Put methods for controlling this subsystem
-  // here. Call these from Commands.
+  // Put methods for controlling this subsystem here. Call these from Commands.
 
   static WPI_TalonSRX frontLeftDriveTalonSRX = new WPI_TalonSRX(RobotMap.frontLeftDriveMotorController);
   static WPI_TalonSRX backLeftDriveTalonSRX = new WPI_TalonSRX(RobotMap.backLeftDriveMotorController);
@@ -60,8 +59,12 @@ public class DriveSubsystem extends Subsystem {
     frontRightDriveTalonSRX.setNeutralMode(NeutralMode.Coast);
     backRightDriveTalonSRX.setNeutralMode(NeutralMode.Coast);
   }
-
-  public void ResetDriveTrainControllers() {
+  /**
+   * Sets the talons to our preferred defaults
+   * We are going away from controller-groups, and back to master-slave
+   * Call this in robot-init: it preforms basic setup for ArcadeDrive
+   */
+  public void resetDriveTrainControllers() {
     frontLeftDriveTalonSRX.configFactoryDefault();
     backLeftDriveTalonSRX.configFactoryDefault();
     frontRightDriveTalonSRX.configFactoryDefault();
@@ -71,7 +74,7 @@ public class DriveSubsystem extends Subsystem {
     backLeftDriveTalonSRX.follow(frontLeftDriveTalonSRX);
     backRightDriveTalonSRX.follow(frontRightDriveTalonSRX);
 
-    // set controller orientation so both sides show green LEDs when drivetrain is going forward  
+    // Set controller orientation so both sides show green LEDs when drivetrain is going forward  
     frontLeftDriveTalonSRX.setInverted(false);
     frontRightDriveTalonSRX.setInverted(true);
     backLeftDriveTalonSRX.setInverted(InvertType.FollowMaster);
@@ -85,11 +88,15 @@ public class DriveSubsystem extends Subsystem {
     frontLeftDriveTalonSRX.setSensorPhase(true);
     frontRightDriveTalonSRX.setSensorPhase(true);
 
-    // Prevent WPI drivtrain class from inverting input for right side motors because we already inverted them
+    // Prevent WPI drivetrain class from inverting input for right side motors because we already inverted them
     drive.setRightSideInverted(false);
   }
-
+  /**
+   * Self explanatory
+   * Calls resetDriveTrainEncoders, just for safety
+   */
   public void configureDriveTrainControllersForSimpleMagic(){
+	resetDriveTrainControllers(); //just to be safe -CMM
 
 	// Configure the encoders for PID control
 	frontLeftDriveTalonSRX.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, RobotMap.PID_PRIMARY, RobotMap.configureTimeoutMs);			
@@ -148,7 +155,7 @@ public class DriveSubsystem extends Subsystem {
 	frontLeftDriveTalonSRX.configClosedLoopPeriod(0, RobotMap.closedLoopPeriodMs, RobotMap.configureTimeoutMs);
 
     /* Motion Magic Configurations */
-    /**Need to replace numbers with real measured values for acceleartion and cruise vel. */
+    /**Need to replace numbers with real measured values for acceleration and cruise vel. */
 	frontLeftDriveTalonSRX.configMotionAcceleration(RobotMap.acceleration, RobotMap.configureTimeoutMs);
     frontLeftDriveTalonSRX.configMotionCruiseVelocity(RobotMap.cruiseVelocity, RobotMap.configureTimeoutMs);
     frontLeftDriveTalonSRX.configMotionSCurveStrength(RobotMap.smoothing);
@@ -159,7 +166,9 @@ public class DriveSubsystem extends Subsystem {
 
   } // End configureDriveTrainControllersForSimpleMagic
 
-
+  /**
+   * WORK IN PROGRESS, DO NOT USE
+   */
   public void configureDriveTrainControllersForDifferentialMagic(){
 
 	// ----- Still a work in progress, do not use ----
@@ -202,7 +211,7 @@ public class DriveSubsystem extends Subsystem {
 	frontLeftDriveTalonSRX.configNeutralDeadband(RobotMap.NeutralDeadband, RobotMap.configureTimeoutMs);
 	
     /* Motion Magic Configurations */
-    /**Need to replace numbers with real measured values for acceleartion and cruise vel. */
+    /**Need to replace numbers with real measured values for acceleration and cruise vel. */
 		frontRightDriveTalonSRX.configMotionAcceleration(RobotMap.acceleration, RobotMap.configureTimeoutMs);
 		frontRightDriveTalonSRX.configMotionCruiseVelocity(RobotMap.cruiseVelocity, RobotMap.configureTimeoutMs);
 

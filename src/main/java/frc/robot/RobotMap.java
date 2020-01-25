@@ -56,7 +56,7 @@ public class RobotMap {
    
    
   //Closed loop constants
-  // How long we wait for a configuration change to happen before we give up and report a failure in miliseconds
+  // How long we wait for a configuration change to happen before we give up and report a failure in milliseconds
   public final static int configureTimeoutMs = 30;
   // How many encoder clicks per revolution (change to 2048 for falcon 500 encoders)
   public final static int encoderUnitsPerShaftRotation = 4096;
@@ -64,7 +64,7 @@ public class RobotMap {
   public final static int fullMotorOutput = 1023;
   // The difference between the left and right side encoder values when the robot is rotated 180 degrees
   public final static int encoderUnitsPerRobotRotation = 38585;
-  // How many miliseconds between each closed loop call
+  // How many milliseconds between each closed loop call
   public final static int closedLoopPeriodMs = 1;
 	// Motor neutral dead-band, set to the minimum 0.1%
   public final static double NeutralDeadband = 0.001;
@@ -84,10 +84,10 @@ public class RobotMap {
      * 
 	 * 	                                    			  kP   kI   kD   kF               Iz    PeakOut */
   /*
-	public final static Gains kGains_Distanc = new Gains( 0.1, 0.0,  0.0, 0.0,            100,  0.50 );
-	public final static Gains kGains_Turning = new Gains( 2.0, 0.0,  4.0, 0.0,            200,  1.00 );
-	public final static Gains kGains_Velocit = new Gains( 0.1, 0.0, 20.0, 1023.0/6800.0,  300,  0.50 );
-	public final static Gains kGains_MotProf = new Gains( 1.0, 0.0,  0.0, 1023.0/6800.0,  400,  1.00 );
+	public final static Gains kGains_Distance = new Gains( 0.1, 0.0,  0.0, 0.0,            100,  0.50 );
+	public final static Gains kGains_Turning  = new Gains( 2.0, 0.0,  4.0, 0.0,            200,  1.00 );
+	public final static Gains kGains_Velocity = new Gains( 0.1, 0.0, 20.0, 1023.0/6800.0,  300,  0.50 );
+	public final static Gains kGains_MotProf  = new Gains( 1.0, 0.0,  0.0, 1023.0/6800.0,  400,  1.00 );
   */
 
   // Closed loop PID parameter values TODO: replace F values with measured values
