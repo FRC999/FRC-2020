@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.ManualDrivingCommand;
 import frc.robot.commands.RealSmartAutoCommand;
 import frc.robot.subsystems.ClimberSubsystem;
+import frc.robot.subsystems.ControlPanelSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.NavXSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -38,6 +39,7 @@ public class Robot extends TimedRobot {
   public static NavXSubsystem navXSubsystem = new NavXSubsystem();
   public static UltrasonicSensorSubsystem ultrasonicSubsystem = new UltrasonicSensorSubsystem();
   public static IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
+  public static ControlPanelSubsystem controlPanelSubsystem = new ControlPanelSubsystem();
   public boolean TestBool = false;
   public static OI oi = new OI();
   Command autonomousCommand;
@@ -146,6 +148,8 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
+    controlPanelSubsystem.putSeenColor();
+
   }
 
   /**
