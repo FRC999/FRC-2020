@@ -18,8 +18,8 @@ public class IntakeSubsystem extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
-  static WPI_VictorSPX intakeMotor1 = new WPI_VictorSPX(RobotMap.intakeMotor1ID);
-  static WPI_VictorSPX intakeMotor2 = new WPI_VictorSPX(RobotMap.intakeMotor2ID);
+  static WPI_VictorSPX intakeMotor1 = new WPI_VictorSPX(RobotMap.intakeMotor1Controller);
+  static WPI_VictorSPX intakeMotor2 = new WPI_VictorSPX(RobotMap.intakeMotor2Controller);
 
   public static DoubleSolenoid intakeSolenoid ;//= new DoubleSolenoid(RobotMap.IntakeSolenoidForwardChannel,RobotMap.IntakeSolenoidReverseChannel);
 
