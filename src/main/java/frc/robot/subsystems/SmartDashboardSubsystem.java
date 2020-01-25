@@ -38,6 +38,12 @@ SmartDashboard.putNumber("left encoder",Robot.driveSubsystem.getLeftEncoder());
     SmartDashboard.putNumber("Navx Roll", Robot.navXSubsystem.getRoll());
     SmartDashboard.putNumber("NavX Yaw", Robot.navXSubsystem.getYaw());
   }
+
+  public void updateUlstasonicSensorValues(){
+    SmartDashboard.putNumber("Forward Ultrasonic Sensor", Robot.navXSubsystem.getPitch());
+    SmartDashboard.putNumber("Left Ultrasonic Sensor", Robot.navXSubsystem.getRoll());
+  }
+
   public void updateAllDisplays(){
     updateNavXValues();
   }

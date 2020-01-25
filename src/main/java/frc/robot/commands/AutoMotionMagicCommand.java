@@ -15,7 +15,7 @@ public class AutoMotionMagicCommand extends Command {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(Robot.driveSubsystem);
-    Robot.driveSubsystem.configureDriveTrainControllersForSimpleMagic();
+    //Robot.driveSubsystem.configureDriveTrainControllersForSimpleMagic();
 
   }
 

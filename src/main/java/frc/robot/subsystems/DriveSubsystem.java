@@ -97,7 +97,7 @@ public class DriveSubsystem extends Subsystem {
    * Calls resetDriveTrainEncoders, just for safety
    */
   public void configureDriveTrainControllersForSimpleMagic(){
-	resetDriveTrainControllers(); //just to be safe -CMM
+	//resetDriveTrainControllers(); //just to be safe -CMM
 
 	// Configure the encoders for PID control
 	frontLeftDriveTalonSRX.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, RobotMap.PID_PRIMARY, RobotMap.configureTimeoutMs);			

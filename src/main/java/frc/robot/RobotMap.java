@@ -16,44 +16,45 @@ package frc.robot;
 public class RobotMap {
   // For example to map the left and right motors, you could define the
   // following variables to use with your drivetrain subsystem.
-
-  //TODO: Mark all as final, to unlock marginal performance gain
   
   // Drivetrain Motor Controllers
-  public static int frontLeftDriveMotorController = 1;
-  public static int backLeftDriveMotorController = 2;
-  public static int frontRightDriveMotorController = 4;
-  public static int backRightDriveMotorController = 3;
+  public final static int frontLeftDriveMotorController = 1;
+  public final static int backLeftDriveMotorController = 2;
+  public final static int frontRightDriveMotorController = 4;
+  public final static int backRightDriveMotorController = 3;
 
   // Intake motor controllers
-  public static int intakeMotor1ID = 8;
-  public static int intakeMotor2ID = 9;
+  public final static int intakeMotor1Controller = 8;
+  public final static int intakeMotor2Controller = 9;
 
   // Shooter motor controllers
-  public static int shooterMotorID = 5;
-  public static int panMotorID = 6;
-  public static int tiltMotorID = 7;
+  public final static int shooterWheelMotorController = 5;
+  public final static int shooterPanMotorController = 6;
+  public final static int ShooterTiltMotorController = 7;
 
+  //Control panel constants
   //TODO: Get actual motor ID
   public static final int diskSpinnerMotorID = -1;
 
-  public static int climberMotorID=10;
-  public static int climberSolenoid1Channel=11;
-  public static int climberSolenoid2Channel=12;
+
+  // Climber constants
+  public final static int climberMotorController=10;
+  //public static int climberSolenoid1Channel=11;
+  //public static int climberSolenoid2Channel=12;
+
 
   // Driver Input Devices
-  public static int leftJoystickPort = 0;
+  public final static int leftJoystickPort = 0;
 
-  // *** Closed loop constants ***
 
-   //PCM forward, reverse channels for doubleSolenoids
-   public static int ColorWheelSolenoidForwardChannel = 0;
-   public static int ColorWheelSolenoidReverseChannel = 1;
-   public static int IntakeSolenoidForwardChannel =2;
-   public static int IntakeSolenoidReverseChannel = 3;
-   public static int ClimberSolenoidForwardChannel = 4;
-   public static int ClimberSolenoidReverseChannel = 5;
-   
+  //PCM forward, reverse channels for doubleSolenoids
+  public final static int ColorWheelSolenoidForwardChannel = 0;
+  public final static int ColorWheelSolenoidReverseChannel = 1;
+  public final static int IntakeSolenoidForwardChannel =2;
+  public final static int IntakeSolenoidReverseChannel = 3;
+  public final static int ClimberSolenoidForwardChannel = 4;
+  public final static int ClimberSolenoidReverseChannel = 5;
+  
    
   //Closed loop constants
   // How long we wait for a configuration change to happen before we give up and report a failure in milliseconds
@@ -74,15 +75,13 @@ public class RobotMap {
    public final static int cruiseVelocity = 2250;
   // MotionMagic curve smoothing parameter [0 - 8]
   public final static int acceleration = 2250;
- 
-
   
-  /**
+  /** ------- EXAMPLE OF SOME GAINS SETTINGS FOR OTHER ROBOTS ------
 	 * PID Gains may have to be adjusted based on the responsiveness of control loop.
      * kF: 1023 represents output value to Talon at 100%, 6800 represents Velocity units at 100% output
      * Not all set of Gains are used in this project and may be removed as desired.
      * 
-	 * 	                                    			  kP   kI   kD   kF               Iz    PeakOut */
+	 * 	                                    	        		  kP   kI   kD   kF               Iz    PeakOut */
   /*
 	public final static Gains kGains_Distance = new Gains( 0.1, 0.0,  0.0, 0.0,            100,  0.50 );
 	public final static Gains kGains_Turning  = new Gains( 2.0, 0.0,  4.0, 0.0,            200,  1.00 );
@@ -119,7 +118,6 @@ public class RobotMap {
 	public final static int SLOT_2 = 2;
   public final static int SLOT_3 = 3;
   
-
   // ---- End closed loop parameter constants ----
 
   // If you are using multiple modules, make sure to define both the port
