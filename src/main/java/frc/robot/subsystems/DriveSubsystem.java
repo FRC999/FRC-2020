@@ -270,7 +270,8 @@ public class DriveSubsystem extends Subsystem {
   public void SimpleMotionMagicTest(int leftWheelTurns, int rightWheelTurns) {
 	// Test method that moves robot forward a given number of wheel rotations  
     int leftTargetEncoderVal = 4096 * leftWheelTurns;
-    int rightTargetEncoderVal = 4096 * rightWheelTurns;
+	System.out.println("Hit WertzCode");
+	int rightTargetEncoderVal = 4096 * rightWheelTurns;
     frontLeftDriveTalonSRX.set(ControlMode.MotionMagic, leftTargetEncoderVal);
 	frontRightDriveTalonSRX.set(ControlMode.MotionMagic, rightTargetEncoderVal);
   }
