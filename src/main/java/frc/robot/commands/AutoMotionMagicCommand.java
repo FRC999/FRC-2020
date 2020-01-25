@@ -15,12 +15,15 @@ public class AutoMotionMagicCommand extends Command {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(Robot.driveSubsystem);
+    Robot.driveSubsystem.configureDriveTrainControllersForSimpleMagic();
 
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    Robot.driveSubsystem.SimpleMotionMagicTest(9, 9);
+    
   }
 
   // Called repeatedly when this Command is scheduled to run

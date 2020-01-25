@@ -30,9 +30,11 @@ public class OI {
   Button zeroYawButton = new JoystickButton(leftJoystick, 4);
   Button climberExtendButton = new JoystickButton(leftJoystick, 5);
   Button climberClimbButton = new JoystickButton(leftJoystick, 6);
+  Button testMotionMagicButton = new JoystickButton(leftJoystick , 7);
   public JoystickButton leftTrigger = new JoystickButton(leftJoystick, 1);
   public JoystickButton leftButton2 = new JoystickButton(leftJoystick, 2);
   public JoystickButton leftButton3 = new JoystickButton(leftJoystick, 3);
+
 
 
 

@@ -91,8 +91,9 @@ public class DriveSubsystem extends Subsystem {
     // Prevent WPI drivetrain class from inverting input for right side motors because we already inverted them
     drive.setRightSideInverted(false);
   }
+
   /**
-   * Self explanatory
+   * Self explanatory:
    * Calls resetDriveTrainEncoders, just for safety
    */
   public void configureDriveTrainControllersForSimpleMagic(){
@@ -269,7 +270,7 @@ public class DriveSubsystem extends Subsystem {
   public void SimpleMotionMagicTest(int leftWheelTurns, int rightWheelTurns) {
 	// Test method that moves robot forward a given number of wheel rotations  
     int leftTargetEncoderVal = 4096 * leftWheelTurns;
-    int rightTargetEncoderVal = 4096 * leftWheelTurns;
+    int rightTargetEncoderVal = 4096 * rightWheelTurns;
     frontLeftDriveTalonSRX.set(ControlMode.MotionMagic, leftTargetEncoderVal);
 	frontRightDriveTalonSRX.set(ControlMode.MotionMagic, rightTargetEncoderVal);
   }
