@@ -40,22 +40,23 @@ public class OI {
 
 
   public OI() { // Setup All Commands Here
-    leftTrigger.whenPressed(new ManualShootCommand());
-    leftTrigger.whenReleased(new ManualEndShootCommand());
+    //leftTrigger.whenPressed(new ManualShootCommand());
+    //leftTrigger.whenReleased(new ManualEndShootCommand());
     //showEncoderButton.whenPressed(new DisplayDriveEncodersCommand());
     zeroEncoderButton.whenPressed(new ZeroDriveEncodersCommand());
     zeroYawButton.whenPressed(new ZeroYawCommand());
     
-    leftButton2.whenPressed(new IntakeInCommand());
-    leftButton2.whenReleased(new IntakeStandbyCommand());
+    //leftButton2.whenPressed(new IntakeInCommand());
+    //leftButton2.whenReleased(new IntakeStandbyCommand());
 
     leftButton3.whenPressed(new IntakeReverseCommand());
     leftButton3.whenReleased(new IntakeStandbyCommand());
-    
+    /*
     climberExtendButton.whenPressed(new ManualClimberExtend());
     climberClimbButton.whenPressed(new ManualClimberClimb());
     climberClimbButton.whenReleased(new ManualClimberEndClimb());
     testMotionMagicButton.whenPressed(new AutoMotionMagicCommand());
+    */
   }
 
   // Button button = new JoystickButton(stick, buttonNumber);
