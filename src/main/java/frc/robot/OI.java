@@ -55,8 +55,9 @@ public class OI {
     climberExtendButton.whenPressed(new ManualClimberExtend());
     climberClimbButton.whenPressed(new ManualClimberClimb());
     climberClimbButton.whenReleased(new ManualClimberEndClimb());
+   */
     testMotionMagicButton.whenPressed(new AutoMotionMagicCommand());
-    */
+    
   }
 
   // Button button = new JoystickButton(stick, buttonNumber);

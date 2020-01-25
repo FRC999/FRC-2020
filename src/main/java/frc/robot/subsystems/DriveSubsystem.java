@@ -65,6 +65,7 @@ public class DriveSubsystem extends Subsystem {
    * Call this in robot-init: it preforms basic setup for ArcadeDrive
    */
   public void resetDriveTrainControllers() {
+	System.out.println("Hit  resetDriveTrainControllers");
     frontLeftDriveTalonSRX.configFactoryDefault();
     backLeftDriveTalonSRX.configFactoryDefault();
     frontRightDriveTalonSRX.configFactoryDefault();
@@ -98,6 +99,7 @@ public class DriveSubsystem extends Subsystem {
    */
   public void configureDriveTrainControllersForSimpleMagic(){
 	//resetDriveTrainControllers(); //just to be safe -CMM
+	System.out.println("Hit  configureDriveTrainControllersForSimpleMagic");
 
 	// Configure the encoders for PID control
 	frontLeftDriveTalonSRX.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, RobotMap.PID_PRIMARY, RobotMap.configureTimeoutMs);			

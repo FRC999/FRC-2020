@@ -22,13 +22,14 @@ public class AutoMotionMagicCommand extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.driveSubsystem.SimpleMotionMagicTest(9, 9);
+//    Robot.driveSubsystem.SimpleMotionMagicTest(9, 9);
     
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    Robot.driveSubsystem.SimpleMotionMagicTest(9, 9);
   
   }
 
