@@ -29,6 +29,7 @@ public class ManualDrivingCommand extends Command {
     double move = Robot.oi.leftJoystick.getY() * -1; // inverts sign for Y axis
     double turn = Robot.oi.leftJoystick.getX();
     Robot.driveSubsystem.ManualDrive(move, turn);
+    Robot.smartDashboardSubsystem.updateEncoderValue();
   }
 
   // Make this return true when this Command no longer needs to run execute()

@@ -57,6 +57,8 @@ public class Robot extends TimedRobot {
    Comment */
   @Override
   public void robotInit() {
+    System.out.println("Hit  robotinit");
+
     sendableCommandChooser.setDefaultOption("Default Auto", new RealSmartAutoCommand());
     sendableCommandChooser.addOption("Really Smart Auto", new RealSmartAutoCommand());
     SmartDashboard.putData("Auto mode", sendableCommandChooser);

@@ -31,7 +31,8 @@ public class SmartDashboardSubsystem extends Subsystem {
   }
 
   public void updateEncoderValue() {
-SmartDashboard.putNumber("left encoder",Robot.driveSubsystem.getLeftEncoder());
+    SmartDashboard.putNumber("left encoder",Robot.driveSubsystem.getLeftEncoder());
+    SmartDashboard.putNumber("right encoder",Robot.driveSubsystem.getRightEncoder());
   }
 
   public void updateNavXValues(){
