@@ -84,7 +84,7 @@ public class RobotMap {
   // Full motor output value
   public final static int fullMotorOutput = 1023;
   // The difference between the left and right side encoder values when the robot is rotated 180 degrees
-  public final static int encoderUnitsPerRobotRotation = 38585;
+  public final static int encoderUnitsPerRobotRotation = 38585;//thats the SUM of the two
   // How many milliseconds between each closed loop call
   public final static int closedLoopPeriodMs = 1;
 	// Motor neutral dead-band, set to the minimum 0.1%
@@ -139,9 +139,4 @@ public class RobotMap {
   public final static int SLOT_3 = 3;
   
   // ---- End closed loop parameter constants ----
-
-  // If you are using multiple modules, make sure to define both the port
-  // number and the module. For example you with a rangefinder:
-  // public static int rangefinderPort = 1;
-  // public static int rangefinderModule = 1;
 }
