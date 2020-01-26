@@ -24,9 +24,7 @@ public class RealSmartAutoCommand extends CommandGroup {
     addSequential(new ZeroDriveEncodersCommand());
     addSequential(new ZeroYawCommand());
     addSequential(new DriveForwardCommand());
-    addSequential(new StopCommand());
     addSequential(new TurnAroundCommand());
-    addSequential(new StopCommand());
     addSequential(new DriveForwardCommand());
     addSequential(new StopCommand());
 

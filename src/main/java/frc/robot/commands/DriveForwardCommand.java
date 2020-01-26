@@ -24,8 +24,6 @@ public class DriveForwardCommand extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    //This is to allow me to use the same command for the first and second leg
-    // This is only called before the command is run the first time!!!
     leftTarget = Robot.driveSubsystem.getLeftEncoder() + driveDistance;
     rightTarget = Robot.driveSubsystem.getRightEncoder() + driveDistance;
     Robot.driveSubsystem.simpleMotionMagicTest(leftTarget, rightTarget);
