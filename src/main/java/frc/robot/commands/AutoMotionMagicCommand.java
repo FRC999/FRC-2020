@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
 public class AutoMotionMagicCommand extends Command {
+  private static final int testEncoderVal = 50000;
   public AutoMotionMagicCommand() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
@@ -29,14 +30,23 @@ public class AutoMotionMagicCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.driveSubsystem.SimpleMotionMagicTest(9, 9);
+    
+    Robot.driveSubsystem.SimpleMotionMagicTest(testEncoderVal,  testEncoderVal);
+    Robot.smartDashboardSubsystem.updateEncoderValue();
   
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return true;
+    boolean retVal= false;
+    if((Robot.driveSubsystem.getLeftEncoder() >= testEncoderVal) ||(Robot.driveSubsystem.getRightEncoder() >= testEncoderVal) ){
+      retVal = true;//exit method and command
+    }
+    else
+    retVal = false;//keep going
+    
+    return retVal;
   }
 
   // Called once after isFinished returns true

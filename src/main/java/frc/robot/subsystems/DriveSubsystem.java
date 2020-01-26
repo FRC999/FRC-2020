@@ -269,13 +269,13 @@ public class DriveSubsystem extends Subsystem {
 
   } // End configureDriveTrainControllersForDifferentialMagic
 
-  public void SimpleMotionMagicTest(int leftWheelTurns, int rightWheelTurns) {
+  public void SimpleMotionMagicTest(int leftEncoderVal, int rightEncoderVal) {
 	// Test method that moves robot forward a given number of wheel rotations  
-    int leftTargetEncoderVal = 4096 * leftWheelTurns;
-	System.out.println("Hit WertzCode");
-	int rightTargetEncoderVal = 4096 * rightWheelTurns;
-    frontLeftDriveTalonSRX.set(ControlMode.MotionMagic, leftTargetEncoderVal);
-	frontRightDriveTalonSRX.set(ControlMode.MotionMagic, rightTargetEncoderVal);
+    //int leftTargetEncoderVal = 4096 * leftWheelTurns;
+	//System.out.println("Hit WertzCode");
+	//int rightTargetEncoderVal = 4096 * rightWheelTurns;
+    frontLeftDriveTalonSRX.set(ControlMode.MotionMagic, leftEncoderVal);
+	frontRightDriveTalonSRX.set(ControlMode.MotionMagic, rightEncoderVal);
   }
 
   public void DriveTrainBrakeMode() {
