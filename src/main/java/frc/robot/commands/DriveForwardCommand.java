@@ -13,13 +13,12 @@ import frc.robot.Robot;
 public class DriveForwardCommand extends Command {
   private static final int driveDistance = 49700;
    
-  int startPoint;
+  int rightTarget;
+  int leftTarget;
   public DriveForwardCommand() {
     requires(Robot.driveSubsystem);
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-
-    startPoint = 0;
   }
 
   // Called just before this Command runs the first time
@@ -27,27 +26,21 @@ public class DriveForwardCommand extends Command {
   protected void initialize() {
     //This is to allow me to use the same command for the first and second leg
     // This is only called before the command is run the first time!!!
-    startPoint = Robot.driveSubsystem.getLeftEncoder();
+    leftTarget = Robot.driveSubsystem.getLeftEncoder() + driveDistance;
+    rightTarget = Robot.driveSubsystem.getRightEncoder() + driveDistance;
+    Robot.driveSubsystem.simpleMotionMagicTest(leftTarget, rightTarget);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.driveSubsystem.manualDrive(.5, 0);
-    Robot.smartDashboardSubsystem.updateEncoderValue();
+    Robot.driveSubsystem.feed();
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    boolean retVal= false;
-    if((Robot.driveSubsystem.getLeftEncoder() >= driveDistance+startPoint) ||(Robot.driveSubsystem.getLeftEncoder() <= startPoint-driveDistance) ){
-      retVal = true;//exit method and command
-    }
-    else
-    retVal = false;//keep going
-    
-    return retVal;
+    return Robot.driveSubsystem.isOnTarget(leftTarget,rightTarget);
   }
 
   // Called once after isFinished returns true

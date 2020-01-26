@@ -28,28 +28,13 @@ public class TurnAroundCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    driveSubsystem.manualDrive(0, .5);
-    Robot.smartDashboardSubsystem.updateNavXValues();
-
+    Robot.driveSubsystem.feed();
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-   boolean testVal= false;
-    if(((Robot.navXSubsystem.getYaw() >= targetFacing)||(Robot.navXSubsystem.getYaw() <= -targetFacing)) && (testYaw > Robot.navXSubsystem.getYaw()) ){
-       /* three conditions: 1 and 2, in the range around +-180; 3,
-       // that it just changed over from positive to negative. 
-       //We are assuming it goes clockwise; the NavX wraps from 180 degrees to -180.
-    */
-       testVal = true;
-      testYaw = 0;
-    }
-    else 
-    { testYaw = Robot.navXSubsystem.getYaw();
-      testVal = false;}
-
-    return testVal;
+    
   }
 
   // Called once after isFinished returns true

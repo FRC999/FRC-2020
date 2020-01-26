@@ -32,6 +32,8 @@ public class DriveSubsystem extends Subsystem {
   static WPI_TalonSRX frontRightDriveTalonSRX = new WPI_TalonSRX(RobotMap.frontRightDriveMotorController);
   static WPI_TalonSRX backRightDriveTalonSRX = new WPI_TalonSRX(RobotMap.backRightDriveMotorController);
 
+  final int defaultAcceptableError = 300;
+
   public static DifferentialDrive drive = new DifferentialDrive(frontLeftDriveTalonSRX, frontRightDriveTalonSRX);
 
   public void manualDrive(double move, double turn) {
@@ -269,11 +271,23 @@ public class DriveSubsystem extends Subsystem {
 
   public void simpleMotionMagicTest(int leftEncoderVal, int rightEncoderVal) {
 	// Test method that moves robot forward a given number of wheel rotations  
-    //int leftTargetEncoderVal = 4096 * leftWheelTurns;
-	//System.out.println("Hit WertzCode");
-	//int rightTargetEncoderVal = 4096 * rightWheelTurns;
-    frontLeftDriveTalonSRX.set(ControlMode.MotionMagic, leftEncoderVal);
-	frontRightDriveTalonSRX.set(ControlMode.MotionMagic, rightEncoderVal);
+    int leftTargetEncoderVal = leftEncoderVal + getLeftEncoder();
+	int rightTargetEncoderVal = rightEncoderVal + getRightEncoder();
+    frontLeftDriveTalonSRX.set(ControlMode.MotionMagic, leftTargetEncoderVal);
+	frontRightDriveTalonSRX.set(ControlMode.MotionMagic, rightTargetEncoderVal);
+  }
+
+  public boolean isOnTarget(int leftEncoderTarget, int rightEncoderTarget){
+    return isOnTarget(leftEncoderTarget, rightEncoderTarget,defaultAcceptableError);
+  }
+  public boolean isOnTarget(int leftEncoderTarget, int rightEncoderTarget, int acceptableError){
+    int leftError = Math.abs(leftEncoderTarget-getLeftEncoder());
+    int rightError = Math.abs(rightEncoderTarget - getRightEncoder());
+    return leftError <= acceptableError && rightError <= acceptableError;
+  }
+  
+  public void feed(){
+    drive.feed();
   }
 
   public void driveTrainBrakeMode() {
