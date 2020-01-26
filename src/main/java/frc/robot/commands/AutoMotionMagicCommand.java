@@ -9,6 +9,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.subsystems.DriveSubsystem;
 
 public class AutoMotionMagicCommand extends Command {
   private static final int testEncoderVal = 50000;
@@ -33,6 +34,8 @@ public class AutoMotionMagicCommand extends Command {
     
     Robot.driveSubsystem.SimpleMotionMagicTest(testEncoderVal,  testEncoderVal);
     Robot.smartDashboardSubsystem.updateEncoderValue();
+    DriveSubsystem.drive.feed();//It took us four hours to figure out we needed this line
+    //"Watchdog does not behave nicely when it gets pissed off"
   
   }
 
