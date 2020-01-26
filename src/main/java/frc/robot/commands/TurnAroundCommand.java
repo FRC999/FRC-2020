@@ -28,7 +28,7 @@ public class TurnAroundCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    driveSubsystem.ManualDrive(0, .5);
+    driveSubsystem.manualDrive(0, .5);
     Robot.smartDashboardSubsystem.updateNavXValues();
 
   }

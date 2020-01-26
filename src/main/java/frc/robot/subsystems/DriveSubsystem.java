@@ -34,11 +34,11 @@ public class DriveSubsystem extends Subsystem {
 
   public static DifferentialDrive drive = new DifferentialDrive(frontLeftDriveTalonSRX, frontRightDriveTalonSRX);
 
-  public void ManualDrive(double move, double turn) {
+  public void manualDrive(double move, double turn) {
 	drive.arcadeDrive(move, turn);
   }
 
-  public void ZeroDriveEncoders() {
+  public void zeroDriveEncoders() {
     frontLeftDriveTalonSRX.setSelectedSensorPosition(0);
     frontRightDriveTalonSRX.setSelectedSensorPosition(0);
   }
@@ -267,7 +267,7 @@ public class DriveSubsystem extends Subsystem {
 
   } // End configureDriveTrainControllersForDifferentialMagic
 
-  public void SimpleMotionMagicTest(int leftEncoderVal, int rightEncoderVal) {
+  public void simpleMotionMagicTest(int leftEncoderVal, int rightEncoderVal) {
 	// Test method that moves robot forward a given number of wheel rotations  
     //int leftTargetEncoderVal = 4096 * leftWheelTurns;
 	//System.out.println("Hit WertzCode");
@@ -276,7 +276,7 @@ public class DriveSubsystem extends Subsystem {
 	frontRightDriveTalonSRX.set(ControlMode.MotionMagic, rightEncoderVal);
   }
 
-  public void DriveTrainBrakeMode() {
+  public void driveTrainBrakeMode() {
 	frontLeftDriveTalonSRX.setNeutralMode(NeutralMode.Brake);
     backLeftDriveTalonSRX.setNeutralMode(NeutralMode.Brake);
     frontRightDriveTalonSRX.setNeutralMode(NeutralMode.Brake);

@@ -32,7 +32,7 @@ public class AutoMotionMagicCommand extends Command {
   @Override
   protected void execute() {
     
-    Robot.driveSubsystem.SimpleMotionMagicTest(testEncoderVal,  testEncoderVal);
+    Robot.driveSubsystem.simpleMotionMagicTest(testEncoderVal,  testEncoderVal);
     Robot.smartDashboardSubsystem.updateEncoderValue();
     DriveSubsystem.drive.feed();//It took us four hours to figure out we needed this line
     //"Watchdog does not behave nicely when it gets pissed off"
