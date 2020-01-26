@@ -34,7 +34,7 @@ public class Robot extends TimedRobot {
   public static DriveSubsystem driveSubsystem = new DriveSubsystem();
   public static ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
   public static ClimberSubsystem climberSubsystem = new ClimberSubsystem();
-  public static ManualDrivingCommand manualDrivingCommand = new ManualDrivingCommand(); //FOR CHOOSER TESTING
+  public static ManualDrivingCommand manualDrivingCommand = new ManualDrivingCommand(); // FOR CHOOSER TESTING
   public static SmartDashboardSubsystem smartDashboardSubsystem = new SmartDashboardSubsystem();
   public static NavXSubsystem navXSubsystem = new NavXSubsystem();
   public static UltrasonicSensorSubsystem ultrasonicSubsystem = new UltrasonicSensorSubsystem();
@@ -54,16 +54,16 @@ public class Robot extends TimedRobot {
   /**
    * This function is run when the robot is first started up and should be used
    * for any initialization code.
-   Comment */
+   */
   @Override
   public void robotInit() {
-    System.out.println("Hit  robotinit");
+    System.out.println("Hit robotInit");
 
     sendableCommandChooser.setDefaultOption("Default Auto", new RealSmartAutoCommand());
     sendableCommandChooser.addOption("Really Smart Auto", new RealSmartAutoCommand());
     SmartDashboard.putData("Auto mode", sendableCommandChooser);
     SmartDashboard.putBoolean("Test Boolean", TestBool);
-    Robot.driveSubsystem.resetDriveTrainControllers(); 
+    Robot.driveSubsystem.resetDriveTrainControllers();
     Robot.driveSubsystem.configureDriveTrainControllersForSimpleMagic();
     Robot.driveSubsystem.ZeroDriveEncoders();
     Robot.driveSubsystem.DriveTrainBrakeMode();

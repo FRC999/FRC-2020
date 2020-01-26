@@ -26,7 +26,6 @@ public class OI {
   Button climberExtendButton = new JoystickButton(leftJoystick, 5);
   Button climberClimbButton = new JoystickButton(leftJoystick, 6);
   Button testMotionMagicButton = new JoystickButton(leftJoystick , 7);
-  Button stopButton = new JoystickButton(leftJoystick, 1);
 
   public OI() { // Setup All Commands Here
     zeroEncoderButton.whenPressed(new ZeroDriveEncodersCommand());

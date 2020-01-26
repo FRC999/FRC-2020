@@ -1,13 +1,10 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.smartdashboard.SendableBuilder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
-import frc.robot.RobotMap;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.I2C;
-import edu.wpi.first.wpilibj.Sendable;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -40,9 +37,13 @@ public class ControlPanelSubsystem extends Subsystem {
     SmartDashboard.putNumber("Spotted Color: Green", currentColor.green * 255);
     SmartDashboard.putNumber("Spotted Color: Blue", currentColor.blue * 255);
     SmartDashboard.putNumber("Spotted Distance: ", getProximity());
-    if (suspectedColor != null){
+    if (suspectedColor != null) {
       SmartDashboard.putString("SuspectedColor: ", suspectedColor.toString());
     }
+  }
+  
+  public boolean hasReceivedGameColor(){
+    return receivedGameColor;
   }
 
   // NOTE: Will be implementing Rotation Control as a command
@@ -78,16 +79,18 @@ public class ControlPanelSubsystem extends Subsystem {
     targetColor = getGameTargetColor();
     currentColor = colorSensor.getColor();
     suspectedColor = getSuspectedColor(currentColor);
-    
+
   }
+
   /**
    * Converts from 'color' to 'PanelColor': assumes no overlap
+   * 
    * @param colour the color to check
    * @return the determined color (may be null)
    */
-  public PanelColors getSuspectedColor(Color colour){ //Mr. Wertz approved -CMM
-    for(PanelColors isItMe : PanelColors.values()){
-      if(isItMe.withinTolerance(colour.red, colour.green, colour.blue)){
+  public PanelColors getSuspectedColor(Color colour) { // Mr. Wertz approved -CMM
+    for (PanelColors isItMe : PanelColors.values()) {
+      if (isItMe.withinTolerance(colour.red, colour.green, colour.blue)) {
         return isItMe;
       }
     }
@@ -149,9 +152,9 @@ public class ControlPanelSubsystem extends Subsystem {
 
   enum PanelColors {
     blue(0, 1, 1), green(0, 1, 0), red(1, 0, 0), yellow(1, 0, 0);
-    //TODO: Find more accurate values, also reformat
-    //Maybe use HSV for tolerance check?
-    
+    // TODO: Find more accurate values, also reformat
+    // Maybe use HSV for tolerance check?
+
     // numbers gotten from game manual + online converter
     final private double redVal, greenVal, blueVal;
 
@@ -166,8 +169,7 @@ public class ControlPanelSubsystem extends Subsystem {
     }
 
     boolean withinTolerance(double r, double g, double b) {
-      if (Math.abs(redVal - r) < toleranceSize 
-          && Math.abs(greenVal - g) < toleranceSize
+      if (Math.abs(redVal - r) < toleranceSize && Math.abs(greenVal - g) < toleranceSize
           && Math.abs(blueVal - b) < toleranceSize) {
         return true;
       }

@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 import frc.robot.commands.UpdateAllSmartDashboard;
-import frc.robot.subsystems.UltrasonicSensorSubsystem;
 
 /**
  * Add your docs here.
@@ -19,10 +18,9 @@ import frc.robot.subsystems.UltrasonicSensorSubsystem;
 public class SmartDashboardSubsystem extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
-  public SmartDashboardSubsystem(){
+  public SmartDashboardSubsystem() {
     SmartDashboard.putString("Friendly", "Good Morning!");
   }
-
 
   @Override
   public void initDefaultCommand() {
@@ -31,24 +29,24 @@ public class SmartDashboardSubsystem extends Subsystem {
   }
 
   public void updateEncoderValue() {
-    SmartDashboard.putNumber("left encoder",Robot.driveSubsystem.getLeftEncoder());
-    SmartDashboard.putNumber("right encoder",Robot.driveSubsystem.getRightEncoder());
+    SmartDashboard.putNumber("left encoder", Robot.driveSubsystem.getLeftEncoder());
+    SmartDashboard.putNumber("right encoder", Robot.driveSubsystem.getRightEncoder());
   }
 
-  public void updateNavXValues(){
+  public void updateNavXValues() {
     SmartDashboard.putNumber("NavX Pitch", Robot.navXSubsystem.getPitch());
     SmartDashboard.putNumber("Navx Roll", Robot.navXSubsystem.getRoll());
     SmartDashboard.putNumber("NavX Yaw", Robot.navXSubsystem.getYaw());
   }
 
   public void updateUltrasonicValues() {
-    SmartDashboard.putNumber("ultrasonic 1 raw value",Robot.ultrasonicSubsystem.getSensor1DistanceInRaw());
-    SmartDashboard.putNumber("ultrasonic 1 mm value",Robot.ultrasonicSubsystem.getSensor1DistanceInMM());
-    SmartDashboard.putNumber("ultrasonic 2 raw value",Robot.ultrasonicSubsystem.getSensor2DistanceInRaw());
-    SmartDashboard.putNumber("ultrasonic 2 mm value",Robot.ultrasonicSubsystem.getSensor2DistanceInMM());
+    SmartDashboard.putNumber("ultrasonic 1 raw value", Robot.ultrasonicSubsystem.getSensor1DistanceInRaw());
+    SmartDashboard.putNumber("ultrasonic 1 mm value", Robot.ultrasonicSubsystem.getSensor1DistanceInMM());
+    SmartDashboard.putNumber("ultrasonic 2 raw value", Robot.ultrasonicSubsystem.getSensor2DistanceInRaw());
+    SmartDashboard.putNumber("ultrasonic 2 mm value", Robot.ultrasonicSubsystem.getSensor2DistanceInMM());
   }
 
-  public void updateAllDisplays(){
+  public void updateAllDisplays() {
     updateNavXValues();
     updateUltrasonicValues();
   }

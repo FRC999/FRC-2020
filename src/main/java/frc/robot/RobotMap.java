@@ -16,7 +16,7 @@ package frc.robot;
 public class RobotMap {
   // For example to map the left and right motors, you could define the
   // following variables to use with your drivetrain subsystem.
-  
+
   // Drivetrain Motor Controllers
   public final static int frontLeftDriveMotorController = 1;
   public final static int backLeftDriveMotorController = 2;
@@ -32,70 +32,75 @@ public class RobotMap {
   public final static int shooterPanMotorController = 6;
   public final static int ShooterTiltMotorController = 7;
 
-  //Control panel constants
-  //TODO: Get actual motor ID
+  // Control panel constants
+  // TODO: Get actual motor ID
   public static final int diskSpinnerMotorID = -1;
 
-
   // Climber constants
-  public final static int climberMotorController=10;
-  //public static int climberSolenoid1Channel=11;
-  //public static int climberSolenoid2Channel=12;
-
-
+  public final static int climberMotorController = 10;
+  // public static int climberSolenoid1Channel=11;
+  // public static int climberSolenoid2Channel=12;
 
   // Driver Input Devices
   public final static int leftJoystickPort = 0;
 
+  // PCM forward, reverse channels for doubleSolenoids
+  public static int ColorWheelSolenoidForwardChannel = 0;
+  public static int ColorWheelSolenoidReverseChannel = 1;
+  public static int IntakeSolenoidForwardChannel = 2;
+  public static int IntakeSolenoidReverseChannel = 3;
+  public static int ClimberSolenoidForwardChannel = 4;
+  public static int ClimberSolenoidReverseChannel = 5;
 
+  // ULTRASONIC CONSTANTS
+  // RoboRIO channel for the ultrasonic sensor's analog input
+  public static final int ultrasonicInputChannel1 = 0;
+  public static final int ultrasonicInputChannel2 = 1;
+  // channel on the roborio section DIO, to trigger a reading from the ultrasonic
+  // sensor
+  public static final int ultrasonicTriggerChannel1 = 0;
+  public static final int ultrasonicTriggerChannel2 = 1;
+  // minimum time to send a pulse to trigger the sensor(20 microseconds); max time
+  // is 96 ms.
+  public static final double ultrasonicTriggerTime = 20E-6;
+  // constant conversion factor: ultrasonic sensor value to inches
+  public static double ultrasonicValueToInchesConversionFactor = 0.125;
+  // 0.125 (inch conversion factor) * 2.54 (inches to cm conversion factor) =
+  // 0.3175; inches conversion factor from a code sample put out by WPIlib, but
+  // trusted less than the value below.
+  // the value below is from when they give the formulas when talking about how to
+  // set it up
+  /*
+   * voltage scaling: Vcc (supplied voltage) / 1024 = Vi (volts per 5 mm) 5
+   * volts/1024 = vi range formula: 5 * (measured voltage)/vi = range in mm 5 *
+   * (measured voltage in volts)/ (5/1024) = (measured voltage * 1024) = range in
+   * mm
+   */
+  public static double ultrasonicValueToMMConversionFactor = 0.3175;
 
-   //PCM forward, reverse channels for doubleSolenoids
-   public static int ColorWheelSolenoidForwardChannel = 0;
-   public static int ColorWheelSolenoidReverseChannel = 1;
-   public static int IntakeSolenoidForwardChannel =2;
-   public static int IntakeSolenoidReverseChannel = 3;
-   public static int ClimberSolenoidForwardChannel = 4;
-   public static int ClimberSolenoidReverseChannel = 5;
-   
-   //RoboRIO channel for the ultrasonic sensor's analog input
-   public static final int ultrasonicInputChannel1 = 0;
-   public static final int ultrasonicInputChannel2 = 1;
-    //channel on the roborio section DIO, to trigger a reading from the ultrasonic sensor
-   public static final int ultrasonicTriggerChannel1  = 0;
-   public static final int ultrasonicTriggerChannel2  = 1;
-   //minimum time to send a pulse to trigger the sensor(20 microseconds); max time is 96 ms.
-   public static final double ultrasonicTriggerTime = 20E-6;
-   //constant conversion factor: ultrasonic sensor value to inches
-   public static double ultrasonicValueToInchesConversionFactor = 0.125;
-   // 0.125 (inch conversion factor) * 2.54 (inches to cm conversion factor) = 0.3175; inches conversion factor from a code sample put out by WPIlib, but trusted less than the value below.
-   //the value below is from when tehy give the formulas when talking about how to set it up
-   /* voltage scaling: Vcc (supplied voltage) / 1024 = Vi (volts per 5 mm)
-   5 volts/1024 = vi
-   range formula: 5 * (measured voltage)/vi = range in mm
-   5 * (measured voltage in volts)/ (5/1024) = (measured voltage * 1024) = range in mm */
-   public static double ultrasonicValueToMMConversionFactor = 0.3175;
-
-   
-  //Closed loop constants
-  // How long we wait for a configuration change to happen before we give up and report a failure in milliseconds
+  // Closed loop constants
+  // How long we wait for a configuration change to happen before we give up and
+  // report a failure in milliseconds
   public final static int configureTimeoutMs = 30;
-  // How many encoder clicks per revolution (change to 2048 for falcon 500 encoders)
+  // How many encoder clicks per revolution (change to 2048 for falcon 500
+  // encoders)
   public final static int encoderUnitsPerShaftRotation = 4096;
   // Full motor output value
   public final static int fullMotorOutput = 1023;
-  // The difference between the left and right side encoder values when the robot is rotated 180 degrees
-  public final static int encoderUnitsPerRobotRotation = 38585;//thats the SUM of the two
+  // The difference between the left and right side encoder values when the robot
+  // is rotated 180 degrees
+  public final static int encoderUnitsPerRobotRotation = 38585;// thats the SUM of the two
   // How many milliseconds between each closed loop call
   public final static int closedLoopPeriodMs = 1;
-	// Motor neutral dead-band, set to the minimum 0.1%
+  // Motor neutral dead-band, set to the minimum 0.1%
   public final static double NeutralDeadband = 0.001;
   // MotionMagic curve smoothing parameter [0 - 8]
   public final static int smoothing = 3;
   // MotionMagic curve smoothing parameter [0 - 8]
-   public final static int cruiseVelocity = 2250;
+  public final static int cruiseVelocity = 2250;
   // MotionMagic curve smoothing parameter [0 - 8]
   public final static int acceleration = 2250;
-  
+
   /** ------- EXAMPLE OF SOME GAINS SETTINGS FOR OTHER ROBOTS ------
 	 * PID Gains may have to be adjusted based on the responsiveness of control loop.
      * kF: 1023 represents output value to Talon at 100%, 6800 represents Velocity units at 100% output
@@ -110,33 +115,37 @@ public class RobotMap {
   */
 
   // Closed loop PID parameter values TODO: replace F values with measured values
-  public final static double P_0 = 0.25 * fullMotorOutput / encoderUnitsPerShaftRotation;  // .25% motor output when error = one rotation
-	public final static double I_0 = 0;
-	public final static double D_0 = 0;
-	public final static double F_0 = 0.227;  // just a guesstimate
-	public final static int Izone_0 = 500;
+  public final static double P_0 = 0.25 * fullMotorOutput / encoderUnitsPerShaftRotation; // .25% motor output when
+                                                                                          // error = one rotation
+  public final static double I_0 = 0;
+  public final static double D_0 = 0;
+  public final static double F_0 = 0.227; // just a guesstimate
+  public final static int Izone_0 = 500;
   public final static double PeakOutput_0 = 1;
 
-  // Closed loop PID parameter values  
-  public final static double P_1 = 0.25 * fullMotorOutput / encoderUnitsPerShaftRotation;  // .25% motor output when error = one rotation
-	public final static double I_1 = 0;
-	public final static double D_1 = 0;
-	public final static double F_1 = 0.227;  // just a guesstimate
-	public final static int Izone_1 = 500;
+  // Closed loop PID parameter values
+  public final static double P_1 = 0.25 * fullMotorOutput / encoderUnitsPerShaftRotation; // .25% motor output when
+                                                                                          // error = one rotation
+  public final static double I_1 = 0;
+  public final static double D_1 = 0;
+  public final static double F_1 = 0.227; // just a guesstimate
+  public final static int Izone_1 = 500;
   public final static double PeakOutput_1 = 1;
 
-  // ---- Flat constants, you should not need to change these ---- 
-	// We allow either a 0 or 1 when selecting an ordinal for remote devices [You can have up to 2 devices assigned remotely to a talon/victor]
-	public final static int REMOTE_0 = 0;
-	public final static int REMOTE_1 = 1;
-	// We allow either a 0 or 1 when selecting a PID Index, where 0 is primary and 1 is auxiliary
-	public final static int PID_PRIMARY = 0;
-	public final static int PID_TURN = 1;
-	// Firmware currently supports slots [0, 3] and can be used for either PID Set
-	public final static int SLOT_0 = 0;
-	public final static int SLOT_1 = 1;
-	public final static int SLOT_2 = 2;
+  // ---- Flat constants, you should not need to change these ----
+  // We allow either a 0 or 1 when selecting an ordinal for remote devices [You
+  // can have up to 2 devices assigned remotely to a talon/victor]
+  public final static int REMOTE_0 = 0;
+  public final static int REMOTE_1 = 1;
+  // We allow either a 0 or 1 when selecting a PID Index, where 0 is primary and 1
+  // is auxiliary
+  public final static int PID_PRIMARY = 0;
+  public final static int PID_TURN = 1;
+  // Firmware currently supports slots [0, 3] and can be used for either PID Set
+  public final static int SLOT_0 = 0;
+  public final static int SLOT_1 = 1;
+  public final static int SLOT_2 = 2;
   public final static int SLOT_3 = 3;
-  
+
   // ---- End closed loop parameter constants ----
 }

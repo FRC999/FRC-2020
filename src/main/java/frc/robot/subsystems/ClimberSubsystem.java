@@ -8,7 +8,6 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
-import frc.robot.RobotMap;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.Solenoid;
 
@@ -19,31 +18,29 @@ public class ClimberSubsystem extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
-
   static WPI_VictorSPX climberMotor;// = new WPI_VictorSPX(RobotMap.climberMotorID);
   static Solenoid climberSolenoid1;// = new Solenoid(RobotMap.climberSolenoidForwardChannel);
-  static Solenoid climberSolenoid2;//` = new Solenoid(RobotMap.climberSolenoidReverseChannel);
+  static Solenoid climberSolenoid2;// = new Solenoid(RobotMap.climberSolenoidReverseChannel);
 
+  double climbSpeed = 0.5;
 
-    double climbSpeed = 0.5;
-
-  public void extend(){
-      climberSolenoid1.set(true);
-      climberSolenoid2.set(true);
+  public void extend() {
+    climberSolenoid1.set(true);
+    climberSolenoid2.set(true);
   }
 
-  public void retract(){
+  public void retract() {
     climberSolenoid1.set(false);
     climberSolenoid2.set(false);
-}
+  }
 
-  public void climb(){
+  public void climb() {
     climberMotor.set(climbSpeed);
   }
 
-  public void standby(){
+  public void standby() {
     climberMotor.set(0);
-    }
+  }
 
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.

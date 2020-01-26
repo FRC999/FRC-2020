@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.DigitalOutput;
 import frc.robot.RobotMap;
 
 /**
- * @see www.maxbotix.com/firstrobotics
+ * @see www.maxbotix.com/firstRobotics
  * sensor returns a value from 0-4095
  * factor to convert to inches: 0.125
  */
