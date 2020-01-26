@@ -36,8 +36,7 @@ public class DriveSubsystem extends Subsystem {
   public static DifferentialDrive drive = new DifferentialDrive(frontLeftDriveTalonSRX, frontRightDriveTalonSRX);
 
   public void ManualDrive(double move, double turn) {
-    drive.arcadeDrive(move, turn);
-    updateEncodersDisplay();
+	drive.arcadeDrive(move, turn);
   }
 
   public void ZeroDriveEncoders() {
@@ -279,15 +278,10 @@ public class DriveSubsystem extends Subsystem {
   }
 
   public void DriveTrainBrakeMode() {
-    frontLeftDriveTalonSRX.setNeutralMode(NeutralMode.Brake);
+	frontLeftDriveTalonSRX.setNeutralMode(NeutralMode.Brake);
     backLeftDriveTalonSRX.setNeutralMode(NeutralMode.Brake);
     frontRightDriveTalonSRX.setNeutralMode(NeutralMode.Brake);
     backRightDriveTalonSRX.setNeutralMode(NeutralMode.Brake);
-  }
-
-  public void updateEncodersDisplay(){
-    SmartDashboard.putNumber("left encoder", getLeftEncoder());
-    SmartDashboard.putNumber("right encoder", getRightEncoder());
   }
 
   @Override
