@@ -51,13 +51,13 @@ public double getSensor2DistanceInMM() {
 }
 
 
-public double getSensor1DistanceInRaw() {
-  double retVal = ultrasonic1.getValue();
+public int getSensor1DistanceInRaw() {
+  int retVal = ultrasonic1.getValue();
   return retVal;
 }
 
-public double getSensor2DistanceInRaw() {
-double retVal = ultrasonic2.getValue();
+public int getSensor2DistanceInRaw() {
+int retVal = ultrasonic2.getValue();
 return retVal;
 }
 
@@ -68,8 +68,5 @@ return retVal;
       
   }
 
-  /*private static class UltrasonicChecker extends Thread {
-@Override
 
-  } */
 }
