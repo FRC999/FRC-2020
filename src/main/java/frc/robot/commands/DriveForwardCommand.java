@@ -8,6 +8,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 
 public class DriveForwardCommand extends Command {
@@ -24,6 +25,7 @@ public class DriveForwardCommand extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    System.out.println("Called initialize");
     leftTarget = Robot.driveSubsystem.getLeftEncoder() + driveDistance;
     rightTarget = Robot.driveSubsystem.getRightEncoder() + driveDistance;
     Robot.driveSubsystem.simpleMotionMagicTest(leftTarget, rightTarget);
@@ -33,6 +35,9 @@ public class DriveForwardCommand extends Command {
   @Override
   protected void execute() {
     Robot.driveSubsystem.feed();
+    Robot.smartDashboardSubsystem.updateEncoderValue();
+    SmartDashboard.putNumber("leftTarget",leftTarget);
+    SmartDashboard.putNumber("RightTarget", rightTarget);
   }
 
   // Make this return true when this Command no longer needs to run execute()

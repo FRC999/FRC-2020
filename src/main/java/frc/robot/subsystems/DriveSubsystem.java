@@ -271,17 +271,15 @@ public class DriveSubsystem extends Subsystem {
 
   public void simpleMotionMagicTest(int leftEncoderVal, int rightEncoderVal) {
 	// Test method that moves robot forward a given number of wheel rotations  
-    int leftTargetEncoderVal = leftEncoderVal + getLeftEncoder();
-	int rightTargetEncoderVal = rightEncoderVal + getRightEncoder();
-    frontLeftDriveTalonSRX.set(ControlMode.MotionMagic, leftTargetEncoderVal);
-	frontRightDriveTalonSRX.set(ControlMode.MotionMagic, rightTargetEncoderVal);
+    frontLeftDriveTalonSRX.set(ControlMode.MotionMagic, leftEncoderVal);
+	frontRightDriveTalonSRX.set(ControlMode.MotionMagic, rightEncoderVal);
   }
 
   public boolean isOnTarget(int leftEncoderTarget, int rightEncoderTarget){
     return isOnTarget(leftEncoderTarget, rightEncoderTarget,defaultAcceptableError);
   }
   public boolean isOnTarget(int leftEncoderTarget, int rightEncoderTarget, int acceptableError){
-    int leftError = Math.abs(leftEncoderTarget-getLeftEncoder());
+    int leftError = Math.abs(leftEncoderTarget - getLeftEncoder());
     int rightError = Math.abs(rightEncoderTarget - getRightEncoder());
     return leftError <= acceptableError && rightError <= acceptableError;
   }

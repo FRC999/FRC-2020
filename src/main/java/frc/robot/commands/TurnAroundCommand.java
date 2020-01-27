@@ -35,6 +35,8 @@ public class TurnAroundCommand extends Command {
   @Override
   protected void execute() {
     Robot.driveSubsystem.feed();
+    Robot.smartDashboardSubsystem.updateEncoderValue();
+    System.out.println("TURNING!");
   }
 
   // Make this return true when this Command no longer needs to run execute()

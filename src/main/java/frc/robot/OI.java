@@ -30,7 +30,7 @@ public class OI {
   public OI() { // Setup All Commands Here
     zeroEncoderButton.whenPressed(new ZeroDriveEncodersCommand());
     zeroYawButton.whenPressed(new ZeroYawCommand());
-    testMotionMagicButton.whenPressed(new AutoMotionMagicCommand());
+    testMotionMagicButton.whenPressed(new DriveForwardCommand());
     
   }
 }
