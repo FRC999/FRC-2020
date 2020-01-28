@@ -18,6 +18,8 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.commands.ManualDrivingCommand;
 
@@ -278,7 +280,9 @@ public class DriveSubsystem extends Subsystem {
   }
   public boolean isOnTarget(int leftEncoderTarget, int rightEncoderTarget, int acceptableError){
     int leftError = Math.abs(leftEncoderTarget - getLeftEncoder());
-    int rightError = Math.abs(rightEncoderTarget - getRightEncoder());
+	int rightError = Math.abs(rightEncoderTarget - getRightEncoder());
+	SmartDashboard.putNumber("Error L", leftError);
+	SmartDashboard.putNumber("Error R", rightError);
     return leftError <= acceptableError && rightError <= acceptableError;
   }
   

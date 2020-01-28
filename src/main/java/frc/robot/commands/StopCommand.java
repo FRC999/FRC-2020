@@ -19,19 +19,20 @@ public class StopCommand extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    Robot.driveSubsystem.driveTrainBrakeMode();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
     Robot.driveSubsystem.manualDrive(0, 0);
-    Robot.driveSubsystem.driveTrainBrakeMode();
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
     return true;
+    //TODO: Check if still moving before stopping
   }
 
   // Called once after isFinished returns true
