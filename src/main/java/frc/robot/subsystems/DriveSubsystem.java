@@ -274,7 +274,7 @@ public class DriveSubsystem extends Subsystem {
   }
 
   public boolean isOnTarget(int leftEncoderTarget, int rightEncoderTarget){
-    return isOnTarget(leftEncoderTarget, rightEncoderTarget,defaultAcceptableError);
+    return isOnTarget(leftEncoderTarget, rightEncoderTarget,RobotMap.defaultAcceptableError);
   }
   public boolean isOnTarget(int leftEncoderTarget, int rightEncoderTarget, int acceptableError){
     int leftError = Math.abs(leftEncoderTarget - getLeftEncoder());

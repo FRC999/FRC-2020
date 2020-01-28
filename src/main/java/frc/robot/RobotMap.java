@@ -101,7 +101,7 @@ public class RobotMap {
   // MotionMagic curve smoothing parameter [0 - 8]
   public final static int acceleration = 2250;
   // Allowable error to exit movement methods
-  public final int defaultAcceptableError = 300;
+  public final static int defaultAcceptableError = 3000;
 
 
   /** ------- EXAMPLE OF SOME GAINS SETTINGS FOR OTHER ROBOTS ------
