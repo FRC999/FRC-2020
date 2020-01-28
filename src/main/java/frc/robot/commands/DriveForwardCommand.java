@@ -28,7 +28,7 @@ public class DriveForwardCommand extends Command {
     System.out.println("Called initialize");
     leftTarget = Robot.driveSubsystem.getLeftEncoder() + driveDistance;
     rightTarget = Robot.driveSubsystem.getRightEncoder() + driveDistance;
-    Robot.driveSubsystem.simpleMotionMagicTest(leftTarget, rightTarget);
+    Robot.driveSubsystem.simpleMotionMagicTest(50000, 50000);
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -43,12 +43,14 @@ public class DriveForwardCommand extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return Robot.driveSubsystem.isOnTarget(leftTarget,rightTarget);
+    return Robot.driveSubsystem.isOnTarget(leftTarget,rightTarget,300);
+    
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    System.out.println("ENDED DRIVEFORWARD");
   }
 
   // Called when another command which requires one or more of the same
