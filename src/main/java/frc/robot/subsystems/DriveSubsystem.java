@@ -32,8 +32,6 @@ public class DriveSubsystem extends Subsystem {
   static WPI_TalonSRX frontRightDriveTalonSRX = new WPI_TalonSRX(RobotMap.frontRightDriveMotorController);
   static WPI_TalonSRX backRightDriveTalonSRX = new WPI_TalonSRX(RobotMap.backRightDriveMotorController);
 
-  final int defaultAcceptableError = 300;
-
   public static DifferentialDrive drive = new DifferentialDrive(frontLeftDriveTalonSRX, frontRightDriveTalonSRX);
 
   public void manualDrive(double move, double turn) {
