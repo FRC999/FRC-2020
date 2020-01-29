@@ -75,6 +75,9 @@ public class RobotMap {
    * volts/1024 = vi range formula: 5 * (measured voltage)/vi = range in mm 5 *
    * (measured voltage in volts)/ (5/1024) = (measured voltage * 1024) = range in
    * mm
+   * 
+   * at around 1800 mm away, the raw value was 1471, while the converted mm value was 467; this is not the right factor.
+   * Therefore, the ideal conversion factorshould be between 1 and 1.5
    */
   public static double ultrasonicValueToMMConversionFactor = 0.3175;
 
