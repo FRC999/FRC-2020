@@ -10,9 +10,10 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
+import frc.robot.RobotMap;
 
 public class DriveForwardCommand extends Command {
-  private static final int driveDistance = 49700;
+  //private static final int driveDistance = 49700;
    
   int rightTarget;
   int leftTarget;
@@ -26,9 +27,9 @@ public class DriveForwardCommand extends Command {
   @Override
   protected void initialize() {
     System.out.println("Called initialize");
-    leftTarget = Robot.driveSubsystem.getLeftEncoder() + driveDistance;
-    rightTarget = Robot.driveSubsystem.getRightEncoder() + driveDistance;
-    Robot.driveSubsystem.simpleMotionMagicTest(50000, 50000);
+    leftTarget = Robot.driveSubsystem.getLeftEncoder() + RobotMap.driveDistance;
+    rightTarget = Robot.driveSubsystem.getRightEncoder() + RobotMap.driveDistance;
+    Robot.driveSubsystem.simpleMotionMagicTest(leftTarget, rightTarget);
   }
 
   // Called repeatedly when this Command is scheduled to run
