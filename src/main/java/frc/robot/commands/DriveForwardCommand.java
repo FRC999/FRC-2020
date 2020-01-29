@@ -13,11 +13,12 @@ import frc.robot.Robot;
 import frc.robot.RobotMap;
 
 public class DriveForwardCommand extends Command {
-  //private static final int driveDistance = 49700;
+  private static int driveDistance;
    
   int rightTarget;
   int leftTarget;
-  public DriveForwardCommand() {
+  public DriveForwardCommand(int distance) {
+    driveDistance = distance;
     requires(Robot.driveSubsystem);
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
@@ -27,8 +28,8 @@ public class DriveForwardCommand extends Command {
   @Override
   protected void initialize() {
     System.out.println("Called initialize");
-    leftTarget = Robot.driveSubsystem.getLeftEncoder() + RobotMap.driveDistance;
-    rightTarget = Robot.driveSubsystem.getRightEncoder() + RobotMap.driveDistance;
+    leftTarget = Robot.driveSubsystem.getLeftEncoder() + driveDistance;
+    rightTarget = Robot.driveSubsystem.getRightEncoder() + driveDistance;
     Robot.driveSubsystem.simpleMotionMagicTest(leftTarget, rightTarget);
   }
 

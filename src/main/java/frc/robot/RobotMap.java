@@ -102,8 +102,7 @@ public class RobotMap {
   public final static int acceleration = 2250;
   // Allowable error to exit movement methods
   public final static int defaultAcceptableError = 1000;
-  public final static int driveDistance = 50000;
-
+ 
 
   /** ------- EXAMPLE OF SOME GAINS SETTINGS FOR OTHER ROBOTS ------
 	 * PID Gains may have to be adjusted based on the responsiveness of control loop.
