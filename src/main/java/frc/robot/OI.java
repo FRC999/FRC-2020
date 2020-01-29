@@ -31,7 +31,7 @@ public class OI {
   public OI() { // Setup All Commands Here
     zeroEncoderButton.whenPressed(new ZeroDriveEncodersCommand());
     zeroYawButton.whenPressed(new ZeroYawCommand());
-    testMotionMagicButton.whenPressed(new DriveForwardCommand());
+    testMotionMagicButton.whenPressed(new DriveForwardCommand(50000));
     spin.whenPressed(new TurnAroundCommand());
     stopButton.whenActive(new StopCommand());
     showEncoderButton.whenPressed(new RealSmartAutoCommand());

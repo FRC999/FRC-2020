@@ -10,14 +10,17 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
+import frc.robot.RobotMap;
 
 public class DriveForwardCommand extends Command {
-  private static final int driveDistance = 50000;
+  private static int driveDistance;
    
   int rightTarget;
   int leftTarget;
-  public DriveForwardCommand() {
+
+  public DriveForwardCommand(int distance) {
     requires(Robot.driveSubsystem);
+    driveDistance = distance;
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
   }
