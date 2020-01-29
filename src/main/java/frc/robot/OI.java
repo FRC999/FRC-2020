@@ -34,6 +34,7 @@ public class OI {
     testMotionMagicButton.whenPressed(new DriveForwardCommand());
     spin.whenPressed(new TurnAroundCommand());
     stopButton.whenActive(new StopCommand());
+    showEncoderButton.whenPressed(new RealSmartAutoCommand());
     
   }
 }

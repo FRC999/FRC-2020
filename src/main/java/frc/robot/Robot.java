@@ -112,6 +112,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
+    
     autonomousCommand = sendableCommandChooser.getSelected();
     /*
      * String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
@@ -119,6 +120,7 @@ public class Robot extends TimedRobot {
      * MyAutoCommand(); break; case "Default Auto": default: autonomousCommand = new
      * ExampleCommand(); break; }
      */
+    driveSubsystem.DriveTrainCoastMode();
 
     // schedule the autonomous command (example)
     if (autonomousCommand != null) {
@@ -136,6 +138,8 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
+    driveSubsystem.DriveTrainCoastMode();
+
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove

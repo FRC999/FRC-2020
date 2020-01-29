@@ -279,8 +279,8 @@ public class DriveSubsystem extends Subsystem {
     return isOnTarget(leftEncoderTarget, rightEncoderTarget,RobotMap.defaultAcceptableError);
   }
   public boolean isOnTarget(int leftEncoderTarget, int rightEncoderTarget, int acceptableError){
-    int leftError = Math.abs(leftEncoderTarget - getLeftEncoder());
-	int rightError = Math.abs(rightEncoderTarget - getRightEncoder());
+    int leftError = Math.abs(leftEncoderTarget) -  Math.abs(getLeftEncoder());
+	int rightError = Math.abs(rightEncoderTarget) - Math.abs(getRightEncoder());
 	SmartDashboard.putNumber("Error L", leftError);
 	SmartDashboard.putNumber("Error R", rightError);
     return leftError <= acceptableError && rightError <= acceptableError;

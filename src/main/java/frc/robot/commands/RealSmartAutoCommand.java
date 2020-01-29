@@ -40,4 +40,10 @@ public class RealSmartAutoCommand extends CommandGroup {
     // a CommandGroup containing them would require both the chassis and the
     // arm.
   }
+  
+  @Override 
+  public void initialize() {
+    System.out.println("++++++++++ AUTO INIT ++++++++++");
+    super.initialize();
+  }
 }

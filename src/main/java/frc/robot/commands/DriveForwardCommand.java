@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 
 public class DriveForwardCommand extends Command {
-  private static final int driveDistance = 49700;
+  private static final int driveDistance = 50000;
    
   int rightTarget;
   int leftTarget;
@@ -26,9 +26,17 @@ public class DriveForwardCommand extends Command {
   @Override
   protected void initialize() {
     System.out.println("Called initialize");
-    leftTarget = Robot.driveSubsystem.getLeftEncoder() + driveDistance;
-    rightTarget = Robot.driveSubsystem.getRightEncoder() + driveDistance;
-    Robot.driveSubsystem.simpleMotionMagicTest(50000, 50000);
+    Robot.driveSubsystem.driveTrainBrakeMode();
+    int lEncoder = Robot.driveSubsystem.getLeftEncoder();
+    int rEncoder = Robot.driveSubsystem.getRightEncoder();
+    System.out.println(lEncoder);
+    System.out.println(rEncoder);
+    leftTarget =  driveDistance + lEncoder;
+    rightTarget = driveDistance + rEncoder;
+    Robot.driveSubsystem.simpleMotionMagicTest(leftTarget, rightTarget);
+    
+    SmartDashboard.putNumber("leftTarget",leftTarget);
+    SmartDashboard.putNumber("RightTarget", rightTarget);
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -36,8 +44,6 @@ public class DriveForwardCommand extends Command {
   protected void execute() {
     Robot.driveSubsystem.feed();
     Robot.smartDashboardSubsystem.updateEncoderValue();
-    SmartDashboard.putNumber("leftTarget",leftTarget);
-    SmartDashboard.putNumber("RightTarget", rightTarget);
   }
 
   // Make this return true when this Command no longer needs to run execute()
