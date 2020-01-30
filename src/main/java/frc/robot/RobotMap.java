@@ -34,7 +34,7 @@ public class RobotMap {
 
   // Control panel constants
   // TODO: Get actual motor ID
-  public static final int diskSpinnerMotorID = -1;
+  public static final int diskSpinnerController = -1;
 
   // Climber constants
   public final static int climberMotorController = 10;
@@ -93,6 +93,7 @@ public class RobotMap {
   // The difference between the left and right side encoder values when the robot
   // is rotated 180 degrees
   public final static int encoderUnitsPerRobotRotation = 38585;// thats the SUM of the two
+  public final static double encoderUnitsPerJEMotorRotation = 44.4;
   // How many milliseconds between each closed loop call
   public final static int closedLoopPeriodMs = 1;
   // Motor neutral dead-band, set to the minimum 0.1%

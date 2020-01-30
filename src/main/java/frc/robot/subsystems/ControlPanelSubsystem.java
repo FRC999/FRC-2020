@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
+import frc.robot.RobotMap;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.I2C;
 
@@ -10,6 +11,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.revrobotics.ColorSensorV3;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 
 public class ControlPanelSubsystem extends Subsystem {
   // TODO: Find stuff for JE-PLG-149 motors so they can be used here
@@ -17,9 +19,11 @@ public class ControlPanelSubsystem extends Subsystem {
   private final I2C.Port i2cPort = I2C.Port.kOnboard;
   private final ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort);
 
-  private WPI_TalonSRX diskSpinnerTalon;// = new WPI_TalonSRX(RobotMap.diskSpinnerMotorID);
+  public static WPI_TalonSRX diskSpinnerTalonSRX = new WPI_TalonSRX(RobotMap.diskSpinnerController);
   private DoubleSolenoid diskSpinnerSolenoid;// = new
                                              // DoubleSolenoid(RobotMap.ColorWheelSolenoidForwardChannel,RobotMap.ColorWheelSolenoidReverseChannel);
+  
+  
 
   private PanelColors targetColor;
   private boolean receivedGameColor = false;
@@ -30,6 +34,12 @@ public class ControlPanelSubsystem extends Subsystem {
   static final double toleranceSize = .01;// tolerance size (in percent)
   private boolean wasAligned = false;
   private double spinSpeed = 0.5;
+
+  public void resetControlPanelControllers() {
+    System.out.println("Hit  reserControlPanelControllers");
+      diskSpinnerTalonSRX.configFactoryDefault();
+      diskSpinnerTalonSRX.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
+  }
 
   public void putSeenColor() {
     updateColorState();
@@ -49,12 +59,12 @@ public class ControlPanelSubsystem extends Subsystem {
   // NOTE: Will be implementing Rotation Control as a command
   public void spinToTargetColor() {
     if (checkColorAlignment()) {
-      diskSpinnerTalon.setNeutralMode(NeutralMode.Brake);
-      diskSpinnerTalon.set(0);
+      diskSpinnerTalonSRX.setNeutralMode(NeutralMode.Brake);
+      diskSpinnerTalonSRX.set(0);
       // TODO: Use actual motion profiling (note: maybe not, will definitely be very hard)
       // Use position MotionMagic... It is very good for this type of application
     } else {
-      diskSpinnerTalon.set(spinSpeed);
+      diskSpinnerTalonSRX.set(spinSpeed);
     }
 
     if (wasAligned != colorsAligned) {// if alignment has changed since last check...
