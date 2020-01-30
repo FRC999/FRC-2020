@@ -29,6 +29,10 @@ import frc.robot.commands.ManualDrivingCommand;
 public class DriveSubsystem extends Subsystem {
   // Put methods for controlling this subsystem here. Call these from Commands.
 
+  //For isOnTarget
+  boolean wasOnTarget = false;
+
+
   static WPI_TalonSRX frontLeftDriveTalonSRX = new WPI_TalonSRX(RobotMap.frontLeftDriveMotorController);
   static WPI_TalonSRX backLeftDriveTalonSRX = new WPI_TalonSRX(RobotMap.backLeftDriveMotorController);
   static WPI_TalonSRX frontRightDriveTalonSRX = new WPI_TalonSRX(RobotMap.frontRightDriveMotorController);
@@ -279,11 +283,18 @@ public class DriveSubsystem extends Subsystem {
     return isOnTarget(leftEncoderTarget, rightEncoderTarget,RobotMap.defaultAcceptableError);
   }
   public boolean isOnTarget(int leftEncoderTarget, int rightEncoderTarget, int acceptableError){
-    int leftError = Math.abs(leftEncoderTarget) -  Math.abs(getLeftEncoder());
-	int rightError = Math.abs(rightEncoderTarget) - Math.abs(getRightEncoder());
+    int leftError = Math.abs(leftEncoderTarget - getLeftEncoder());
+	int rightError = Math.abs(rightEncoderTarget - getRightEncoder());
 	SmartDashboard.putNumber("Error L", leftError);
 	SmartDashboard.putNumber("Error R", rightError);
-    return leftError <= acceptableError && rightError <= acceptableError;
+    if(leftError <= acceptableError && rightError <= acceptableError){
+		if(wasOnTarget){return true;};
+		wasOnTarget = true;//Dont return true if we just 
+	}
+	else{
+		wasOnTarget=false;
+	}
+	return false;
   }
   
   public void feed(){

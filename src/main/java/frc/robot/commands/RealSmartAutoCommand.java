@@ -8,6 +8,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.command.WaitCommand;
 
 public class RealSmartAutoCommand extends CommandGroup {
   /**
@@ -22,10 +23,17 @@ public class RealSmartAutoCommand extends CommandGroup {
     //What we want to do
     
     addSequential(new ZeroDriveEncodersCommand());
-    addSequential(new DriveForwardCommand(50000));
-    addSequential(new TurnAroundCommand());
+    addSequential(new WaitCommand(0.1));
+    addSequential(new StopCommand());
     addSequential(new DriveForwardCommand(50000));
     addSequential(new StopCommand());
+    addSequential(new WaitCommand(0.1));
+    addSequential(new TurnAroundCommand());
+    addSequential(new StopCommand());
+    addSequential(new WaitCommand(0.1));
+    addSequential(new DriveForwardCommand(50000));
+    addSequential(new StopCommand());
+    addSequential(new WaitCommand(0.1));
 
 
     // To run multiple commands at the same time,
