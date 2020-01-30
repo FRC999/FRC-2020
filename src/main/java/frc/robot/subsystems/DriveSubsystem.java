@@ -18,6 +18,8 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.commands.ManualDrivingCommand;
 
@@ -27,6 +29,10 @@ import frc.robot.commands.ManualDrivingCommand;
 public class DriveSubsystem extends Subsystem {
   // Put methods for controlling this subsystem here. Call these from Commands.
 
+  //For isOnTarget
+  boolean wasOnTarget = false;
+
+
   static WPI_TalonSRX frontLeftDriveTalonSRX = new WPI_TalonSRX(RobotMap.frontLeftDriveMotorController);
   static WPI_TalonSRX backLeftDriveTalonSRX = new WPI_TalonSRX(RobotMap.backLeftDriveMotorController);
   static WPI_TalonSRX frontRightDriveTalonSRX = new WPI_TalonSRX(RobotMap.frontRightDriveMotorController);
@@ -34,11 +40,11 @@ public class DriveSubsystem extends Subsystem {
 
   public static DifferentialDrive drive = new DifferentialDrive(frontLeftDriveTalonSRX, frontRightDriveTalonSRX);
 
-  public void ManualDrive(double move, double turn) {
+  public void manualDrive(double move, double turn) {
 	drive.arcadeDrive(move, turn);
   }
 
-  public void ZeroDriveEncoders() {
+  public void zeroDriveEncoders() {
     frontLeftDriveTalonSRX.setSelectedSensorPosition(0);
     frontRightDriveTalonSRX.setSelectedSensorPosition(0);
   }
@@ -267,16 +273,35 @@ public class DriveSubsystem extends Subsystem {
 
   } // End configureDriveTrainControllersForDifferentialMagic
 
-  public void SimpleMotionMagicTest(int leftEncoderVal, int rightEncoderVal) {
+  public void simpleMotionMagicTest(int leftEncoderVal, int rightEncoderVal) {
 	// Test method that moves robot forward a given number of wheel rotations  
-    //int leftTargetEncoderVal = 4096 * leftWheelTurns;
-	//System.out.println("Hit WertzCode");
-	//int rightTargetEncoderVal = 4096 * rightWheelTurns;
     frontLeftDriveTalonSRX.set(ControlMode.MotionMagic, leftEncoderVal);
 	frontRightDriveTalonSRX.set(ControlMode.MotionMagic, rightEncoderVal);
   }
 
-  public void DriveTrainBrakeMode() {
+  public boolean isOnTarget(int leftEncoderTarget, int rightEncoderTarget){
+    return isOnTarget(leftEncoderTarget, rightEncoderTarget,RobotMap.defaultAcceptableError);
+  }
+  public boolean isOnTarget(int leftEncoderTarget, int rightEncoderTarget, int acceptableError){
+    int leftError = Math.abs(leftEncoderTarget - getLeftEncoder());
+	int rightError = Math.abs(rightEncoderTarget - getRightEncoder());
+	SmartDashboard.putNumber("Error L", leftError);
+	SmartDashboard.putNumber("Error R", rightError);
+    if(leftError <= acceptableError && rightError <= acceptableError){
+		if(wasOnTarget){return true;};
+		wasOnTarget = true;//Dont return true if we just 
+	}
+	else{
+		wasOnTarget=false;
+	}
+	return false;
+  }
+  
+  public void feed(){
+    drive.feed();
+  }
+
+  public void driveTrainBrakeMode() {
 	frontLeftDriveTalonSRX.setNeutralMode(NeutralMode.Brake);
     backLeftDriveTalonSRX.setNeutralMode(NeutralMode.Brake);
     frontRightDriveTalonSRX.setNeutralMode(NeutralMode.Brake);

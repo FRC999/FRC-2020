@@ -23,18 +23,6 @@ public class UltrasonicSensorSubsystem extends Subsystem {
 
   private final AnalogInput ultrasonic1 = new AnalogInput(RobotMap.ultrasonicInputChannel1);
   private final AnalogInput ultrasonic2 = new AnalogInput(RobotMap.ultrasonicInputChannel2);
-  //channel on the roborio section DIO, to trigger a reading from the ultrasonic sensor
-  private final DigitalOutput ultrasonicTrigger1 = new DigitalOutput(RobotMap.ultrasonicTriggerChannel1);
-  private final DigitalOutput ultrasonicTrigger2 = new DigitalOutput(RobotMap.ultrasonicTriggerChannel2);
-
-  /**sends a pulse to trigger sensor 1 to send in a new value. */
-  public void pulseSensor1() {
-      ultrasonicTrigger1.pulse(RobotMap.ultrasonicTriggerTime);
-  }
-    /**sends a pulse to trigger sensor 2 to send in a new value. */
-    public void pulseSensor2() {
-      ultrasonicTrigger2.pulse(RobotMap.ultrasonicTriggerTime);
-  }
 
   public double getDistanceInInches() {
     double retVal = ultrasonic1.getValue() * RobotMap.ultrasonicValueToInchesConversionFactor;
@@ -49,7 +37,6 @@ public double getSensor2DistanceInMM() {
   double retVal = ultrasonic2.getValue() * RobotMap.ultrasonicValueToMMConversionFactor;
   return retVal;
 }
-
 
 public int getSensor1DistanceInRaw() {
   int retVal = ultrasonic1.getValue();
