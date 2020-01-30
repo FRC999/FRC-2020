@@ -24,15 +24,12 @@ public class AutoMotionMagicCommand extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-//    Robot.driveSubsystem.SimpleMotionMagicTest(9, 9);
-    
+    Robot.driveSubsystem.simpleMotionMagicTest(testEncoderVal,  testEncoderVal);    
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    
-    Robot.driveSubsystem.SimpleMotionMagicTest(testEncoderVal,  testEncoderVal);
     Robot.smartDashboardSubsystem.updateEncoderValue();
     DriveSubsystem.drive.feed();//It took us four hours to figure out we needed this line
     //"Watchdog does not behave nicely when it gets pissed off"

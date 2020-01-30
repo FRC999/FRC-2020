@@ -26,11 +26,15 @@ public class OI {
   Button climberExtendButton = new JoystickButton(leftJoystick, 5);
   Button climberClimbButton = new JoystickButton(leftJoystick, 6);
   Button testMotionMagicButton = new JoystickButton(leftJoystick , 7);
+  Button spin = new JoystickButton(leftJoystick, 8);
 
   public OI() { // Setup All Commands Here
     zeroEncoderButton.whenPressed(new ZeroDriveEncodersCommand());
     zeroYawButton.whenPressed(new ZeroYawCommand());
-    testMotionMagicButton.whenPressed(new AutoMotionMagicCommand());
+    testMotionMagicButton.whenPressed(new DriveForwardCommand(50000));
+    spin.whenPressed(new TurnAroundCommand());
+    stopButton.whenActive(new StopCommand());
+    showEncoderButton.whenPressed(new RealSmartAutoCommand());
     
   }
 }
