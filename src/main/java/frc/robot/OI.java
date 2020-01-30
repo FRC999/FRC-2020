@@ -8,13 +8,14 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.robot.commands.*;
 
 /**
- * OPERATOR INPUT
- * This class is the glue that binds the controls on the physical operator
- * interface to the commands and command groups that allow control of the robot.
+ * OPERATOR INPUT This class is the glue that binds the controls on the physical
+ * operator interface to the commands and command groups that allow control of
+ * the robot.
  */
 public class OI {
   //// CREATING BUTTONS
@@ -23,18 +24,18 @@ public class OI {
   // You create one by telling it which joystick it's on and which button
   // number it is.
   public Joystick leftJoystick = new Joystick(RobotMap.leftJoystickPort);
+  Button showEncoderButton = new JoystickButton(leftJoystick, 1);
+  Button zeroEncoderButton = new JoystickButton(leftJoystick, 2);
+  Button zeroYawButton = new JoystickButton(leftJoystick, 3);
   public JoystickButton leftTrigger = new JoystickButton(leftJoystick, 1);
- 
- 
- 
-  public OI(){ //All Commands
-    leftTrigger.whenPressed(new ManualShoot());
-    leftTrigger.whenReleased(new ManualEndShoot());
+
+  public OI() { // Setup All Commands Here
+    leftTrigger.whenPressed(new ManualShootCommand());
+    leftTrigger.whenReleased(new ManualEndShootCommand());
+    //showEncoderButton.whenPressed(new DisplayDriveEncodersCommand());
+    zeroEncoderButton.whenPressed(new ZeroDriveEncodersCommand());
+    zeroYawButton.whenPressed(new ZeroYawCommand());
   }
-
-
-
-
 
   // Button button = new JoystickButton(stick, buttonNumber);
 
@@ -44,7 +45,7 @@ public class OI {
 
   //// TRIGGERING COMMANDS WITH BUTTONS
   // Once you have a button, it's trivial to bind it to a button in one of
-  // three ways:
+  // three ways: (note: do this the RobotMap constructor, above)
 
   // Start the command when the button is pressed and let it run the command
   // until it is finished as determined by it's isFinished method.
@@ -57,4 +58,5 @@ public class OI {
   // Start the command when the button is released and let it run the command
   // until it is finished as determined by it's isFinished method.
   // button.whenReleased(new ExampleCommand());
+
 }

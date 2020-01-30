@@ -11,5 +11,16 @@
     "**/.project": true,
     "**/.settings": true,
     "**/.factorypath": true
-  }
+  },
+  "cSpell.words": [
+    "canutils",
+    "ctre",
+    "linuxathena",
+    "subclassing",
+    "submodule",
+    "teleop",
+    "teleoperated",
+    "windowsx",
+    "wpiapi"
+  ]
 }

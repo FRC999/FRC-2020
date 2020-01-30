@@ -10,11 +10,11 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class ManualDrivingCommand extends Command {
-
-  public ManualDrivingCommand() {
+public class ZeroYawCommand extends Command {
+  public ZeroYawCommand() {
     // Use requires() here to declare subsystem dependencies
-    requires(Robot.driveSubsystem);
+    // eg. requires(chassis);
+    requires(Robot.navXSubsystem);
   }
 
   // Called just before this Command runs the first time
@@ -25,16 +25,13 @@ public class ManualDrivingCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    // Read joystick values
-    double move = Robot.oi.leftJoystick.getY() * -1; // inverts sign for Y axis
-    double turn = Robot.oi.leftJoystick.getX();
-    Robot.driveSubsystem.ManualDrive(move, turn);
+    Robot.navXSubsystem.zeroYaw();
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return true;
   }
 
   // Called once after isFinished returns true

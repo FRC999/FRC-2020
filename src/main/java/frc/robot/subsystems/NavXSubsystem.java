@@ -14,16 +14,16 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
  * This is a class that manages a NavX. Copy-paste it, whatever The methods are
- * corrected to the robot orientation TODO: Have the methods return the correct axis
- * axis for their name: ie, correct for NavX orientation
+ * corrected to the robot orientation TODO: Have the methods return the correct
+ * axis axis for their name: ie, correct for NavX orientation
  */
-public class NavXBase extends Subsystem {
+public class NavXSubsystem extends Subsystem {
     AHRS NavX;
 
     /**
      * This constructs the navx: it may throw an exception if the NavX is not found
      */
-    public NavXBase() {// PUT ARGUMENTS WHEN WE NEED THEM
+    public NavXSubsystem() {// PUT ARGUMENTS WHEN WE NEED THEM
         try {
             NavX = new AHRS(SPI.Port.kMXP);// TODO: Check port num
         } catch (RuntimeException ex) {
@@ -43,7 +43,7 @@ public class NavXBase extends Subsystem {
 
     /**
      * Gets the pitch of the robot (X axis rotation) (pitch is rotation around the
-     * horisontal axis perpendicular to straight forward)
+     * horizontal axis perpendicular to straight forward)
      * 
      * @return The pitch of the robot
      */
