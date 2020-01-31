@@ -41,6 +41,7 @@ public class DriveSubsystem extends Subsystem {
   public static DifferentialDrive drive = new DifferentialDrive(frontLeftDriveTalonSRX, frontRightDriveTalonSRX);
 
   public void manualDrive(double move, double turn) {
+	drive.setSafetyEnabled(false);  // This should prevent the watchdog from complaining during movement using motionmagic
 	drive.arcadeDrive(move, turn);
   }
 
@@ -69,11 +70,16 @@ public class DriveSubsystem extends Subsystem {
    * Call this in robot-init: it preforms basic setup for ArcadeDrive
    */
   public void resetDriveTrainControllers() {
-	System.out.println("Hit  resetDriveTrainControllers");
+	//System.out.println("Hit  resetDriveTrainControllers");
     frontLeftDriveTalonSRX.configFactoryDefault();
     backLeftDriveTalonSRX.configFactoryDefault();
     frontRightDriveTalonSRX.configFactoryDefault();
-    backRightDriveTalonSRX.configFactoryDefault();
+	backRightDriveTalonSRX.configFactoryDefault();
+	
+	//frontLeftDriveTalonSRX.setSafetyEnabled(true);
+	//backLeftDriveTalonSRX.setSafetyEnabled(true);
+	//frontRightDriveTalonSRX.setSafetyEnabled(true);
+	//backRightDriveTalonSRX.setSafetyEnabled(true);
 
     // Set up followers
     backLeftDriveTalonSRX.follow(frontLeftDriveTalonSRX);
@@ -103,7 +109,7 @@ public class DriveSubsystem extends Subsystem {
    */
   public void configureDriveTrainControllersForSimpleMagic(){
 	//resetDriveTrainControllers(); //just to be safe -CMM
-	System.out.println("Hit  configureDriveTrainControllersForSimpleMagic");
+	//System.out.println("Hit  configureDriveTrainControllersForSimpleMagic");
 
 	// Configure the encoders for PID control
 	frontLeftDriveTalonSRX.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, RobotMap.PID_PRIMARY, RobotMap.configureTimeoutMs);			
