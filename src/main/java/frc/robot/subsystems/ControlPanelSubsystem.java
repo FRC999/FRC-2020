@@ -6,10 +6,13 @@ import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.I2C;
 
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.revrobotics.ColorSensorV3;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+
+import frc.robot.RobotMap;
 
 public class ControlPanelSubsystem extends Subsystem {
   // TODO: Find stuff for JE-PLG-149 motors so they can be used here
@@ -17,9 +20,8 @@ public class ControlPanelSubsystem extends Subsystem {
   private final I2C.Port i2cPort = I2C.Port.kOnboard;
   private final ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort);
 
-  private WPI_TalonSRX diskSpinnerTalon;// = new WPI_TalonSRX(RobotMap.diskSpinnerMotorID);
-  private DoubleSolenoid diskSpinnerSolenoid;// = new
-                                             // DoubleSolenoid(RobotMap.ColorWheelSolenoidForwardChannel,RobotMap.ColorWheelSolenoidReverseChannel);
+  private WPI_TalonSRX diskSpinnerTalon = new WPI_TalonSRX(RobotMap.diskSpinnerMotorID);
+  private DoubleSolenoid diskSpinnerSolenoid= new DoubleSolenoid(RobotMap.ColorWheelSolenoidForwardChannel,RobotMap.ColorWheelSolenoidReverseChannel);
 
   private PanelColors targetColor;
   private boolean receivedGameColor = false;
@@ -30,6 +32,18 @@ public class ControlPanelSubsystem extends Subsystem {
   static final double toleranceSize = .01;// tolerance size (in percent)
   private boolean wasAligned = false;
   private double spinSpeed = 0.5;
+
+  public  void resetMotorController() {
+    diskSpinnerTalon.configFactoryDefault();
+    diskSpinnerTalon.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
+  }
+  public int readEncoder() {
+    return diskSpinnerTalon.getSelectedSensorPosition();
+  }
+
+public void zeroEncoder() {
+  diskSpinnerTalon.setSelectedSensorPosition(0);
+}
 
   public void putSeenColor() {
     updateColorState();
