@@ -33,12 +33,23 @@ public class ControlPanelSubsystem extends Subsystem {
   private boolean wasAligned = false;
   private double spinSpeed = 0.5;
 
+  public ControlPanelSubsystem()
+  {
+    resetMotorController();
+  }
+
   public  void resetMotorController() {
     diskSpinnerTalon.configFactoryDefault();
     diskSpinnerTalon.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
+    zeroEncoder();
   }
-  public int readEncoder() {
+  /** angular position of the control panel motor in encoder ticks. This uses a quadrature encoder, with 44.4 ticks per revolution. */
+  public int readEncoderRaw() {
     return diskSpinnerTalon.getSelectedSensorPosition();
+  }
+/**  angular position of the control panel motor in revolutions. Converted from raw encoder ticks using the formula (encoder ticks) * (1 revolution/44.4 ticks) = the number of revolutions.  */
+  public double readEncoderRevolutions() {
+    return (diskSpinnerTalon.getSelectedSensorPosition() /44.4);
   }
 
 public void zeroEncoder() {
