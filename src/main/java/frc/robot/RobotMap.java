@@ -34,7 +34,7 @@ public class RobotMap {
 
   // Control panel constants
   // TODO: Get actual motor ID
-  public static final int diskSpinnerMotorID = -1;
+  public static final int diskSpinnerMotorID = 52;
 
   // Climber constants
   public final static int climberMotorController = 10;

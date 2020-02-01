@@ -41,15 +41,26 @@ public class ControlPanelSubsystem extends Subsystem {
   public  void resetMotorController() {
     diskSpinnerTalon.configFactoryDefault();
     diskSpinnerTalon.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
+    /*Johnson motors have a quadrature encoder with 178 ticks per revolution. Notes on wiring them to talons:
+      type   |motor | breakout board
+             --------------------
+          5v |brown | red
+  output 1/A |yellow| green
+  output 2/B |green | yellow
+      ground |blue  | black
+    
+    */
     zeroEncoder();
   }
-  /** angular position of the control panel motor in encoder ticks. This uses a quadrature encoder, with 44.4 ticks per revolution. */
+  /** angular position of the control panel motor in encoder ticks. This uses a quadrature encoder, with 178 ticks per revolution. */
   public int readEncoderRaw() {
     return diskSpinnerTalon.getSelectedSensorPosition();
   }
-/**  angular position of the control panel motor in revolutions. Converted from raw encoder ticks using the formula (encoder ticks) * (1 revolution/44.4 ticks) = the number of revolutions.  */
+/**  angular position of the control panel motor in revolutions. Converted from raw encoder ticks using the formula (encoder ticks) * (1 revolution/178 ticks) = the number of revolutions. 
+ * Experimentally: 4 revolutions = 712 encoder ticks / 4 = 178
+ */
   public double readEncoderRevolutions() {
-    return (diskSpinnerTalon.getSelectedSensorPosition() /44.4);
+    return diskSpinnerTalon.getSelectedSensorPosition()/178. ;
   }
 
 public void zeroEncoder() {
