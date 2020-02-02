@@ -17,6 +17,7 @@ import frc.robot.commands.RealSmartAutoCommand;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.ControlPanelSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.FalconDriveSubsystem;
 import frc.robot.subsystems.NavXSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
@@ -40,6 +41,7 @@ public class Robot extends TimedRobot {
   public static UltrasonicSensorSubsystem ultrasonicSubsystem = new UltrasonicSensorSubsystem();
   public static IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   public static ControlPanelSubsystem controlPanelSubsystem = new ControlPanelSubsystem();
+  public static FalconDriveSubsystem falconDriveSubsystem = new FalconDriveSubsystem();
   public boolean TestBool = false;
   public static OI oi = new OI();
   Command autonomousCommand;
@@ -67,7 +69,7 @@ public class Robot extends TimedRobot {
 
     // after testing run only the second configure method
     Robot.driveSubsystem.configureDriveTrainControllersForSimpleMagic();
-    Robot.driveSubsystem.configureDriveTrainControllersForAuxClosedLoopPID();
+    //Robot.driveSubsystem.configureDriveTrainControllersForAuxClosedLoopPID();
 
     Robot.driveSubsystem.zeroDriveEncoders();
     Robot.driveSubsystem.driveTrainBrakeMode();
@@ -169,5 +171,6 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void testPeriodic() {
+    
   }
 }

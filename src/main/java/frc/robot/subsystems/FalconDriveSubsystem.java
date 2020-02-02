@@ -22,6 +22,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
+import frc.robot.commands.FalconManualDrivingCommand;
 
 /**
  * Add your docs here.
@@ -342,7 +343,8 @@ public class FalconDriveSubsystem extends Subsystem {
 
   @Override
   public void initDefaultCommand() {
+    
     // Set the default command for a subsystem here.
-    // setDefaultCommand(new MySpecialCommand());
+     setDefaultCommand(new FalconManualDrivingCommand());
   }
 }

@@ -20,8 +20,8 @@ public class RobotMap {
   // Drivetrain Motor Controllers
   public final static int frontLeftDriveMotorController = 1;
   public final static int backLeftDriveMotorController = 2;
-  public final static int frontRightDriveMotorController = 4;
-  public final static int backRightDriveMotorController = 3;
+  public final static int frontRightDriveMotorController = 3;
+  public final static int backRightDriveMotorController = 4;
 
   // Intake motor controllers
   public final static int intakeMotor1Controller = 8;

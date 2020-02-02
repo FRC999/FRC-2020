@@ -14,7 +14,7 @@ public class FalconManualDrivingCommand extends Command {
   public FalconManualDrivingCommand() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.driveSubsystem);
+    requires(Robot.falconDriveSubsystem);
   }
 
   // Called just before this Command runs the first time
@@ -28,7 +28,7 @@ public class FalconManualDrivingCommand extends Command {
       // Read joystick values
       double move = Robot.oi.leftJoystick.getY() * -1; // inverts sign for Y axis
       double turn = Robot.oi.leftJoystick.getX();
-      Robot.driveSubsystem.manualDrive(move, turn);
+      Robot.falconDriveSubsystem.manualDrive(move, turn);
       Robot.smartDashboardSubsystem.updateEncoderValue();
   
   }
