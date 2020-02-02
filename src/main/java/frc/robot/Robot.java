@@ -68,6 +68,7 @@ public class Robot extends TimedRobot {
     Robot.driveSubsystem.zeroDriveEncoders();
     Robot.driveSubsystem.driveTrainBrakeMode();
     Robot.navXSubsystem.zeroYaw();
+    Robot.controlPanelSubsystem.resetMotorController();
   }
 
   /**
@@ -91,6 +92,7 @@ public class Robot extends TimedRobot {
   @Override
   public void disabledInit() {
     driveSubsystem.DriveTrainCoastMode();
+    controlPanelSubsystem.stopTalon();
   }
 
   @Override

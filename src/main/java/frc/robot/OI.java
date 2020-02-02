@@ -28,6 +28,7 @@ public class OI {
   Button testMotionMagicButton = new JoystickButton(leftJoystick , 7);
   Button spin = new JoystickButton(leftJoystick, 8);
   Button zeroControlPanelEncoderButton = new JoystickButton(leftJoystick, 9);
+  Button setControlPanelPositionButton = new JoystickButton(leftJoystick, 10);
 
   public OI() { // Setup All Commands Here
     zeroEncoderButton.whenPressed(new ZeroDriveEncodersCommand());
@@ -37,6 +38,7 @@ public class OI {
     stopButton.whenActive(new StopCommand());
     showEncoderButton.whenPressed(new RealSmartAutoCommand());
     zeroControlPanelEncoderButton.whenPressed(new ZeroControlPanelEncoderCommand());
+    setControlPanelPositionButton.whenPressed(new MoveControlPanelToTargetRevolutionsCommand(3.5));
     
   }
 }
