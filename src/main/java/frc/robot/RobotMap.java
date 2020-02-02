@@ -121,7 +121,7 @@ public class RobotMap {
   */
 
   // Closed loop PID parameter values TODO: replace F values with measured values
-  public final static double P_0 = 0.75 * fullMotorOutput / encoderUnitsPerShaftRotation; // .25% motor output when
+  public final static double P_0 = 0.75 * fullMotorOutput / encoderUnitsPerShaftRotation; // 75% motor output when
                                                                                           // error = one rotation
   public final static double I_0 = 0.005 * fullMotorOutput / encoderUnitsPerShaftRotation;
   public final static double D_0 = .1;
@@ -129,11 +129,11 @@ public class RobotMap {
   public final static int Izone_0 = 500;
   public final static double PeakOutput_0 = 1;
 
-  // Closed loop PID parameter values
-  public final static double P_1 = 0.25 * fullMotorOutput / encoderUnitsPerShaftRotation; // .25% motor output when
+  // Closed loop Aux PID parameter values
+  public final static double P_1 = 0.75 * fullMotorOutput / encoderUnitsPerShaftRotation; // 75% motor output when
                                                                                           // error = one rotation
-  public final static double I_1 = 0.025 * fullMotorOutput / encoderUnitsPerShaftRotation;
-  public final static double D_1 = 0;
+  public final static double I_1 = 0.005 * fullMotorOutput / encoderUnitsPerShaftRotation;
+  public final static double D_1 = 0.1;
   public final static double F_1 = 0.227; // just a guesstimate
   public final static int Izone_1 = 500;
   public final static double PeakOutput_1 = 1;

@@ -64,7 +64,11 @@ public class Robot extends TimedRobot {
     SmartDashboard.putData("Auto mode", sendableCommandChooser);
     SmartDashboard.putBoolean("Test Boolean", TestBool);
     Robot.driveSubsystem.resetDriveTrainControllers();
+    
+    // after testing run only the second configure method
     Robot.driveSubsystem.configureDriveTrainControllersForSimpleMagic();
+    Robot.driveSubsystem.configureDriveTrainControllersForAuxClosedLoopPID();
+
     Robot.driveSubsystem.zeroDriveEncoders();
     Robot.driveSubsystem.driveTrainBrakeMode();
     Robot.navXSubsystem.zeroYaw();

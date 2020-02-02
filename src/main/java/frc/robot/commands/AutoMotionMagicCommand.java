@@ -24,6 +24,7 @@ public class AutoMotionMagicCommand extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    DriveSubsystem.drive.setSafetyEnabled(false);  // This should prevent the watchdog from complaining during movement using motionmagic
     Robot.driveSubsystem.simpleMotionMagicTest(testEncoderVal,  testEncoderVal);    
   }
 
@@ -31,8 +32,9 @@ public class AutoMotionMagicCommand extends Command {
   @Override
   protected void execute() {
     Robot.smartDashboardSubsystem.updateEncoderValue();
-    DriveSubsystem.drive.feed();//It took us four hours to figure out we needed this line
+    //DriveSubsystem.drive.feed();//It took us four hours to figure out we needed this line
     //"Watchdog does not behave nicely when it gets pissed off"
+    // --- fixed by setting setSafetyEnabled to false durring this command -----
   
   }
 
@@ -52,6 +54,7 @@ public class AutoMotionMagicCommand extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    DriveSubsystem.drive.setSafetyEnabled(true);  // Reactivate watchdog after motionmagic
   }
 
   // Called when another command which requires one or more of the same
