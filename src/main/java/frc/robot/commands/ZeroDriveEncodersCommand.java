@@ -8,7 +8,6 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.WaitCommand;
 import frc.robot.Robot;
 
 public class ZeroDriveEncodersCommand extends Command {
