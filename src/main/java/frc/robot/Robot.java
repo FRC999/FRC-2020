@@ -64,7 +64,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putData("Auto mode", sendableCommandChooser);
     SmartDashboard.putBoolean("Test Boolean", TestBool);
     Robot.driveSubsystem.resetDriveTrainControllers();
-    
+
     // after testing run only the second configure method
     Robot.driveSubsystem.configureDriveTrainControllersForSimpleMagic();
     Robot.driveSubsystem.configureDriveTrainControllersForAuxClosedLoopPID();
@@ -126,7 +126,7 @@ public class Robot extends TimedRobot {
      * MyAutoCommand(); break; case "Default Auto": default: autonomousCommand = new
      * ExampleCommand(); break; }
      */
-    driveSubsystem.DriveTrainCoastMode();
+    driveSubsystem.driveTrainBrakeMode();
 
     // schedule the autonomous command (example)
     if (autonomousCommand != null) {
@@ -144,7 +144,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-    driveSubsystem.DriveTrainCoastMode();
+    driveSubsystem.driveTrainBrakeMode();
 
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to

@@ -8,16 +8,13 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.subsystems.ControlPanelSubsystem;
+import frc.robot.Robot;
 
-public class RotationControlCommand extends Command {
-  ControlPanelSubsystem controlPanelSubsystem;
-  //controlPanelSubsystem = Robot.controlPanelSubsystem;
-  public RotationControlCommand() {
+public class FalconManualDrivingCommand extends Command {
+  public FalconManualDrivingCommand() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    //requires(Robot.controlPanelSubsystem);//uncomment when its time to use
-    
+    requires(Robot.driveSubsystem);
   }
 
   // Called just before this Command runs the first time
@@ -28,8 +25,14 @@ public class RotationControlCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-
+      // Read joystick values
+      double move = Robot.oi.leftJoystick.getY() * -1; // inverts sign for Y axis
+      double turn = Robot.oi.leftJoystick.getX();
+      Robot.driveSubsystem.manualDrive(move, turn);
+      Robot.smartDashboardSubsystem.updateEncoderValue();
+  
   }
+
 
   // Make this return true when this Command no longer needs to run execute()
   @Override

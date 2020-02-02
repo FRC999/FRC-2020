@@ -25,7 +25,7 @@ public class DifMMDriveForwardCommand extends Command {
   @Override
   protected void initialize() {
     //System.out.println("Called initialize");
-    Robot.driveSubsystem.driveTrainBrakeMode();
+    //Robot.driveSubsystem.driveTrainBrakeMode();
     int heading = Robot.driveSubsystem.getHeadingPosition();
     int position = Robot.driveSubsystem.getDistancePosition();
     int driveTarget =  driveDistance + position;

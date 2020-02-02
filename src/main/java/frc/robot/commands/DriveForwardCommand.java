@@ -29,7 +29,7 @@ public class DriveForwardCommand extends Command {
   @Override
   protected void initialize() {
     //System.out.println("Called initialize");
-    Robot.driveSubsystem.driveTrainBrakeMode();
+    //Robot.driveSubsystem.driveTrainBrakeMode();
     int lEncoder = Robot.driveSubsystem.getLeftEncoder();
     int rEncoder = Robot.driveSubsystem.getRightEncoder();
     //System.out.println(lEncoder);

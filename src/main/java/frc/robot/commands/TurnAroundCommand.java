@@ -25,7 +25,7 @@ public class TurnAroundCommand extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.driveSubsystem.driveTrainBrakeMode();
+    //Robot.driveSubsystem.driveTrainBrakeMode();
     //NOTE: This is *not* configured to work with the NavX anymore: it is purely based on encoder tics
     //We could (and maybe should) rewrite it to use the NavX as an auxiliary input for more accuracy.
     leftTarget = Robot.driveSubsystem.getLeftEncoder() - RobotMap.encoderUnitsPerRobotRotation/2;
