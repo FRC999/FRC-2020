@@ -6,10 +6,14 @@ import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.I2C;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.revrobotics.ColorSensorV3;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+
+import frc.robot.RobotMap;
 
 public class ControlPanelSubsystem extends Subsystem {
   // TODO: Find stuff for JE-PLG-149 motors so they can be used here
@@ -17,9 +21,8 @@ public class ControlPanelSubsystem extends Subsystem {
   private final I2C.Port i2cPort = I2C.Port.kOnboard;
   private final ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort);
 
-  private WPI_TalonSRX diskSpinnerTalon;// = new WPI_TalonSRX(RobotMap.diskSpinnerMotorID);
-  private DoubleSolenoid diskSpinnerSolenoid;// = new
-                                             // DoubleSolenoid(RobotMap.ColorWheelSolenoidForwardChannel,RobotMap.ColorWheelSolenoidReverseChannel);
+  private WPI_TalonSRX diskSpinnerTalon = new WPI_TalonSRX(RobotMap.diskSpinnerMotorID);
+  private DoubleSolenoid diskSpinnerSolenoid= new DoubleSolenoid(RobotMap.ColorWheelSolenoidForwardChannel,RobotMap.ColorWheelSolenoidReverseChannel);
 
   private PanelColors targetColor;
   private boolean receivedGameColor = false;
@@ -30,6 +33,59 @@ public class ControlPanelSubsystem extends Subsystem {
   static final double toleranceSize = .01;// tolerance size (in percent)
   private boolean wasAligned = false;
   private double spinSpeed = 0.5;
+
+  public ControlPanelSubsystem()
+  {
+    resetMotorController();
+  }
+
+  public  void resetMotorController() {
+    diskSpinnerTalon.configFactoryDefault();
+    diskSpinnerTalon.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
+    /*Johnson motors have a quadrature encoder with 178 ticks per revolution. Notes on wiring them to talons:
+      type   |motor | breakout board
+             --------------------
+          5v |brown | red
+  output 1/A |yellow| green
+  output 2/B |green | yellow
+      ground |blue  | black
+    
+    */
+    zeroEncoder();
+  }
+  /** angular position of the control panel motor in encoder ticks. This uses a quadrature encoder, with 178 ticks per revolution. */
+  public int readEncoderRaw() {
+    return diskSpinnerTalon.getSelectedSensorPosition();
+  }
+/**  angular position of the control panel motor in revolutions. Converted from raw encoder ticks using the formula
+ *  (encoder ticks) * (1 revolution/178 ticks) = the number of revolutions. 
+ * Experimentally: 4 revolutions = 712 encoder ticks / 4 = 178
+ */
+  public double readEncoderRevolutions() {
+    return diskSpinnerTalon.getSelectedSensorPosition() * (1/RobotMap.quadratureEncoderTicksPerRev) ;
+  }
+/** set the value of this subsystem's motor encoder to zero. */
+public void zeroEncoder() {
+  diskSpinnerTalon.setSelectedSensorPosition(0);
+}
+/** convert a target value in revolutions for how far we want to spin the control panel 
+ * to the number of encoder ticks we need to spin our cylinder to get the control panel there.
+ */
+public double controlPanelTargetRevolutionsToQuadEncoderTicks(double target) {
+/*  angular displacement of gear A / angular displacement of gear B = radius of B / radius of A
+theta cyl/theta control = r control / r cyl
+theta cyl = (theta control * r control)/r cyl
+theta cyl rev * (ticks/rev) = theta cyl ticks
+*/
+ return (target *RobotMap.controlPanelDiameter * RobotMap.quadratureEncoderTicksPerRev)/(RobotMap.diskSpinnerDiameter);
+}
+/** Uses this talon's encoder */
+public void moveTalonToPosition(double position) {
+ // diskSpinnerTalon.set(ControlMode.Position,position);
+ diskSpinnerTalon.set(0.5);
+ System.out.println(position);
+}
+/**basically just for test debugging */public void stopTalon() {diskSpinnerTalon.set(0);}
 
   public void putSeenColor() {
     updateColorState();

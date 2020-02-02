@@ -34,7 +34,13 @@ public class RobotMap {
 
   // Control panel constants
   // TODO: Get actual motor ID
-  public static final int diskSpinnerMotorID = -1;
+  public static final int diskSpinnerMotorID = 52;
+  //quadrature motor controller ticks per revolution
+  public static final int quadratureEncoderTicksPerRev = 178;
+  // diameter of the wheel which spins the control panel wheel, in cm
+  public static final double diskSpinnerDiameter = 81.28;
+  // diameter of the control panel disk in cm
+  public static final double controlPanelDiameter = 81.28;
 
   // Climber constants
   public final static int climberMotorController = 10;

@@ -26,6 +26,7 @@ public class UpdateAllSmartDashboard extends CommandGroup {
     // Command1 and Command2 will run in parallel.
     addParallel(new UpdateNavXSmartDashboard());
     addParallel(new UltrasonicSensorSmartDashboardCommand());
+    addParallel(new UpdateControlPanelSmartDashboardCommand());
     //addParallel(new DisplayDriveEncodersCommand());
 
     // A command group will require all of the subsystems that each member
