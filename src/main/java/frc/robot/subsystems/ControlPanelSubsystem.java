@@ -21,7 +21,7 @@ public class ControlPanelSubsystem extends Subsystem {
   private final ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort);
 
   private WPI_TalonSRX diskSpinnerTalon = new WPI_TalonSRX(RobotMap.diskSpinnerMotorID);
- // private DoubleSolenoid diskSpinnerSolenoid= new DoubleSolenoid(RobotMap.ColorWheelSolenoidForwardChannel,RobotMap.ColorWheelSolenoidReverseChannel);
+  private DoubleSolenoid diskSpinnerSolenoid;//= new DoubleSolenoid(RobotMap.ColorWheelSolenoidForwardChannel,RobotMap.ColorWheelSolenoidReverseChannel);
 
   private PanelColors targetColor;
   private boolean receivedGameColor = false;
