@@ -7,6 +7,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -15,8 +16,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.ManualDrivingCommand;
 import frc.robot.commands.RealSmartAutoCommand;
 import frc.robot.subsystems.ClimberSubsystem;
-//import frc.robot.subsystems.ControlPanelSubsystem;
-import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.ControlPanelSubsystem;
+import frc.robot.subsystems.DriveSubsystemBase;
+import frc.robot.subsystems.TalonDriveSubsystem;
 import frc.robot.subsystems.FalconDriveSubsystem;
 import frc.robot.subsystems.NavXSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -32,7 +34,7 @@ import frc.robot.subsystems.UltrasonicSensorSubsystem;
  * project.
  */
 public class Robot extends TimedRobot {
-  public static DriveSubsystem driveSubsystem = new DriveSubsystem();
+  public static DriveSubsystemBase driveSubsystem;
   public static ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
   public static ClimberSubsystem climberSubsystem = new ClimberSubsystem();
   public static ManualDrivingCommand manualDrivingCommand = new ManualDrivingCommand(); // FOR CHOOSER TESTING
@@ -40,8 +42,7 @@ public class Robot extends TimedRobot {
   public static NavXSubsystem navXSubsystem = new NavXSubsystem();
   public static UltrasonicSensorSubsystem ultrasonicSubsystem = new UltrasonicSensorSubsystem();
   public static IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
-  //public static ControlPanelSubsystem controlPanelSubsystem = new ControlPanelSubsystem();
-  public static FalconDriveSubsystem falconDriveSubsystem = new FalconDriveSubsystem();
+  public static ControlPanelSubsystem controlPanelSubsystem = new ControlPanelSubsystem();
   public boolean TestBool = false;
   public static OI oi = new OI();
   Command autonomousCommand;
@@ -74,7 +75,18 @@ public class Robot extends TimedRobot {
     Robot.driveSubsystem.zeroDriveEncoders();
     Robot.driveSubsystem.driveTrainBrakeMode();
     Robot.navXSubsystem.zeroYaw();
-    //Robot.controlPanelSubsystem.resetMotorController();
+    Robot.controlPanelSubsystem.resetMotorController();
+    DigitalInput falconBotSwitch = new DigitalInput(RobotMap.falconBotSwitchPortNumber);
+    RobotMap.isFalconBot = falconBotSwitch.get();
+    if(RobotMap.isFalconBot){
+      driveSubsystem = new FalconDriveSubsystem();
+      System.out.println("We're a FALCON");
+    }
+    else{
+      driveSubsystem = new TalonDriveSubsystem();
+      System.out.println("We're a TALON");
+    }
+    falconBotSwitch.close();
   }
 
   /**

@@ -8,53 +8,55 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
-import frc.robot.subsystems.TalonDriveSubsystem;
+import frc.robot.RobotMap;
 
-public class AutoMotionMagicCommand extends Command {
-  private static final int testEncoderVal = 50000;
-  public AutoMotionMagicCommand() {
+public class TurnRightX extends Command {
+  private int leftTarget;
+  private int rightTarget;
+  private double turnDegrees;
+  private int leftAddEncoder = (int) Math.round(RobotMap.encoderUnitsPerRobotRotation * turnDegrees / 360);
+  private int rightAddEncoder = (int) Math.round(RobotMap.encoderUnitsPerRobotRotation * turnDegrees / 360);
+  
+  public TurnRightX(double degrees) {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(Robot.driveSubsystem);
-    //Robot.driveSubsystem.configureDriveTrainControllersForSimpleMagic();
-
+    turnDegrees = degrees;
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    TalonDriveSubsystem.drive.setSafetyEnabled(false);  // This should prevent the watchdog from complaining during movement using motionmagic
-    Robot.driveSubsystem.simpleMotionMagicTest(testEncoderVal,  testEncoderVal);    
+    Robot.driveSubsystem.driveTrainBrakeMode();
+    //NOTE: This is *not* configured to work with the NavX anymore: it is purely based on encoder tics
+    //We could (and maybe should) rewrite it to use the NavX as an auxiliary input for more accuracy.
+    leftTarget = Robot.driveSubsystem.getLeftEncoder() + leftAddEncoder;
+    rightTarget = Robot.driveSubsystem.getRightEncoder() - rightAddEncoder;
+    Robot.driveSubsystem.simpleMotionMagicTest(leftTarget, rightTarget);
+    System.out.println("Turning init done.");
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    Robot.driveSubsystem.feed();
     Robot.smartDashboardSubsystem.updateEncoderValue();
-    //DriveSubsystem.drive.feed();//It took us four hours to figure out we needed this line
-    //"Watchdog does not behave nicely when it gets pissed off"
-    // --- fixed by setting setSafetyEnabled to false durring this command -----
-  
+    SmartDashboard.putNumber("leftTarget",leftTarget);
+    SmartDashboard.putNumber("RightTarget", rightTarget);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    boolean retVal= false;
-    if((Robot.driveSubsystem.getLeftEncoder() >= testEncoderVal) ||(Robot.driveSubsystem.getRightEncoder() >= testEncoderVal) ){
-      retVal = true;//exit method and command
-    }
-    else
-    retVal = false;//keep going
-    
-    return retVal;
+    return Robot.driveSubsystem.isOnTarget(leftTarget,rightTarget,100);
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    TalonDriveSubsystem.drive.setSafetyEnabled(true);  // Reactivate watchdog after motionmagic
+    System.out.println("Done turning.");
   }
 
   // Called when another command which requires one or more of the same

@@ -71,21 +71,15 @@ public class RobotMap {
   public static final double ultrasonicTriggerTime = 20E-6;
   // constant conversion factor: ultrasonic sensor value to inches
   public static double ultrasonicValueToInchesConversionFactor = 0.125;
-  // 0.125 (inch conversion factor) * 2.54 (inches to cm conversion factor) =
-  // 0.3175; inches conversion factor from a code sample put out by WPIlib, but
-  // trusted less than the value below.
-  // the value below is from when they give the formulas when talking about how to
-  // set it up
-  /*
-   * voltage scaling: Vcc (supplied voltage) / 1024 = Vi (volts per 5 mm) 5
-   * volts/1024 = vi range formula: 5 * (measured voltage)/vi = range in mm 5 *
-   * (measured voltage in volts)/ (5/1024) = (measured voltage * 1024) = range in
-   * mm
-   * 
+/*
    * at around 1800 mm away, the raw value was 1471, while the converted mm value was 467; this is not the right factor.
    * Therefore, the ideal conversion factorshould be between 1 and 1.5
+   * 4 consistent tests (mm/raw unit ratios of 1.255,1.22,1.276, and 1.25, discarding an 0.7058 from measurements 240/340)
+   *  suggest the correct factor is around 1.25
    */
-  public static double ultrasonicValueToMMConversionFactor = 0.3175;
+  public static double ultrasonicValueToMMConversionFactor = 1.25;
+  public static int falconBotSwitchPortNumber = 0;
+  public static boolean isFalconBot;
 
   // Closed loop constants
   // How long we wait for a configuration change to happen before we give up and
@@ -99,6 +93,7 @@ public class RobotMap {
   // The difference between the left and right side encoder values when the robot
   // is rotated 180 degrees
   public final static int encoderUnitsPerRobotRotation = 38585;// thats the SUM of the two
+  public final static double encoderUnitsPerJEMotorRotation = 44.4;
   // How many milliseconds between each closed loop call
   public final static int closedLoopPeriodMs = 1;
   // Motor neutral dead-band, set to the minimum 0.1%
