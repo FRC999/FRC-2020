@@ -30,6 +30,7 @@ public class OI {
   Button testDifMM = new JoystickButton(leftJoystick, 11);
   Button zeroControlPanelEncoderButton = new JoystickButton(leftJoystick, 9);
   Button setControlPanelPositionButton = new JoystickButton(leftJoystick, 10);
+  Button turnToValue = new JoystickButton(leftJoystick, 12);
 
   public OI() { // Setup All Commands Here
     zeroEncoderButton.whenPressed(new ZeroDriveEncodersCommand());
@@ -41,6 +42,6 @@ public class OI {
     testDifMM.whenPressed(new DifMMDriveForwardCommand(50000));
     zeroControlPanelEncoderButton.whenPressed(new ZeroControlPanelEncoderCommand());
     setControlPanelPositionButton.whenPressed(new MoveControlPanelToTargetRevolutionsCommand(3.5));
-    
+    turnToValue.whenPressed(new TurnRightX(270));
   }
 }
