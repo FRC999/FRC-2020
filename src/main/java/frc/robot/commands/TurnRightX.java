@@ -16,8 +16,6 @@ public class TurnRightX extends Command {
   private int leftTarget;
   private int rightTarget;
   private double turnDegrees;
-  private int leftAddEncoder = (int) Math.round(RobotMap.encoderUnitsPerRobotRotation * turnDegrees / 360);
-  private int rightAddEncoder = (int) Math.round(RobotMap.encoderUnitsPerRobotRotation * turnDegrees / 360);
   
   public TurnRightX(double degrees) {
     // Use requires() here to declare subsystem dependencies
@@ -32,8 +30,8 @@ public class TurnRightX extends Command {
     Robot.driveSubsystem.driveTrainBrakeMode();
     //NOTE: This is *not* configured to work with the NavX anymore: it is purely based on encoder tics
     //We could (and maybe should) rewrite it to use the NavX as an auxiliary input for more accuracy.
-    leftTarget = Robot.driveSubsystem.getLeftEncoder() + leftAddEncoder;
-    rightTarget = Robot.driveSubsystem.getRightEncoder() - rightAddEncoder;
+    leftTarget = Robot.driveSubsystem.getLeftEncoder() + (int) Math.round(RobotMap.encoderUnitsPerRobotRotation * turnDegrees / 360);
+    rightTarget = Robot.driveSubsystem.getRightEncoder() - (int) Math.round(RobotMap.encoderUnitsPerRobotRotation * turnDegrees / 360);
     Robot.driveSubsystem.simpleMotionMagicTest(leftTarget, rightTarget);
     System.out.println("Turning init done.");
   }
