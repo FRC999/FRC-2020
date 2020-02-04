@@ -37,14 +37,13 @@ public class Robot extends TimedRobot {
   public static DriveSubsystemBase driveSubsystem;
   public static ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
   public static ClimberSubsystem climberSubsystem = new ClimberSubsystem();
-  public static ManualDrivingCommand manualDrivingCommand = new ManualDrivingCommand(); // FOR CHOOSER TESTING
   public static SmartDashboardSubsystem smartDashboardSubsystem = new SmartDashboardSubsystem();
   public static NavXSubsystem navXSubsystem = new NavXSubsystem();
   public static UltrasonicSensorSubsystem ultrasonicSubsystem = new UltrasonicSensorSubsystem();
   public static IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   //public static ControlPanelSubsystem controlPanelSubsystem = new ControlPanelSubsystem();
   public boolean TestBool = false;
-  public static OI oi = new OI();
+  public static OI oi;
   Command autonomousCommand;
 
   // Sendable choosers below
@@ -62,6 +61,18 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     System.out.println("Hit robotInit");
 
+    DigitalInput falconBotSwitch = new DigitalInput(RobotMap.falconBotSwitchPortNumber);
+    RobotMap.isFalconBot = !falconBotSwitch.get();
+    if(RobotMap.isFalconBot){
+      driveSubsystem = new FalconDriveSubsystem();
+      System.out.println("We're a FALCON");
+    }
+    else{
+      driveSubsystem = new TalonDriveSubsystem();
+      System.out.println("We're a TALON");
+    }
+    falconBotSwitch.close();
+
     sendableCommandChooser.setDefaultOption("Default Auto", new RealSmartAutoCommand());
     sendableCommandChooser.addOption("Really Smart Auto", new RealSmartAutoCommand());
     SmartDashboard.putData("Auto mode", sendableCommandChooser);
@@ -76,17 +87,9 @@ public class Robot extends TimedRobot {
     Robot.driveSubsystem.driveTrainBrakeMode();
     Robot.navXSubsystem.zeroYaw();
     //Robot.controlPanelSubsystem.resetMotorController();
-    DigitalInput falconBotSwitch = new DigitalInput(RobotMap.falconBotSwitchPortNumber);
-    RobotMap.isFalconBot = falconBotSwitch.get();
-    if(RobotMap.isFalconBot){
-      driveSubsystem = new FalconDriveSubsystem();
-      System.out.println("We're a FALCON");
-    }
-    else{
-      driveSubsystem = new TalonDriveSubsystem();
-      System.out.println("We're a TALON");
-    }
-    falconBotSwitch.close();
+    
+
+    oi = new OI();
   }
 
   /**

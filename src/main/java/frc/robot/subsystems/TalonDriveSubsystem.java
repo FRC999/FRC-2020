@@ -22,6 +22,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
+import frc.robot.commands.ManualDrivingCommand;
 
 /**
  * Add your docs here. TODO: Add docs
@@ -348,7 +349,8 @@ public class TalonDriveSubsystem extends DriveSubsystemBase {
 
   @Override
   public void initDefaultCommand() {
-    // Set the default command for a subsystem here.
-    //setDefaultCommand(new ManualDrivingCommand());
+	// Set the default command for a subsystem here.
+	System.out.println("Default command set");
+    setDefaultCommand(new ManualDrivingCommand());
   }
 }
