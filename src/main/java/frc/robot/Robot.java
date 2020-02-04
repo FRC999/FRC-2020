@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.ManualDrivingCommand;
 import frc.robot.commands.RealSmartAutoCommand;
 import frc.robot.subsystems.ClimberSubsystem;
-import frc.robot.subsystems.ControlPanelSubsystem;
+//import frc.robot.subsystems.ControlPanelSubsystem;
 import frc.robot.subsystems.DriveSubsystemBase;
 import frc.robot.subsystems.TalonDriveSubsystem;
 import frc.robot.subsystems.FalconDriveSubsystem;
@@ -42,7 +42,7 @@ public class Robot extends TimedRobot {
   public static NavXSubsystem navXSubsystem = new NavXSubsystem();
   public static UltrasonicSensorSubsystem ultrasonicSubsystem = new UltrasonicSensorSubsystem();
   public static IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
-  public static ControlPanelSubsystem controlPanelSubsystem = new ControlPanelSubsystem();
+  //public static ControlPanelSubsystem controlPanelSubsystem = new ControlPanelSubsystem();
   public boolean TestBool = false;
   public static OI oi = new OI();
   Command autonomousCommand;
@@ -75,7 +75,7 @@ public class Robot extends TimedRobot {
     Robot.driveSubsystem.zeroDriveEncoders();
     Robot.driveSubsystem.driveTrainBrakeMode();
     Robot.navXSubsystem.zeroYaw();
-    Robot.controlPanelSubsystem.resetMotorController();
+    //Robot.controlPanelSubsystem.resetMotorController();
     DigitalInput falconBotSwitch = new DigitalInput(RobotMap.falconBotSwitchPortNumber);
     RobotMap.isFalconBot = falconBotSwitch.get();
     if(RobotMap.isFalconBot){
