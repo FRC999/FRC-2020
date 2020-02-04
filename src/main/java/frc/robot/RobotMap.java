@@ -78,6 +78,8 @@ public class RobotMap {
    *  suggest the correct factor is around 1.25
    */
   public static double ultrasonicValueToMMConversionFactor = 1.25;
+  public static int falconBotSwitchPortNumber = 0;
+  public static boolean isFalconBot;
 
   // Closed loop constants
   // How long we wait for a configuration change to happen before we give up and

@@ -9,7 +9,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.TalonDriveSubsystem;
 
 public class AutoMotionMagicCommand extends Command {
   private static final int testEncoderVal = 50000;
@@ -24,7 +24,7 @@ public class AutoMotionMagicCommand extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    DriveSubsystem.drive.setSafetyEnabled(false);  // This should prevent the watchdog from complaining during movement using motionmagic
+    TalonDriveSubsystem.drive.setSafetyEnabled(false);  // This should prevent the watchdog from complaining during movement using motionmagic
     Robot.driveSubsystem.simpleMotionMagicTest(testEncoderVal,  testEncoderVal);    
   }
 
@@ -54,7 +54,7 @@ public class AutoMotionMagicCommand extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    DriveSubsystem.drive.setSafetyEnabled(true);  // Reactivate watchdog after motionmagic
+    TalonDriveSubsystem.drive.setSafetyEnabled(true);  // Reactivate watchdog after motionmagic
   }
 
   // Called when another command which requires one or more of the same

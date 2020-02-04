@@ -23,12 +23,11 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
-import frc.robot.commands.ManualDrivingCommand;
 
 /**
  * Add your docs here. TODO: Add docs
  */
-public class DriveSubsystem extends Subsystem {
+public class DriveSubsystemBase extends Subsystem {
   // Put methods for controlling this subsystem here. Call these from Commands.
 
   //For isOnTarget

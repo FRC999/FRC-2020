@@ -19,15 +19,14 @@ import com.ctre.phoenix.motorcontrol.StatusFrame;
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
-import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
-import frc.robot.commands.FalconManualDrivingCommand;
+import frc.robot.commands.ManualDrivingCommand;
 
 /**
  * Add your docs here.
  */
-public class FalconDriveSubsystem extends Subsystem {
+public class FalconDriveSubsystem extends DriveSubsystemBase {
   //For isOnTarget
   boolean wasOnTarget = false;
   int withinAcceptableErrorLoops = 0;
@@ -345,6 +344,6 @@ public class FalconDriveSubsystem extends Subsystem {
   public void initDefaultCommand() {
     
     // Set the default command for a subsystem here.
-     setDefaultCommand(new FalconManualDrivingCommand());
+     setDefaultCommand(new ManualDrivingCommand());
   }
 }
