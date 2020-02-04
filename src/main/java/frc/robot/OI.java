@@ -39,8 +39,8 @@ public class OI {
     stopButton.whenActive(new StopCommand());
     showEncoderButton.whenPressed(new RealSmartAutoCommand());
     testDifMM.whenPressed(new DifMMDriveForwardCommand(50000));
-    zeroControlPanelEncoderButton.whenPressed(new ZeroControlPanelEncoderCommand());
-    setControlPanelPositionButton.whenPressed(new MoveControlPanelToTargetRevolutionsCommand(3.5));
+    //zeroControlPanelEncoderButton.whenPressed(new ZeroControlPanelEncoderCommand());
+    //setControlPanelPositionButton.whenPressed(new MoveControlPanelToTargetRevolutionsCommand(3.5));
     
   }
 }
