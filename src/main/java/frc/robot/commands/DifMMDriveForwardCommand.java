@@ -8,51 +8,45 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
 
-public class TurnAroundCommand extends Command {
-  private int leftTarget;
-  private int rightTarget;
-  
-  public TurnAroundCommand() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
+public class DifMMDriveForwardCommand extends Command {
+  private static int driveDistance;
+  private static int driveTarget;
+
+  public DifMMDriveForwardCommand(int distance) {
     requires(Robot.driveSubsystem);
+    driveDistance = distance;
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    //System.out.println("Called initialize");
     //Robot.driveSubsystem.driveTrainBrakeMode();
-    //NOTE: This is *not* configured to work with the NavX anymore: it is purely based on encoder tics
-    //We could (and maybe should) rewrite it to use the NavX as an auxiliary input for more accuracy.
-    leftTarget = Robot.driveSubsystem.getLeftEncoder() - RobotMap.encoderUnitsPerRobotRotation/2;
-    rightTarget = Robot.driveSubsystem.getRightEncoder() + RobotMap.encoderUnitsPerRobotRotation/2;
-    Robot.driveSubsystem.simpleMotionMagicTest(leftTarget, rightTarget);
-    System.out.println("Ran turning init!");
+    int heading = Robot.driveSubsystem.getHeadingPosition();
+    int position = Robot.driveSubsystem.getDistancePosition();
+    int driveTarget =  driveDistance + position;
+    Robot.driveSubsystem.differentialMotionMagicTest(driveTarget, heading);
   }
+    
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.driveSubsystem.feed();
-    Robot.smartDashboardSubsystem.updateEncoderValue();
-    SmartDashboard.putNumber("leftTarget",leftTarget);
-    SmartDashboard.putNumber("RightTarget", rightTarget);
+    // check to see if closed loop PID is settled on target
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return Robot.driveSubsystem.isOnTarget(leftTarget,rightTarget,100);
+    return Robot.driveSubsystem.isOnTargetMagicMotion(driveTarget, RobotMap.defaultAcceptableError);
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    System.out.println("Done turning?");
   }
 
   // Called when another command which requires one or more of the same

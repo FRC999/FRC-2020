@@ -10,7 +10,6 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
-import frc.robot.RobotMap;
 
 public class DriveForwardCommand extends Command {
   private static int driveDistance;
@@ -28,12 +27,12 @@ public class DriveForwardCommand extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    System.out.println("Called initialize");
-    Robot.driveSubsystem.driveTrainBrakeMode();
+    //System.out.println("Called initialize");
+    //Robot.driveSubsystem.driveTrainBrakeMode();
     int lEncoder = Robot.driveSubsystem.getLeftEncoder();
     int rEncoder = Robot.driveSubsystem.getRightEncoder();
-    System.out.println(lEncoder);
-    System.out.println(rEncoder);
+    //System.out.println(lEncoder);
+    //System.out.println(rEncoder);
     leftTarget =  driveDistance + lEncoder;
     rightTarget = driveDistance + rEncoder;
     Robot.driveSubsystem.simpleMotionMagicTest(leftTarget, rightTarget);
@@ -59,13 +58,13 @@ public class DriveForwardCommand extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    System.out.println("ENDED DRIVEFORWARD");
+    //System.out.println("ENDED DRIVEFORWARD");
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    System.out.println("Interrupted Forward Advance");
+    //System.out.println("Interrupted Forward Advance");
   }
 }

@@ -20,8 +20,8 @@ public class RobotMap {
   // Drivetrain Motor Controllers
   public final static int frontLeftDriveMotorController = 1;
   public final static int backLeftDriveMotorController = 2;
-  public final static int frontRightDriveMotorController = 4;
-  public final static int backRightDriveMotorController = 3;
+  public final static int frontRightDriveMotorController = 3;
+  public final static int backRightDriveMotorController = 4;
 
   // Intake motor controllers
   public final static int intakeMotor1Controller = 8;
@@ -34,7 +34,13 @@ public class RobotMap {
 
   // Control panel constants
   // TODO: Get actual motor ID
-  public static final int diskSpinnerController = -1;
+  public static final int diskSpinnerMotorID = 52;
+  //quadrature motor controller ticks per revolution
+  public static final int quadratureEncoderTicksPerRev = 178;
+  // diameter of the wheel which spins the control panel wheel, in cm
+  public static final double diskSpinnerDiameter = 81.28;
+  // diameter of the control panel disk in cm
+  public static final double controlPanelDiameter = 81.28;
 
   // Climber constants
   public final static int climberMotorController = 10;
@@ -114,7 +120,7 @@ public class RobotMap {
   */
 
   // Closed loop PID parameter values TODO: replace F values with measured values
-  public final static double P_0 = 0.75 * fullMotorOutput / encoderUnitsPerShaftRotation; // .25% motor output when
+  public final static double P_0 = 0.75 * fullMotorOutput / encoderUnitsPerShaftRotation; // 75% motor output when
                                                                                           // error = one rotation
   public final static double I_0 = 0.005 * fullMotorOutput / encoderUnitsPerShaftRotation;
   public final static double D_0 = .1;
@@ -122,11 +128,11 @@ public class RobotMap {
   public final static int Izone_0 = 500;
   public final static double PeakOutput_0 = 1;
 
-  // Closed loop PID parameter values
-  public final static double P_1 = 0.25 * fullMotorOutput / encoderUnitsPerShaftRotation; // .25% motor output when
+  // Closed loop Aux PID parameter values
+  public final static double P_1 = 0.75 * fullMotorOutput / encoderUnitsPerShaftRotation; // 75% motor output when
                                                                                           // error = one rotation
-  public final static double I_1 = 0.025 * fullMotorOutput / encoderUnitsPerShaftRotation;
-  public final static double D_1 = 0;
+  public final static double I_1 = 0.005 * fullMotorOutput / encoderUnitsPerShaftRotation;
+  public final static double D_1 = 0.1;
   public final static double F_1 = 0.227; // just a guesstimate
   public final static int Izone_1 = 500;
   public final static double PeakOutput_1 = 1;

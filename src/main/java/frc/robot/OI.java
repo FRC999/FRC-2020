@@ -27,6 +27,9 @@ public class OI {
   Button climberClimbButton = new JoystickButton(leftJoystick, 6);
   Button testMotionMagicButton = new JoystickButton(leftJoystick , 7);
   Button spin = new JoystickButton(leftJoystick, 8);
+  Button testDifMM = new JoystickButton(leftJoystick, 11);
+  Button zeroControlPanelEncoderButton = new JoystickButton(leftJoystick, 9);
+  Button setControlPanelPositionButton = new JoystickButton(leftJoystick, 10);
 
   public OI() { // Setup All Commands Here
     zeroEncoderButton.whenPressed(new ZeroDriveEncodersCommand());
@@ -35,6 +38,9 @@ public class OI {
     spin.whenPressed(new TurnAroundCommand());
     stopButton.whenActive(new StopCommand());
     showEncoderButton.whenPressed(new RealSmartAutoCommand());
+    testDifMM.whenPressed(new DifMMDriveForwardCommand(50000));
+    zeroControlPanelEncoderButton.whenPressed(new ZeroControlPanelEncoderCommand());
+    setControlPanelPositionButton.whenPressed(new MoveControlPanelToTargetRevolutionsCommand(3.5));
     
   }
 }

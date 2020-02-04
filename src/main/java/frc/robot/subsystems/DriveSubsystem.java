@@ -8,18 +8,20 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.FollowerType;
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.RemoteSensorSource;
 import com.ctre.phoenix.motorcontrol.SensorTerm;
 import com.ctre.phoenix.motorcontrol.StatusFrame;
+import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.commands.ManualDrivingCommand;
 
@@ -31,6 +33,7 @@ public class DriveSubsystem extends Subsystem {
 
   //For isOnTarget
   boolean wasOnTarget = false;
+  int withinAcceptableErrorLoops = 0;
 
 
   static WPI_TalonSRX frontLeftDriveTalonSRX = new WPI_TalonSRX(RobotMap.frontLeftDriveMotorController);
@@ -56,6 +59,15 @@ public class DriveSubsystem extends Subsystem {
   public int getRightEncoder() {
     return frontRightDriveTalonSRX.getSelectedSensorPosition();
   }
+ 
+  // encoder positions for aux closed loop PID (driving straight)
+  public int getHeadingPosition() {
+    return frontRightDriveTalonSRX.getSelectedSensorPosition(1);
+  }
+  public int getDistancePosition() {
+    return frontRightDriveTalonSRX.getSelectedSensorPosition(0);
+  }
+
 
   public void DriveTrainCoastMode() {
     frontLeftDriveTalonSRX.setNeutralMode(NeutralMode.Coast);
@@ -69,11 +81,22 @@ public class DriveSubsystem extends Subsystem {
    * Call this in robot-init: it preforms basic setup for ArcadeDrive
    */
   public void resetDriveTrainControllers() {
-	System.out.println("Hit  resetDriveTrainControllers");
+	//System.out.println("Hit  resetDriveTrainControllers");
     frontLeftDriveTalonSRX.configFactoryDefault();
     backLeftDriveTalonSRX.configFactoryDefault();
     frontRightDriveTalonSRX.configFactoryDefault();
-    backRightDriveTalonSRX.configFactoryDefault();
+	backRightDriveTalonSRX.configFactoryDefault();
+	
+	//Set all drive motors to brake mode
+    frontLeftDriveTalonSRX.setNeutralMode(NeutralMode.Brake);
+    backLeftDriveTalonSRX.setNeutralMode(NeutralMode.Brake);
+    frontRightDriveTalonSRX.setNeutralMode(NeutralMode.Brake);
+    backRightDriveTalonSRX.setNeutralMode(NeutralMode.Brake);
+
+	// Set contrllers to Percent output
+    frontLeftDriveTalonSRX.set(ControlMode.PercentOutput, 0);
+    frontRightDriveTalonSRX.set(ControlMode.PercentOutput, 0);
+
 
     // Set up followers
     backLeftDriveTalonSRX.follow(frontLeftDriveTalonSRX);
@@ -96,14 +119,8 @@ public class DriveSubsystem extends Subsystem {
     // Prevent WPI drivetrain class from inverting input for right side motors because we already inverted them
     drive.setRightSideInverted(false);
   }
-
-  /**
-   * Self explanatory:
-   * Calls resetDriveTrainEncoders, just for safety
-   */
+  // replace with configure controllers for aux closed loop PID when ready
   public void configureDriveTrainControllersForSimpleMagic(){
-	//resetDriveTrainControllers(); //just to be safe -CMM
-	System.out.println("Hit  configureDriveTrainControllersForSimpleMagic");
 
 	// Configure the encoders for PID control
 	frontLeftDriveTalonSRX.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, RobotMap.PID_PRIMARY, RobotMap.configureTimeoutMs);			
@@ -173,12 +190,8 @@ public class DriveSubsystem extends Subsystem {
 
   } // End configureDriveTrainControllersForSimpleMagic
 
-  /**
-   * WORK IN PROGRESS, DO NOT USE
-   */
-  public void configureDriveTrainControllersForDifferentialMagic(){
 
-	// ----- Still a work in progress, do not use ----
+  public void configureDriveTrainControllersForAuxClosedLoopPID(){
 	
 	// Configure the left Talon's selected sensor 
 	frontLeftDriveTalonSRX.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, RobotMap.PID_PRIMARY, RobotMap.configureTimeoutMs);
@@ -219,65 +232,77 @@ public class DriveSubsystem extends Subsystem {
 	
     /* Motion Magic Configurations */
     /**Need to replace numbers with real measured values for acceleration and cruise vel. */
-		frontRightDriveTalonSRX.configMotionAcceleration(RobotMap.acceleration, RobotMap.configureTimeoutMs);
-		frontRightDriveTalonSRX.configMotionCruiseVelocity(RobotMap.cruiseVelocity, RobotMap.configureTimeoutMs);
+	frontRightDriveTalonSRX.configMotionAcceleration(RobotMap.acceleration, RobotMap.configureTimeoutMs);
+	frontRightDriveTalonSRX.configMotionCruiseVelocity(RobotMap.cruiseVelocity, RobotMap.configureTimeoutMs);
 
-		/**
-		 * Max out the peak output (for all modes).  
-		 * However you can limit the output of a given PID object with configClosedLoopPeakOutput().
-		 */
-		frontLeftDriveTalonSRX.configPeakOutputForward(+1.0, RobotMap.configureTimeoutMs);
-		frontLeftDriveTalonSRX.configPeakOutputReverse(-1.0, RobotMap.configureTimeoutMs);
-		frontLeftDriveTalonSRX.configNominalOutputForward(0, RobotMap.configureTimeoutMs);
-		frontLeftDriveTalonSRX.configNominalOutputReverse(0, RobotMap.configureTimeoutMs);
+	/**
+	 * Max out the peak output (for all modes).  
+	 * However you can limit the output of a given PID object with configClosedLoopPeakOutput().
+	 */
+	frontLeftDriveTalonSRX.configPeakOutputForward(+1.0, RobotMap.configureTimeoutMs);
+	frontLeftDriveTalonSRX.configPeakOutputReverse(-1.0, RobotMap.configureTimeoutMs);
+	frontLeftDriveTalonSRX.configNominalOutputForward(0, RobotMap.configureTimeoutMs);
+	frontLeftDriveTalonSRX.configNominalOutputReverse(0, RobotMap.configureTimeoutMs);
 
-	    frontRightDriveTalonSRX.configPeakOutputForward(+1.0, RobotMap.configureTimeoutMs);
-		frontRightDriveTalonSRX.configPeakOutputReverse(-1.0, RobotMap.configureTimeoutMs);
-	    frontRightDriveTalonSRX.configNominalOutputForward(0, RobotMap.configureTimeoutMs);
-		frontRightDriveTalonSRX.configNominalOutputReverse(0, RobotMap.configureTimeoutMs);
+	frontRightDriveTalonSRX.configPeakOutputForward(+1.0, RobotMap.configureTimeoutMs);
+	frontRightDriveTalonSRX.configPeakOutputReverse(-1.0, RobotMap.configureTimeoutMs);
+	frontRightDriveTalonSRX.configNominalOutputForward(0, RobotMap.configureTimeoutMs);
+	frontRightDriveTalonSRX.configNominalOutputReverse(0, RobotMap.configureTimeoutMs);
 
-		/* FPID Gains for distance servo */
-		frontRightDriveTalonSRX.config_kP(RobotMap.SLOT_0, RobotMap.P_0, RobotMap.configureTimeoutMs);
-		frontRightDriveTalonSRX.config_kI(RobotMap.SLOT_0, RobotMap.I_0, RobotMap.configureTimeoutMs);
-		frontRightDriveTalonSRX.config_kD(RobotMap.SLOT_0, RobotMap.D_0, RobotMap.configureTimeoutMs);
-		frontRightDriveTalonSRX.config_kF(RobotMap.SLOT_0, RobotMap.F_0, RobotMap.configureTimeoutMs);
-		frontRightDriveTalonSRX.config_IntegralZone(RobotMap.SLOT_0, RobotMap.Izone_0, RobotMap.configureTimeoutMs);
-		frontRightDriveTalonSRX.configClosedLoopPeakOutput(RobotMap.SLOT_0, RobotMap.PeakOutput_0, RobotMap.configureTimeoutMs);
-		frontRightDriveTalonSRX.configAllowableClosedloopError(RobotMap.SLOT_0, 0, RobotMap.configureTimeoutMs);
+	/* FPID Gains for distance servo */
+	frontRightDriveTalonSRX.config_kP(RobotMap.SLOT_0, RobotMap.P_0, RobotMap.configureTimeoutMs);
+	frontRightDriveTalonSRX.config_kI(RobotMap.SLOT_0, RobotMap.I_0, RobotMap.configureTimeoutMs);
+	frontRightDriveTalonSRX.config_kD(RobotMap.SLOT_0, RobotMap.D_0, RobotMap.configureTimeoutMs);
+	frontRightDriveTalonSRX.config_kF(RobotMap.SLOT_0, RobotMap.F_0, RobotMap.configureTimeoutMs);
+	frontRightDriveTalonSRX.config_IntegralZone(RobotMap.SLOT_0, RobotMap.Izone_0, RobotMap.configureTimeoutMs);
+	frontRightDriveTalonSRX.configClosedLoopPeakOutput(RobotMap.SLOT_0, RobotMap.PeakOutput_0, RobotMap.configureTimeoutMs);
+	frontRightDriveTalonSRX.configAllowableClosedloopError(RobotMap.SLOT_0, 0, RobotMap.configureTimeoutMs);
 
-		/* FPID Gains for turn servo */
-		frontRightDriveTalonSRX.config_kP(RobotMap.SLOT_1, RobotMap.P_1, RobotMap.configureTimeoutMs);
-		frontRightDriveTalonSRX.config_kI(RobotMap.SLOT_1, RobotMap.I_1, RobotMap.configureTimeoutMs);
-		frontRightDriveTalonSRX.config_kD(RobotMap.SLOT_1, RobotMap.D_1, RobotMap.configureTimeoutMs);
-		frontRightDriveTalonSRX.config_kF(RobotMap.SLOT_1, RobotMap.F_1, RobotMap.configureTimeoutMs);
-		frontRightDriveTalonSRX.config_IntegralZone(RobotMap.SLOT_1, RobotMap.Izone_1, RobotMap.configureTimeoutMs);
-		frontRightDriveTalonSRX.configClosedLoopPeakOutput(RobotMap.SLOT_1, RobotMap.PeakOutput_1, RobotMap.configureTimeoutMs);
-		frontRightDriveTalonSRX.configAllowableClosedloopError(RobotMap.SLOT_1, 0, RobotMap.configureTimeoutMs);
+	/* FPID Gains for turn servo */
+	frontRightDriveTalonSRX.config_kP(RobotMap.SLOT_1, RobotMap.P_1, RobotMap.configureTimeoutMs);
+	frontRightDriveTalonSRX.config_kI(RobotMap.SLOT_1, RobotMap.I_1, RobotMap.configureTimeoutMs);
+	frontRightDriveTalonSRX.config_kD(RobotMap.SLOT_1, RobotMap.D_1, RobotMap.configureTimeoutMs);
+	frontRightDriveTalonSRX.config_kF(RobotMap.SLOT_1, RobotMap.F_1, RobotMap.configureTimeoutMs);
+	frontRightDriveTalonSRX.config_IntegralZone(RobotMap.SLOT_1, RobotMap.Izone_1, RobotMap.configureTimeoutMs);
+	frontRightDriveTalonSRX.configClosedLoopPeakOutput(RobotMap.SLOT_1, RobotMap.PeakOutput_1, RobotMap.configureTimeoutMs);
+	frontRightDriveTalonSRX.configAllowableClosedloopError(RobotMap.SLOT_1, 0, RobotMap.configureTimeoutMs);
 
-		/**
-		 * 1ms per loop.  PID loop can be slowed down if need be.
-		 * For example,
-		 * - if sensor updates are too slow
-		 * - sensor deltas are very small per update, so derivative error never gets large enough to be useful.
-		 * - sensor movement is very slow causing the derivative error to be near zero.
-		 */
-		frontRightDriveTalonSRX.configClosedLoopPeriod(0, RobotMap.closedLoopPeriodMs, RobotMap.configureTimeoutMs);
-		frontRightDriveTalonSRX.configClosedLoopPeriod(1, RobotMap.closedLoopPeriodMs, RobotMap.configureTimeoutMs);
+	/**
+	 * 1ms per loop.  PID loop can be slowed down if need be.
+	 * For example,
+	 * - if sensor updates are too slow
+	 * - sensor deltas are very small per update, so derivative error never gets large enough to be useful.
+	 * - sensor movement is very slow causing the derivative error to be near zero.
+	 */
+	frontRightDriveTalonSRX.configClosedLoopPeriod(0, RobotMap.closedLoopPeriodMs, RobotMap.configureTimeoutMs);
+	frontRightDriveTalonSRX.configClosedLoopPeriod(1, RobotMap.closedLoopPeriodMs, RobotMap.configureTimeoutMs);
 
-		/**
-		 * configAuxPIDPolarity(boolean invert, int timeoutMs)
-		 * false means talon's local output is PID0 + PID1, and other side Talon is PID0 - PID1
-		 * true means talon's local output is PID0 - PID1, and other side Talon is PID0 + PID1
-		 */
-		frontRightDriveTalonSRX.configAuxPIDPolarity(false, RobotMap.configureTimeoutMs);
+	/**
+	 * configAuxPIDPolarity(boolean invert, int timeoutMs)
+	 * false means talon's local output is PID0 + PID1, and other side Talon is PID0 - PID1
+	 * true means talon's local output is PID0 - PID1, and other side Talon is PID0 + PID1
+	 */
+	frontRightDriveTalonSRX.configAuxPIDPolarity(false, RobotMap.configureTimeoutMs);
+	frontRightDriveTalonSRX.setStatusFramePeriod(StatusFrameEnhanced.Status_10_Targets, 10);
+	frontRightDriveTalonSRX.selectProfileSlot(RobotMap.SLOT_0, RobotMap.PID_PRIMARY);
+	frontRightDriveTalonSRX.selectProfileSlot(RobotMap.SLOT_1, RobotMap.PID_TURN);
 
-  } // End configureDriveTrainControllersForDifferentialMagic
+  } // End configureDriveTrainControllersForAuxClosedLoopPID
+
+
 
   public void simpleMotionMagicTest(int leftEncoderVal, int rightEncoderVal) {
 	// Test method that moves robot forward a given number of wheel rotations  
     frontLeftDriveTalonSRX.set(ControlMode.MotionMagic, leftEncoderVal);
 	frontRightDriveTalonSRX.set(ControlMode.MotionMagic, rightEncoderVal);
   }
+
+  public void differentialMotionMagicTest(int distance, int heading) {
+	  frontRightDriveTalonSRX.set(ControlMode.MotionMagic, distance, DemandType.AuxPID, heading);
+	  frontLeftDriveTalonSRX.follow(frontRightDriveTalonSRX,FollowerType.AuxOutput1);
+
+  }
+
 
   public boolean isOnTarget(int leftEncoderTarget, int rightEncoderTarget){
     return isOnTarget(leftEncoderTarget, rightEncoderTarget,RobotMap.defaultAcceptableError);
@@ -297,6 +322,21 @@ public class DriveSubsystem extends Subsystem {
 	return false;
   }
   
+  public boolean isOnTargetMagicMotion(int driveTarget, int acceptableError){
+	int distanceError = driveTarget - frontRightDriveTalonSRX.getActiveTrajectoryPosition(0);
+	if (distanceError < +acceptableError && distanceError > -acceptableError) {
+
+		++withinAcceptableErrorLoops;
+	} else {
+		withinAcceptableErrorLoops = 0;
+	}
+	if (withinAcceptableErrorLoops > 10){
+		return true;
+	} else {
+		return false;
+	}
+  }
+
   public void feed(){
     drive.feed();
   }
@@ -311,6 +351,6 @@ public class DriveSubsystem extends Subsystem {
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
-    setDefaultCommand(new ManualDrivingCommand());
+    //setDefaultCommand(new ManualDrivingCommand());
   }
 }

@@ -17,6 +17,7 @@ import frc.robot.commands.RealSmartAutoCommand;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.ControlPanelSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.FalconDriveSubsystem;
 import frc.robot.subsystems.NavXSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
@@ -40,6 +41,7 @@ public class Robot extends TimedRobot {
   public static UltrasonicSensorSubsystem ultrasonicSubsystem = new UltrasonicSensorSubsystem();
   public static IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   public static ControlPanelSubsystem controlPanelSubsystem = new ControlPanelSubsystem();
+  public static FalconDriveSubsystem falconDriveSubsystem = new FalconDriveSubsystem();
   public boolean TestBool = false;
   public static OI oi = new OI();
   Command autonomousCommand;
@@ -64,10 +66,15 @@ public class Robot extends TimedRobot {
     SmartDashboard.putData("Auto mode", sendableCommandChooser);
     SmartDashboard.putBoolean("Test Boolean", TestBool);
     Robot.driveSubsystem.resetDriveTrainControllers();
+
+    // after testing run only the second configure method
     Robot.driveSubsystem.configureDriveTrainControllersForSimpleMagic();
+    //Robot.driveSubsystem.configureDriveTrainControllersForAuxClosedLoopPID();
+
     Robot.driveSubsystem.zeroDriveEncoders();
     Robot.driveSubsystem.driveTrainBrakeMode();
     Robot.navXSubsystem.zeroYaw();
+    Robot.controlPanelSubsystem.resetMotorController();
   }
 
   /**
@@ -91,6 +98,7 @@ public class Robot extends TimedRobot {
   @Override
   public void disabledInit() {
     driveSubsystem.DriveTrainCoastMode();
+    controlPanelSubsystem.stopTalon();
   }
 
   @Override
@@ -120,7 +128,7 @@ public class Robot extends TimedRobot {
      * MyAutoCommand(); break; case "Default Auto": default: autonomousCommand = new
      * ExampleCommand(); break; }
      */
-    driveSubsystem.DriveTrainCoastMode();
+    driveSubsystem.driveTrainBrakeMode();
 
     // schedule the autonomous command (example)
     if (autonomousCommand != null) {
@@ -138,7 +146,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-    driveSubsystem.DriveTrainCoastMode();
+    driveSubsystem.driveTrainBrakeMode();
 
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to
@@ -163,5 +171,6 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void testPeriodic() {
+    
   }
 }
