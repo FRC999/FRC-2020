@@ -71,6 +71,7 @@ public class Robot extends TimedRobot {
       driveSubsystem = new TalonDriveSubsystem();
       System.out.println("We're a TALON");
     }
+    driveSubsystem.setDefaultCommand(new ManualDrivingCommand());
     falconBotSwitch.close();
 
     sendableCommandChooser.setDefaultOption("Default Auto", new RealSmartAutoCommand());

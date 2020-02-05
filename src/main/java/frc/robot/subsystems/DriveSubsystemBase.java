@@ -36,13 +36,17 @@ public class DriveSubsystemBase extends Subsystem {
   int withinAcceptableErrorLoops = 0;
 
 
-  static WPI_TalonSRX frontLeftDriveTalonSRX = new WPI_TalonSRX(RobotMap.frontLeftDriveMotorController);
-  static WPI_TalonSRX backLeftDriveTalonSRX = new WPI_TalonSRX(RobotMap.backLeftDriveMotorController);
-  static WPI_TalonSRX frontRightDriveTalonSRX = new WPI_TalonSRX(RobotMap.frontRightDriveMotorController);
-  static WPI_TalonSRX backRightDriveTalonSRX = new WPI_TalonSRX(RobotMap.backRightDriveMotorController);
+  static WPI_TalonSRX frontLeftDriveTalonSRX;
+  static WPI_TalonSRX backLeftDriveTalonSRX;
+  static WPI_TalonSRX frontRightDriveTalonSRX;
+  static WPI_TalonSRX backRightDriveTalonSRX;
 
-  public static DifferentialDrive drive = new DifferentialDrive(frontLeftDriveTalonSRX, frontRightDriveTalonSRX);
+  public static DifferentialDrive drive;
 
+  DriveSubsystemBase(){
+	  super();
+	  System.out.println("Made a DriveSubsystem");
+  }
   public void manualDrive(double move, double turn) {
 	drive.arcadeDrive(move, turn);
   }
