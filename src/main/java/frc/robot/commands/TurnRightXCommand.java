@@ -11,27 +11,37 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
+import frc.robot.subsystems.TalonDriveSubsystem;
 
-public class TurnAroundCommand extends Command {
+public class TurnRightXCommand extends Command {
   private int leftTarget;
   private int rightTarget;
+  private double turnDegrees;
+  private int leftAddEncoder = (int) Math.round(RobotMap.encoderUnitsPerRobotRotation * turnDegrees / 360);
+  private int rightAddEncoder = (int) Math.round(RobotMap.encoderUnitsPerRobotRotation * turnDegrees / 360);
   
-  public TurnAroundCommand() {
+
+  /**
+   * @param degrees How many degrees to turn right
+   */
+  public TurnRightXCommand(double degrees) {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(Robot.driveSubsystem);
+    turnDegrees = degrees;
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    //Robot.driveSubsystem.driveTrainBrakeMode();
+    Robot.driveSubsystem.driveTrainBrakeMode();
+    TalonDriveSubsystem.drive.setSafetyEnabled(false);
     //NOTE: This is *not* configured to work with the NavX anymore: it is purely based on encoder tics
     //We could (and maybe should) rewrite it to use the NavX as an auxiliary input for more accuracy.
-    leftTarget = Robot.driveSubsystem.getLeftEncoder() - RobotMap.encoderUnitsPerRobotRotation/2;
-    rightTarget = Robot.driveSubsystem.getRightEncoder() + RobotMap.encoderUnitsPerRobotRotation/2;
+    leftTarget = Robot.driveSubsystem.getLeftEncoder() + leftAddEncoder;
+    rightTarget = Robot.driveSubsystem.getRightEncoder() - rightAddEncoder;
     Robot.driveSubsystem.simpleMotionMagicTest(leftTarget, rightTarget);
-    System.out.println("Ran turning init!");
+    System.out.println("Turning init done.");
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -52,7 +62,8 @@ public class TurnAroundCommand extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    System.out.println("Done turning?");
+    System.out.println("Done turning.");
+    TalonDriveSubsystem.drive.setSafetyEnabled(true);
   }
 
   // Called when another command which requires one or more of the same

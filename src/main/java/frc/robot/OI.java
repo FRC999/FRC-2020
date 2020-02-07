@@ -35,7 +35,7 @@ public class OI {
     zeroEncoderButton.whenPressed(new ZeroDriveEncodersCommand());
     zeroYawButton.whenPressed(new ZeroYawCommand());
     testMotionMagicButton.whenPressed(new DriveForwardCommand(50000));
-    spin.whenPressed(new TurnAroundCommand());
+    spin.whenPressed(new TurnRightXCommand(90));
     stopButton.whenActive(new StopCommand());
     showEncoderButton.whenPressed(new RealSmartAutoCommand());
     testDifMM.whenPressed(new DifMMDriveForwardCommand(50000));

@@ -10,6 +10,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
+import frc.robot.subsystems.TalonDriveSubsystem;
 
 public class DifMMDriveForwardCommand extends Command {
   private static int driveDistance;
@@ -23,8 +24,7 @@ public class DifMMDriveForwardCommand extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    //System.out.println("Called initialize");
-    //Robot.driveSubsystem.driveTrainBrakeMode();
+    TalonDriveSubsystem.drive.setSafetyEnabled(false);
     int heading = Robot.driveSubsystem.getHeadingPosition();
     int position = Robot.driveSubsystem.getDistancePosition();
     int driveTarget =  driveDistance + position;
@@ -47,6 +47,7 @@ public class DifMMDriveForwardCommand extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    TalonDriveSubsystem.drive.setSafetyEnabled(true);
   }
 
   // Called when another command which requires one or more of the same
