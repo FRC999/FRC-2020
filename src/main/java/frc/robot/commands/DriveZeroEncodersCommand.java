@@ -9,45 +9,37 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.RobotMap;
-import frc.robot.subsystems.TalonDriveSubsystem;
 
-public class DifMMDriveForwardCommand extends Command {
-  private static int driveDistance;
-  private static int driveTarget;
-
-  public DifMMDriveForwardCommand(int distance) {
+public class DriveZeroEncodersCommand extends Command {
+  public DriveZeroEncodersCommand() {
+    // Use requires() here to declare subsystem dependencies
+    // eg. requires(chassis);
     requires(Robot.driveSubsystem);
-    driveDistance = distance;
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    TalonDriveSubsystem.drive.setSafetyEnabled(false);
-    int heading = Robot.driveSubsystem.getHeadingPosition();
-    int position = Robot.driveSubsystem.getDistancePosition();
-    int driveTarget =  driveDistance + position;
-    Robot.driveSubsystem.differentialMotionMagicTest(driveTarget, heading);
+    Robot.driveSubsystem.zeroDriveEncoders();
+    System.out.println("Zeroed Encoders");
   }
-    
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    // check to see if closed loop PID is settled on target
+    Robot.driveSubsystem.zeroDriveEncoders();
+    System.out.println("Zeroed Encoders Again");
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return Robot.driveSubsystem.isOnTargetMagicMotion(driveTarget, RobotMap.defaultAcceptableError);
+    return true;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    TalonDriveSubsystem.drive.setSafetyEnabled(true);
   }
 
   // Called when another command which requires one or more of the same

@@ -10,9 +10,9 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class ManualDrivingCommand extends Command {
+public class DriveManuallyCommand extends Command {
 
-  public ManualDrivingCommand() {
+  public DriveManuallyCommand() {
     // Use requires() here to declare subsystem dependencies
     requires(Robot.driveSubsystem);
   }

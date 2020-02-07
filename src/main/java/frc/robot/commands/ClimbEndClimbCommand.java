@@ -3,8 +3,8 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class ManualClimberExtend extends Command {
-  public ManualClimberExtend() {
+public class ClimbEndClimbCommand extends Command {
+  public ClimbEndClimbCommand() {
     // Use requires() here to declare subsystem dependencies
     requires(Robot.climberSubsystem);
 
@@ -18,7 +18,7 @@ public class ManualClimberExtend extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.climberSubsystem.extend();
+    Robot.climberSubsystem.standby();
   }
 
   // Make this return true when this Command no longer needs to run execute()

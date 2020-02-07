@@ -32,13 +32,13 @@ public class OI {
   Button setControlPanelPositionButton = new JoystickButton(leftJoystick, 10);
 
   public OI() { // Setup All Commands Here
-    zeroEncoderButton.whenPressed(new ZeroDriveEncodersCommand());
-    zeroYawButton.whenPressed(new ZeroYawCommand());
+    zeroEncoderButton.whenPressed(new DriveZeroEncodersCommand());
+    zeroYawButton.whenPressed(new NavXZeroYawCommand());
     testMotionMagicButton.whenPressed(new DriveForwardCommand(50000));
-    spin.whenPressed(new TurnRightXCommand(90));
-    stopButton.whenActive(new StopCommand());
+    spin.whenPressed(new DriveTurnCommand(90));
+    stopButton.whenActive(new DriveStopCommand());
     showEncoderButton.whenPressed(new RealSmartAutoCommand());
-    testDifMM.whenPressed(new DifMMDriveForwardCommand(50000));
+    testDifMM.whenPressed(new DriveForwardDifferentialCommand(50000));
     //zeroControlPanelEncoderButton.whenPressed(new ZeroControlPanelEncoderCommand());
     //setControlPanelPositionButton.whenPressed(new MoveControlPanelToTargetRevolutionsCommand(3.5));
     

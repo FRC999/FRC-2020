@@ -22,17 +22,17 @@ public class RealSmartAutoCommand extends CommandGroup {
 
     //What we want to do
     
-    addSequential(new ZeroDriveEncodersCommand());
+    addSequential(new DriveZeroEncodersCommand());
     addSequential(new WaitCommand(0.1));
-    addSequential(new StopCommand());
+    addSequential(new DriveStopCommand());
     addSequential(new DriveForwardCommand(50000));
-    addSequential(new StopCommand());
+    addSequential(new DriveStopCommand());
     addSequential(new WaitCommand(0.1));
-    addSequential(new TurnRightXCommand(90));
-    addSequential(new StopCommand());
+    addSequential(new DriveTurnCommand(90));
+    addSequential(new DriveStopCommand());
     addSequential(new WaitCommand(0.1));
     addSequential(new DriveForwardCommand(50000));
-    addSequential(new StopCommand());
+    addSequential(new DriveStopCommand());
     addSequential(new WaitCommand(0.1));
 
 

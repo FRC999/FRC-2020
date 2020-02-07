@@ -13,7 +13,7 @@ import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.subsystems.TalonDriveSubsystem;
 
-public class TurnRightXCommand extends Command {
+public class DriveTurnCommand extends Command {
   private int leftTarget;
   private int rightTarget;
   private double turnDegrees;
@@ -22,9 +22,10 @@ public class TurnRightXCommand extends Command {
   
 
   /**
+   * Turns right that many degrees
    * @param degrees How many degrees to turn right
    */
-  public TurnRightXCommand(double degrees) {
+  public DriveTurnCommand(double degrees) {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(Robot.driveSubsystem);

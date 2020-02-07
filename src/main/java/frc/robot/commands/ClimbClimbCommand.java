@@ -1,31 +1,30 @@
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class ManualShooterCommandGroup extends CommandGroup {
-  public ManualShooterCommandGroup() {
+public class ClimbClimbCommand extends Command {
+  public ClimbClimbCommand() {
     // Use requires() here to declare subsystem dependencies
-    requires(Robot.shooterSubsystem);
-    addSequential(new ManualShootCommand());
+    requires(Robot.climberSubsystem);
 
   }
 
   // Called just before this Command runs the first time
   @Override
-
   protected void initialize() {
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    Robot.climberSubsystem.climb();
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return true;
   }
 
   // Called once after isFinished returns true

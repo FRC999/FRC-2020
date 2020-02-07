@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.commands.ManualDrivingCommand;
+import frc.robot.commands.DriveManuallyCommand;
 import frc.robot.commands.RealSmartAutoCommand;
 import frc.robot.subsystems.ClimberSubsystem;
 //import frc.robot.subsystems.ControlPanelSubsystem;
@@ -71,7 +71,7 @@ public class Robot extends TimedRobot {
       driveSubsystem = new TalonDriveSubsystem();
       System.out.println("We're a TALON");
     }
-    driveSubsystem.setDefaultCommand(new ManualDrivingCommand());
+    driveSubsystem.setDefaultCommand(new DriveManuallyCommand());
     falconBotSwitch.close();
 
     sendableCommandChooser.setDefaultOption("Default Auto", new RealSmartAutoCommand());
