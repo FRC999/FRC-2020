@@ -42,7 +42,6 @@ public class DriveForwardCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.driveSubsystem.feed();
     Robot.smartDashboardSubsystem.updateEncoderValue();
   }
 

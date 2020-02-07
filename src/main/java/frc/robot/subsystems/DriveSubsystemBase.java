@@ -28,7 +28,7 @@ import frc.robot.commands.DriveManuallyCommand;
 /**
  * Add your docs here. TODO: Add docs
  */
-public class DriveSubsystemBase extends Subsystem {
+public abstract class DriveSubsystemBase extends Subsystem {
   // Put methods for controlling this subsystem here. Call these from Commands.
 
   //For isOnTarget
@@ -41,15 +41,11 @@ public class DriveSubsystemBase extends Subsystem {
   static WPI_TalonSRX frontRightDriveTalonSRX;
   static WPI_TalonSRX backRightDriveTalonSRX;
 
-  public static DifferentialDrive drive;
-
   DriveSubsystemBase(){
 	  super();
 	  System.out.println("Made a DriveSubsystem");
   }
-  public void manualDrive(double move, double turn) {
-	drive.arcadeDrive(move, turn);
-  }
+  public abstract void manualDrive(double move, double turn);
 
   public void zeroDriveEncoders() {
     frontLeftDriveTalonSRX.setSelectedSensorPosition(0);
@@ -119,9 +115,6 @@ public class DriveSubsystemBase extends Subsystem {
     // Set encoder phase so values increase when controller LEDs are green
     frontLeftDriveTalonSRX.setSensorPhase(true);
     frontRightDriveTalonSRX.setSensorPhase(true);
-
-    // Prevent WPI drivetrain class from inverting input for right side motors because we already inverted them
-    drive.setRightSideInverted(false);
   }
   // replace with configure controllers for aux closed loop PID when ready
   public void configureDriveTrainControllersForSimpleMagic(){
@@ -339,10 +332,6 @@ public class DriveSubsystemBase extends Subsystem {
 	} else {
 		return false;
 	}
-  }
-
-  public void feed(){
-    drive.feed();
   }
 
   public void driveTrainBrakeMode() {

@@ -20,10 +20,10 @@ import frc.robot.commands.*;
 public class OI {
   public Joystick leftJoystick = new Joystick(RobotMap.leftJoystickPort);
   Button stopButton = new JoystickButton(leftJoystick, 1);
-  Button showEncoderButton = new JoystickButton(leftJoystick, 2);
+  Button showAllButton = new JoystickButton(leftJoystick, 2);
   Button zeroEncoderButton = new JoystickButton(leftJoystick, 3);
   Button zeroYawButton = new JoystickButton(leftJoystick, 4);
-  Button climberExtendButton = new JoystickButton(leftJoystick, 5);
+  Button turnAbsoluteTestButton = new JoystickButton(leftJoystick, 5);
   Button climberClimbButton = new JoystickButton(leftJoystick, 6);
   Button testMotionMagicButton = new JoystickButton(leftJoystick , 7);
   Button spin = new JoystickButton(leftJoystick, 8);
@@ -36,9 +36,10 @@ public class OI {
     zeroYawButton.whenPressed(new NavXZeroYawCommand());
     testMotionMagicButton.whenPressed(new DriveForwardCommand(50000));
     spin.whenPressed(new DriveTurnCommand(90));
-    stopButton.whenActive(new DriveStopCommand());
-    showEncoderButton.whenPressed(new RealSmartAutoCommand());
+    stopButton.whileActive(new DriveStopCommand());
+    showAllButton.whileActive(new SmartDashboardUpdateAllCommand());
     testDifMM.whenPressed(new DriveForwardDifferentialCommand(50000));
+    turnAbsoluteTestButton.whenActive(new DriveTurnAbsoluteCommand(30));
     //zeroControlPanelEncoderButton.whenPressed(new ZeroControlPanelEncoderCommand());
     //setControlPanelPositionButton.whenPressed(new MoveControlPanelToTargetRevolutionsCommand(3.5));
     

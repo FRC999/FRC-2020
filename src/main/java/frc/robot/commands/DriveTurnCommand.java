@@ -23,7 +23,7 @@ public class DriveTurnCommand extends Command {
 
   /**
    * Turns right that many degrees
-   * @param degrees How many degrees to turn right
+   * @param degrees How many degrees to turn right (clockwise)
    */
   public DriveTurnCommand(double degrees) {
     // Use requires() here to declare subsystem dependencies
@@ -48,7 +48,6 @@ public class DriveTurnCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.driveSubsystem.feed();
     Robot.smartDashboardSubsystem.updateEncoderValue();
     SmartDashboard.putNumber("leftTarget",leftTarget);
     SmartDashboard.putNumber("RightTarget", rightTarget);
