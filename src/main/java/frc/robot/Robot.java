@@ -82,7 +82,7 @@ public class Robot extends TimedRobot {
 
     // after testing run only the second configure method
     Robot.driveSubsystem.configureDriveTrainControllersForSimpleMagic();
-    Robot.driveSubsystem.configureDriveTrainControllersForAuxClosedLoopPID();
+    //Robot.driveSubsystem.configureDriveTrainControllersForAuxClosedLoopPID();
 
     Robot.driveSubsystem.zeroDriveEncoders();
     Robot.driveSubsystem.driveTrainBrakeMode();
