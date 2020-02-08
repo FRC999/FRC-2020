@@ -9,51 +9,43 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.subsystems.ControlPanelSubsystem;
 
-public class ControlPanelMoveToTargetCommand extends Command {
-  double targetRev;
-  double targetTicks;
-  /** @param target the number of revolutions, positive or negative, to turn the control panel */
-  public ControlPanelMoveToTargetCommand(double target) {
-    targetRev = target;
-    // Use requires() here to declare subsystem dependencies
+public class ControlPanelMoveTargetColorCommand extends Command {
+  
+  ControlPanelSubsystem.PanelColors colorUnderSensor;
+  ControlPanelSubsystem.PanelColors colorWantedUnderSensor;
+  double encoderTarget;
+  public ControlPanelMoveTargetColorCommand() {
+    // Use requires() here to declare subsystem dependencie
     // eg. requires(chassis);
     requires(Robot.controlPanelSubsystem);
-    targetTicks = Robot.controlPanelSubsystem.controlPanelTargetRevolutionsToQuadEncoderTicks(target);
-
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-Robot.controlPanelSubsystem.zeroEncoder();
+    Robot.controlPanelSubsystem.updateColorState();
+    colorWantedUnderSensor = Robot.controlPanelSubsystem.getGameTargetColor();
+    colorUnderSensor = Robot.controlPanelSubsystem.getSuspectedColor(Robot.controlPanelSubsystem.getSeenColor());
+    encoderTarget = Robot.controlPanelSubsystem.getPathToDesiredColor(colorUnderSensor, colorWantedUnderSensor);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-
-    
-      Robot.controlPanelSubsystem.moveTalonInDirection(targetTicks);
-
-
+    Robot.controlPanelSubsystem.moveTalonInDirection(encoderTarget);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-   boolean retVal = false;
-    if (( (Math.signum(targetTicks) == 1) && (Robot.controlPanelSubsystem.readEncoderRaw() <= targetTicks)) || ((Math.signum(targetTicks) == -1) && (Robot.controlPanelSubsystem.readEncoderRaw() >= targetTicks)))
-     {retVal = false;}
-      else {retVal = true;}
-   
-    return retVal;
+    return false;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.controlPanelSubsystem.stopTalon();
   }
 
   // Called when another command which requires one or more of the same
