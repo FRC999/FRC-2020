@@ -18,8 +18,8 @@ public class DriveTurnCommand extends Command {
   private int rightTarget;
   private double turnDegrees;
   private double targetHeading;
-  private int leftAddEncoder = (int) Math.round(RobotMap.encoderUnitsPerRobotRotation * turnDegrees / 360);
-  private int rightAddEncoder = (int) Math.round(RobotMap.encoderUnitsPerRobotRotation * turnDegrees / 360);
+  private int leftAddEncoder;
+  private int rightAddEncoder; 
   
 
   /**
@@ -32,7 +32,8 @@ public class DriveTurnCommand extends Command {
     requires(Robot.driveSubsystem);
     requires(Robot.navXSubsystem);
     turnDegrees = degrees;
-
+    leftAddEncoder = (int) Math.round(RobotMap.encoderUnitsPerRobotRotation * turnDegrees / 360);
+    rightAddEncoder = (int) Math.round(RobotMap.encoderUnitsPerRobotRotation * turnDegrees / 360);
   }
 
   // Called just before this Command runs the first time
@@ -47,6 +48,7 @@ public class DriveTurnCommand extends Command {
     rightTarget = Robot.driveSubsystem.getRightEncoder() - rightAddEncoder;
     targetHeading = Robot.navXSubsystem.getYaw() + turnDegrees;
     SmartDashboard.putNumber("leftTarget",leftTarget);
+    SmartDashboard.putNumber("delta encoder", leftAddEncoder);
     SmartDashboard.putNumber("RightTarget", rightTarget);
     SmartDashboard.putNumber("TargetHeading", targetHeading);
     Robot.driveSubsystem.simpleMotionMagicTest(leftTarget, rightTarget);
