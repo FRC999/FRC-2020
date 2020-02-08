@@ -39,7 +39,7 @@ public class OI {
     stopButton.whileActive(new DriveStopCommand());
     showAllButton.whileActive(new SmartDashboardUpdateAllCommand());
     testDifMM.whenPressed(new DriveForwardDifferentialCommand(50000));
-    turnAbsoluteTestButton.whenActive(new DriveTurnAbsoluteCommand(30));
+    turnAbsoluteTestButton.whenActive(new DriveTurnAbsoluteCommand(90));
     zeroControlPanelEncoderButton.whenPressed(new ControlPanelZeroEncoderCommand());
     setControlPanelPositionButton.whenPressed(new ControlPanelMoveToTargetCommand(3.5));
     

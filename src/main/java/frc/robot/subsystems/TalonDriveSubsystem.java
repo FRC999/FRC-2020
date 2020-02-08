@@ -43,6 +43,14 @@ public class TalonDriveSubsystem extends DriveSubsystemBase {
 
   public static DifferentialDrive drive = new DifferentialDrive(frontLeftDriveTalonSRX, frontRightDriveTalonSRX);
 
+  public TalonDriveSubsystem(){
+	frontLeftDriveMotorController = frontLeftDriveTalonSRX;
+	backLeftDriveMotorController = backLeftDriveTalonSRX;
+	frontRightDriveMotorController = frontRightDriveTalonSRX;
+	backRightDriveMotorController = backRightDriveTalonSRX;
+  
+  }
+
   public void manualDrive(double move, double turn) {
 	drive.arcadeDrive(move, turn);
   }

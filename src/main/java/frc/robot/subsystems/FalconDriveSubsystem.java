@@ -38,6 +38,13 @@ public class FalconDriveSubsystem extends DriveSubsystemBase {
   static WPI_TalonFX frontRightDriveTalonFX = new WPI_TalonFX(RobotMap.frontRightDriveMotorController);
   static WPI_TalonFX backRightDriveTalonFX = new WPI_TalonFX(RobotMap.backRightDriveMotorController);
 
+  public FalconDriveSubsystem(){
+	frontLeftDriveMotorController = frontLeftDriveTalonFX;
+	backLeftDriveMotorController = backLeftDriveTalonFX;
+	frontRightDriveMotorController = frontRightDriveTalonFX;
+	backRightDriveMotorController = backRightDriveTalonFX;
+  }
+
   //public static DifferentialDrive drive = new DifferentialDrive(frontLeftDriveTalonFX, frontRightDriveTalonFX);
   // No differential or arcade drive for falcons
   
@@ -47,34 +54,6 @@ public class FalconDriveSubsystem extends DriveSubsystemBase {
     frontRightDriveTalonFX.set(ControlMode.PercentOutput, move, DemandType.ArbitraryFeedForward, -turn);
   }
 
-  public void zeroDriveEncoders() {
-    frontLeftDriveTalonFX.setSelectedSensorPosition(0);
-    frontRightDriveTalonFX.setSelectedSensorPosition(0);
-  }
-
-  public int getLeftEncoder() {
-    return frontLeftDriveTalonFX.getSelectedSensorPosition();
-  }
-
-  public int getRightEncoder() {
-    return frontRightDriveTalonFX.getSelectedSensorPosition();
-  }
- 
-  // encoder positions for aux closed loop PID (driving straight)
-  public int getHeadingPosition() {
-    return frontRightDriveTalonFX.getSelectedSensorPosition(1);
-  }
-  public int getDistancePosition() {
-    return frontRightDriveTalonFX.getSelectedSensorPosition(0);
-  }
-
-
-  public void DriveTrainCoastMode() {
-    frontLeftDriveTalonFX.setNeutralMode(NeutralMode.Coast);
-    backLeftDriveTalonFX.setNeutralMode(NeutralMode.Coast);
-    frontRightDriveTalonFX.setNeutralMode(NeutralMode.Coast);
-    backRightDriveTalonFX.setNeutralMode(NeutralMode.Coast);
-  }
   /**
    * Sets the talons to our preferred defaults
    * We are going away from controller-groups, and back to master-slave
@@ -117,6 +96,7 @@ public class FalconDriveSubsystem extends DriveSubsystemBase {
     frontRightDriveTalonFX.setSensorPhase(true);
 
   }
+
   // replace with configure controllers for aux closed loop PID when ready
   public void configureDriveTrainControllersForSimpleMagic(){
 
@@ -286,21 +266,6 @@ public class FalconDriveSubsystem extends DriveSubsystemBase {
 	frontRightDriveTalonFX.selectProfileSlot(RobotMap.SLOT_1, RobotMap.PID_TURN);
 
   } // End configureDriveTrainControllersForAuxClosedLoopPID
-
-
-
-  public void simpleMotionMagicTest(int leftEncoderVal, int rightEncoderVal) {
-	// Test method that moves robot forward a given number of wheel rotations  
-    frontLeftDriveTalonFX.set(ControlMode.MotionMagic, leftEncoderVal);
-	frontRightDriveTalonFX.set(ControlMode.MotionMagic, rightEncoderVal);
-  }
-
-  public void differentialMotionMagicTest(int distance, int heading) {
-	  frontRightDriveTalonFX.set(ControlMode.MotionMagic, distance, DemandType.AuxPID, heading);
-	  frontLeftDriveTalonFX.follow(frontRightDriveTalonFX,FollowerType.AuxOutput1);
-
-  }
-
 
   public boolean isOnTarget(int leftEncoderTarget, int rightEncoderTarget){
 	// stuff parameters and call again (-200 is an impossible heading)
