@@ -9,6 +9,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import frc.robot.RobotMap;
 import edu.wpi.first.wpilibj.Solenoid;
 
 /**
@@ -20,7 +21,7 @@ public class ClimberSubsystem extends Subsystem {
 
   static WPI_VictorSPX climberMotor;// = new WPI_VictorSPX(RobotMap.climberMotorID);
   static Solenoid climberSolenoid1;// = new Solenoid(RobotMap.climberSolenoidForwardChannel);
-  static Solenoid climberSolenoid2;// = new Solenoid(RobotMap.climberSolenoidReverseChannel);
+  static Solenoid climberSolenoid2 = new Solenoid(3);
 
   double climbSpeed = 0.5;
 

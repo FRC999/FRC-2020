@@ -8,58 +8,38 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
-import frc.robot.subsystems.TalonDriveSubsystem;
 
-public class DriveForwardCommand extends Command {
-  private static int driveDistance;
-   
-  int rightTarget;
-  int leftTarget;
-
-  public DriveForwardCommand(int distance) {
-    requires(Robot.driveSubsystem);
-    driveDistance = distance;
+public class ControlPanelZeroEncoderCommand extends Command {
+  public ControlPanelZeroEncoderCommand() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
+    requires(Robot.driveSubsystem);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    TalonDriveSubsystem.drive.setSafetyEnabled(false);
-    int lEncoder = Robot.driveSubsystem.getLeftEncoder();
-    int rEncoder = Robot.driveSubsystem.getRightEncoder();
-    leftTarget =  driveDistance + lEncoder;
-    rightTarget = driveDistance + rEncoder;
-    Robot.driveSubsystem.simpleMotionMagicTest(leftTarget, rightTarget);
-    
-    SmartDashboard.putNumber("leftTarget",leftTarget);
-    SmartDashboard.putNumber("RightTarget", rightTarget);
+    Robot.driveSubsystem.zeroDriveEncoders();
+    System.out.println("Zeroed Encoders");
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-<<<<<<< HEAD
-    //Robot.driveSubsystem.feed();
-=======
->>>>>>> 3bbe16e22d2eb83c9f5f6439c15f2871eb20ad1f
-    Robot.smartDashboardSubsystem.updateEncoderValue();
+    Robot.driveSubsystem.zeroDriveEncoders();
+    System.out.println("Zeroed Encoders Again");
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return Robot.driveSubsystem.isOnTarget(leftTarget,rightTarget,300);
-    
+    return true;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    TalonDriveSubsystem.drive.setSafetyEnabled(true);
   }
 
   // Called when another command which requires one or more of the same

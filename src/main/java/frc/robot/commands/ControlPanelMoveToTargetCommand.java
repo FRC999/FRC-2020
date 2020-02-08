@@ -8,58 +8,52 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
-import frc.robot.subsystems.TalonDriveSubsystem;
 
-public class DriveForwardCommand extends Command {
-  private static int driveDistance;
-   
-  int rightTarget;
-  int leftTarget;
-
-  public DriveForwardCommand(int distance) {
-    requires(Robot.driveSubsystem);
-    driveDistance = distance;
+public class ControlPanelMoveToTargetCommand extends Command {
+  double targetRev;
+  double targetTicks;
+  /** @param target the number of revolutions, positive or negative, to turn the control panel */
+  public ControlPanelMoveToTargetCommand(double target) {
+    targetRev = target;
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
+    requires(Robot.controlPanelSubsystem);
+    targetTicks = Robot.controlPanelSubsystem.controlPanelTargetRevolutionsToQuadEncoderTicks(target);
+
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    TalonDriveSubsystem.drive.setSafetyEnabled(false);
-    int lEncoder = Robot.driveSubsystem.getLeftEncoder();
-    int rEncoder = Robot.driveSubsystem.getRightEncoder();
-    leftTarget =  driveDistance + lEncoder;
-    rightTarget = driveDistance + rEncoder;
-    Robot.driveSubsystem.simpleMotionMagicTest(leftTarget, rightTarget);
-    
-    SmartDashboard.putNumber("leftTarget",leftTarget);
-    SmartDashboard.putNumber("RightTarget", rightTarget);
+Robot.controlPanelSubsystem.zeroEncoder();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-<<<<<<< HEAD
-    //Robot.driveSubsystem.feed();
-=======
->>>>>>> 3bbe16e22d2eb83c9f5f6439c15f2871eb20ad1f
-    Robot.smartDashboardSubsystem.updateEncoderValue();
+
+    
+      Robot.controlPanelSubsystem.moveTalonToPosition(targetTicks);
+
+
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return Robot.driveSubsystem.isOnTarget(leftTarget,rightTarget,300);
-    
+   boolean retVal = false;
+    if (( (Math.signum(targetTicks) == 1) && (Robot.controlPanelSubsystem.readEncoderRaw() <= targetTicks)) || ((Math.signum(targetTicks) == -1) && (Robot.controlPanelSubsystem.readEncoderRaw() >= targetTicks)))
+     {retVal = false;}
+      else {retVal = true;}
+   
+    return retVal;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    TalonDriveSubsystem.drive.setSafetyEnabled(true);
+    Robot.controlPanelSubsystem.stopTalon();
   }
 
   // Called when another command which requires one or more of the same

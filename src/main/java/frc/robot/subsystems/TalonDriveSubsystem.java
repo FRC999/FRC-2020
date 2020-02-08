@@ -80,7 +80,7 @@ public class TalonDriveSubsystem extends DriveSubsystemBase {
    * Call this in robot-init: it preforms basic setup for ArcadeDrive
    */
   public void resetDriveTrainControllers() {
-	//System.out.println("Hit  resetDriveTrainControllers");
+    //System.out.println("Hit  resetDriveTrainControllers");
     frontLeftDriveTalonSRX.configFactoryDefault();
     backLeftDriveTalonSRX.configFactoryDefault();
     frontRightDriveTalonSRX.configFactoryDefault();
@@ -114,7 +114,6 @@ public class TalonDriveSubsystem extends DriveSubsystemBase {
     // Set encoder phase so values increase when controller LEDs are green
     frontLeftDriveTalonSRX.setSensorPhase(true);
     frontRightDriveTalonSRX.setSensorPhase(true);
-
     // Prevent WPI drivetrain class from inverting input for right side motors because we already inverted them
     drive.setRightSideInverted(false);
   }
