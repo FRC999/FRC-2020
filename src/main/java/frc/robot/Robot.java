@@ -65,6 +65,8 @@ public class Robot extends TimedRobot {
     RobotMap.isFalconBot = !falconBotSwitch.get();
     if(RobotMap.isFalconBot){
       driveSubsystem = new FalconDriveSubsystem();
+      // the IAmFalconBot method resets some RobotMap constants for the FalconBot chassis
+      driveSubsystem.IAmFalconBot();
       System.out.println("We're a FALCON");
     }
     else{

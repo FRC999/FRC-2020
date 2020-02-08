@@ -20,6 +20,7 @@ import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.commands.DriveManuallyCommand;
 
@@ -31,6 +32,7 @@ public class FalconDriveSubsystem extends DriveSubsystemBase {
   boolean wasOnTarget = false;
   int withinAcceptableErrorLoops = 0;
 
+
   static WPI_TalonFX frontLeftDriveTalonFX = new WPI_TalonFX(RobotMap.frontLeftDriveMotorController);
   static WPI_TalonFX backLeftDriveTalonFX = new WPI_TalonFX(RobotMap.backLeftDriveMotorController);
   static WPI_TalonFX frontRightDriveTalonFX = new WPI_TalonFX(RobotMap.frontRightDriveMotorController);
@@ -39,6 +41,7 @@ public class FalconDriveSubsystem extends DriveSubsystemBase {
   //public static DifferentialDrive drive = new DifferentialDrive(frontLeftDriveTalonFX, frontRightDriveTalonFX);
   // No differential or arcade drive for falcons
   
+
   public void manualDrive(double move, double turn) {
     frontLeftDriveTalonFX.set(ControlMode.PercentOutput, move, DemandType.ArbitraryFeedForward, +turn);
     frontRightDriveTalonFX.set(ControlMode.PercentOutput, move, DemandType.ArbitraryFeedForward, -turn);
