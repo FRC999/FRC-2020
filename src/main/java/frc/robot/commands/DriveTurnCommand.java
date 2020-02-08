@@ -56,10 +56,7 @@ public class DriveTurnCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-<<<<<<< HEAD
-   // Robot.driveSubsystem.feed();
-=======
->>>>>>> 3bbe16e22d2eb83c9f5f6439c15f2871eb20ad1f
+    // Robot.driveSubsystem.feed();
     Robot.smartDashboardSubsystem.updateEncoderValue();
     //SmartDashboard.putNumber("leftTarget",leftTarget);
     //SmartDashboard.putNumber("RightTarget", rightTarget);
