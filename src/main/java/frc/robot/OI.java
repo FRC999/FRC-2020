@@ -41,7 +41,7 @@ public class OI {
     testDifMM.whenPressed(new DriveForwardDifferentialCommand(50000));
     turnAbsoluteTestButton.whenActive(new DriveTurnAbsoluteCommand(30));
     //zeroControlPanelEncoderButton.whenPressed(new ZeroControlPanelEncoderCommand());
-    //setControlPanelPositionButton.whenPressed(new MoveControlPanelToTargetRevolutionsCommand(3.5));
+    setControlPanelPositionButton.whenPressed(new ControlPanelMoveToTargetCommand(3.5));
     
   }
 }
