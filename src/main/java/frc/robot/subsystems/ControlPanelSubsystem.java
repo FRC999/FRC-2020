@@ -79,13 +79,19 @@ theta cyl rev * (ticks/rev) = theta cyl ticks
 */
  return (target *RobotMap.controlPanelDiameter * RobotMap.quadratureEncoderTicksPerRev)/(RobotMap.diskSpinnerDiameter);
 }
-/** Uses this talon's encoder */
-public void moveTalonToPosition(double position) {
+/** moves the motor at 0.5 power in the direction specified by the sign of the input. */
+public void moveTalonInDirection(double position) {
  // diskSpinnerTalon.set(ControlMode.Position,position);
- diskSpinnerTalon.set(0.5);
+
+ diskSpinnerTalon.set(0.5 * Math.signum(position));
  System.out.println(position);
 }
 /**basically just for test debugging */public void stopTalon() {diskSpinnerTalon.set(0);}
+
+/**gets the raw color that the color sensor detects. Put into getSuspectedColor for the pure panel-recognition color. */
+public Color getSeenColor() {
+  return colorSensor.getColor();
+}
 
   public void putSeenColor() {
     updateColorState();
@@ -315,7 +321,7 @@ retVal = controlPanelTargetRevolutionsToQuadEncoderTicks(RobotMap.controlPanelDi
     return retVal;
   }
 
-  enum PanelColors {
+  public enum PanelColors {
     blue(0, 1, 1), green(0, 1, 0), red(1, 0, 0), yellow(1, 0, 0);
     // TODO: Find more accurate values, also reformat
     // Maybe use HSV for tolerance check?
