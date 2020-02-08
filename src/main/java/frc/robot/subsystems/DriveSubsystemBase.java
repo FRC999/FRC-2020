@@ -22,6 +22,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.commands.DriveManuallyCommand;
 
@@ -309,11 +310,22 @@ public class DriveSubsystemBase extends Subsystem {
 
 
   public boolean isOnTarget(int leftEncoderTarget, int rightEncoderTarget){
-    return isOnTarget(leftEncoderTarget, rightEncoderTarget,RobotMap.defaultAcceptableError);
+	  // stuff parameters and call again (-200 is an impossible heading)
+    return isOnTarget(leftEncoderTarget, rightEncoderTarget, RobotMap.defaultAcceptableError, -200);
   }
+
   public boolean isOnTarget(int leftEncoderTarget, int rightEncoderTarget, int acceptableError){
+	// stuff parameters and call again (-200 is an impossible heading)
+  return isOnTarget(leftEncoderTarget, rightEncoderTarget, acceptableError, -200);
+}
+public boolean isOnTarget(int leftEncoderTarget, int rightEncoderTarget, int acceptableError, double targetHeading){
     int leftError = Math.abs(leftEncoderTarget - getLeftEncoder());
 	int rightError = Math.abs(rightEncoderTarget - getRightEncoder());
+	if (targetHeading != -200){
+		double headingError = Math.abs(Robot.navXSubsystem.getYaw()) - Math.abs(targetHeading);
+		//just show angle error for now to get an idea of if thee is an issue.
+		SmartDashboard.putNumber("Error Heading", headingError);
+	}
 	SmartDashboard.putNumber("Error L", leftError);
 	SmartDashboard.putNumber("Error R", rightError);
     if(leftError <= acceptableError && rightError <= acceptableError){

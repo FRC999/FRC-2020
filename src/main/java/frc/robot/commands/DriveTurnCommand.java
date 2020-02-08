@@ -17,6 +17,7 @@ public class DriveTurnCommand extends Command {
   private int leftTarget;
   private int rightTarget;
   private double turnDegrees;
+  private double targetHeading;
   private int leftAddEncoder = (int) Math.round(RobotMap.encoderUnitsPerRobotRotation * turnDegrees / 360);
   private int rightAddEncoder = (int) Math.round(RobotMap.encoderUnitsPerRobotRotation * turnDegrees / 360);
   
@@ -29,18 +30,25 @@ public class DriveTurnCommand extends Command {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(Robot.driveSubsystem);
+    requires(Robot.navXSubsystem);
     turnDegrees = degrees;
+
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.driveSubsystem.driveTrainBrakeMode();
+    //Robot.driveSubsystem.driveTrainBrakeMode();
     TalonDriveSubsystem.drive.setSafetyEnabled(false);
     //NOTE: This is *not* configured to work with the NavX anymore: it is purely based on encoder tics
     //We could (and maybe should) rewrite it to use the NavX as an auxiliary input for more accuracy.
+
     leftTarget = Robot.driveSubsystem.getLeftEncoder() + leftAddEncoder;
     rightTarget = Robot.driveSubsystem.getRightEncoder() - rightAddEncoder;
+    targetHeading = Robot.navXSubsystem.getYaw() + turnDegrees;
+    SmartDashboard.putNumber("leftTarget",leftTarget);
+    SmartDashboard.putNumber("RightTarget", rightTarget);
+    SmartDashboard.putNumber("TargetHeading", targetHeading);
     Robot.driveSubsystem.simpleMotionMagicTest(leftTarget, rightTarget);
     System.out.println("Turning init done.");
   }
@@ -48,16 +56,17 @@ public class DriveTurnCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.driveSubsystem.feed();
+   // Robot.driveSubsystem.feed();
     Robot.smartDashboardSubsystem.updateEncoderValue();
-    SmartDashboard.putNumber("leftTarget",leftTarget);
-    SmartDashboard.putNumber("RightTarget", rightTarget);
+    //SmartDashboard.putNumber("leftTarget",leftTarget);
+    //SmartDashboard.putNumber("RightTarget", rightTarget);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return Robot.driveSubsystem.isOnTarget(leftTarget,rightTarget,100);
+    //return Robot.driveSubsystem.isOnTarget(leftTarget,rightTarget,100);
+    return Robot.driveSubsystem.isOnTarget(leftTarget,rightTarget,100, targetHeading);
   }
 
   // Called once after isFinished returns true
