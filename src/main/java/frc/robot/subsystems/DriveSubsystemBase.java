@@ -189,118 +189,11 @@ public abstract class DriveSubsystemBase extends Subsystem {
   } // End configureDriveTrainControllersForSimpleMagic
 
 
-  public void configureDriveTrainControllersForAuxClosedLoopPID(){
-	
-	// Configure the left Talon's selected sensor 
-	frontLeftDriveMotorController.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, RobotMap.PID_PRIMARY, RobotMap.configureTimeoutMs);
-
-	/* Configure the Remote Talon's selected sensor as a remote sensor for the right Talon */
-	frontRightDriveMotorController.configRemoteFeedbackFilter(frontLeftDriveMotorController.getDeviceID(), RemoteSensorSource.TalonSRX_SelectedSensor, RobotMap.REMOTE_0,	RobotMap.configureTimeoutMs);
-	
-	/* Setup Sum signal to be used for Distance */
-	frontRightDriveMotorController.configSensorTerm(SensorTerm.Sum0, FeedbackDevice.RemoteSensor0, RobotMap.configureTimeoutMs);				// Feedback Device of Remote Talon
-	frontRightDriveMotorController.configSensorTerm(SensorTerm.Sum1, FeedbackDevice.CTRE_MagEncoder_Relative, RobotMap.configureTimeoutMs);	// Quadrature Encoder of current Talon
-	
-	/* Setup Difference signal to be used for Turn */
-	frontRightDriveMotorController.configSensorTerm(SensorTerm.Diff1, FeedbackDevice.RemoteSensor0, RobotMap.configureTimeoutMs);
-	frontRightDriveMotorController.configSensorTerm(SensorTerm.Diff0, FeedbackDevice.CTRE_MagEncoder_Relative, RobotMap.configureTimeoutMs);
-	
-	/* Configure Sum [Sum of both QuadEncoders] to be used for Primary PID Index */
-	frontRightDriveMotorController.configSelectedFeedbackSensor(FeedbackDevice.SensorSum, RobotMap.PID_PRIMARY, RobotMap.configureTimeoutMs);
-	
-	/* Scale Feedback by 0.5 to half the sum of Distance */
-	frontRightDriveMotorController.configSelectedFeedbackCoefficient(0.5, RobotMap.PID_PRIMARY, RobotMap.configureTimeoutMs);
-	
-	/* Configure Difference [Difference between both QuadEncoders] to be used for Auxiliary PID Index */
-	frontRightDriveMotorController.configSelectedFeedbackSensor(FeedbackDevice.SensorDifference, RobotMap.PID_TURN, RobotMap.configureTimeoutMs);
-	
-	/* Scale the Feedback Sensor using a coefficient */
-	frontRightDriveMotorController.configSelectedFeedbackCoefficient( 1, RobotMap.PID_TURN, RobotMap.configureTimeoutMs);
-	
-	/* Set status frame periods to ensure we don't have stale data */
-	frontRightDriveMotorController.setStatusFramePeriod(StatusFrame.Status_12_Feedback1, 20, RobotMap.configureTimeoutMs);
-	frontRightDriveMotorController.setStatusFramePeriod(StatusFrame.Status_13_Base_PIDF0, 20, RobotMap.configureTimeoutMs);
-	frontRightDriveMotorController.setStatusFramePeriod(StatusFrame.Status_14_Turn_PIDF1, 20, RobotMap.configureTimeoutMs);
-	frontRightDriveMotorController.setStatusFramePeriod(StatusFrame.Status_10_Targets, 20, RobotMap.configureTimeoutMs);
-	frontLeftDriveMotorController.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 5, RobotMap.configureTimeoutMs);
-
-	/* Configure motor neutral deadband */
-	frontRightDriveMotorController.configNeutralDeadband(RobotMap.NeutralDeadband, RobotMap.configureTimeoutMs);
-	frontLeftDriveMotorController.configNeutralDeadband(RobotMap.NeutralDeadband, RobotMap.configureTimeoutMs);
-	
-    /* Motion Magic Configurations */
-    /**Need to replace numbers with real measured values for acceleration and cruise vel. */
-	frontRightDriveMotorController.configMotionAcceleration(RobotMap.acceleration, RobotMap.configureTimeoutMs);
-	frontRightDriveMotorController.configMotionCruiseVelocity(RobotMap.cruiseVelocity, RobotMap.configureTimeoutMs);
-
-	/**
-	 * Max out the peak output (for all modes).  
-	 * However you can limit the output of a given PID object with configClosedLoopPeakOutput().
-	 */
-	frontLeftDriveMotorController.configPeakOutputForward(+1.0, RobotMap.configureTimeoutMs);
-	frontLeftDriveMotorController.configPeakOutputReverse(-1.0, RobotMap.configureTimeoutMs);
-	frontLeftDriveMotorController.configNominalOutputForward(0, RobotMap.configureTimeoutMs);
-	frontLeftDriveMotorController.configNominalOutputReverse(0, RobotMap.configureTimeoutMs);
-
-	frontRightDriveMotorController.configPeakOutputForward(+1.0, RobotMap.configureTimeoutMs);
-	frontRightDriveMotorController.configPeakOutputReverse(-1.0, RobotMap.configureTimeoutMs);
-	frontRightDriveMotorController.configNominalOutputForward(0, RobotMap.configureTimeoutMs);
-	frontRightDriveMotorController.configNominalOutputReverse(0, RobotMap.configureTimeoutMs);
-
-	/* FPID Gains for distance servo */
-	frontRightDriveMotorController.config_kP(RobotMap.SLOT_0, RobotMap.P_0, RobotMap.configureTimeoutMs);
-	frontRightDriveMotorController.config_kI(RobotMap.SLOT_0, RobotMap.I_0, RobotMap.configureTimeoutMs);
-	frontRightDriveMotorController.config_kD(RobotMap.SLOT_0, RobotMap.D_0, RobotMap.configureTimeoutMs);
-	frontRightDriveMotorController.config_kF(RobotMap.SLOT_0, RobotMap.F_0, RobotMap.configureTimeoutMs);
-	frontRightDriveMotorController.config_IntegralZone(RobotMap.SLOT_0, RobotMap.Izone_0, RobotMap.configureTimeoutMs);
-	frontRightDriveMotorController.configClosedLoopPeakOutput(RobotMap.SLOT_0, RobotMap.PeakOutput_0, RobotMap.configureTimeoutMs);
-	frontRightDriveMotorController.configAllowableClosedloopError(RobotMap.SLOT_0, 0, RobotMap.configureTimeoutMs);
-
-	/* FPID Gains for turn servo */
-	frontRightDriveMotorController.config_kP(RobotMap.SLOT_1, RobotMap.P_1, RobotMap.configureTimeoutMs);
-	frontRightDriveMotorController.config_kI(RobotMap.SLOT_1, RobotMap.I_1, RobotMap.configureTimeoutMs);
-	frontRightDriveMotorController.config_kD(RobotMap.SLOT_1, RobotMap.D_1, RobotMap.configureTimeoutMs);
-	frontRightDriveMotorController.config_kF(RobotMap.SLOT_1, RobotMap.F_1, RobotMap.configureTimeoutMs);
-	frontRightDriveMotorController.config_IntegralZone(RobotMap.SLOT_1, RobotMap.Izone_1, RobotMap.configureTimeoutMs);
-	frontRightDriveMotorController.configClosedLoopPeakOutput(RobotMap.SLOT_1, RobotMap.PeakOutput_1, RobotMap.configureTimeoutMs);
-	frontRightDriveMotorController.configAllowableClosedloopError(RobotMap.SLOT_1, 0, RobotMap.configureTimeoutMs);
-
-	/**
-	 * 1ms per loop.  PID loop can be slowed down if need be.
-	 * For example,
-	 * - if sensor updates are too slow
-	 * - sensor deltas are very small per update, so derivative error never gets large enough to be useful.
-	 * - sensor movement is very slow causing the derivative error to be near zero.
-	 */
-	frontRightDriveMotorController.configClosedLoopPeriod(0, RobotMap.closedLoopPeriodMs, RobotMap.configureTimeoutMs);
-	frontRightDriveMotorController.configClosedLoopPeriod(1, RobotMap.closedLoopPeriodMs, RobotMap.configureTimeoutMs);
-
-	/**
-	 * configAuxPIDPolarity(boolean invert, int timeoutMs)
-	 * false means talon's local output is PID0 + PID1, and other side Talon is PID0 - PID1
-	 * true means talon's local output is PID0 - PID1, and other side Talon is PID0 + PID1
-	 */
-	frontRightDriveMotorController.configAuxPIDPolarity(false, RobotMap.configureTimeoutMs);
-	frontRightDriveMotorController.setStatusFramePeriod(StatusFrameEnhanced.Status_10_Targets, 10);
-	frontRightDriveMotorController.selectProfileSlot(RobotMap.SLOT_0, RobotMap.PID_PRIMARY);
-	frontRightDriveMotorController.selectProfileSlot(RobotMap.SLOT_1, RobotMap.PID_TURN);
-
-  } // End configureDriveTrainControllersForAuxClosedLoopPID
-
-
-
   public void simpleMotionMagicTest(int leftEncoderVal, int rightEncoderVal) {
 	// Test method that moves robot forward a given number of wheel rotations  
     frontLeftDriveMotorController.set(ControlMode.MotionMagic, leftEncoderVal);
 	frontRightDriveMotorController.set(ControlMode.MotionMagic, rightEncoderVal);
   }
-
-  public void differentialMotionMagicTest(int distance, int heading) {
-	  frontRightDriveMotorController.set(ControlMode.MotionMagic, distance, DemandType.AuxPID, heading);
-	  frontLeftDriveMotorController.follow(frontRightDriveMotorController,FollowerType.AuxOutput1);
-
-  }
-
 
   public boolean isOnTarget(int leftEncoderTarget, int rightEncoderTarget){
 	  // stuff parameters and call again (-200 is an impossible heading)
@@ -366,7 +259,6 @@ public boolean isOnTarget(int leftEncoderTarget, int rightEncoderTarget, int acc
     RobotMap.defaultAcceptableError = 500;
     System.out.println("I AM FALCONBOT! CACAW! CACAAAAAWWWWW!");
 }
-
 
   @Override
   public void initDefaultCommand() {

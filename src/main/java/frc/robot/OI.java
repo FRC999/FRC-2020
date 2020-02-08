@@ -27,7 +27,6 @@ public class OI {
   Button climberClimbButton = new JoystickButton(leftJoystick, 6);
   Button testMotionMagicButton = new JoystickButton(leftJoystick , 7);
   Button spin = new JoystickButton(leftJoystick, 8);
-  Button testDifMM = new JoystickButton(leftJoystick, 11);
   Button zeroControlPanelEncoderButton = new JoystickButton(leftJoystick, 9);
   Button setControlPanelPositionButton = new JoystickButton(leftJoystick, 10);
 
@@ -38,7 +37,6 @@ public class OI {
     spin.whenPressed(new DriveTurnCommand(90));
     stopButton.whileActive(new DriveStopCommand());
     showAllButton.whileActive(new SmartDashboardUpdateAllCommand());
-    testDifMM.whenPressed(new DriveForwardDifferentialCommand(50000));
     turnAbsoluteTestButton.whenActive(new DriveTurnAbsoluteCommand(90));
     zeroControlPanelEncoderButton.whenPressed(new ControlPanelZeroEncoderCommand());
     setControlPanelPositionButton.whenPressed(new ControlPanelMoveToTargetCommand(3.5));
