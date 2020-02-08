@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -203,6 +204,115 @@ public void moveTalonToPosition(double position) {
    */
   public int getProximity() {
     return colorSensor.getProximity();
+  }
+
+  /** given the color under the wheel now and the color we want to be under the wheel, calculate the minimum number of encoder ticks 
+   * (and the direction, hence positive or negative values) the motor must turn to get to the color we want to be under the sensor.
+   * @param colorNow the color under the sensor, as a starting point
+   * @param colorWant the color we want to get to be under the sensor
+   *  */
+  public double getPathToDesiredColor(PanelColors colorNow, PanelColors colorWant) {
+    double retVal = 0;
+    /* 4 colors, repeated; each slice takes up 1/8 of the wheel. 
+    if clockwise is the positive direction, the number of slices needed
+     to turn to get to the desired color is as follows.
+
+    colorNow | colorWanted
+             | R | G | B | Y |
+          R  | 0 |-1 |+-2|+1 |
+          G  |+1 | 0 |-1 |+-2|
+          B  |+-2|+1 | 0 |-1 |
+          Y  |-1 |+-2|+1 | 0 |
+    */
+int slicesVal;
+switch (colorNow) {
+case red:
+          switch (colorWant) {
+            case red:
+            slicesVal = 0;
+            break;
+            case green:
+            slicesVal = -1;
+            break;
+            case blue:
+            slicesVal = 2;
+            break;
+            case yellow:
+            slicesVal = 1;
+            break;
+            default: 
+            slicesVal = 0;
+            break;
+          }
+break;
+
+case green:
+          switch (colorWant) {
+            case red:
+            slicesVal = 1;
+            break;
+            case green:
+            slicesVal = 0;
+            break;
+            case blue:
+            slicesVal = -1;
+            break;
+            case yellow:
+            slicesVal = 2;
+            break;
+            default: 
+            slicesVal = 0;
+            break;
+          }
+break;
+
+case blue:
+          switch (colorWant) {
+            case red:
+            slicesVal = 2;
+            break;
+            case green:
+            slicesVal = 1;
+            break;
+            case blue:
+            slicesVal = 0;
+            break;
+            case yellow:
+            slicesVal = -1;
+            break;
+            default: 
+            slicesVal = 0;
+            break;
+          }
+break;
+case yellow:
+          switch (colorWant) {
+            case red:
+            slicesVal = -1;
+            break;
+            case green:
+            slicesVal = 2;
+            break;
+            case blue:
+            slicesVal = 1;
+            break;
+            case yellow:
+            slicesVal = 0;
+            break;
+            default: 
+            slicesVal = 0;
+            break;
+          }
+break;
+default:
+slicesVal = 0;
+break;
+}
+
+//slicesVal to revolutions to encoder ticks: 1/8 rev per slicesVal: slicesVal/1 * ( 1/8 rev /1 slicesVal unit) = rev
+retVal = controlPanelTargetRevolutionsToQuadEncoderTicks(RobotMap.controlPanelDirectionFactor *slicesVal/8);
+
+    return retVal;
   }
 
   enum PanelColors {
