@@ -303,22 +303,34 @@ public class FalconDriveSubsystem extends DriveSubsystemBase {
 
 
   public boolean isOnTarget(int leftEncoderTarget, int rightEncoderTarget){
-    return isOnTarget(leftEncoderTarget, rightEncoderTarget,RobotMap.defaultAcceptableError);
+	// stuff parameters and call again (-200 is an impossible heading)
+  return isOnTarget(leftEncoderTarget, rightEncoderTarget, RobotMap.defaultAcceptableError, -200);
+}
+
+public boolean isOnTarget(int leftEncoderTarget, int rightEncoderTarget, int acceptableError){
+  // stuff parameters and call again (-200 is an impossible heading)
+return isOnTarget(leftEncoderTarget, rightEncoderTarget, acceptableError, -200);
+}
+public boolean isOnTarget(int leftEncoderTarget, int rightEncoderTarget, int acceptableError, double targetHeading){
+  int leftError = Math.abs(leftEncoderTarget - getLeftEncoder());
+  int rightError = Math.abs(rightEncoderTarget - getRightEncoder());
+  if (targetHeading != -200){
+	  double headingError = Math.abs(Robot.navXSubsystem.getYaw()) - Math.abs(targetHeading);
+	  //just show angle error for now to get an idea of if thee is an issue.
+	  SmartDashboard.putNumber("Error Heading", headingError);
   }
-  public boolean isOnTarget(int leftEncoderTarget, int rightEncoderTarget, int acceptableError){
-    int leftError = Math.abs(leftEncoderTarget - getLeftEncoder());
-	int rightError = Math.abs(rightEncoderTarget - getRightEncoder());
-	SmartDashboard.putNumber("Error L", leftError);
-	SmartDashboard.putNumber("Error R", rightError);
-    if(leftError <= acceptableError && rightError <= acceptableError){
-		if(wasOnTarget){return true;};
-		wasOnTarget = true;//Dont return true if we just 
-	}
-	else{
-		wasOnTarget=false;
-	}
-	return false;
+  SmartDashboard.putNumber("Error L", leftError);
+  SmartDashboard.putNumber("Error R", rightError);
+  if(leftError <= acceptableError && rightError <= acceptableError){
+	  if(wasOnTarget){return true;};
+	  wasOnTarget = true;//Dont return true if we just 
   }
+  else{
+	  wasOnTarget=false;
+  }
+  return false;
+}
+
   
   public boolean isOnTargetMagicMotion(int driveTarget, int acceptableError){
 	int distanceError = driveTarget - frontRightDriveTalonFX.getActiveTrajectoryPosition(0);
