@@ -40,7 +40,7 @@ public class OI {
     showAllButton.whileActive(new SmartDashboardUpdateAllCommand());
     testDifMM.whenPressed(new DriveForwardDifferentialCommand(50000));
     turnAbsoluteTestButton.whenActive(new DriveTurnAbsoluteCommand(30));
-    //zeroControlPanelEncoderButton.whenPressed(new ZeroControlPanelEncoderCommand());
+    zeroControlPanelEncoderButton.whenPressed(new ControlPanelZeroEncoderCommand());
     setControlPanelPositionButton.whenPressed(new ControlPanelMoveToTargetCommand(3.5));
     
   }
