@@ -8,20 +8,13 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
-import com.ctre.phoenix.motorcontrol.FollowerType;
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.RemoteSensorSource;
-import com.ctre.phoenix.motorcontrol.SensorTerm;
 import com.ctre.phoenix.motorcontrol.StatusFrame;
-import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.commands.DriveManuallyCommand;
 
@@ -35,7 +28,6 @@ public class TalonDriveSubsystem extends DriveSubsystemBase {
   boolean wasOnTarget = false;
   int withinAcceptableErrorLoops = 0;
 
-
   static WPI_TalonSRX frontLeftDriveTalonSRX = new WPI_TalonSRX(RobotMap.frontLeftDriveMotorController);
   static WPI_TalonSRX backLeftDriveTalonSRX = new WPI_TalonSRX(RobotMap.backLeftDriveMotorController);
   static WPI_TalonSRX frontRightDriveTalonSRX = new WPI_TalonSRX(RobotMap.frontRightDriveMotorController);
@@ -48,13 +40,11 @@ public class TalonDriveSubsystem extends DriveSubsystemBase {
 	backLeftDriveMotorController = backLeftDriveTalonSRX;
 	frontRightDriveMotorController = frontRightDriveTalonSRX;
 	backRightDriveMotorController = backRightDriveTalonSRX;
-  
   }
 
   public void manualDrive(double move, double turn) {
 	drive.arcadeDrive(move, turn);
   }
-
 
   public void zeroDriveEncoders() {
     frontLeftDriveTalonSRX.setSelectedSensorPosition(0);
@@ -68,22 +58,23 @@ public class TalonDriveSubsystem extends DriveSubsystemBase {
   public int getRightEncoder() {
     return frontRightDriveTalonSRX.getSelectedSensorPosition();
   }
- 
+  /*
   // encoder positions for aux closed loop PID (driving straight)
   public int getHeadingPosition() {
     return frontRightDriveTalonSRX.getSelectedSensorPosition(1);
   }
+
   public int getDistancePosition() {
     return frontRightDriveTalonSRX.getSelectedSensorPosition(0);
   }
-
-
+  */
   public void DriveTrainCoastMode() {
     frontLeftDriveTalonSRX.setNeutralMode(NeutralMode.Coast);
     backLeftDriveTalonSRX.setNeutralMode(NeutralMode.Coast);
     frontRightDriveTalonSRX.setNeutralMode(NeutralMode.Coast);
     backRightDriveTalonSRX.setNeutralMode(NeutralMode.Coast);
   }
+
   /**
    * Sets the talons to our preferred defaults
    * We are going away from controller-groups, and back to master-slave
@@ -106,7 +97,6 @@ public class TalonDriveSubsystem extends DriveSubsystemBase {
     frontLeftDriveTalonSRX.set(ControlMode.PercentOutput, 0);
     frontRightDriveTalonSRX.set(ControlMode.PercentOutput, 0);
 
-
     // Set up followers
     backLeftDriveTalonSRX.follow(frontLeftDriveTalonSRX);
     backRightDriveTalonSRX.follow(frontRightDriveTalonSRX);
@@ -127,6 +117,7 @@ public class TalonDriveSubsystem extends DriveSubsystemBase {
     // Prevent WPI drivetrain class from inverting input for right side motors because we already inverted them
     drive.setRightSideInverted(false);
   }
+
   // replace with configure controllers for aux closed loop PID when ready
   public void configureDriveTrainControllersForSimpleMagic(){
 
@@ -204,35 +195,37 @@ public class TalonDriveSubsystem extends DriveSubsystemBase {
 	frontRightDriveTalonSRX.set(ControlMode.MotionMagic, rightEncoderVal);
   }
 
+  /*
   public boolean isOnTarget(int leftEncoderTarget, int rightEncoderTarget){
 	// stuff parameters and call again (-200 is an impossible heading)
-  return isOnTarget(leftEncoderTarget, rightEncoderTarget, RobotMap.defaultAcceptableError, -200);
-}
+    return isOnTarget(leftEncoderTarget, rightEncoderTarget, RobotMap.defaultAcceptableError, -200);
+  }
 
-public boolean isOnTarget(int leftEncoderTarget, int rightEncoderTarget, int acceptableError){
-  // stuff parameters and call again (-200 is an impossible heading)
-return isOnTarget(leftEncoderTarget, rightEncoderTarget, acceptableError, -200);
-}
-public boolean isOnTarget(int leftEncoderTarget, int rightEncoderTarget, int acceptableError, double targetHeading){
-  int leftError = Math.abs(leftEncoderTarget - getLeftEncoder());
-  int rightError = Math.abs(rightEncoderTarget - getRightEncoder());
-  if (targetHeading != -200){
+  public boolean isOnTarget(int leftEncoderTarget, int rightEncoderTarget, int acceptableError){
+    // stuff parameters and call again (-200 is an impossible heading)
+    return isOnTarget(leftEncoderTarget, rightEncoderTarget, acceptableError, -200);
+  }
+
+  public boolean isOnTarget(int leftEncoderTarget, int rightEncoderTarget, int acceptableError, double targetHeading){
+    int leftError = Math.abs(leftEncoderTarget - getLeftEncoder());
+    int rightError = Math.abs(rightEncoderTarget - getRightEncoder());
+    if (targetHeading != -200){
 	  double headingError = Math.abs(Robot.navXSubsystem.getYaw()) - Math.abs(targetHeading);
 	  //just show angle error for now to get an idea of if thee is an issue.
 	  SmartDashboard.putNumber("Error Heading", headingError);
-  }
-  SmartDashboard.putNumber("Error L", leftError);
-  SmartDashboard.putNumber("Error R", rightError);
-  if(leftError <= acceptableError && rightError <= acceptableError){
+    }
+    SmartDashboard.putNumber("Error L", leftError);
+    SmartDashboard.putNumber("Error R", rightError);
+    if(leftError <= acceptableError && rightError <= acceptableError){
 	  if(wasOnTarget){return true;};
 	  wasOnTarget = true;//Dont return true if we just 
-  }
-  else{
+    }
+    else{
 	  wasOnTarget=false;
+    }
+    return false;
   }
-  return false;
-}
-
+  */
   public boolean isOnTargetMagicMotion(int driveTarget, int acceptableError){
 	int distanceError = driveTarget - frontRightDriveTalonSRX.getActiveTrajectoryPosition(0);
 	if (distanceError < +acceptableError && distanceError > -acceptableError) {

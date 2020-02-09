@@ -8,15 +8,10 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
-import com.ctre.phoenix.motorcontrol.FollowerType;
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.RemoteSensorSource;
-import com.ctre.phoenix.motorcontrol.SensorTerm;
 import com.ctre.phoenix.motorcontrol.StatusFrame;
-import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.can.BaseTalon;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -35,7 +30,6 @@ public abstract class DriveSubsystemBase extends Subsystem {
   boolean wasOnTarget = false;
   int withinAcceptableErrorLoops = 0;
 
-
   static BaseTalon frontLeftDriveMotorController;
   static BaseTalon backLeftDriveMotorController;
   static BaseTalon frontRightDriveMotorController;
@@ -45,6 +39,7 @@ public abstract class DriveSubsystemBase extends Subsystem {
 	  super();
 	  System.out.println("Made a DriveSubsystem");
   }
+
   public abstract void manualDrive(double move, double turn);
 
   public void zeroDriveEncoders() {
@@ -59,7 +54,7 @@ public abstract class DriveSubsystemBase extends Subsystem {
   public int getRightEncoder() {
     return frontRightDriveMotorController.getSelectedSensorPosition();
   }
- 
+  /*
   // encoder positions for aux closed loop PID (driving straight)
   public int getHeadingPosition() {
     return frontRightDriveMotorController.getSelectedSensorPosition(1);
@@ -68,8 +63,7 @@ public abstract class DriveSubsystemBase extends Subsystem {
   public int getDistancePosition() {
     return frontRightDriveMotorController.getSelectedSensorPosition(0);
   }
-
-
+  */
   public void DriveTrainCoastMode() {
     frontLeftDriveMotorController.setNeutralMode(NeutralMode.Coast);
     backLeftDriveMotorController.setNeutralMode(NeutralMode.Coast);
@@ -98,7 +92,6 @@ public abstract class DriveSubsystemBase extends Subsystem {
     frontLeftDriveMotorController.set(ControlMode.PercentOutput, 0);
     frontRightDriveMotorController.set(ControlMode.PercentOutput, 0);
 
-
     // Set up followers
     backLeftDriveMotorController.follow(frontLeftDriveMotorController);
     backRightDriveMotorController.follow(frontRightDriveMotorController);
@@ -117,6 +110,7 @@ public abstract class DriveSubsystemBase extends Subsystem {
     frontLeftDriveMotorController.setSensorPhase(true);
     frontRightDriveMotorController.setSensorPhase(true);
   }
+
   // replace with configure controllers for aux closed loop PID when ready
   public void configureDriveTrainControllersForSimpleMagic(){
 
@@ -147,7 +141,6 @@ public abstract class DriveSubsystemBase extends Subsystem {
 	frontRightDriveMotorController.configPeakOutputReverse(-1.0, RobotMap.configureTimeoutMs);
 	frontRightDriveMotorController.configNominalOutputForward(0, RobotMap.configureTimeoutMs);
 	frontRightDriveMotorController.configNominalOutputReverse(0, RobotMap.configureTimeoutMs);
-
 
 	/* FPID Gains for each side of drivetrain */
 	frontLeftDriveMotorController.config_kP(RobotMap.SLOT_0, RobotMap.P_0, RobotMap.configureTimeoutMs);
@@ -188,7 +181,6 @@ public abstract class DriveSubsystemBase extends Subsystem {
 
   } // End configureDriveTrainControllersForSimpleMagic
 
-
   public void simpleMotionMagicTest(int leftEncoderVal, int rightEncoderVal) {
 	// Test method that moves robot forward a given number of wheel rotations  
     frontLeftDriveMotorController.set(ControlMode.MotionMagic, leftEncoderVal);
@@ -202,9 +194,9 @@ public abstract class DriveSubsystemBase extends Subsystem {
 
   public boolean isOnTarget(int leftEncoderTarget, int rightEncoderTarget, int acceptableError){
 	// stuff parameters and call again (-200 is an impossible heading)
-  return isOnTarget(leftEncoderTarget, rightEncoderTarget, acceptableError, -200);
-}
-public boolean isOnTarget(int leftEncoderTarget, int rightEncoderTarget, int acceptableError, double targetHeading){
+    return isOnTarget(leftEncoderTarget, rightEncoderTarget, acceptableError, -200);
+  }
+  public boolean isOnTarget(int leftEncoderTarget, int rightEncoderTarget, int acceptableError, double targetHeading){
     int leftError = Math.abs(leftEncoderTarget - getLeftEncoder());
 	int rightError = Math.abs(rightEncoderTarget - getRightEncoder());
 	if (targetHeading != -200){
@@ -245,6 +237,7 @@ public boolean isOnTarget(int leftEncoderTarget, int rightEncoderTarget, int acc
     frontRightDriveMotorController.setNeutralMode(NeutralMode.Brake);
     backRightDriveMotorController.setNeutralMode(NeutralMode.Brake);
   }
+
   public void IAmFalconBot() {
     // How many encoder clicks per revolution (change to 2048 for falcon 500
     // encoders)
@@ -258,7 +251,7 @@ public boolean isOnTarget(int leftEncoderTarget, int rightEncoderTarget, int acc
     // Allowable error to exit movement methods
     RobotMap.defaultAcceptableError = 500;
     System.out.println("I AM FALCONBOT! CACAW! CACAAAAAWWWWW!");
-}
+  } 
 
   @Override
   public void initDefaultCommand() {
