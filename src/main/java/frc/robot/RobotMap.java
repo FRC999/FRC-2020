@@ -42,7 +42,7 @@ public class RobotMap {
   // diameter of the control panel disk in cm
   public static final double controlPanelDiameter = 81.28;
   /** factor to indicate the direction on the motor that the encoder ticks are positive. If clockwise, keep 1; if counterclockwise, change to -1. */
-  public static final int controlPanelDirectionFactor = 1;
+  public static final int controlPanelDirectionFactor = -1;
 
   // Climber constants
   public final static int climberMotorController = 10;

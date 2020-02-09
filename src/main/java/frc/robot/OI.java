@@ -30,6 +30,7 @@ public class OI {
   Button testDifMM = new JoystickButton(leftJoystick, 11);
   Button zeroControlPanelEncoderButton = new JoystickButton(leftJoystick, 9);
   Button setControlPanelPositionButton = new JoystickButton(leftJoystick, 10);
+  Button moveControlPanelAlongColorPathButton = new JoystickButton(leftJoystick, 11);
 
   public OI() { // Setup All Commands Here
     zeroEncoderButton.whenPressed(new DriveZeroEncodersCommand());
@@ -42,6 +43,7 @@ public class OI {
     turnAbsoluteTestButton.whenActive(new DriveTurnAbsoluteCommand(30));
     zeroControlPanelEncoderButton.whenPressed(new ControlPanelZeroEncoderCommand());
     setControlPanelPositionButton.whenPressed(new ControlPanelMoveToTargetCommand(3.5));
+    moveControlPanelAlongColorPathButton.whenPressed(new ControlPanelMoveTargetColorCommand());
     
   }
 }

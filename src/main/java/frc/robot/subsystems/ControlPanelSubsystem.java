@@ -30,7 +30,7 @@ public class ControlPanelSubsystem extends Subsystem {
   private Color currentColor;
   private PanelColors suspectedColor;
 
-  static final double toleranceSize = .01;// tolerance size (in percent)
+  static final double toleranceSize = .05;// tolerance size (in percent)
   private boolean wasAligned = false;
   private double spinSpeed = 0.5;
 
@@ -62,7 +62,7 @@ public class ControlPanelSubsystem extends Subsystem {
  * Experimentally: 4 revolutions = 712 encoder ticks / 4 = 178
  */
   public double readEncoderRevolutions() {
-    return diskSpinnerTalon.getSelectedSensorPosition() * (1/RobotMap.quadratureEncoderTicksPerRev) ;
+    return diskSpinnerTalon.getSelectedSensorPosition() * (1./RobotMap.quadratureEncoderTicksPerRev) ;
   }
 /** set the value of this subsystem's motor encoder to zero. */
 public void zeroEncoder() {
@@ -77,14 +77,17 @@ theta cyl/theta control = r control / r cyl
 theta cyl = (theta control * r control)/r cyl
 theta cyl rev * (ticks/rev) = theta cyl ticks
 */
- return (target *RobotMap.controlPanelDiameter * RobotMap.quadratureEncoderTicksPerRev)/(RobotMap.diskSpinnerDiameter);
+System.out.println("target:" + target);
+ double retVal = (target * RobotMap.controlPanelDiameter * RobotMap.quadratureEncoderTicksPerRev)/(RobotMap.diskSpinnerDiameter);
+System.out.println(target + " * " + RobotMap.controlPanelDiameter + " * " + RobotMap.quadratureEncoderTicksPerRev + " / " + RobotMap.diskSpinnerDiameter + " = " + retVal);
+ return retVal;
 }
 /** moves the motor at 0.5 power in the direction specified by the sign of the input. */
 public void moveTalonInDirection(double position) {
  // diskSpinnerTalon.set(ControlMode.Position,position);
 
- diskSpinnerTalon.set(0.5 * Math.signum(position));
- System.out.println(position);
+ diskSpinnerTalon.set(0.20 * Math.signum(position));
+
 }
 /**basically just for test debugging */public void stopTalon() {diskSpinnerTalon.set(0);}
 
@@ -93,7 +96,9 @@ public Color getSeenColor() {
   return colorSensor.getColor();
 }
 
-  public void putSeenColor() {
+
+// transferred this to the SmartDashboard class
+  /*public void putSeenColor() {
     updateColorState();
     SmartDashboard.putNumber("Spotted Color: Red", currentColor.red * 255);
     SmartDashboard.putNumber("Spotted Color: Green", currentColor.green * 255);
@@ -102,7 +107,7 @@ public Color getSeenColor() {
     if (suspectedColor != null) {
       SmartDashboard.putString("SuspectedColor: ", suspectedColor.toString());
     }
-  }
+  } */
   
   public boolean hasReceivedGameColor(){
     return receivedGameColor;
@@ -144,6 +149,8 @@ public Color getSeenColor() {
 
   }
 
+  public Color getCurrentColor() {return currentColor;}
+
   /**
    * Converts from 'color' to 'PanelColor': assumes no overlap
    * 
@@ -158,6 +165,8 @@ public Color getSeenColor() {
     }
     return null;
   }
+/** find the last updated value for the suspected colors. */
+  public PanelColors getSuspectedColor() {return suspectedColor;}
 
   /**
    * Checks whether the colors are aligned: null checked
@@ -182,6 +191,8 @@ public Color getSeenColor() {
    */
   public PanelColors getGameTargetColor() {
     String gameData = DriverStation.getInstance().getGameSpecificMessage();
+    // ONLY FOR TESTING, DO NOT KEEP IN FINAL CODE 
+    gameData = "B";
     if (gameData.length() > 0) {
       receivedGameColor = true;
       switch (gameData.charAt(0)) {
@@ -218,7 +229,7 @@ public Color getSeenColor() {
    * @param colorWant the color we want to get to be under the sensor
    *  */
   public double getPathToDesiredColor(PanelColors colorNow, PanelColors colorWant) {
-    double retVal = 0;
+    double retVal;
     /* 4 colors, repeated; each slice takes up 1/8 of the wheel. 
     if clockwise is the positive direction, the number of slices needed
      to turn to get to the desired color is as follows.
@@ -231,6 +242,7 @@ public Color getSeenColor() {
           Y  |-1 |+-2|+1 | 0 |
     */
 int slicesVal;
+if (colorNow != null) {
 switch (colorNow) {
 case red:
           switch (colorWant) {
@@ -313,16 +325,18 @@ break;
 default:
 slicesVal = 0;
 break;
-}
+}//switch
+}//if colorNow != null
+else
+{slicesVal = 0;}
 
 //slicesVal to revolutions to encoder ticks: 1/8 rev per slicesVal: slicesVal/1 * ( 1/8 rev /1 slicesVal unit) = rev
-retVal = controlPanelTargetRevolutionsToQuadEncoderTicks(RobotMap.controlPanelDirectionFactor *slicesVal/8);
-
+retVal = controlPanelTargetRevolutionsToQuadEncoderTicks(RobotMap.controlPanelDirectionFactor *slicesVal/8.);
     return retVal;
   }
 
   public enum PanelColors {
-    blue(0, 1, 1), green(0, 1, 0), red(1, 0, 0), yellow(1, 0, 0);
+    blue(0.13, 0.44, 0.43), green(0.17, 0.59, 0.25), red(0.5, 0.36, 0.14), yellow(0.32, 0.57, 0.12);
     // TODO: Find more accurate values, also reformat
     // Maybe use HSV for tolerance check?
 
