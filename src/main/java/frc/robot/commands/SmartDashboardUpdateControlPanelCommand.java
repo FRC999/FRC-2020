@@ -26,6 +26,7 @@ public class SmartDashboardUpdateControlPanelCommand extends Command {
   @Override
   protected void execute() {
     Robot.smartDashboardSubsystem.updateControlPanelValues();
+    
   }
 
   // Make this return true when this Command no longer needs to run execute()

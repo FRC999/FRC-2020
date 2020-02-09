@@ -20,15 +20,15 @@ public class ControlPanelZeroEncoderCommand extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.driveSubsystem.zeroDriveEncoders();
-    System.out.println("Zeroed Encoders");
+    Robot.controlPanelSubsystem.zeroEncoder();
+    System.out.println("Zeroed control panel Encoder");
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.driveSubsystem.zeroDriveEncoders();
-    System.out.println("Zeroed Encoders Again");
+    Robot.controlPanelSubsystem.zeroEncoder();
+    System.out.println("Zeroed control panel encoder Again");
   }
 
   // Make this return true when this Command no longer needs to run execute()
