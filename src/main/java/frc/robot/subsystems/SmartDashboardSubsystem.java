@@ -29,6 +29,11 @@ public class SmartDashboardSubsystem extends Subsystem {
     setDefaultCommand(new SmartDashboardUpdateAllCommand());
   }
 
+  public void updateShooterValues() {
+    SmartDashboard.putNumber("Pan Encoder", Robot.shooterSubsystem.getpanEncoder());
+    SmartDashboard.putNumber("Tilt Encoder", Robot.shooterSubsystem.gettiltEncoder());
+  }
+
   public void updateEncoderValue() {
     SmartDashboard.putNumber("left encoder", Robot.driveSubsystem.getLeftEncoder());
     SmartDashboard.putNumber("right encoder", Robot.driveSubsystem.getRightEncoder());
