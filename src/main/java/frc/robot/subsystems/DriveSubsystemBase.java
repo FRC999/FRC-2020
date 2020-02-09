@@ -198,22 +198,24 @@ public abstract class DriveSubsystemBase extends Subsystem {
   }
   public boolean isOnTarget(int leftEncoderTarget, int rightEncoderTarget, int acceptableError, double targetHeading){
     int leftError = Math.abs(leftEncoderTarget - getLeftEncoder());
-	int rightError = Math.abs(rightEncoderTarget - getRightEncoder());
-	if (targetHeading != -200){
-		double headingError = Math.abs(Robot.navXSubsystem.getYaw()) - Math.abs(targetHeading);
-		//just show angle error for now to get an idea of if thee is an issue.
-		SmartDashboard.putNumber("Error Heading", headingError);
-	}
-	SmartDashboard.putNumber("Error L", leftError);
-	SmartDashboard.putNumber("Error R", rightError);
+	  int rightError = Math.abs(rightEncoderTarget - getRightEncoder());
+	  if (targetHeading != -200){
+		  double headingError = Math.abs(Robot.navXSubsystem.getYaw()) - Math.abs(targetHeading);
+		  //just show angle error for now to get an idea of if thee is an issue.
+		  SmartDashboard.putNumber("Error Heading", headingError);
+	  }
+	  SmartDashboard.putNumber("Error L", leftError);
+	  SmartDashboard.putNumber("Error R", rightError);
     if(leftError <= acceptableError && rightError <= acceptableError){
-		if(wasOnTarget){return true;};
-		wasOnTarget = true;//Dont return true if we just 
-	}
-	else{
-		wasOnTarget=false;
-	}
-	return false;
+		  if(wasOnTarget){
+        return true;
+      }
+		  wasOnTarget = true;//Dont return true if we just 
+	  }
+	  else{
+		  wasOnTarget=false;
+	  }
+	  return false;
   }
   
   public boolean isOnTargetMagicMotion(int driveTarget, int acceptableError){
