@@ -41,10 +41,6 @@ public class FalconDriveSubsystem extends DriveSubsystemBase {
   //public static DifferentialDrive drive = new DifferentialDrive(frontLeftDriveTalonFX, frontRightDriveTalonFX);
   // No differential or arcade drive for falcons
   
-  public void manualDrive(double move, double turn) {
-    frontLeftDriveTalonFX.set(ControlMode.PercentOutput, move, DemandType.ArbitraryFeedForward, +turn);
-    frontRightDriveTalonFX.set(ControlMode.PercentOutput, move, DemandType.ArbitraryFeedForward, -turn);
-  }
 
   /**
    * Sets the talons to our preferred defaults
@@ -58,66 +54,4 @@ public class FalconDriveSubsystem extends DriveSubsystemBase {
   public void configureDriveTrainControllersForSimpleMagic(){
     super.configureDriveTrainControllersForSimpleMagic();
   } // End configureDriveTrainControllersForSimpleMagic
-
-  /*
-  public boolean isOnTarget(int leftEncoderTarget, int rightEncoderTarget){
-	// stuff parameters and call again (-200 is an impossible heading)
-    return isOnTarget(leftEncoderTarget, rightEncoderTarget, RobotMap.defaultAcceptableError, -200);
-  }
-
-  public boolean isOnTarget(int leftEncoderTarget, int rightEncoderTarget, int acceptableError){
-    // stuff parameters and call again (-200 is an impossible heading)
-    return isOnTarget(leftEncoderTarget, rightEncoderTarget, acceptableError, -200);
-  }
-
-  public boolean isOnTarget(int leftEncoderTarget, int rightEncoderTarget, int acceptableError, double targetHeading){
-    int leftError = Math.abs(leftEncoderTarget - getLeftEncoder());
-    int rightError = Math.abs(rightEncoderTarget - getRightEncoder());
-    if (targetHeading != -200){
-	  double headingError = Math.abs(Robot.navXSubsystem.getYaw()) - Math.abs(targetHeading);
-	  //just show angle error for now to get an idea of if thee is an issue.
-	  SmartDashboard.putNumber("Error Heading", headingError);
-    }
-    SmartDashboard.putNumber("Error L", leftError);
-    SmartDashboard.putNumber("Error R", rightError);
-    if(leftError <= acceptableError && rightError <= acceptableError){
-	  if(wasOnTarget){return true;};
-	  wasOnTarget = true;//Dont return true if we just 
-    }
-    else{
-	  wasOnTarget=false;
-    }
-    return false;
-  }
-  */
-  
-  public boolean isOnTargetMagicMotion(int driveTarget, int acceptableError){
-	int distanceError = driveTarget - frontRightDriveTalonFX.getActiveTrajectoryPosition(0);
-	if (distanceError < +acceptableError && distanceError > -acceptableError) {
-
-		++withinAcceptableErrorLoops;
-	} else {
-		withinAcceptableErrorLoops = 0;
-	}
-	if (withinAcceptableErrorLoops > 10){
-		return true;
-	} else {
-		return false;
-	}
-  }
-
- 
-  public void driveTrainBrakeMode() {
-	frontLeftDriveTalonFX.setNeutralMode(NeutralMode.Brake);
-    backLeftDriveTalonFX.setNeutralMode(NeutralMode.Brake);
-    frontRightDriveTalonFX.setNeutralMode(NeutralMode.Brake);
-    backRightDriveTalonFX.setNeutralMode(NeutralMode.Brake);
-  }
-
-  @Override
-  public void initDefaultCommand() {
-    
-    // Set the default command for a subsystem here.
-     setDefaultCommand(new DriveManuallyCommand());
-  }
 }

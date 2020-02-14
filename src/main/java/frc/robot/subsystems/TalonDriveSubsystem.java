@@ -49,11 +49,4 @@ public class TalonDriveSubsystem extends DriveSubsystemBase {
   public void configureDriveTrainControllersForSimpleMagic(){
     super.configureDriveTrainControllersForSimpleMagic();
   } // End configureDriveTrainControllersForSimpleMagic
-
-  @Override
-  public void initDefaultCommand() {
-	// Set the default command for a subsystem here.
-	System.out.println("Default command set");
-    setDefaultCommand(new DriveManuallyCommand());
-  }
 }

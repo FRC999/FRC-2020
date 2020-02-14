@@ -81,19 +81,19 @@ public abstract class DriveSubsystemBase extends Subsystem {
    * Call this in robot-init: it preforms basic setup for ArcadeDrive
    */
   public void resetDriveTrainControllers() {
-	//System.out.println("Hit  resetDriveTrainControllers");
+	  //System.out.println("Hit  resetDriveTrainControllers");
     frontLeftDriveMotorController.configFactoryDefault();
     backLeftDriveMotorController.configFactoryDefault();
     frontRightDriveMotorController.configFactoryDefault();
-	backRightDriveMotorController.configFactoryDefault();
+	  backRightDriveMotorController.configFactoryDefault();
 	
-	//Set all drive motors to brake mode
+	  //Set all drive motors to brake mode
     frontLeftDriveMotorController.setNeutralMode(NeutralMode.Brake);
     backLeftDriveMotorController.setNeutralMode(NeutralMode.Brake);
     frontRightDriveMotorController.setNeutralMode(NeutralMode.Brake);
     backRightDriveMotorController.setNeutralMode(NeutralMode.Brake);
 
-	// Set controllers to Percent output
+  	// Set controllers to Percent output
     frontLeftDriveMotorController.set(ControlMode.PercentOutput, 0);
     frontRightDriveMotorController.set(ControlMode.PercentOutput, 0);
 
@@ -118,6 +118,8 @@ public abstract class DriveSubsystemBase extends Subsystem {
     drive.setRightSideInverted(false);
   }
 
+
+
   // replace with configure controllers for aux closed loop PID when ready
   public void configureDriveTrainControllersForSimpleMagic(){
 
@@ -135,7 +137,7 @@ public abstract class DriveSubsystemBase extends Subsystem {
     frontRightDriveMotorController.configNeutralDeadband(RobotMap.NeutralDeadband, RobotMap.configureTimeoutMs);
     frontLeftDriveMotorController.configNeutralDeadband(RobotMap.NeutralDeadband, RobotMap.configureTimeoutMs);
 
-      /**
+    /**
      * Max out the peak output (for all modes).  
      * However you can limit the output of a given PID object with configClosedLoopPeakOutput().
      */
@@ -166,7 +168,7 @@ public abstract class DriveSubsystemBase extends Subsystem {
     frontRightDriveMotorController.configClosedLoopPeakOutput(RobotMap.SLOT_0, RobotMap.PeakOutput_0, RobotMap.configureTimeoutMs);
     frontRightDriveMotorController.configAllowableClosedloopError(RobotMap.SLOT_0, 0, RobotMap.configureTimeoutMs);
 
-      /**
+    /**
      * 1ms per loop.  PID loop can be slowed down if need be.
      * For example,
      * - if sensor updates are too slow
@@ -177,7 +179,8 @@ public abstract class DriveSubsystemBase extends Subsystem {
     frontLeftDriveMotorController.configClosedLoopPeriod(0, RobotMap.closedLoopPeriodMs, RobotMap.configureTimeoutMs);
 
       /* Motion Magic Configurations */
-      /**Need to replace numbers with real measured values for acceleration and cruise vel. */
+
+    /**Need to replace numbers with real measured values for acceleration and cruise vel. */
     frontLeftDriveMotorController.configMotionAcceleration(RobotMap.acceleration, RobotMap.configureTimeoutMs);
       frontLeftDriveMotorController.configMotionCruiseVelocity(RobotMap.cruiseVelocity, RobotMap.configureTimeoutMs);
       frontLeftDriveMotorController.configMotionSCurveStrength(RobotMap.smoothing);
@@ -203,6 +206,7 @@ public abstract class DriveSubsystemBase extends Subsystem {
 	// stuff parameters and call again (-200 is an impossible heading)
     return isOnTarget(leftEncoderTarget, rightEncoderTarget, acceptableError, -200);
   }
+  
   public boolean isOnTarget(int leftEncoderTarget, int rightEncoderTarget, int acceptableError, double targetHeading){
     int leftError = Math.abs(leftEncoderTarget - getLeftEncoder());
 	  int rightError = Math.abs(rightEncoderTarget - getRightEncoder());
