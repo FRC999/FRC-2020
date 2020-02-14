@@ -9,12 +9,10 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.DemandType;
-import com.ctre.phoenix.motorcontrol.FeedbackDevice;
-import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.StatusFrame;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.robot.RobotMap;
 import frc.robot.commands.DriveManuallyCommand;
 
@@ -32,10 +30,12 @@ public class FalconDriveSubsystem extends DriveSubsystemBase {
   static WPI_TalonFX backRightDriveTalonFX = new WPI_TalonFX(RobotMap.backRightDriveMotorController);
 
   public FalconDriveSubsystem(){
-	frontLeftDriveMotorController = frontLeftDriveTalonFX;
-	backLeftDriveMotorController = backLeftDriveTalonFX;
-	frontRightDriveMotorController = frontRightDriveTalonFX;
-	backRightDriveMotorController = backRightDriveTalonFX;
+    IAmFalconBot();
+	  frontLeftDriveMotorController = frontLeftDriveTalonFX;
+	  backLeftDriveMotorController = backLeftDriveTalonFX;
+	  frontRightDriveMotorController = frontRightDriveTalonFX;
+    backRightDriveMotorController = backRightDriveTalonFX;
+    drive = new DifferentialDrive(frontLeftDriveTalonFX, frontRightDriveTalonFX);
   }
 
   //public static DifferentialDrive drive = new DifferentialDrive(frontLeftDriveTalonFX, frontRightDriveTalonFX);
@@ -52,109 +52,11 @@ public class FalconDriveSubsystem extends DriveSubsystemBase {
    * Call this in robot-init: it preforms basic setup for ArcadeDrive
    */
   public void resetDriveTrainControllers() {
-	//System.out.println("Hit  resetDriveTrainControllers");
-    frontLeftDriveTalonFX.configFactoryDefault();
-    backLeftDriveTalonFX.configFactoryDefault();
-    frontRightDriveTalonFX.configFactoryDefault();
-	backRightDriveTalonFX.configFactoryDefault();
-	
-	//Set all drive motors to brake mode
-    frontLeftDriveTalonFX.setNeutralMode(NeutralMode.Brake);
-    backLeftDriveTalonFX.setNeutralMode(NeutralMode.Brake);
-    frontRightDriveTalonFX.setNeutralMode(NeutralMode.Brake);
-    backRightDriveTalonFX.setNeutralMode(NeutralMode.Brake);
-
-	// Set contrllers to Percent output
-    frontLeftDriveTalonFX.set(ControlMode.PercentOutput, 0);
-    frontRightDriveTalonFX.set(ControlMode.PercentOutput, 0);
-
-    // Set up followers
-    backLeftDriveTalonFX.follow(frontLeftDriveTalonFX);
-    backRightDriveTalonFX.follow(frontRightDriveTalonFX);
-
-    // Set controller orientation so both sides show green LEDs when drivetrain is going forward  
-    frontLeftDriveTalonFX.setInverted(false);
-    frontRightDriveTalonFX.setInverted(true);
-    backLeftDriveTalonFX.setInverted(InvertType.FollowMaster);
-    backRightDriveTalonFX.setInverted(InvertType.FollowMaster);
-
-    // Configure Encoders
-    frontLeftDriveTalonFX.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
-    frontRightDriveTalonFX.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
-
-    // Set encoder phase so values increase when controller LEDs are green
-    frontLeftDriveTalonFX.setSensorPhase(true);
-    frontRightDriveTalonFX.setSensorPhase(true);
+	  super.resetDriveTrainControllers();
   }
 
-  // replace with configure controllers for aux closed loop PID when ready
   public void configureDriveTrainControllersForSimpleMagic(){
-
-	// Configure the encoders for PID control
-	frontLeftDriveTalonFX.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, RobotMap.PID_PRIMARY, RobotMap.configureTimeoutMs);			
-	frontRightDriveTalonFX.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, RobotMap.PID_PRIMARY,	RobotMap.configureTimeoutMs);
-	
-	/* Set status frame periods to ensure we don't have stale data */
-	frontRightDriveTalonFX.setStatusFramePeriod(StatusFrame.Status_13_Base_PIDF0, 20, RobotMap.configureTimeoutMs);
-	frontRightDriveTalonFX.setStatusFramePeriod(StatusFrame.Status_10_MotionMagic, 20, RobotMap.configureTimeoutMs);
-	frontLeftDriveTalonFX.setStatusFramePeriod(StatusFrame.Status_13_Base_PIDF0, 20, RobotMap.configureTimeoutMs);
-	frontLeftDriveTalonFX.setStatusFramePeriod(StatusFrame.Status_10_MotionMagic, 20, RobotMap.configureTimeoutMs);
-
-	/* Configure motor neutral deadband */
-	frontRightDriveTalonFX.configNeutralDeadband(RobotMap.NeutralDeadband, RobotMap.configureTimeoutMs);
-	frontLeftDriveTalonFX.configNeutralDeadband(RobotMap.NeutralDeadband, RobotMap.configureTimeoutMs);
-
-    /**
-	 * Max out the peak output (for all modes).  
-	 * However you can limit the output of a given PID object with configClosedLoopPeakOutput().
-	 */
-	frontLeftDriveTalonFX.configPeakOutputForward(+1.0, RobotMap.configureTimeoutMs);
-	frontLeftDriveTalonFX.configPeakOutputReverse(-1.0, RobotMap.configureTimeoutMs);
-	frontLeftDriveTalonFX.configNominalOutputForward(0, RobotMap.configureTimeoutMs);
-	frontLeftDriveTalonFX.configNominalOutputReverse(0, RobotMap.configureTimeoutMs);
-
-	frontRightDriveTalonFX.configPeakOutputForward(+1.0, RobotMap.configureTimeoutMs);
-	frontRightDriveTalonFX.configPeakOutputReverse(-1.0, RobotMap.configureTimeoutMs);
-	frontRightDriveTalonFX.configNominalOutputForward(0, RobotMap.configureTimeoutMs);
-	frontRightDriveTalonFX.configNominalOutputReverse(0, RobotMap.configureTimeoutMs);
-
-	/* FPID Gains for each side of drivetrain */
-	frontLeftDriveTalonFX.config_kP(RobotMap.SLOT_0, RobotMap.P_0, RobotMap.configureTimeoutMs);
-	frontLeftDriveTalonFX.config_kI(RobotMap.SLOT_0, RobotMap.I_0, RobotMap.configureTimeoutMs);
-	frontLeftDriveTalonFX.config_kD(RobotMap.SLOT_0, RobotMap.D_0, RobotMap.configureTimeoutMs);
-	frontLeftDriveTalonFX.config_kF(RobotMap.SLOT_0, RobotMap.F_0, RobotMap.configureTimeoutMs);
-	frontLeftDriveTalonFX.config_IntegralZone(RobotMap.SLOT_0, RobotMap.Izone_0, RobotMap.configureTimeoutMs);
-	frontLeftDriveTalonFX.configClosedLoopPeakOutput(RobotMap.SLOT_0, RobotMap.PeakOutput_0, RobotMap.configureTimeoutMs);
-	frontLeftDriveTalonFX.configAllowableClosedloopError(RobotMap.SLOT_0, 0, RobotMap.configureTimeoutMs);
-
-	frontRightDriveTalonFX.config_kP(RobotMap.SLOT_0, RobotMap.P_0, RobotMap.configureTimeoutMs);
-	frontRightDriveTalonFX.config_kI(RobotMap.SLOT_0, RobotMap.I_0, RobotMap.configureTimeoutMs);
-	frontRightDriveTalonFX.config_kD(RobotMap.SLOT_0, RobotMap.D_0, RobotMap.configureTimeoutMs);
-	frontRightDriveTalonFX.config_kF(RobotMap.SLOT_0, RobotMap.F_0, RobotMap.configureTimeoutMs);
-	frontRightDriveTalonFX.config_IntegralZone(RobotMap.SLOT_0, RobotMap.Izone_0, RobotMap.configureTimeoutMs);
-	frontRightDriveTalonFX.configClosedLoopPeakOutput(RobotMap.SLOT_0, RobotMap.PeakOutput_0, RobotMap.configureTimeoutMs);
-	frontRightDriveTalonFX.configAllowableClosedloopError(RobotMap.SLOT_0, 0, RobotMap.configureTimeoutMs);
-
-    /**
-	 * 1ms per loop.  PID loop can be slowed down if need be.
-	 * For example,
-	 * - if sensor updates are too slow
-	 * - sensor deltas are very small per update, so derivative error never gets large enough to be useful.
-	 * - sensor movement is very slow causing the derivative error to be near zero.
-	 */
-	frontRightDriveTalonFX.configClosedLoopPeriod(0, RobotMap.closedLoopPeriodMs, RobotMap.configureTimeoutMs);
-	frontLeftDriveTalonFX.configClosedLoopPeriod(0, RobotMap.closedLoopPeriodMs, RobotMap.configureTimeoutMs);
-
-    /* Motion Magic Configurations */
-    /**Need to replace numbers with real measured values for acceleration and cruise vel. */
-	frontLeftDriveTalonFX.configMotionAcceleration(RobotMap.acceleration, RobotMap.configureTimeoutMs);
-    frontLeftDriveTalonFX.configMotionCruiseVelocity(RobotMap.cruiseVelocity, RobotMap.configureTimeoutMs);
-    frontLeftDriveTalonFX.configMotionSCurveStrength(RobotMap.smoothing);
-
-    frontRightDriveTalonFX.configMotionAcceleration(RobotMap.acceleration, RobotMap.configureTimeoutMs);
-	frontRightDriveTalonFX.configMotionCruiseVelocity(RobotMap.cruiseVelocity, RobotMap.configureTimeoutMs);
-    frontRightDriveTalonFX.configMotionSCurveStrength(RobotMap.smoothing);
-
+    super.configureDriveTrainControllersForSimpleMagic();
   } // End configureDriveTrainControllersForSimpleMagic
 
   /*
