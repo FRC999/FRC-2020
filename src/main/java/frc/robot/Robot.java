@@ -25,6 +25,7 @@ import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.SmartDashboardSubsystem;
 import frc.robot.subsystems.UltrasonicSensorSubsystem;
+import edu.wpi.first.networktables.*;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -34,6 +35,7 @@ import frc.robot.subsystems.UltrasonicSensorSubsystem;
  * project.
  */
 public class Robot extends TimedRobot {
+  NetworkTable table;
   public static DriveSubsystemBase driveSubsystem;
   public static ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
   public static ClimberSubsystem climberSubsystem = new ClimberSubsystem();
@@ -59,6 +61,12 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+    
+    NetworkTableInstance ntInst = NetworkTableInstance.getDefault();
+    ntInst.startClientTeam(999);
+    NetworkTable table = ntInst.getTable("TestTable");
+    NetworkTableEntry testEntry = table.getEntry("test");
+    testEntry.setDouble(10.5);
     System.out.println("Hit robotInit");
 
     DigitalInput falconBotSwitch = new DigitalInput(RobotMap.falconBotSwitchPortNumber);
