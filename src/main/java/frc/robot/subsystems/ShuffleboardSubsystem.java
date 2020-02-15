@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.shuffleboard.*;
 import frc.robot.commands.*;
@@ -7,18 +8,39 @@ import frc.robot.Robot;
 
 public class ShuffleboardSubsystem extends Subsystem{
 
+    NetworkTableEntry leftSpeedEntry;
+    NetworkTableEntry rightSpeedEntry;
+    ShuffleboardLayout speedometerLayout;
+    
+    NetworkTableEntry s
+
     public ShuffleboardSubsystem(){
+    }
+
+    public void setupShuffleboard(){
         ShuffleboardTab displays = Shuffleboard.getTab("Displays");
         Shuffleboard.selectTab("Displays");
-    }
 
-    public void setup(){
+        //Shuffleboard.getTab("Displays").add("Gyro", Robot.navXSubsystem.getNavX()).withWidget(BuiltInWidgets.kGyro);
+
+        //Speed of Encoders
+        speedometerLayout = Shuffleboard.getTab("Displays").getLayout("Speedometers", BuiltInLayouts.kList).withSize(2,3).withPosition(0,0);
+        leftSpeedEntry = 
+        Shuffleboard.getTab("Displays").getLayout("Speedometers").add("Speed of Left Encoder", 40).withWidget(BuiltInWidgets.kDial).getEntry();
+        rightSpeedEntry = 
+        Shuffleboard.getTab("Displays").getLayout("Speedometers").add("Speed of Right Encoder", 60).withWidget(BuiltInWidgets.kDial).getEntry();
+       
+        //Voltage
+        
+
+       //Test Entry
         Shuffleboard.getTab("Displays").add("Test", 3.14);
-        Shuffleboard.getTab("Displays").add("Gyro", Robot.navXSubsystem.getNavX()).withWidget(BuiltInWidgets.kGyro);
-        Shuffleboard.getTab("Displays").add("Speed", Robot.driveSubsystem.getLeftEncoderSpeed()).withWidget(BuiltInWidgets.kDial);
     }
 
-
+    public void updateShuffleboardEntries(){
+        leftSpeedEntry.setDouble(4);
+        rightSpeedEntry.setDouble(31);
+    }
 
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.

@@ -11,6 +11,8 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.DriveManuallyCommand;
@@ -27,6 +29,7 @@ import frc.robot.subsystems.ShuffleboardSubsystem;
 import frc.robot.subsystems.SmartDashboardSubsystem;
 import frc.robot.subsystems.UltrasonicSensorSubsystem;
 import edu.wpi.first.networktables.*;
+
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -64,6 +67,10 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     
+    //Set up shuffleboard
+    shuffleBoardSubsystem.setupShuffleboard();
+
+
     NetworkTableInstance ntInst = NetworkTableInstance.getDefault();
     ntInst.startClientTeam(999);
     NetworkTable table = ntInst.getTable("TestTable");
@@ -88,8 +95,7 @@ public class Robot extends TimedRobot {
 
     sendableCommandChooser.setDefaultOption("Default Auto", new RealSmartAutoCommand());
     sendableCommandChooser.addOption("Really Smart Auto", new RealSmartAutoCommand());
-    SmartDashboard.putData("Auto mode", sendableCommandChooser);
-    SmartDashboard.putBoolean("Test Boolean", TestBool);
+
     Robot.driveSubsystem.resetDriveTrainControllers();
 
     // after testing run only the second configure method
@@ -174,8 +180,12 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-    driveSubsystem.driveTrainBrakeMode();
 
+    driveSubsystem.driveTrainBrakeMode();
+    //ShuffleboardTab displays = Shuffleboard.getTab("Displays");
+    //Shuffleboard.selectTab("Displays");
+    //Shuffleboard.getTab("Displays")
+    // .add("PiTest", 3.14);
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
