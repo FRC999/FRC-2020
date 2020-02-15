@@ -12,7 +12,7 @@ public class ShuffleboardSubsystem extends Subsystem{
     NetworkTableEntry rightSpeedEntry;
     ShuffleboardLayout speedometerLayout;
     
-    NetworkTableEntry s
+    NetworkTableEntry voltageEntry;
 
     public ShuffleboardSubsystem(){
     }
