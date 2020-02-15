@@ -1,6 +1,10 @@
 package frc.robot.subsystems;
 
+import java.util.Map;
+
 import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.shuffleboard.*;
 import frc.robot.commands.*;
@@ -14,6 +18,8 @@ public class ShuffleboardSubsystem extends Subsystem{
     
     NetworkTableEntry voltageEntry;
 
+
+
     public ShuffleboardSubsystem(){
     }
 
@@ -21,7 +27,6 @@ public class ShuffleboardSubsystem extends Subsystem{
         ShuffleboardTab displays = Shuffleboard.getTab("Displays");
         Shuffleboard.selectTab("Displays");
 
-        //Shuffleboard.getTab("Displays").add("Gyro", Robot.navXSubsystem.getNavX()).withWidget(BuiltInWidgets.kGyro);
 
         //Speed of Encoders
         speedometerLayout = Shuffleboard.getTab("Displays").getLayout("Speedometers", BuiltInLayouts.kList).withSize(2,3).withPosition(0,0);
@@ -31,15 +36,20 @@ public class ShuffleboardSubsystem extends Subsystem{
         Shuffleboard.getTab("Displays").getLayout("Speedometers").add("Speed of Right Encoder", 60).withWidget(BuiltInWidgets.kDial).getEntry();
        
         //Voltage
-        
+        voltageEntry = 
+        Shuffleboard.getTab("Displays").add("Battery Voltage", 20).withPosition(3,0).withWidget(BuiltInWidgets.kNumberBar).withProperties(Map.of("min", 0, "max", 14)).getEntry();
+
+        //Gyro
+        Shuffleboard.getTab("Displays").add("Gyro Yaw", Robot.navXSubsystem.getNavX()).withWidget(BuiltInWidgets.kGyro);
 
        //Test Entry
         Shuffleboard.getTab("Displays").add("Test", 3.14);
     }
 
     public void updateShuffleboardEntries(){
-        leftSpeedEntry.setDouble(4);
-        rightSpeedEntry.setDouble(31);
+        leftSpeedEntry.setDouble(Robot.driveSubsystem.getLeftEncoderSpeed());
+        rightSpeedEntry.setDouble(Robot.driveSubsystem.getRightEncoderSpeed());
+        voltageEntry.setDouble(RobotController.getBatteryVoltage());
     }
 
     public void initDefaultCommand() {
