@@ -11,6 +11,8 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.DriveManuallyCommand;
@@ -23,8 +25,11 @@ import frc.robot.subsystems.FalconDriveSubsystem;
 import frc.robot.subsystems.NavXSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.ShuffleboardSubsystem;
 import frc.robot.subsystems.SmartDashboardSubsystem;
 import frc.robot.subsystems.UltrasonicSensorSubsystem;
+import edu.wpi.first.networktables.*;
+
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -34,6 +39,7 @@ import frc.robot.subsystems.UltrasonicSensorSubsystem;
  * project.
  */
 public class Robot extends TimedRobot {
+  NetworkTable table;
   public static DriveSubsystemBase driveSubsystem;
   public static ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
   public static ClimberSubsystem climberSubsystem = new ClimberSubsystem();
@@ -42,11 +48,14 @@ public class Robot extends TimedRobot {
   public static UltrasonicSensorSubsystem ultrasonicSubsystem = new UltrasonicSensorSubsystem();
   public static IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   public static ControlPanelSubsystem controlPanelSubsystem = new ControlPanelSubsystem();
+  public static ShuffleboardSubsystem shuffleBoardSubsystem = new ShuffleboardSubsystem();
+
+  
   public boolean TestBool = false;
   public static OI oi;
   Command autonomousCommand;
 
-  // Sendable choosers below
+  // Sendable choosers belowP
   SendableChooser<Command> sendableCommandChooser = new SendableChooser<Command>();
   SendableChooser<String> sendableStringChooser = new SendableChooser<String>();
   SendableChooser<Integer> sendableIntegerChooser = new SendableChooser<Integer>();
@@ -59,6 +68,16 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+    
+    //Set up shuffleboard
+    shuffleBoardSubsystem.setupShuffleboard();
+
+
+    NetworkTableInstance ntInst = NetworkTableInstance.getDefault();
+    ntInst.startClientTeam(999);
+    NetworkTable table = ntInst.getTable("TestTable");
+    NetworkTableEntry testEntry = table.getEntry("test");
+    testEntry.setDouble(10.5);
     System.out.println("Hit robotInit");
 
     DigitalInput falconBotSwitch = new DigitalInput(RobotMap.falconBotSwitchPortNumber);
@@ -78,8 +97,7 @@ public class Robot extends TimedRobot {
 
     sendableCommandChooser.setDefaultOption("Default Auto", new RealSmartAutoCommand());
     sendableCommandChooser.addOption("Really Smart Auto", new RealSmartAutoCommand());
-    SmartDashboard.putData("Auto mode", sendableCommandChooser);
-    SmartDashboard.putBoolean("Test Boolean", TestBool);
+
     Robot.driveSubsystem.resetDriveTrainControllers();
 
     // after testing run only the second configure method
@@ -164,8 +182,12 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-    driveSubsystem.driveTrainBrakeMode();
 
+    driveSubsystem.driveTrainBrakeMode();
+    //ShuffleboardTab displays = Shuffleboard.getTab("Displays");
+    //Shuffleboard.selectTab("Displays");
+    //Shuffleboard.getTab("Displays")
+    // .add("PiTest", 3.14);
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
