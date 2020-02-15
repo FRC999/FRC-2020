@@ -13,7 +13,9 @@ public class ShuffleboardSubsystem extends Subsystem{
     }
 
     public void setup(){
-        //Shuffleboard.getTab("Displays").add("Gyro", Robot.navXSubsystem.getNavX()).withWidget(BuiltInWidgets.kGyro);
+        Shuffleboard.getTab("Displays").add("Test", 3.14);
+        Shuffleboard.getTab("Displays").add("Gyro", Robot.navXSubsystem.getNavX()).withWidget(BuiltInWidgets.kGyro);
+        Shuffleboard.getTab("Displays").add("Speed", Robot.driveSubsystem.getLeftEncoderSpeed()).withWidget(BuiltInWidgets.kDial);
     }
 
 

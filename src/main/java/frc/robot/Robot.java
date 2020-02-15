@@ -50,7 +50,7 @@ public class Robot extends TimedRobot {
   public static OI oi;
   Command autonomousCommand;
 
-  // Sendable choosers below
+  // Sendable choosers belowP
   SendableChooser<Command> sendableCommandChooser = new SendableChooser<Command>();
   SendableChooser<String> sendableStringChooser = new SendableChooser<String>();
   SendableChooser<Integer> sendableIntegerChooser = new SendableChooser<Integer>();
