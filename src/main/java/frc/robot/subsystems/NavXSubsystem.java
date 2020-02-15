@@ -81,4 +81,10 @@ public class NavXSubsystem extends Subsystem {
         NavX.zeroYaw();
         return temporaryDouble;
     }
+
+    public AHRS getNavX()
+    {
+        return NavX;
+    }
+
 }
