@@ -30,6 +30,7 @@ public class OI {
   Button zeroControlPanelEncoderButton = new JoystickButton(leftJoystick, 9);
   Button setControlPanelPositionButton = new JoystickButton(leftJoystick, 10);
   Button moveControlPanelAlongColorPathButton = new JoystickButton(leftJoystick, 11);
+  Button shooterManualControlButton = new JoystickButton(leftJoystick, 12);
 
   public OI() { // Setup All Commands Here
     zeroEncoderButton.whenPressed(new DriveZeroEncodersCommand());
@@ -42,6 +43,8 @@ public class OI {
     zeroControlPanelEncoderButton.whenPressed(new ControlPanelZeroEncoderCommand());
     setControlPanelPositionButton.whenPressed(new ControlPanelMoveToTargetCommand(3.5));
     moveControlPanelAlongColorPathButton.whenPressed(new ControlPanelMoveTargetColorCommand());
+    moveControlPanelAlongColorPathButton.whenPressed(new ControlPanelMoveTargetColorCommand());
+    shooterManualControlButton.whenPressed(new ShootManuallyCommand());
     
   }
 }
