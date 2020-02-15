@@ -9,12 +9,13 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.RobotMap;
 
 public class ShootManuallyCommand extends Command {
   public ShootManuallyCommand() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
+    requires(Robot.shooterSubsystem);
+    
   }
 
   // Called just before this Command runs the first time
@@ -33,7 +34,7 @@ public class ShootManuallyCommand extends Command {
     Robot.shooterSubsystem.pan(pan);
     Robot.shooterSubsystem.tilt(tilt);
     
-    Robot.smartDashboardSubsystem.updateEncoderValue();
+    Robot.smartDashboardSubsystem.updateShooterValues();
   }
 
   // Make this return true when this Command no longer needs to run execute()
