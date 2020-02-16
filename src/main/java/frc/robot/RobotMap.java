@@ -46,8 +46,6 @@ public class RobotMap {
 
   // Climber constants
   public final static int climberMotorController = 10;
-  // public static int climberSolenoid1Channel=11;
-  // public static int climberSolenoid2Channel=12;
 
   // Driver Input Devices
   public final static int leftJoystickPort = 0;
@@ -57,8 +55,8 @@ public class RobotMap {
   public static int ColorWheelSolenoidReverseChannel = 1;
   public static int IntakeSolenoidForwardChannel = 2;
   public static int IntakeSolenoidReverseChannel = 3;
-  public static int ClimberSolenoidForwardChannel = 4;
-  public static int ClimberSolenoidReverseChannel = 5;
+  public static int climberSolenoidForwardChannel = 4;
+  public static int climberSolenoidReverseChannel = 5;
 
   // ULTRASONIC CONSTANTS
   // RoboRIO channel for the ultrasonic sensor's analog input

@@ -20,16 +20,16 @@ public class ShooterSubsystem extends Subsystem {
     panMotorController.configFactoryDefault();
     tiltMotorController.configFactoryDefault();
     panMotorController.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
-    tiltMotorController.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
+    //tiltMotorController.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
   }
 
   public int getpanEncoder() {
     return panMotorController.getSelectedSensorPosition();
   }
 
-  public int gettiltEncoder() {
-    return tiltMotorController.getSelectedSensorPosition();
-  }
+  //public int gettiltEncoder() {
+   // return tiltMotorController.getSelectedSensorPosition();
+  //}
 
   public void standby() {
     shooterMotorController.set(ControlMode.PercentOutput, 0);
@@ -43,9 +43,9 @@ public class ShooterSubsystem extends Subsystem {
     panMotorController.set(ControlMode.PercentOutput, pan);
   }
 
-  public void tilt(double tilt) {
-    tiltMotorController.set(ControlMode.PercentOutput, tilt);
-  }
+  //public void tilt(double tilt) {
+    //tiltMotorController.set(ControlMode.PercentOutput, tilt);
+  //}
 
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
