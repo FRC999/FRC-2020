@@ -17,7 +17,7 @@ public class ShuffleboardSubsystem extends Subsystem{
     
     NetworkTableEntry voltageEntry;
 
-
+    NetworkTableEntry turretEntry;
 
     public ShuffleboardSubsystem(){
     }
@@ -41,6 +41,9 @@ public class ShuffleboardSubsystem extends Subsystem{
         //Gyro
         Shuffleboard.getTab("Displays").add("Gyro Yaw", Robot.navXSubsystem.getNavX()).withWidget(BuiltInWidgets.kGyro);
 
+        //Turret Rotation
+        turretEntry = Shuffleboard.getTab("Displays").add("Turret Rotation", 10).withWidget(BuiltInWidgets.kDial).withProperties(Map.of("min", 0, "max",360)).getEntry();
+
        //Test Entry
         Shuffleboard.getTab("Displays").add("Test", 3.14);
     }
@@ -49,6 +52,7 @@ public class ShuffleboardSubsystem extends Subsystem{
         leftSpeedEntry.setDouble(Robot.driveSubsystem.getLeftEncoderSpeed());
         rightSpeedEntry.setDouble(Robot.driveSubsystem.getRightEncoderSpeed());
         voltageEntry.setDouble(RobotController.getBatteryVoltage());
+        turretEntry.setDouble(240);
     }
 
     public void initDefaultCommand() {
