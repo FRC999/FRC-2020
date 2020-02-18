@@ -7,7 +7,7 @@
 
 package frc.robot.subsystems;
 
-import com.kauailabs.navx.frc.*;
+import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.SPI;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -81,4 +81,10 @@ public class NavXSubsystem extends Subsystem {
         NavX.zeroYaw();
         return temporaryDouble;
     }
+
+    public AHRS getNavX()
+    {
+        return NavX;
+    }
+
 }

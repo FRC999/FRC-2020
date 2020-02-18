@@ -56,6 +56,13 @@ public abstract class DriveSubsystemBase extends Subsystem {
     return frontLeftDriveMotorController.getSelectedSensorPosition();
   }
 
+  public int getLeftEncoderSpeed(){
+    return frontLeftDriveMotorController.getSelectedSensorVelocity();
+  }
+
+  public int getRightEncoderSpeed(){
+    return frontRightDriveMotorController.getSelectedSensorVelocity();
+  }
   public int getRightEncoder() {
     return frontRightDriveMotorController.getSelectedSensorPosition();
   }

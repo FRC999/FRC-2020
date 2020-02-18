@@ -11,6 +11,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 import frc.robot.commands.SmartDashboardUpdateAllCommand;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.RobotController;
 
 
 /**
@@ -31,7 +33,7 @@ public class SmartDashboardSubsystem extends Subsystem {
 
   public void updateShooterValues() {
     SmartDashboard.putNumber("Pan Encoder", Robot.shooterSubsystem.getpanEncoder());
-    SmartDashboard.putNumber("Tilt Encoder", Robot.shooterSubsystem.gettiltEncoder());
+    //SmartDashboard.putNumber("Tilt Encoder", Robot.shooterSubsystem.gettiltEncoder());
   }
 
   public void updateEncoderValue() {
@@ -66,9 +68,15 @@ public class SmartDashboardSubsystem extends Subsystem {
  
   }
 
+  public void updateMatchTimeAndBatteryVoltage() {
+    SmartDashboard.putNumber("MATCH TIME LEFT (s)", DriverStation.getInstance().getMatchTime());
+    SmartDashboard.putNumber("battery voltage", RobotController.getBatteryVoltage());
+  }
+
   public void updateAllDisplays() {
     updateNavXValues();
     updateUltrasonicValues();
     updateControlPanelValues();
+    updateMatchTimeAndBatteryVoltage();
   }
 }

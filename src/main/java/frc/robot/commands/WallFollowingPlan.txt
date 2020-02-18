@@ -1,0 +1,4 @@
+1.  Check if wall is sensed using Ultrasonic sensors
+2.  Move to a desired distance from the wall
+3.  Turn and start moving along the wall, staying the desired distance away
+

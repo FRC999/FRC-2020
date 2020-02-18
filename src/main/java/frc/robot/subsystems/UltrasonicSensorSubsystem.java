@@ -47,6 +47,19 @@ int retVal = ultrasonic2.getValue();
 return retVal;
 }
 
+public boolean checkWallFollowerPossible(){
+  if (getSensor1DistanceInMM()<3500){
+    return true;
+  }
+  else
+  {
+    return false;
+  }
+
+  
+
+}
+
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
@@ -54,5 +67,9 @@ return retVal;
       
   }
 
+//Wall Crawler
+
+//Need to maintain a distance of 45.72 cm from the wall.
+//
 
 }
