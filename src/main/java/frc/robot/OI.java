@@ -19,6 +19,7 @@ import frc.robot.commands.*;
  */
 public class OI {
   public Joystick leftJoystick = new Joystick(RobotMap.leftJoystickPort);
+  public Joystick buttonBox = new Joystick(RobotMap.buttonBoxPort);
   Button stopButton = new JoystickButton(leftJoystick, 1);
   Button showAllButton = new JoystickButton(leftJoystick, 2);
   Button zeroEncoderButton = new JoystickButton(leftJoystick, 3);
@@ -27,9 +28,14 @@ public class OI {
   Button climberClimbButton = new JoystickButton(leftJoystick, 6);
   Button testMotionMagicButton = new JoystickButton(leftJoystick , 7);
   Button spin = new JoystickButton(leftJoystick, 8);
-  Button testDifMM = new JoystickButton(leftJoystick, 11);
   Button zeroControlPanelEncoderButton = new JoystickButton(leftJoystick, 9);
   Button setControlPanelPositionButton = new JoystickButton(leftJoystick, 10);
+  Button moveControlPanelAlongColorPathButton = new JoystickButton(leftJoystick, 11);
+  Button shooterManualControlButton = new JoystickButton(leftJoystick, 12);
+
+  Button climbExtendButton = new JoystickButton(buttonBox, 1);
+  Button climbRetractButton = new JoystickButton(buttonBox, 2);
+
 
   public OI() { // Setup All Commands Here
     zeroEncoderButton.whenPressed(new DriveZeroEncodersCommand());
@@ -38,10 +44,14 @@ public class OI {
     spin.whenPressed(new DriveTurnCommand(90));
     stopButton.whileActive(new DriveStopCommand());
     showAllButton.whileActive(new SmartDashboardUpdateAllCommand());
-    testDifMM.whenPressed(new DriveForwardDifferentialCommand(50000));
-    turnAbsoluteTestButton.whenActive(new DriveTurnAbsoluteCommand(30));
+    turnAbsoluteTestButton.whenActive(new DriveTurnAbsoluteCommand(90));
     zeroControlPanelEncoderButton.whenPressed(new ControlPanelZeroEncoderCommand());
     setControlPanelPositionButton.whenPressed(new ControlPanelMoveToTargetCommand(3.5));
-    
+    moveControlPanelAlongColorPathButton.whenPressed(new ControlPanelMoveTargetColorCommand());
+    moveControlPanelAlongColorPathButton.whenPressed(new ControlPanelMoveTargetColorCommand());
+    shooterManualControlButton.whenPressed(new ShootManuallyCommand());
+
+    climbExtendButton.whenPressed(new ClimbExtendCommand());
+    climbRetractButton.whenPressed(new ClimbRetractCommand());
   }
 }

@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.can.BaseTalon;
+
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
  * to a variable name. This provides flexibility changing wiring, makes checking
@@ -42,23 +44,22 @@ public class RobotMap {
   // diameter of the control panel disk in cm
   public static final double controlPanelDiameter = 81.28;
   /** factor to indicate the direction on the motor that the encoder ticks are positive. If clockwise, keep 1; if counterclockwise, change to -1. */
-  public static final int controlPanelDirectionFactor = 1;
+  public static final int controlPanelDirectionFactor = -1;
 
   // Climber constants
   public final static int climberMotorController = 10;
-  // public static int climberSolenoid1Channel=11;
-  // public static int climberSolenoid2Channel=12;
 
   // Driver Input Devices
   public final static int leftJoystickPort = 0;
+  public final static int buttonBoxPort = 1;
 
   // PCM forward, reverse channels for doubleSolenoids
   public static int ColorWheelSolenoidForwardChannel = 0;
   public static int ColorWheelSolenoidReverseChannel = 1;
   public static int IntakeSolenoidForwardChannel = 2;
   public static int IntakeSolenoidReverseChannel = 3;
-  public static int ClimberSolenoidForwardChannel = 4;
-  public static int ClimberSolenoidReverseChannel = 5;
+  public static int climberSolenoidForwardChannel = 4;
+  public static int climberSolenoidReverseChannel = 5;
 
   // ULTRASONIC CONSTANTS
   // RoboRIO channel for the ultrasonic sensor's analog input

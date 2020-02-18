@@ -10,31 +10,31 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class ControlPanelZeroEncoderCommand extends Command {
-  public ControlPanelZeroEncoderCommand() {
+public class ShuffleboardSetupCommand extends Command {
+  public ShuffleboardSetupCommand() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.driveSubsystem);
+    requires(Robot.shuffleBoardSubsystem);
+    
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.controlPanelSubsystem.zeroEncoder();
-    System.out.println("Zeroed control panel Encoder");
+
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.controlPanelSubsystem.zeroEncoder();
-    System.out.println("Zeroed control panel encoder Again");
+    Robot.shuffleBoardSubsystem.updateShuffleboardEntries();
+
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return true;
+    return false;
   }
 
   // Called once after isFinished returns true

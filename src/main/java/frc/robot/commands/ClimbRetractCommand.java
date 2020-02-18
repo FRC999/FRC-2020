@@ -9,45 +9,34 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.RobotMap;
-import frc.robot.subsystems.TalonDriveSubsystem;
 
-public class DriveForwardDifferentialCommand extends Command {
-  private static int driveDistance;
-  private static int driveTarget;
-
-  public DriveForwardDifferentialCommand(int distance) {
-    requires(Robot.driveSubsystem);
-    driveDistance = distance;
+public class ClimbRetractCommand extends Command {
+  public ClimbRetractCommand() {
+    // Use requires() here to declare subsystem dependencies
+    // eg. requires(chassis);
+    requires(Robot.climberSubsystem);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    TalonDriveSubsystem.drive.setSafetyEnabled(false);
-    int heading = Robot.driveSubsystem.getHeadingPosition();
-    int position = Robot.driveSubsystem.getDistancePosition();
-    int driveTarget =  driveDistance + position;
-    Robot.driveSubsystem.differentialMotionMagicTest(driveTarget, heading);
+    Robot.climberSubsystem.retract();
   }
-    
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    // check to see if closed loop PID is settled on target
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return Robot.driveSubsystem.isOnTargetMagicMotion(driveTarget, RobotMap.defaultAcceptableError);
+    return false;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    TalonDriveSubsystem.drive.setSafetyEnabled(true);
   }
 
   // Called when another command which requires one or more of the same
