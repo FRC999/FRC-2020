@@ -83,5 +83,5 @@ public class ShuffleBoardSubsystem extends Subsystem {
     updateNavXValues();
     updateUltrasonicValues();
     updateControlPanelValues();
-  }
+  } 
 }
