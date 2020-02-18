@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
+import edu.wpi.first.wpilibj.util.Color8Bit;
 import frc.robot.RobotMap;
 
 public class ControlPanelSubsystem extends Subsystem {
@@ -20,7 +21,7 @@ public class ControlPanelSubsystem extends Subsystem {
   private final ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort);
 
   private WPI_TalonSRX diskSpinnerTalon = new WPI_TalonSRX(RobotMap.diskSpinnerMotorID);
-  private DoubleSolenoid diskSpinnerSolenoid= new DoubleSolenoid(RobotMap.ColorWheelSolenoidForwardChannel,RobotMap.ColorWheelSolenoidReverseChannel);
+  private DoubleSolenoid diskSpinnerSolenoid;//= new DoubleSolenoid(RobotMap.ColorWheelSolenoidForwardChannel,RobotMap.ColorWheelSolenoidReverseChannel);
 
   private PanelColors targetColor;
   private boolean receivedGameColor = false;
@@ -121,10 +122,10 @@ public void moveTalonToPosition(double position) {
    * Sets the value of this subsystem's DoubleSolenoid: kForward, kReverse, or
    * kOff. These are values of the enum DoubleSolenoid.Value.
    */
-  public void setSolenoid(DoubleSolenoid.Value val) {
-    diskSpinnerSolenoid.set(val);
+ // public void setSolenoid(DoubleSolenoid.Value val) {
+  //  diskSpinnerSolenoid.set(val);
 
-  }
+  //}
 
   /**
    * Update the color that we should be reading:
@@ -205,12 +206,12 @@ public void moveTalonToPosition(double position) {
   }
 
   enum PanelColors {
-    blue(0, 1, 1), green(0, 1, 0), red(1, 0, 0), yellow(1, 0, 0);
+    blue(0, 255, 255), green(0, 255, 0), red(255, 0, 0), yellow(255, 0, 0);
     // TODO: Find more accurate values, also reformat
     // Maybe use HSV for tolerance check?
 
     // numbers gotten from game manual + online converter
-    final private double redVal, greenVal, blueVal;
+    final private int redVal, greenVal, blueVal;
 
     PanelColors(int r, int g, int b) {
       redVal = r;
@@ -218,8 +219,9 @@ public void moveTalonToPosition(double position) {
       blueVal = b;
     }
 
-    Color getColor() {
-      return new Color(redVal, greenVal, blueVal);
+    public Color getColor() {
+      Color c = new Color(new Color8Bit(redVal, greenVal, blueVal));
+      return c;
     }
 
     boolean withinTolerance(double r, double g, double b) {
