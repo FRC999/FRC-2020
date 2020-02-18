@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.can.BaseTalon;
+
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
  * to a variable name. This provides flexibility changing wiring, makes checking
@@ -41,22 +43,23 @@ public class RobotMap {
   public static final double diskSpinnerDiameter = 81.28;
   // diameter of the control panel disk in cm
   public static final double controlPanelDiameter = 81.28;
+  /** factor to indicate the direction on the motor that the encoder ticks are positive. If clockwise, keep 1; if counterclockwise, change to -1. */
+  public static final int controlPanelDirectionFactor = -1;
 
   // Climber constants
   public final static int climberMotorController = 10;
-  // public static int climberSolenoid1Channel=11;
-  // public static int climberSolenoid2Channel=12;
 
   // Driver Input Devices
   public final static int leftJoystickPort = 0;
+  public final static int buttonBoxPort = 1;
 
   // PCM forward, reverse channels for doubleSolenoids
   public static int ColorWheelSolenoidForwardChannel = 0;
   public static int ColorWheelSolenoidReverseChannel = 1;
   public static int IntakeSolenoidForwardChannel = 2;
   public static int IntakeSolenoidReverseChannel = 3;
-  public static int ClimberSolenoidForwardChannel = 4;
-  public static int ClimberSolenoidReverseChannel = 5;
+  public static int climberSolenoidForwardChannel = 4;
+  public static int climberSolenoidReverseChannel = 5;
 
   // ULTRASONIC CONSTANTS
   // RoboRIO channel for the ultrasonic sensor's analog input
@@ -78,20 +81,29 @@ public class RobotMap {
    *  suggest the correct factor is around 1.25
    */
   public static double ultrasonicValueToMMConversionFactor = 1.25;
+  public static int falconBotSwitchPortNumber = 0;
+  public static boolean isFalconBot;
+
+  // How many encoder clicks per revolution (change to 2048 for falcon 500
+  // encoders)
+  public static int encoderUnitsPerShaftRotation = 4096;
+  // The difference between the left and right side encoder values when the robot
+  // is rotated 180 degrees
+  public static int encoderUnitsPerRobotRotation = 38585;// thats the SUM of the two
+  public static int cruiseVelocity = 2250;
+  // MotionMagic curve smoothing parameter [0 - 8]
+  public static int acceleration = 2250;
+  // Allowable error to exit movement methods
+  public static int defaultAcceptableError = 1000;
+
+
 
   // Closed loop constants
   // How long we wait for a configuration change to happen before we give up and
   // report a failure in milliseconds
   public final static int configureTimeoutMs = 30;
-  // How many encoder clicks per revolution (change to 2048 for falcon 500
-  // encoders)
-  public final static int encoderUnitsPerShaftRotation = 4096;
   // Full motor output value
   public final static int fullMotorOutput = 1023;
-  // The difference between the left and right side encoder values when the robot
-  // is rotated 180 degrees
-  public final static int encoderUnitsPerRobotRotation = 38585;// thats the SUM of the two
-  public final static double encoderUnitsPerJEMotorRotation = 44.4;
   // How many milliseconds between each closed loop call
   public final static int closedLoopPeriodMs = 1;
   // Motor neutral dead-band, set to the minimum 0.1%
@@ -99,12 +111,9 @@ public class RobotMap {
   // MotionMagic curve smoothing parameter [0 - 8]
   public final static int smoothing = 3;
   // MotionMagic curve smoothing parameter [0 - 8]
-  public final static int cruiseVelocity = 2250;
-  // MotionMagic curve smoothing parameter [0 - 8]
-  public final static int acceleration = 2250;
-  // Allowable error to exit movement methods
-  public final static int defaultAcceptableError = 1000;
  
+  public final static double encoderUnitsPerJEMotorRotation = 178;
+
 
   /** ------- EXAMPLE OF SOME GAINS SETTINGS FOR OTHER ROBOTS ------
 	 * PID Gains may have to be adjusted based on the responsiveness of control loop.
@@ -153,4 +162,6 @@ public class RobotMap {
   public final static int SLOT_3 = 3;
 
   // ---- End closed loop parameter constants ----
+
+
 }

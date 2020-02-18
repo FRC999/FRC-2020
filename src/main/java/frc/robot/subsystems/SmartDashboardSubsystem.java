@@ -10,7 +10,9 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
-import frc.robot.commands.UpdateAllSmartDashboard;
+import frc.robot.commands.SmartDashboardUpdateAllCommand;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.RobotController;
 
 
 /**
@@ -26,7 +28,12 @@ public class SmartDashboardSubsystem extends Subsystem {
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
-    setDefaultCommand(new UpdateAllSmartDashboard());
+    setDefaultCommand(new SmartDashboardUpdateAllCommand());
+  }
+
+  public void updateShooterValues() {
+    SmartDashboard.putNumber("Pan Encoder", Robot.shooterSubsystem.getpanEncoder());
+    //SmartDashboard.putNumber("Tilt Encoder", Robot.shooterSubsystem.gettiltEncoder());
   }
 
   public void updateEncoderValue() {
@@ -49,11 +56,27 @@ public class SmartDashboardSubsystem extends Subsystem {
   public void updateControlPanelValues() {
     SmartDashboard.putNumber("control panel quad encoder raw value", Robot.controlPanelSubsystem.readEncoderRaw() );
     SmartDashboard.putNumber("control panel quad encoder in revolutions ", Robot.controlPanelSubsystem.readEncoderRevolutions());
+ 
+    Robot.controlPanelSubsystem.updateColorState();
+    SmartDashboard.putNumber("Spotted Color: Red", Robot.controlPanelSubsystem.getCurrentColor().red );
+    SmartDashboard.putNumber("Spotted Color: Green", Robot.controlPanelSubsystem.getCurrentColor().green );
+    SmartDashboard.putNumber("Spotted Color: Blue", Robot.controlPanelSubsystem.getCurrentColor().blue);
+    SmartDashboard.putNumber("Spotted Distance: ", Robot.controlPanelSubsystem.getProximity());
+    if (Robot.controlPanelSubsystem.getSuspectedColor() != null) {
+      SmartDashboard.putString("SuspectedColor: ", Robot.controlPanelSubsystem.getSuspectedColor().toString());
+    }
+ 
+  }
+
+  public void updateMatchTimeAndBatteryVoltage() {
+    SmartDashboard.putNumber("MATCH TIME LEFT (s)", DriverStation.getInstance().getMatchTime());
+    SmartDashboard.putNumber("battery voltage", RobotController.getBatteryVoltage());
   }
 
   public void updateAllDisplays() {
     updateNavXValues();
     updateUltrasonicValues();
     updateControlPanelValues();
+    updateMatchTimeAndBatteryVoltage();
   }
 }

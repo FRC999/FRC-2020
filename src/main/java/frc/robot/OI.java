@@ -19,29 +19,39 @@ import frc.robot.commands.*;
  */
 public class OI {
   public Joystick leftJoystick = new Joystick(RobotMap.leftJoystickPort);
+  public Joystick buttonBox = new Joystick(RobotMap.buttonBoxPort);
   Button stopButton = new JoystickButton(leftJoystick, 1);
-  Button showEncoderButton = new JoystickButton(leftJoystick, 2);
+  Button showAllButton = new JoystickButton(leftJoystick, 2);
   Button zeroEncoderButton = new JoystickButton(leftJoystick, 3);
   Button zeroYawButton = new JoystickButton(leftJoystick, 4);
-  Button climberExtendButton = new JoystickButton(leftJoystick, 5);
+  Button turnAbsoluteTestButton = new JoystickButton(leftJoystick, 5);
   Button climberClimbButton = new JoystickButton(leftJoystick, 6);
   Button testMotionMagicButton = new JoystickButton(leftJoystick , 7);
   Button spin = new JoystickButton(leftJoystick, 8);
-  Button testDifMM = new JoystickButton(leftJoystick, 11);
   Button zeroControlPanelEncoderButton = new JoystickButton(leftJoystick, 9);
   Button setControlPanelPositionButton = new JoystickButton(leftJoystick, 10);
-  Button turnToValue = new JoystickButton(leftJoystick, 12);
+  Button moveControlPanelAlongColorPathButton = new JoystickButton(leftJoystick, 11);
+  Button shooterManualControlButton = new JoystickButton(leftJoystick, 12);
+
+  Button climbExtendButton = new JoystickButton(buttonBox, 1);
+  Button climbRetractButton = new JoystickButton(buttonBox, 2);
+
 
   public OI() { // Setup All Commands Here
-    zeroEncoderButton.whenPressed(new ZeroDriveEncodersCommand());
-    zeroYawButton.whenPressed(new ZeroYawCommand());
+    zeroEncoderButton.whenPressed(new DriveZeroEncodersCommand());
+    zeroYawButton.whenPressed(new NavXZeroYawCommand());
     testMotionMagicButton.whenPressed(new DriveForwardCommand(50000));
-    spin.whenPressed(new TurnAroundCommand());
-    stopButton.whenActive(new StopCommand());
-    showEncoderButton.whenPressed(new RealSmartAutoCommand());
-    testDifMM.whenPressed(new DifMMDriveForwardCommand(50000));
-    zeroControlPanelEncoderButton.whenPressed(new ZeroControlPanelEncoderCommand());
-    setControlPanelPositionButton.whenPressed(new MoveControlPanelToTargetRevolutionsCommand(3.5));
-    turnToValue.whenPressed(new TurnRightX(270));
+    spin.whenPressed(new DriveTurnCommand(90));
+    stopButton.whileActive(new DriveStopCommand());
+    showAllButton.whileActive(new SmartDashboardUpdateAllCommand());
+    turnAbsoluteTestButton.whenActive(new DriveTurnAbsoluteCommand(90));
+    zeroControlPanelEncoderButton.whenPressed(new ControlPanelZeroEncoderCommand());
+    setControlPanelPositionButton.whenPressed(new ControlPanelMoveToTargetCommand(3.5));
+    moveControlPanelAlongColorPathButton.whenPressed(new ControlPanelMoveTargetColorCommand());
+    moveControlPanelAlongColorPathButton.whenPressed(new ControlPanelMoveTargetColorCommand());
+    shooterManualControlButton.whenPressed(new ShootManuallyCommand());
+
+    climbExtendButton.whenPressed(new ClimbExtendCommand());
+    climbRetractButton.whenPressed(new ClimbRetractCommand());
   }
 }

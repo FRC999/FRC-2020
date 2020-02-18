@@ -9,39 +9,33 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.RobotMap;
 
-public class DifMMDriveForwardCommand extends Command {
-  private static int driveDistance;
-  private static int driveTarget;
-
-  public DifMMDriveForwardCommand(int distance) {
-    requires(Robot.driveSubsystem);
-    driveDistance = distance;
+public class DriveStopCommand extends Command {
+  public DriveStopCommand() {
+    // Use requires() here to declare subsystem dependencies
+     requires(Robot.driveSubsystem);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    //System.out.println("Called initialize");
-    //Robot.driveSubsystem.driveTrainBrakeMode();
-    int heading = Robot.driveSubsystem.getHeadingPosition();
-    int position = Robot.driveSubsystem.getDistancePosition();
-    int driveTarget =  driveDistance + position;
-    Robot.driveSubsystem.differentialMotionMagicTest(driveTarget, heading);
-  }
     
+    Robot.driveSubsystem.driveTrainBrakeMode();
+  }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    // check to see if closed loop PID is settled on target
+    Robot.driveSubsystem.manualDrive(0, 0);
+    System.out.println("HALT!");
+    System.out.println(Robot.driveSubsystem.getLeftEncoder() + "  " + Robot.driveSubsystem.getRightEncoder());
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return Robot.driveSubsystem.isOnTargetMagicMotion(driveTarget, RobotMap.defaultAcceptableError);
+    return true;
+    //TODO: Check if still moving before stopping
   }
 
   // Called once after isFinished returns true

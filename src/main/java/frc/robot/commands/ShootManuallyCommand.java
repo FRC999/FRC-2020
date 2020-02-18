@@ -10,28 +10,38 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class UpdateControlPanelSmartDashboardCommand extends Command {
-  public UpdateControlPanelSmartDashboardCommand() {
+public class ShootManuallyCommand extends Command {
+  public ShootManuallyCommand() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.smartDashboardSubsystem);
+    requires(Robot.shooterSubsystem);
+    requires(Robot.shooterSubsystem);
+    
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    //set shooter wheel to full speed
+    Robot.shooterSubsystem.shoot(1);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.smartDashboardSubsystem.updateControlPanelValues();
+    //use the twist and throttle to control shooter pan and tilt
+    double pan = Robot.oi.leftJoystick.getZ();
+    //double tilt = Robot.oi.leftJoystick.getThrottle();
+    Robot.shooterSubsystem.pan(pan);
+    //Robot.shooterSubsystem.tilt(tilt);
+    
+    Robot.smartDashboardSubsystem.updateShooterValues();
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return true;
+    return false;
   }
 
   // Called once after isFinished returns true

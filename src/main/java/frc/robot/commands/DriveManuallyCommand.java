@@ -10,31 +10,33 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class StopCommand extends Command {
-  public StopCommand() {
+public class DriveManuallyCommand extends Command {
+
+  public DriveManuallyCommand() {
     // Use requires() here to declare subsystem dependencies
-     requires(Robot.driveSubsystem);
+    requires(Robot.driveSubsystem);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    //Robot.driveSubsystem.driveTrainBrakeMode();
+    System.out.println("Man. Drive Setup");
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.driveSubsystem.manualDrive(0, 0);
-    System.out.println("HALT!");
-    System.out.println(Robot.driveSubsystem.getLeftEncoder() + "  " + Robot.driveSubsystem.getRightEncoder());
+    // Read joystick values
+    double move = Robot.oi.leftJoystick.getY() * -1; // inverts sign for Y axis
+    double turn = Robot.oi.leftJoystick.getX();
+    Robot.driveSubsystem.manualDrive(move, turn);
+    Robot.smartDashboardSubsystem.updateEncoderValue();
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return true;
-    //TODO: Check if still moving before stopping
+    return false;
   }
 
   // Called once after isFinished returns true

@@ -9,7 +9,6 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj.util.Color8Bit;
 import frc.robot.RobotMap;
@@ -21,7 +20,7 @@ public class ControlPanelSubsystem extends Subsystem {
   private final ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort);
 
   private WPI_TalonSRX diskSpinnerTalon = new WPI_TalonSRX(RobotMap.diskSpinnerMotorID);
-  private DoubleSolenoid diskSpinnerSolenoid;//= new DoubleSolenoid(RobotMap.ColorWheelSolenoidForwardChannel,RobotMap.ColorWheelSolenoidReverseChannel);
+  private DoubleSolenoid diskSpinnerSolenoid = new DoubleSolenoid(RobotMap.ColorWheelSolenoidForwardChannel,RobotMap.ColorWheelSolenoidReverseChannel);
 
   private PanelColors targetColor;
   private boolean receivedGameColor = false;
@@ -29,7 +28,7 @@ public class ControlPanelSubsystem extends Subsystem {
   private Color currentColor;
   private PanelColors suspectedColor;
 
-  static final double toleranceSize = .01;// tolerance size (in percent)
+  static final double toleranceSize = .05;// tolerance size (in percent)
   private boolean wasAligned = false;
   private double spinSpeed = 0.5;
 
@@ -61,7 +60,7 @@ public class ControlPanelSubsystem extends Subsystem {
  * Experimentally: 4 revolutions = 712 encoder ticks / 4 = 178
  */
   public double readEncoderRevolutions() {
-    return diskSpinnerTalon.getSelectedSensorPosition() * (1/RobotMap.quadratureEncoderTicksPerRev) ;
+    return diskSpinnerTalon.getSelectedSensorPosition() * (1./RobotMap.quadratureEncoderTicksPerRev) ;
   }
 /** set the value of this subsystem's motor encoder to zero. */
 public void zeroEncoder() {
@@ -76,17 +75,28 @@ theta cyl/theta control = r control / r cyl
 theta cyl = (theta control * r control)/r cyl
 theta cyl rev * (ticks/rev) = theta cyl ticks
 */
- return (target *RobotMap.controlPanelDiameter * RobotMap.quadratureEncoderTicksPerRev)/(RobotMap.diskSpinnerDiameter);
+System.out.println("target:" + target);
+ double retVal = (target * RobotMap.controlPanelDiameter * RobotMap.quadratureEncoderTicksPerRev)/(RobotMap.diskSpinnerDiameter);
+System.out.println(target + " * " + RobotMap.controlPanelDiameter + " * " + RobotMap.quadratureEncoderTicksPerRev + " / " + RobotMap.diskSpinnerDiameter + " = " + retVal);
+ return retVal;
 }
-/** Uses this talon's encoder */
-public void moveTalonToPosition(double position) {
+/** moves the motor at 0.5 power in the direction specified by the sign of the input. */
+public void moveTalonInDirection(double position) {
  // diskSpinnerTalon.set(ControlMode.Position,position);
- diskSpinnerTalon.set(0.5);
- System.out.println(position);
+
+ diskSpinnerTalon.set(0.20 * Math.signum(position));
+
 }
 /**basically just for test debugging */public void stopTalon() {diskSpinnerTalon.set(0);}
 
-  public void putSeenColor() {
+/**gets the raw color that the color sensor detects. Put into getSuspectedColor for the pure panel-recognition color. */
+public Color getSeenColor() {
+  return colorSensor.getColor();
+}
+
+
+// transferred this to the SmartDashboard class
+  /*public void putSeenColor() {
     updateColorState();
     SmartDashboard.putNumber("Spotted Color: Red", currentColor.red * 255);
     SmartDashboard.putNumber("Spotted Color: Green", currentColor.green * 255);
@@ -95,7 +105,7 @@ public void moveTalonToPosition(double position) {
     if (suspectedColor != null) {
       SmartDashboard.putString("SuspectedColor: ", suspectedColor.toString());
     }
-  }
+  } */
   
   public boolean hasReceivedGameColor(){
     return receivedGameColor;
@@ -137,6 +147,8 @@ public void moveTalonToPosition(double position) {
 
   }
 
+  public Color getCurrentColor() {return currentColor;}
+
   /**
    * Converts from 'color' to 'PanelColor': assumes no overlap
    * 
@@ -151,6 +163,8 @@ public void moveTalonToPosition(double position) {
     }
     return null;
   }
+/** find the last updated value for the suspected colors. */
+  public PanelColors getSuspectedColor() {return suspectedColor;}
 
   /**
    * Checks whether the colors are aligned: null checked
@@ -175,6 +189,8 @@ public void moveTalonToPosition(double position) {
    */
   public PanelColors getGameTargetColor() {
     String gameData = DriverStation.getInstance().getGameSpecificMessage();
+    // ONLY FOR TESTING, DO NOT KEEP IN FINAL CODE 
+    gameData = "B";
     if (gameData.length() > 0) {
       receivedGameColor = true;
       switch (gameData.charAt(0)) {
@@ -205,22 +221,134 @@ public void moveTalonToPosition(double position) {
     return colorSensor.getProximity();
   }
 
-  enum PanelColors {
-    blue(0, 255, 255), green(0, 255, 0), red(255, 0, 0), yellow(255, 0, 0);
+  /** given the color under the wheel now and the color we want to be under the wheel, calculate the minimum number of encoder ticks 
+   * (and the direction, hence positive or negative values) the motor must turn to get to the color we want to be under the sensor.
+   * @param colorNow the color under the sensor, as a starting point
+   * @param colorWant the color we want to get to be under the sensor
+   *  */
+  public double getPathToDesiredColor(PanelColors colorNow, PanelColors colorWant) {
+    double retVal;
+    /* 4 colors, repeated; each slice takes up 1/8 of the wheel. 
+    if clockwise is the positive direction, the number of slices needed
+     to turn to get to the desired color is as follows.
+
+    colorNow | colorWanted
+             | R | G | B | Y |
+          R  | 0 |-1 |+-2|+1 |
+          G  |+1 | 0 |-1 |+-2|
+          B  |+-2|+1 | 0 |-1 |
+          Y  |-1 |+-2|+1 | 0 |
+    */
+int slicesVal;
+if (colorNow != null) {
+switch (colorNow) {
+case red:
+          switch (colorWant) {
+            case red:
+            slicesVal = 0;
+            break;
+            case green:
+            slicesVal = -1;
+            break;
+            case blue:
+            slicesVal = 2;
+            break;
+            case yellow:
+            slicesVal = 1;
+            break;
+            default: 
+            slicesVal = 0;
+            break;
+          }
+break;
+
+case green:
+          switch (colorWant) {
+            case red:
+            slicesVal = 1;
+            break;
+            case green:
+            slicesVal = 0;
+            break;
+            case blue:
+            slicesVal = -1;
+            break;
+            case yellow:
+            slicesVal = 2;
+            break;
+            default: 
+            slicesVal = 0;
+            break;
+          }
+break;
+
+case blue:
+          switch (colorWant) {
+            case red:
+            slicesVal = 2;
+            break;
+            case green:
+            slicesVal = 1;
+            break;
+            case blue:
+            slicesVal = 0;
+            break;
+            case yellow:
+            slicesVal = -1;
+            break;
+            default: 
+            slicesVal = 0;
+            break;
+          }
+break;
+case yellow:
+          switch (colorWant) {
+            case red:
+            slicesVal = -1;
+            break;
+            case green:
+            slicesVal = 2;
+            break;
+            case blue:
+            slicesVal = 1;
+            break;
+            case yellow:
+            slicesVal = 0;
+            break;
+            default: 
+            slicesVal = 0;
+            break;
+          }
+break;
+default:
+slicesVal = 0;
+break;
+}//switch
+}//if colorNow != null
+else
+{slicesVal = 0;}
+
+//slicesVal to revolutions to encoder ticks: 1/8 rev per slicesVal: slicesVal/1 * ( 1/8 rev /1 slicesVal unit) = rev
+retVal = controlPanelTargetRevolutionsToQuadEncoderTicks(RobotMap.controlPanelDirectionFactor *slicesVal/8.);
+    return retVal;
+  }
+
+  public enum PanelColors {
+    blue(0.13, 0.44, 0.43), green(0.17, 0.59, 0.25), red(0.5, 0.36, 0.14), yellow(0.32, 0.57, 0.12);
     // TODO: Find more accurate values, also reformat
     // Maybe use HSV for tolerance check?
 
     // numbers gotten from game manual + online converter
-    final private int redVal, greenVal, blueVal;
+    final private double redVal, greenVal, blueVal;
 
-    PanelColors(int r, int g, int b) {
+    PanelColors(double r, double g, double b) {
       redVal = r;
       greenVal = g;
       blueVal = b;
     }
 
     public Color getColor() {
-      Color c = new Color(new Color8Bit(redVal, greenVal, blueVal));
+      Color c = new Color(redVal, greenVal, blueVal);
       return c;
     }
 
