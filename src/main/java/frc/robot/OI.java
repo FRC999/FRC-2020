@@ -19,6 +19,7 @@ import frc.robot.commands.*;
  */
 public class OI {
   public Joystick leftJoystick = new Joystick(RobotMap.leftJoystickPort);
+  public Joystick buttonBox = new Joystick(RobotMap.buttonBoxPort);
   Button stopButton = new JoystickButton(leftJoystick, 1);
   Button showAllButton = new JoystickButton(leftJoystick, 2);
   Button zeroEncoderButton = new JoystickButton(leftJoystick, 3);
@@ -31,6 +32,10 @@ public class OI {
   Button setControlPanelPositionButton = new JoystickButton(leftJoystick, 10);
   Button moveControlPanelAlongColorPathButton = new JoystickButton(leftJoystick, 11);
   Button shooterManualControlButton = new JoystickButton(leftJoystick, 12);
+
+  Button climbExtendButton = new JoystickButton(buttonBox, 1);
+  Button climbRetractButton = new JoystickButton(buttonBox, 2);
+
 
   public OI() { // Setup All Commands Here
     zeroEncoderButton.whenPressed(new DriveZeroEncodersCommand());
@@ -45,6 +50,8 @@ public class OI {
     moveControlPanelAlongColorPathButton.whenPressed(new ControlPanelMoveTargetColorCommand());
     moveControlPanelAlongColorPathButton.whenPressed(new ControlPanelMoveTargetColorCommand());
     shooterManualControlButton.whenPressed(new ShootManuallyCommand());
-    
+
+    climbExtendButton.whenPressed(new ClimbExtendCommand());
+    climbRetractButton.whenPressed(new ClimbRetractCommand());
   }
 }

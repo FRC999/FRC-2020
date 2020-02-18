@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.can.BaseTalon;
+
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
  * to a variable name. This provides flexibility changing wiring, makes checking
@@ -49,6 +51,7 @@ public class RobotMap {
 
   // Driver Input Devices
   public final static int leftJoystickPort = 0;
+  public final static int buttonBoxPort = 1;
 
   // PCM forward, reverse channels for doubleSolenoids
   public static int ColorWheelSolenoidForwardChannel = 0;

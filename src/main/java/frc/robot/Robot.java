@@ -107,6 +107,8 @@ public class Robot extends TimedRobot {
     Robot.driveSubsystem.zeroDriveEncoders();
     Robot.driveSubsystem.driveTrainBrakeMode();
     Robot.navXSubsystem.zeroYaw();
+    Robot.shooterSubsystem.configureShooterControllers();
+    Robot.shooterSubsystem.zeroShooterEncoders();
     //Robot.controlPanelSubsystem.resetMotorController();
     
 
