@@ -25,7 +25,7 @@ import frc.robot.subsystems.FalconDriveSubsystem;
 import frc.robot.subsystems.NavXSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
-import frc.robot.subsystems.ShuffleBoardSubsystem;
+import frc.robot.subsystems.ShuffleboardSubsystem;
 import frc.robot.subsystems.SmartDashboardSubsystem;
 import frc.robot.subsystems.UltrasonicSensorSubsystem;
 import edu.wpi.first.networktables.*;
@@ -48,7 +48,7 @@ public class Robot extends TimedRobot {
   public static UltrasonicSensorSubsystem ultrasonicSubsystem = new UltrasonicSensorSubsystem();
   public static IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   public static ControlPanelSubsystem controlPanelSubsystem = new ControlPanelSubsystem();
-  public static ShuffleBoardSubsystem shuffleBoardSubsystem = new ShuffleBoardSubsystem();
+  public static ShuffleboardSubsystem shuffleBoardSubsystem = new ShuffleboardSubsystem();
 
   
   public boolean TestBool = false;
