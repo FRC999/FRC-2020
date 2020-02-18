@@ -5,6 +5,7 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.SensorCollection;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
 
@@ -16,6 +17,8 @@ public class ShooterSubsystem extends Subsystem {
   //public SensorCollection turretEncoder;
 
   // double shooterSpeed = 0.5;
+
+  NetworkTableInstance networkTableInstance = NetworkTableInstance.getDefault();
 
   public void configureShooterControllers(){
     //this.turretEncoder = turretEncoder;
@@ -39,7 +42,7 @@ public class ShooterSubsystem extends Subsystem {
   //public int gettiltEncoder() {
    // return tiltMotorController.getSelectedSensorPosition();
   //}
-
+/** stops the shooter motor. */
   public void standby() {
     shooterMotorController.set(ControlMode.PercentOutput, 0);
   }
@@ -55,6 +58,15 @@ public class ShooterSubsystem extends Subsystem {
   //public void tilt(double tilt) {
     //tiltMotorController.set(ControlMode.PercentOutput, tilt);
   //}
+/** gets the x-value of the center of the object the camera is looking at. 640 is the maximum; if it returns 1000, the pi is not posting to networktables.*/
+  public double getX() {
+   return networkTableInstance.getTable("TestTable/PI").getEntry("X").getDouble(1000);// 640 is the maximum; 
+  }
+
+  /** gets the y-value of the center of the object the camera is looking at.  480 is the maximum; if it returns 1000, the pi is not posting to networktables.*/
+  public double getY() {
+    return networkTableInstance.getTable("TestTable/PI").getEntry("Y").getDouble(1000);// 480 is the maximum; 
+  }
 
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.

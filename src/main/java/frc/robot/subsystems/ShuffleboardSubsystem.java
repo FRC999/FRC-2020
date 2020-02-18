@@ -1,21 +1,53 @@
+/*----------------------------------------------------------------------------*/
+/* Copyright (c) 2018 FIRST. All Rights Reserved.                             */
+/* Open Source Software - may be modified and shared by FRC teams. The code   */
+/* must be accompanied by the FIRST BSD license file in the root directory of */
+/* the project.                                                               */
+/*----------------------------------------------------------------------------*/
+
+//Goal: Shuffleboard (show info as widgets and get driving camera feeds from Pi) (Jack and I)
+
 package frc.robot.subsystems;
 
-import java.util.Map;
-
-import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.wpilibj.RobotController;
+import edu.wpi.first.wpilibj.Sendable;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.shuffleboard.*;
 
 import frc.robot.commands.*;
 import jdk.internal.loader.BuiltinClassLoader;
 import frc.robot.Robot;
+import edu.wpi.first.wpilibj.shuffleboard.*;
+import frc.robot.commands.InitializeShuffleboardCommand;
+import frc.robot.commands.SmartDashboardUpdateAllCommand;
 
-public class ShuffleboardSubsystem extends Subsystem{
+//Shuffleboard (show info as widgets and get driving camera feeds from Pi) (Jack and I)
 
-    NetworkTableEntry leftSpeedEntry;
-    NetworkTableEntry rightSpeedEntry;
-    ShuffleboardLayout speedometerLayout;
+/**
+ * Add your docs here.
+ */
+public class ShuffleBoardSubsystem extends Subsystem {
+  // Put methods for controlling this subsystem
+  // here. Call these from Commands.
+
+  int test; 
+// Constructor
+  public ShuffleBoardSubsystem() {
+    test=5;
+  }
+
+  @Override
+  public void initDefaultCommand() {
+    setDefaultCommand(new InitializeShuffleboardCommand());
+  }
+
+  public void initializeShuffleboard(){
+    //Create Tabs
+    ShuffleboardTab dataValuesTab = Shuffleboard.getTab("Data Values");
+    ShuffleboardTab cameraTab = Shuffleboard.getTab("Camera");
+
+    //Send Simple Data to Tabs
+    //Data Tab
+    Shuffleboard.getTab("Data Values").add("Test", Robot.shuffl8eBoardSubsystem.test);
     
     NetworkTableEntry voltageEntry;
 
@@ -74,5 +106,3 @@ public class ShuffleboardSubsystem extends Subsystem{
       }
 
 }
-
-//Needs: Gyro values, Camera, Encoder Positions, Heading direction, Speedometer, Battery Voltage 

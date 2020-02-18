@@ -34,6 +34,10 @@ public class RobotMap {
   public final static int shooterPanMotorController = 6;
   public final static int ShooterTiltMotorController = 7;
 
+  //shooter constants
+  /* TODO: get a more accurate value for this */
+  public final static int shooterPanMotorEncoderTicksPerRotation = 3977;
+
   // Control panel constants
   // TODO: Get actual motor ID
   public static final int diskSpinnerMotorID = 52;
