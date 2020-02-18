@@ -74,6 +74,8 @@ public class RobotMap {
   public static final double ultrasonicTriggerTime = 20E-6;
   // constant conversion factor: ultrasonic sensor value to inches
   public static double ultrasonicValueToInchesConversionFactor = 0.125;
+
+  public static double distancefromWall = 1500; //Stay 1500 mm from wall
 /*
    * at around 1800 mm away, the raw value was 1471, while the converted mm value was 467; this is not the right factor.
    * Therefore, the ideal conversion factorshould be between 1 and 1.5

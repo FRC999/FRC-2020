@@ -6,7 +6,9 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.shuffleboard.*;
+
 import frc.robot.commands.*;
+import jdk.internal.loader.BuiltinClassLoader;
 import frc.robot.Robot;
 
 public class ShuffleboardSubsystem extends Subsystem{
@@ -18,6 +20,9 @@ public class ShuffleboardSubsystem extends Subsystem{
     NetworkTableEntry voltageEntry;
 
     NetworkTableEntry turretEntry;
+
+    ShuffleboardLayout wallFollowerLayout;
+    NetworkTableEntry wallFollowerPossibleEntry;
 
     public ShuffleboardSubsystem(){
     }
@@ -44,6 +49,12 @@ public class ShuffleboardSubsystem extends Subsystem{
         //Turret Rotation
         turretEntry = Shuffleboard.getTab("Displays").add("Turret Rotation", 10).withWidget(BuiltInWidgets.kDial).withProperties(Map.of("min", 0, "max",360)).getEntry();
 
+        wallFollowerLayout = Shuffleboard.getTab("Displays").getLayout("Wall Follower", BuiltInLayouts.kList).withSize(2,2).withPosition(4, 0);
+        //Can we activate wall follower?  If so, shows Green Light
+        wallFollowerPossibleEntry = Shuffleboard.getTab("Displays").getLayout("Wall Follower").add("Wall Follow Possible", false).withWidget(BuiltInWidgets.kBooleanBox).getEntry();
+        Shuffleboard.getTab("Displays").getLayout("Wall Follower").add("Wall Follow", new MaintainDistanceCommand());
+
+
        //Test Entry
         Shuffleboard.getTab("Displays").add("Test", 3.14);
     }
@@ -53,6 +64,7 @@ public class ShuffleboardSubsystem extends Subsystem{
         rightSpeedEntry.setDouble(Robot.driveSubsystem.getRightEncoderSpeed());
         voltageEntry.setDouble(RobotController.getBatteryVoltage());
         turretEntry.setDouble(240);
+        wallFollowerPossibleEntry.setBoolean(Robot.ultrasonicSubsystem.checkWallFollowerPossible());
     }
 
     public void initDefaultCommand() {

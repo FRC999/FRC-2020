@@ -47,6 +47,19 @@ int retVal = ultrasonic2.getValue();
 return retVal;
 }
 
+public boolean checkWallFollowerPossible(){
+  if (getSensor1DistanceInMM()<3500){
+    return true;
+  }
+  else
+  {
+    return false;
+  }
+
+  
+
+}
+
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.

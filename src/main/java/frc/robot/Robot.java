@@ -197,6 +197,8 @@ public class Robot extends TimedRobot {
 
     System.out.println(ultrasonicSubsystem.getSensor1DistanceInMM());
     System.out.println(ultrasonicSubsystem.getSensor1DistanceInRaw());
+    System.out.println(ultrasonicSubsystem.getSensor2DistanceInMM());
+    System.out.println(ultrasonicSubsystem.getSensor2DistanceInRaw());
 
     if (autonomousCommand != null) {
       autonomousCommand.cancel();
