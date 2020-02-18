@@ -11,8 +11,8 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
 
-public class ShooterCenterOnVisionCommand extends Command {
-  public ShooterCenterOnVisionCommand() {
+public class ShooterPanToRobotZeroCommand extends Command {
+  public ShooterPanToRobotZeroCommand() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(Robot.shooterSubsystem);
@@ -26,29 +26,27 @@ public class ShooterCenterOnVisionCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-
-    double panVal = Math.signum(Robot.shooterSubsystem.getDifferenceFromMiddleX()) * 0.5;
-    Robot.shooterSubsystem.pan(panVal);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
     boolean retVal = false;
-    retVal = Robot.shooterSubsystem.getCenteredX();
+    if ((Robot.shooterSubsystem.getPanEncoder() <= 20) || (Robot.shooterSubsystem.getPanEncoder() >= (RobotMap.shooterPanMotorEncoderTicksPerRotation -20)) ) {
+retVal = true;
+    }
+
     return retVal;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.shooterSubsystem.pan(0);
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    Robot.shooterSubsystem.pan(0);
   }
 }

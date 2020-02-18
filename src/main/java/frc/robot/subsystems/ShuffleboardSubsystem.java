@@ -12,6 +12,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.Sendable;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.shuffleboard.*;
+import edu.wpi.first.networktables.*;
 
 import frc.robot.commands.*;
 import jdk.internal.loader.BuiltinClassLoader;
@@ -47,7 +48,7 @@ public class ShuffleBoardSubsystem extends Subsystem {
 
     //Send Simple Data to Tabs
     //Data Tab
-    Shuffleboard.getTab("Data Values").add("Test", Robot.shuffl8eBoardSubsystem.test);
+    Shuffleboard.getTab("Data Values").add("Test", Robot.shuffleBoardSubsystem.test);
     
     NetworkTableEntry voltageEntry;
 

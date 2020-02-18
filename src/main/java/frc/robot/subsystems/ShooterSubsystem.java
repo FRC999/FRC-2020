@@ -8,7 +8,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
-
+/**TODO: write a method to check the encoder and figure out whch way to go to get to zero in the shortest time */
 public class ShooterSubsystem extends Subsystem {
 
   static WPI_TalonSRX shooterMotorController = new WPI_TalonSRX(RobotMap.shooterWheelMotorController);
@@ -31,7 +31,7 @@ public class ShooterSubsystem extends Subsystem {
     //tiltMotorController.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
   }
 
-  public int getpanEncoder() {
+  public int getPanEncoder() {
     return panMotorController.getSelectedSensorPosition();
   }
 
@@ -69,22 +69,23 @@ public class ShooterSubsystem extends Subsystem {
   }
 
   /**tests whether the current x-value of the object the robot sees is in the center of its field of view. Outputs the difference (current value - 320). */
-  public double differenceFromMiddleX()
+  public double getDifferenceFromMiddleX()
   {
 return (getX() -( RobotMap.shooterXResolution/2));
   }
  /**tests whether the current y-value of the object the robot sees is in the center of its field of view. Outputs the difference (current value - 240). */
- public double differenceFromMiddleY()
+ public double getDifferenceFromMiddleY()
  {
 return (getY() - ( RobotMap.shooterXResolution/2));
  }
 
  public boolean getCenteredX() {
    boolean retVal = false;
-   if(Math.abs(differenceFromMiddleX()) <= RobotMap.shooterResolutionAcceptableError)
+   if(Math.abs(getDifferenceFromMiddleX()) <= RobotMap.shooterResolutionAcceptableError)
    {retVal = true;}
    return retVal;
  }
+ 
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
   }
