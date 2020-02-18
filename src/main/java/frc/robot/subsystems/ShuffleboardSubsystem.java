@@ -1,66 +1,87 @@
+/*----------------------------------------------------------------------------*/
+/* Copyright (c) 2018 FIRST. All Rights Reserved.                             */
+/* Open Source Software - may be modified and shared by FRC teams. The code   */
+/* must be accompanied by the FIRST BSD license file in the root directory of */
+/* the project.                                                               */
+/*----------------------------------------------------------------------------*/
+
+//Goal: Shuffleboard (show info as widgets and get driving camera feeds from Pi) (Jack and I)
+
 package frc.robot.subsystems;
 
-import java.util.Map;
-
-import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.wpilibj.RobotController;
+import edu.wpi.first.wpilibj.Sendable;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.shuffleboard.*;
-import frc.robot.commands.*;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
+import edu.wpi.first.wpilibj.shuffleboard.*;
+import frc.robot.commands.InitializeShuffleboardCommand;
+import frc.robot.commands.SmartDashboardUpdateAllCommand;
 
-public class ShuffleboardSubsystem extends Subsystem{
+//Shuffleboard (show info as widgets and get driving camera feeds from Pi) (Jack and I)
 
-    NetworkTableEntry leftSpeedEntry;
-    NetworkTableEntry rightSpeedEntry;
-    ShuffleboardLayout speedometerLayout;
+/**
+ * Add your docs here.
+ */
+public class ShuffleBoardSubsystem extends Subsystem {
+  // Put methods for controlling this subsystem
+  // here. Call these from Commands.
+
+  int test; 
+// Constructor
+  public ShuffleBoardSubsystem() {
+    test=5;
+  }
+
+  @Override
+  public void initDefaultCommand() {
+    setDefaultCommand(new InitializeShuffleboardCommand());
+  }
+
+  public void initializeShuffleboard(){
+    //Create Tabs
+    ShuffleboardTab dataValuesTab = Shuffleboard.getTab("Data Values");
+    ShuffleboardTab cameraTab = Shuffleboard.getTab("Camera");
+
+    //Send Simple Data to Tabs
+    //Data Tab
+    Shuffleboard.getTab("Data Values").add("Test", Robot.shuffl8eBoardSubsystem.test);
     
-    NetworkTableEntry voltageEntry;
-
-    NetworkTableEntry turretEntry;
-
-    public ShuffleboardSubsystem(){
-    }
-
-    public void setupShuffleboard(){
-        ShuffleboardTab displays = Shuffleboard.getTab("Displays");
-        Shuffleboard.selectTab("Displays");
+  }
 
 
-        //Speed of Encoders
-        speedometerLayout = Shuffleboard.getTab("Displays").getLayout("Speedometers", BuiltInLayouts.kList).withSize(2,3).withPosition(0,0);
-        leftSpeedEntry = 
-        Shuffleboard.getTab("Displays").getLayout("Speedometers").add("Speed of Left Encoder", 40).withWidget(BuiltInWidgets.kDial).getEntry();
-        rightSpeedEntry = 
-        Shuffleboard.getTab("Displays").getLayout("Speedometers").add("Speed of Right Encoder", 60).withWidget(BuiltInWidgets.kDial).getEntry();
-       
-        //Voltage
-        voltageEntry = 
-        Shuffleboard.getTab("Displays").add("Battery Voltage", 20).withPosition(3,0).withWidget(BuiltInWidgets.kNumberBar).withProperties(Map.of("min", 0, "max", 14)).getEntry();
 
-        //Gyro
-        Shuffleboard.getTab("Displays").add("Gyro Yaw", Robot.navXSubsystem.getNavX()).withWidget(BuiltInWidgets.kGyro);
+  public void updateEncoderValue() {
+    Shuffleboard.getTab("Data Values").add("Left Encoder", Robot.driveSubsystem.getLeftEncoder());
+    Shuffleboard.getTab("Data Values").add("Right Encoder", Robot.driveSubsystem.getRightEncoder());
+  }
 
-        //Turret Rotation
-        turretEntry = Shuffleboard.getTab("Displays").add("Turret Rotation", 10).withWidget(BuiltInWidgets.kDial).withProperties(Map.of("min", 0, "max",360)).getEntry();
+  public void updateNavXValues() {
+    Shuffleboard.getTab("Data Values").add("NavX Pitch", Robot.navXSubsystem.getPitch());
+    Shuffleboard.getTab("Data Values").add("NavX Roll", Robot.navXSubsystem.getRoll());
+    Shuffleboard.getTab("Data Values").add("NavX Yaw", Robot.navXSubsystem.getYaw());
+  }
 
-       //Test Entry
-        Shuffleboard.getTab("Displays").add("Test", 3.14);
-    }
+  public void updateUltrasonicValues() {
+    Shuffleboard.getTab("Data Values")
+    .add("Ultrasonic 1 Raw Value", Robot.ultrasonicSubsystem.getSensor1DistanceInRaw());
+    Shuffleboard.getTab("Data Values")
+    .add("Ultrasonic 1 mm Value", Robot.ultrasonicSubsystem.getSensor1DistanceInMM());  
+    Shuffleboard.getTab("Data Values")
+    .add("Ultrasonic 2 Raw Value", Robot.ultrasonicSubsystem.getSensor2DistanceInRaw());
+    Shuffleboard.getTab("Data Values")
+    .add("Ultrasonic 2 mm Value", Robot.ultrasonicSubsystem.getSensor2DistanceInMM());
+  }
 
-    public void updateShuffleboardEntries(){
-        leftSpeedEntry.setDouble(Robot.driveSubsystem.getLeftEncoderSpeed());
-        rightSpeedEntry.setDouble(Robot.driveSubsystem.getRightEncoderSpeed());
-        voltageEntry.setDouble(RobotController.getBatteryVoltage());
-        turretEntry.setDouble(240);
-    }
+  public void updateControlPanelValues() {
+    // SmartDashboard.putNumber("control panel quad encoder raw value",
+    // Robot.controlPanelSubsystem.readEncoderRaw() );
+    // SmartDashboard.putNumber("control panel quad encoder in revolutions ",
+    // Robot.controlPanelSubsystem.readEncoderRevolutions());
+  }
 
-    public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
-        setDefaultCommand(new ShuffleboardSetupCommand());
-      }
-
+  public void updateAllDisplays() {
+    updateNavXValues();
+    updateUltrasonicValues();
+    updateControlPanelValues();
+  } 
 }
-
-//Needs: Gyro values, Camera, Encoder Positions, Heading direction, Speedometer, Battery Voltage 
