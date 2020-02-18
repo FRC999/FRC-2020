@@ -68,6 +68,23 @@ public class ShooterSubsystem extends Subsystem {
     return networkTableInstance.getTable("TestTable/PI").getEntry("Y").getDouble(1000);// 480 is the maximum; 
   }
 
+  /**tests whether the current x-value of the object the robot sees is in the center of its field of view. Outputs the difference (current value - 320). */
+  public double differenceFromMiddleX()
+  {
+return (getX() -( RobotMap.shooterXResolution/2));
+  }
+ /**tests whether the current y-value of the object the robot sees is in the center of its field of view. Outputs the difference (current value - 240). */
+ public double differenceFromMiddleY()
+ {
+return (getY() - ( RobotMap.shooterXResolution/2));
+ }
+
+ public boolean getCenteredX() {
+   boolean retVal = false;
+   if(Math.abs(differenceFromMiddleX()) <= RobotMap.shooterResolutionAcceptableError)
+   {retVal = true;}
+   return retVal;
+ }
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
   }
