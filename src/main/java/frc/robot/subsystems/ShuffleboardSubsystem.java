@@ -9,68 +9,73 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.Sendable;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.shuffleboard.*;
 import edu.wpi.first.networktables.*;
 
 import frc.robot.commands.*;
-import jdk.internal.loader.BuiltinClassLoader;
 import frc.robot.Robot;
 import edu.wpi.first.wpilibj.shuffleboard.*;
-import frc.robot.commands.InitializeShuffleboardCommand;
+import frc.robot.commands.ShuffleboardSetupCommand;
 import frc.robot.commands.SmartDashboardUpdateAllCommand;
+
+import java.util.Map;
+
+import edu.wpi.first.networktables.NetworkTableEntry;
 
 //Shuffleboard (show info as widgets and get driving camera feeds from Pi) (Jack and I)
 
 /**
  * Add your docs here.
  */
-public class ShuffleBoardSubsystem extends Subsystem {
+public class ShuffleboardSubsystem extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
   int test; 
+
+  NetworkTableEntry voltageEntry;
+
+  NetworkTableEntry turretEntry;
+
+  ShuffleboardLayout speedometerLayout;
+  NetworkTableEntry leftSpeedEntry;
+  NetworkTableEntry rightSpeedEntry;
+
+  ShuffleboardLayout wallFollowerLayout;
+  NetworkTableEntry wallFollowerPossibleEntry;
+  
 // Constructor
-  public ShuffleBoardSubsystem() {
+  public ShuffleboardSubsystem() {
     test=5;
   }
 
-  @Override
-  public void initDefaultCommand() {
-    setDefaultCommand(new InitializeShuffleboardCommand());
-  }
+/*
 
   public void initializeShuffleboard(){
     //Create Tabs
     ShuffleboardTab dataValuesTab = Shuffleboard.getTab("Data Values");
     ShuffleboardTab cameraTab = Shuffleboard.getTab("Camera");
 
+
     //Send Simple Data to Tabs
     //Data Tab
     Shuffleboard.getTab("Data Values").add("Test", Robot.shuffleBoardSubsystem.test);
-    
-    NetworkTableEntry voltageEntry;
-
-    NetworkTableEntry turretEntry;
-
-    ShuffleboardLayout wallFollowerLayout;
-    NetworkTableEntry wallFollowerPossibleEntry;
-
-    public ShuffleboardSubsystem(){
-    }
+  }
+  
+  */
 
     public void setupShuffleboard(){
-        ShuffleboardTab displays = Shuffleboard.getTab("Displays");
-        Shuffleboard.selectTab("Displays");
 
+         ShuffleboardTab displays = Shuffleboard.getTab("Displays");
+         Shuffleboard.selectTab("Displays");
 
         //Speed of Encoders
         speedometerLayout = Shuffleboard.getTab("Displays").getLayout("Speedometers", BuiltInLayouts.kList).withSize(2,3).withPosition(0,0);
-        leftSpeedEntry = 
-        Shuffleboard.getTab("Displays").getLayout("Speedometers").add("Speed of Left Encoder", 40).withWidget(BuiltInWidgets.kDial).getEntry();
-        rightSpeedEntry = 
-        Shuffleboard.getTab("Displays").getLayout("Speedometers").add("Speed of Right Encoder", 60).withWidget(BuiltInWidgets.kDial).getEntry();
+        leftSpeedEntry = Shuffleboard.getTab("Displays").getLayout("Speedometers").add("Speed of Left Encoder", 40).withWidget(BuiltInWidgets.kDial).getEntry();
+        rightSpeedEntry = Shuffleboard.getTab("Displays").getLayout("Speedometers").add("Speed of Right Encoder", 60).withWidget(BuiltInWidgets.kDial).getEntry();
        
         //Voltage
         voltageEntry = 
@@ -87,9 +92,9 @@ public class ShuffleBoardSubsystem extends Subsystem {
         wallFollowerPossibleEntry = Shuffleboard.getTab("Displays").getLayout("Wall Follower").add("Wall Follow Possible", false).withWidget(BuiltInWidgets.kBooleanBox).getEntry();
         Shuffleboard.getTab("Displays").getLayout("Wall Follower").add("Wall Follow", new MaintainDistanceCommand());
 
-
        //Test Entry
         Shuffleboard.getTab("Displays").add("Test", 3.14);
+        
     }
 
     public void updateShuffleboardEntries(){
