@@ -85,6 +85,14 @@ return (getY() - ( RobotMap.shooterXResolution/2));
    {retVal = true;}
    return retVal;
  }
+
+ public int getWhichWayToTurnToGetToZero() {
+   int retVal = 0;
+   if (getPanEncoder() <= RobotMap.shooterPanMotorEncoderTicksPerRotation/2)
+   {retVal=-1;}
+   else{retVal = 1;}
+   return retVal;
+ }
  
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
