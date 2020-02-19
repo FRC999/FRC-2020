@@ -30,9 +30,12 @@ public class SmartDashboardSubsystem extends Subsystem {
     // Set the default command for a subsystem here.
     setDefaultCommand(new SmartDashboardUpdateAllCommand());
   }
-
+//private double prevPan = 0;
   public void updateShooterValues() {
-    SmartDashboard.putNumber("Pan Encoder", Robot.shooterSubsystem.getpanEncoder());
+  /*  if (Robot.shooterSubsystem.getPanEncoder() > prevPan)
+    {SmartDashboard.putNumber("Pan Encoder High Score", Robot.shooterSubsystem.getPanEncoder());
+    prevPan = Robot.shooterSubsystem.getPanEncoder();}*/
+    SmartDashboard.putNumber("Pan Encoder", Robot.shooterSubsystem.getPanEncoder());
     //SmartDashboard.putNumber("Tilt Encoder", Robot.shooterSubsystem.gettiltEncoder());
   }
 

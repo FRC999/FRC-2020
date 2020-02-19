@@ -93,6 +93,11 @@ return (getY() - ( RobotMap.shooterXResolution/2));
    else{retVal = 1;}
    return retVal;
  }
+ public double getHeadingDegreesFromPanEncoderValue() {
+double retVal = 0;
+retVal = getPanEncoder() * (360./RobotMap.shooterPanMotorEncoderTicksPerRotation);
+return retVal;
+ }
  
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.

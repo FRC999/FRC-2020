@@ -90,7 +90,7 @@ public class ShuffleboardSubsystem extends Subsystem {
         wallFollowerLayout = Shuffleboard.getTab("Displays").getLayout("Wall Follower", BuiltInLayouts.kList).withSize(2,2).withPosition(4, 0);
         //Can we activate wall follower?  If so, shows Green Light
         wallFollowerPossibleEntry = Shuffleboard.getTab("Displays").getLayout("Wall Follower").add("Wall Follow Possible", false).withWidget(BuiltInWidgets.kBooleanBox).getEntry();
-        Shuffleboard.getTab("Displays").getLayout("Wall Follower").add("Wall Follow", new MaintainDistanceCommand());
+       // Shuffleboard.getTab("Displays").getLayout("Wall Follower").add("Wall Follow", new MaintainDistanceCommand());
 
        //Test Entry
         Shuffleboard.getTab("Displays").add("Test", 3.14);
