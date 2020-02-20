@@ -15,3 +15,5 @@
 * Center turret
   * Opposite of the above
 * Figure out turret encoder stuff
+
+* DOCUMENT THE CODE MORE, FOR THE LOVE OF GOD!
