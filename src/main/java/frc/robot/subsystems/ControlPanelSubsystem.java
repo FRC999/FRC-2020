@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.util.Color;
+import edu.wpi.first.wpilibj.util.Color8Bit;
 import frc.robot.RobotMap;
 
 public class ControlPanelSubsystem extends Subsystem {
@@ -131,10 +132,10 @@ public Color getSeenColor() {
    * Sets the value of this subsystem's DoubleSolenoid: kForward, kReverse, or
    * kOff. These are values of the enum DoubleSolenoid.Value.
    */
-  public void setSolenoid(DoubleSolenoid.Value val) {
-    diskSpinnerSolenoid.set(val);
+ // public void setSolenoid(DoubleSolenoid.Value val) {
+  //  diskSpinnerSolenoid.set(val);
 
-  }
+  //}
 
   /**
    * Update the color that we should be reading:

@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.can.BaseTalon;
+
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
  * to a variable name. This provides flexibility changing wiring, makes checking
@@ -32,6 +34,13 @@ public class RobotMap {
   public final static int shooterPanMotorController = 6;
   public final static int ShooterTiltMotorController = 7;
 
+  //shooter constants
+  /* TODO: get a more accurate value for this */
+  public final static int shooterPanMotorEncoderTicksPerRotation = 3977;
+  public final static int shooterXResolution = 640;
+  public final static int shooterYResolution = 480; 
+  public final static int shooterResolutionAcceptableError = 20;
+
   // Control panel constants
   // TODO: Get actual motor ID
   public static final int diskSpinnerMotorID = 52;
@@ -46,19 +55,18 @@ public class RobotMap {
 
   // Climber constants
   public final static int climberMotorController = 10;
-  // public static int climberSolenoid1Channel=11;
-  // public static int climberSolenoid2Channel=12;
 
   // Driver Input Devices
   public final static int leftJoystickPort = 0;
+  public final static int buttonBoxPort = 1;
 
   // PCM forward, reverse channels for doubleSolenoids
   public static int ColorWheelSolenoidForwardChannel = 0;
   public static int ColorWheelSolenoidReverseChannel = 1;
   public static int IntakeSolenoidForwardChannel = 2;
   public static int IntakeSolenoidReverseChannel = 3;
-  public static int ClimberSolenoidForwardChannel = 4;
-  public static int ClimberSolenoidReverseChannel = 5;
+  public static int climberSolenoidForwardChannel = 4;
+  public static int climberSolenoidReverseChannel = 5;
 
   // ULTRASONIC CONSTANTS
   // RoboRIO channel for the ultrasonic sensor's analog input
@@ -73,6 +81,8 @@ public class RobotMap {
   public static final double ultrasonicTriggerTime = 20E-6;
   // constant conversion factor: ultrasonic sensor value to inches
   public static double ultrasonicValueToInchesConversionFactor = 0.125;
+
+  public static double distancefromWall = 1500; //Stay 1500 mm from wall
 /*
    * at around 1800 mm away, the raw value was 1471, while the converted mm value was 467; this is not the right factor.
    * Therefore, the ideal conversion factorshould be between 1 and 1.5
