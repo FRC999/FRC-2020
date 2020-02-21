@@ -41,7 +41,19 @@ public class NetworkTablesSubsystem extends Subsystem {
     // Set the default command for a subsystem here.
     // setDefaultCommand(new MySpecialCommand());
   }
-  public enum TABLES {
-    ROOT
+  public enum Location {
+    ROOT("Root"),
+    LIVEWINDOW("Livewindow"), 
+    TESTTABLE("TestTable");
+ 
+    private String table;
+ 
+    Location(String envUrl) {
+        this.table = envUrl;
+    }
+ 
+    public String getLocation() {
+        return table;
+    }
   }
 }
