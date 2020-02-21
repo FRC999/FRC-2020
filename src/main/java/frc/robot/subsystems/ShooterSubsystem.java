@@ -7,6 +7,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import frc.robot.Robot;
 import frc.robot.RobotMap;
 
 public class ShooterSubsystem extends Subsystem {
@@ -84,6 +85,44 @@ return (getY() - ( RobotMap.shooterXResolution/2));
    if(Math.abs(differenceFromMiddleX()) <= RobotMap.shooterResolutionAcceptableError)
    {retVal = true;}
    return retVal;
+ }
+
+ public String whichSide() {
+   String state = "";
+   if(!getCenteredX()) {
+     if (getX() < ((RobotMap.shooterXResolution/2)-(RobotMap.shooterResolutionAcceptableError))) { //310
+       state = "Left";
+     } else if (getX() > ((RobotMap.shooterXResolution)+(RobotMap.shooterResolutionAcceptableError))) { //330
+       state = "Right";
+     }
+     else {
+       state = "Center";
+     }
+   }
+   return state;
+ }
+ public void centerShooter() {
+  switch (whichSide()) {
+    case "Left" : {
+      panMotorController.set(RobotMap.shooterPanSpeed);
+      System.out.println("TARGET LEFT OF CENTER");
+    }
+    break;
+    case "Center" : {
+      panMotorController.set(0);
+      System.out.println("TARGET IN CENTER");
+    }
+    break;
+    case "Right" : {
+      panMotorController.set((RobotMap.shooterPanSpeed)*-1);
+      System.out.println("TARGET RIGHT OF CENTER");
+    }
+    break;
+    default : {
+      panMotorController.set(0);
+      System.out.println("DEFAULT");
+    }
+  }
  }
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.

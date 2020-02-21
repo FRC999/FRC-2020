@@ -41,7 +41,8 @@ public class RobotMap {
   public final static int shooterPanMotorEncoderTicksPerRotation = 3977;
   public final static int shooterXResolution = 640;
   public final static int shooterYResolution = 480; 
-  public final static int shooterResolutionAcceptableError = 20;
+  public final static int shooterResolutionAcceptableError = 10;
+  public final static double shooterPanSpeed = 0.4;
 
   // Control panel constants
   // TODO: Get actual motor ID
