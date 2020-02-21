@@ -26,7 +26,7 @@ public class IntakeInCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.intakeSubsystem.intakeIn(0.5);
+    Robot.intakeSubsystem.intake(0.5);
   }
 
   // Make this return true when this Command no longer needs to run execute()

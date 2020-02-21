@@ -22,7 +22,7 @@ public class ClimberSubsystem extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
-  static WPI_VictorSPX climberMotorController = new WPI_VictorSPX(RobotMap.climberMotorController);
+  static WPI_VictorSPX climberMotorController = new WPI_VictorSPX(RobotMap.climberMotorControllerID);
   static DoubleSolenoid climberSolenoid = new DoubleSolenoid(RobotMap.climberSolenoidForwardChannel, RobotMap.climberSolenoidReverseChannel);
 
   //double climbSpeed = 0.5;

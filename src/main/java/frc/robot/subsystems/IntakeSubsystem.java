@@ -19,23 +19,34 @@ public class IntakeSubsystem extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
-  static WPI_VictorSPX intakeMotor1Controller = new WPI_VictorSPX(RobotMap.intakeMotor1Controller);
-  static WPI_VictorSPX intakeMotor2Controller = new WPI_VictorSPX(RobotMap.intakeMotor2Controller);
+  static WPI_VictorSPX intakeMotorController = new WPI_VictorSPX(RobotMap.intakeMotorControllerID);
+  static WPI_VictorSPX magazineMotorController = new WPI_VictorSPX(RobotMap.magazineMotorControllerID);
+  static WPI_VictorSPX loaderMotor1Controller = new WPI_VictorSPX(RobotMap.loaderMotor1ControllerID);
+  static WPI_VictorSPX loaderMotor2Controller = new WPI_VictorSPX(RobotMap.loaderMotor2ControllerID);
 
   public static DoubleSolenoid intakeSolenoid ;//= new DoubleSolenoid(RobotMap.IntakeSolenoidForwardChannel,RobotMap.IntakeSolenoidReverseChannel);
 
   //double intakeSpeed = 0.5;
 
   public void standby(){
-    intakeMotor1Controller.set(ControlMode.PercentOutput, 0);
-    intakeMotor2Controller.set(ControlMode.PercentOutput, 0);
+    intakeMotorController.set(ControlMode.PercentOutput, 0);
+    magazineMotorController.set(ControlMode.PercentOutput, 0);
+    loaderMotor1Controller.set(ControlMode.PercentOutput, 0);
+    loaderMotor2Controller.set(ControlMode.PercentOutput, 0);
   }
 
-  public void intakeIn(double intakeSpeed){
-    intakeMotor1Controller.set(ControlMode.PercentOutput, intakeSpeed);
-    intakeMotor2Controller.set(ControlMode.PercentOutput, intakeSpeed);
+  public void intake(double motorSpeed){
+    intakeMotorController.set(ControlMode.PercentOutput, motorSpeed);
   }
 
+  public void magazine(double motorSpeed){
+    magazineMotorController.set(ControlMode.PercentOutput, motorSpeed);
+  }
+
+  public void loader0(double motorSpeed){
+    loaderMotor1Controller.set(ControlMode.PercentOutput, motorSpeed);
+    loaderMotor2Controller.set(ControlMode.PercentOutput, motorSpeed);
+  }
   /** sets the intake solenoid (piston controller) to either its forward, reverse, or off states, using the enum DoubleSolenoid.Value's states kForward, kReverse, and kOff.*/
   public void SetIntakeSolenoid(DoubleSolenoid.Value val) {
     intakeSolenoid.set(val);
