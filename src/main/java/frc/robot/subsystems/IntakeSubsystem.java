@@ -10,7 +10,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
 
@@ -24,9 +24,8 @@ public class IntakeSubsystem extends Subsystem {
   static WPI_VictorSPX loaderMotor1Controller = new WPI_VictorSPX(RobotMap.loaderMotor1ControllerID);
   static WPI_VictorSPX loaderMotor2Controller = new WPI_VictorSPX(RobotMap.loaderMotor2ControllerID);
 
-  public static DoubleSolenoid intakeSolenoid ;//= new DoubleSolenoid(RobotMap.IntakeSolenoidForwardChannel,RobotMap.IntakeSolenoidReverseChannel);
+  public static DoubleSolenoid intakeSolenoid = new DoubleSolenoid(RobotMap.IntakeSolenoidForwardChannel,RobotMap.IntakeSolenoidReverseChannel);
 
-  //double intakeSpeed = 0.5;
 
   public void standby(){
     intakeMotorController.set(ControlMode.PercentOutput, 0);
@@ -43,10 +42,19 @@ public class IntakeSubsystem extends Subsystem {
     magazineMotorController.set(ControlMode.PercentOutput, motorSpeed);
   }
 
-  public void loader0(double motorSpeed){
+  public void loader(double motorSpeed){
     loaderMotor1Controller.set(ControlMode.PercentOutput, motorSpeed);
     loaderMotor2Controller.set(ControlMode.PercentOutput, motorSpeed);
   }
+
+  public void IntakeUp() {
+    intakeSolenoid.set(Value.kForward);
+  }
+
+  public void IntakeDown() {
+    intakeSolenoid.set(Value.kReverse);
+  }
+
   /** sets the intake solenoid (piston controller) to either its forward, reverse, or off states, using the enum DoubleSolenoid.Value's states kForward, kReverse, and kOff.*/
   public void SetIntakeSolenoid(DoubleSolenoid.Value val) {
     intakeSolenoid.set(val);
