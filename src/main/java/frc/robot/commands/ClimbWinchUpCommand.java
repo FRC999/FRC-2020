@@ -3,8 +3,8 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class ClimbClimbCommand extends Command {
-  public ClimbClimbCommand() {
+public class ClimbWinchUpCommand extends Command {
+  public ClimbWinchUpCommand() {
     // Use requires() here to declare subsystem dependencies
     requires(Robot.climberSubsystem);
 

@@ -25,25 +25,34 @@ public class ShooterSubsystem extends Subsystem {
     //this.turretEncoder = turretEncoder;
     shooterMotorController.configFactoryDefault();
     panMotorController.configFactoryDefault();
-    tiltMotorController.configFactoryDefault();
     panMotorController.configSelectedFeedbackSensor(FeedbackDevice.PulseWidthEncodedPosition);
     panMotorController.configFeedbackNotContinuous(true, RobotMap.configureTimeoutMs);
     //panMotorController.turretEncoder.getPulseWidthRiseToFallUs()
-    //tiltMotorController.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
+    tiltMotorController.configFactoryDefault();
+    tiltMotorController.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
+    tiltMotorController.setSelectedSensorPosition(0);
+     /*Johnson motors have a quadrature encoder with 178 ticks per revolution. Notes on wiring them to talons:
+      type   |motor | breakout board
+             --------------------
+          5v |brown | red
+  output 1/A |yellow| green
+  output 2/B |green | yellow
+      ground |blue  | black
+    
+    */
+
   }
 
   public int getpanEncoder() {
     return panMotorController.getSelectedSensorPosition();
   }
 
-  public void zeroShooterEncoders() {
-     panMotorController.setSelectedSensorPosition(0);
-  }
+ 
 
   //public int gettiltEncoder() {
    // return tiltMotorController.getSelectedSensorPosition();
   //}
-/** stops the shooter motor. */
+  /** stops the shooter motor. */
   public void standby() {
     shooterMotorController.set(ControlMode.PercentOutput, 0);
   }
@@ -56,10 +65,11 @@ public class ShooterSubsystem extends Subsystem {
     panMotorController.set(ControlMode.PercentOutput, pan);
   }
 
-  //public void tilt(double tilt) {
-    //tiltMotorController.set(ControlMode.PercentOutput, tilt);
-  //}
-/** gets the x-value of the center of the object the camera is looking at. 640 is the maximum; if it returns 1000, the pi is not posting to networktables.*/
+
+  
+
+
+  /** gets the x-value of the center of the object the camera is looking at. 640 is the maximum; if it returns 1000, the pi is not posting to networktables.*/
   public double getX() {
    return networkTableInstance.getTable("TestTable/PI").getEntry("X").getDouble(1000);// 640 is the maximum; 
   }
