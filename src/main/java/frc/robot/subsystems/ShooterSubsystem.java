@@ -52,25 +52,29 @@ public class ShooterSubsystem extends Subsystem {
     */
   }
 
+  public int getAdjustedPanPosition(){
+    return adjustedTurretPosition;
+  }
+
   /**
    * Update the 'adjusted' turret position: the position we use to compenstate for
    * the fact that the zero point of the real turret may be in an awkward
    * location.
    */
   public void updateAdjustedTurretPosition() {
-    adjustedTurretPosition = adjustTurretPosition(0);// TODO: get a method call to get the real pos.
+    adjustedTurretPosition = adjustTurretPosition(getPanEncoder());
 
   }
 
   /**
    * Convert from an absolute position (given by the encoder) to an adjusted
-   * position (what we use)
+   * position (what we use).  The adjusted scale goes from 0 to the number of ticks in one rotation.
    * 
    * @param absolute the encoder ticks in an absolute scale
    * @return the encoder ticks in the adjusted scale
    */
   public int adjustTurretPosition(int absolute) {
-    int relative = absolute - RobotMap.shooterPanMotorEncoderOffset;
+    int relative = absolute - RobotMap.shooterPanMotorEncoderOffset - RobotMap.shooterPanMotorEncoderMinimum;
     if (relative < 0) {
       relative += RobotMap.shooterPanMotorEncoderTicksPerTurretRotation + 1;
     }
@@ -85,13 +89,17 @@ public class ShooterSubsystem extends Subsystem {
    * @return encoder ticks in an absolute scale
    */
   public int deAdjustTurretPosition(int relative) {
-    int absolute = relative + RobotMap.shooterPanMotorEncoderOffset;
+    int absolute = relative + RobotMap.shooterPanMotorEncoderOffset + RobotMap.shooterPanMotorEncoderMinimum;
     if (absolute > RobotMap.shooterPanMotorEncoderTicksPerTurretRotation) {
       absolute -= RobotMap.shooterPanMotorEncoderTicksPerTurretRotation + 1;
     }
     return absolute;
   }
 
+  /**
+   * Gets the RAW pan encoder
+   * Used 
+   */
   public int getPanEncoder() {
     return panMotorController.getSelectedSensorPosition();
   }
@@ -214,10 +222,10 @@ public int getWhichWayToTurnToGetToZero() {
 public int getWhichWayToTurnToGetToAdjustedEncoderValue(double encoderTicksRequested) {
   int retVal = 0;
   double target = encoderTicksRequested;
-  if (encoderTicksRequested > RobotMap.shooterPanMotorEncoderTicksBeforeRollover) {
-    target = encoderTicksRequested - RobotMap.shooterPanMotorEncoderTicksBeforeRollover;
+  if (encoderTicksRequested > RobotMap.shooterPanMotorEncoderMaximum) {
+    target = encoderTicksRequested - RobotMap.shooterPanMotorEncoderMaximum;
   } else if (encoderTicksRequested < 0) {
-    target = RobotMap.shooterPanMotorEncoderTicksBeforeRollover + encoderTicksRequested;
+    target = RobotMap.shooterPanMotorEncoderMaximum + encoderTicksRequested;
   }
 
   int adjTurrPos =adjustTurretPosition(getPanEncoder());

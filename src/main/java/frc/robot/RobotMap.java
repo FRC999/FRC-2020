@@ -38,8 +38,9 @@ public class RobotMap {
 
   // shooter constants
   /* TODO: get a more accurate value for this */
-  public final static int shooterPanMotorEncoderTicksPerTurretRotation = 3977;
-  public final static int shooterPanMotorEncoderTicksBeforeRollover = 3977;
+  public final static int shooterPanMotorEncoderMaximum = 3977;
+  public final static int shooterPanMotorEncoderMinimum = 130;
+  public final static int shooterPanMotorEncoderTicksPerTurretRotation = shooterPanMotorEncoderMaximum - shooterPanMotorEncoderMinimum;
   public final static int shooterPanMotorEncoderOffset = 0;
   public final static int shooterXResolution = 640;
   public final static int shooterYResolution = 480; 
