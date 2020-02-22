@@ -73,19 +73,21 @@ public class RobotMap {
 
   // ULTRASONIC CONSTANTS
   // RoboRIO channel for the ultrasonic sensor's analog input
-  public static final int ultrasonicInputChannel1 = 0;
-  public static final int ultrasonicInputChannel2 = 1;
+  public static final int ultrasonicInputChannelLeft = 0;
+  public static final int ultrasonicInputChannelRight = 1;
   // channel on the roborio section DIO, to trigger a reading from the ultrasonic
   // sensor
-  public static final int ultrasonicTriggerChannel1 = 0;
-  public static final int ultrasonicTriggerChannel2 = 1;
+  //public static final int ultrasonicTriggerChannel1 = 0;
+  //public static final int ultrasonicTriggerChannel2 = 1;
   // minimum time to send a pulse to trigger the sensor(20 microseconds); max time
   // is 96 ms.
-  public static final double ultrasonicTriggerTime = 20E-6;
+  //public static final double ultrasonicTriggerTime = 20E-6;
+  
   // constant conversion factor: ultrasonic sensor value to inches
   public static double ultrasonicValueToInchesConversionFactor = 0.125;
 
-  public static double distancefromWall = 1500; //Stay 1500 mm from wall
+  public static double distanceFromWall = 1500; //Stay 1500 mm from wall
+  public static double distanceFromWallTolerance = 20;
 /*
    * at around 1800 mm away, the raw value was 1471, while the converted mm value was 467; this is not the right factor.
    * Therefore, the ideal conversion factorshould be between 1 and 1.5
@@ -157,6 +159,13 @@ public class RobotMap {
   public final static double F_1 = 0.227; // just a guesstimate
   public final static int Izone_1 = 500;
   public final static double PeakOutput_1 = 1;
+
+  // Ultrasonic Open loop PID parameter values TODO: replace F values with measured values
+  public final static double P_U = 0.01; 
+  public final static double I_U = 0.0;
+  public final static double D_U = 0;
+  public final static double F_U = 0.01; // just a guesstimate
+  
 
   // ---- Flat constants, you should not need to change these ----
   // We allow either a 0 or 1 when selecting an ordinal for remote devices [You

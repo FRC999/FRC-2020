@@ -51,7 +51,7 @@ public class DriveTurnCommand extends Command {
     SmartDashboard.putNumber("delta encoder", leftAddEncoder);
     SmartDashboard.putNumber("RightTarget", rightTarget);
     SmartDashboard.putNumber("TargetHeading", targetHeading);
-    Robot.driveSubsystem.simpleMotionMagicTest(leftTarget, rightTarget);
+    Robot.driveSubsystem.simpleMotionMagic(leftTarget, rightTarget);
     System.out.println("Turning init done.");
   }
 

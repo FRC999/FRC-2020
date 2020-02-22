@@ -188,7 +188,7 @@ public abstract class DriveSubsystemBase extends Subsystem {
 
   } // End configureDriveTrainControllersForSimpleMagic
 
-  public void simpleMotionMagicTest(int leftEncoderVal, int rightEncoderVal) {
+  public void simpleMotionMagic(int leftEncoderVal, int rightEncoderVal) {
 	// Test method that moves robot forward a given number of wheel rotations  
     frontLeftDriveMotorController.set(ControlMode.MotionMagic, leftEncoderVal);
 	frontRightDriveMotorController.set(ControlMode.MotionMagic, rightEncoderVal);

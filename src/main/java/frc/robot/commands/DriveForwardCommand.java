@@ -33,7 +33,7 @@ public class DriveForwardCommand extends Command {
     int rEncoder = Robot.driveSubsystem.getRightEncoder();
     leftTarget =  driveDistance + lEncoder;
     rightTarget = driveDistance + rEncoder;
-    Robot.driveSubsystem.simpleMotionMagicTest(leftTarget, rightTarget);
+    Robot.driveSubsystem.simpleMotionMagic(leftTarget, rightTarget);
     
     SmartDashboard.putNumber("leftTarget",leftTarget);
     SmartDashboard.putNumber("RightTarget", rightTarget);

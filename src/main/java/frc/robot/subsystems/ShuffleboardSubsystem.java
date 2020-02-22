@@ -101,7 +101,7 @@ public class ShuffleboardSubsystem extends Subsystem {
         rightSpeedEntry.setDouble(Robot.driveSubsystem.getRightEncoderSpeed());
         voltageEntry.setDouble(RobotController.getBatteryVoltage());
         turretEntry.setDouble(240);
-        wallFollowerPossibleEntry.setBoolean(Robot.ultrasonicSubsystem.checkWallFollowerPossible());
+        //wallFollowerPossibleEntry.setBoolean(Robot.ultrasonicSubsystem.checkWallFollowerPossible());
     }
 
     public void initDefaultCommand() {
