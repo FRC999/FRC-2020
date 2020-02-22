@@ -93,6 +93,35 @@ return (getY() - ( RobotMap.shooterXResolution/2));
    else{retVal = 1;}
    return retVal;
  }
+
+ public int getWhichWayToTurnToGetToAngle(double encoderTicksRequested) {
+  int retVal = 0;
+  double target = encoderTicksRequested;
+  if (encoderTicksRequested > RobotMap.shooterPanMotorEncoderTicksBeforeRollover)
+  {target = encoderTicksRequested - RobotMap.shooterPanMotorEncoderTicksBeforeRollover;}
+else if (encoderTicksRequested <0)
+{target = RobotMap.shooterPanMotorEncoderTicksBeforeRollover + encoderTicksRequested;}
+
+
+if ((getPanEncoder() <= 20 + RobotMap.shooterPanMotorEncoderTicksPerRotation/2) && (getPanEncoder() >= RobotMap.shooterPanMotorEncoderTicksPerRotation/2 - 20))
+{
+  if (target> getPanEncoder())
+  {retVal=1;}
+  else{retVal = -1;}
+}
+else if (target > getPanEncoder()) {
+  if (target> getPanEncoder() + RobotMap.shooterPanMotorEncoderTicksPerRotation/2)
+  {retVal=-1;}
+  else{retVal = 1;}
+ }
+else if (target < getPanEncoder()) {
+if (target> getPanEncoder() - RobotMap.shooterPanMotorEncoderTicksPerRotation/2)
+{retVal=-1;}
+else{retVal = 1;}
+ }
+
+  return retVal;
+}
  public double getHeadingDegreesFromPanEncoderValue() {
 double retVal = 0;
 retVal = getPanEncoder() * (360./RobotMap.shooterPanMotorEncoderTicksPerRotation);

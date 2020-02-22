@@ -37,6 +37,8 @@ public class RobotMap {
   //shooter constants
   /* TODO: get a more accurate value for this */
   public final static int shooterPanMotorEncoderTicksPerRotation = 3977;
+  public final static int shooterPanMotorEncoderTicksBeforeRollover = 3977;
+  public static final int shooterPanMotorEncoderFacingRobotFront = 1;//TODO : change, change ShooterSubsystem.getWhichWayToTurn methods updated according to this value
   public final static double shooterXResolution = 640;
   public final static double shooterYResolution = 480; 
   public final static double shooterResolutionAcceptableError = 20;
