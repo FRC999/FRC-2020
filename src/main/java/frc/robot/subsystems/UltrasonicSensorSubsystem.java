@@ -20,35 +20,36 @@ public class UltrasonicSensorSubsystem extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
-  private final AnalogInput ultrasonic1 = new AnalogInput(RobotMap.ultrasonicInputChannel1);
-  private final AnalogInput ultrasonic2 = new AnalogInput(RobotMap.ultrasonicInputChannel2);
+  private final AnalogInput ultrasonicLeft = new AnalogInput(RobotMap.ultrasonicInputChannelLeft);
+  private final AnalogInput ultrasonicRight = new AnalogInput(RobotMap.ultrasonicInputChannelRight);
 
   public double getDistanceInInches() {
-    double retVal = ultrasonic1.getValue() * RobotMap.ultrasonicValueToInchesConversionFactor;
-    return retVal;
-  }
-  public double getSensor1DistanceInMM() {
-    double retVal = ultrasonic1.getValue() * RobotMap.ultrasonicValueToMMConversionFactor;
+    double retVal = ultrasonicLeft.getValue() * RobotMap.ultrasonicValueToInchesConversionFactor;
     return retVal;
   }
 
-public double getSensor2DistanceInMM() {
-  double retVal = ultrasonic2.getValue() * RobotMap.ultrasonicValueToMMConversionFactor;
-  return retVal;
-}
+  public double getUltrasonicLeftDistanceInMM() {
+    double retVal = ultrasonicLeft.getValue() * RobotMap.ultrasonicValueToMMConversionFactor;
+    return retVal;
+  }
 
-public int getSensor1DistanceInRaw() {
-  int retVal = ultrasonic1.getValue();
-  return retVal;
-}
+  public double getUltrosonicRightDistanceInMM() {
+    double retVal = ultrasonicRight.getValue() * RobotMap.ultrasonicValueToMMConversionFactor;
+    return retVal;
+  }
 
-public int getSensor2DistanceInRaw() {
-int retVal = ultrasonic2.getValue();
+  public int getUltrasonicLeftDistanceInRaw() {
+    int retVal = ultrasonicLeft.getValue();
+    return retVal;
+  }
+
+  public int getUltrasonicRightDistanceInRaw() {
+    int retVal = ultrasonicRight.getValue();
 return retVal;
 }
 
-public boolean checkWallFollowerPossible(){
-  if (getSensor1DistanceInMM()<3500){
+public boolean checkLeftWallFollowerPossible(){
+  if (getUltrasonicLeftDistanceInMM() < 3500) {
     return true;
   }
   else

@@ -27,7 +27,7 @@ public class ShooterCenterOnVisionCommand extends Command {
   @Override
   protected void execute() {
 
-    double panVal = Math.signum(Robot.shooterSubsystem.getDifferenceFromMiddleX()) * 0.5;
+    double panVal = Math.signum(Robot.shooterSubsystem.differenceFromMiddleX()) * 0.5;
     Robot.shooterSubsystem.pan(panVal);
   }
 
@@ -35,7 +35,7 @@ public class ShooterCenterOnVisionCommand extends Command {
   @Override
   protected boolean isFinished() {
     boolean retVal = false;
-    retVal = (Robot.shooterSubsystem.getCenteredX() && Robot.shooterSubsystem.inBounds());
+    retVal = (Robot.shooterSubsystem.getCenteredX() && Robot.shooterSubsystem.inBounds(Robot.shooterSubsystem.getX()));
     return retVal;
   }
 
