@@ -14,7 +14,6 @@ import frc.robot.commands.SmartDashboardUpdateAllCommand;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotController;
 
-
 /**
  * Add your docs here.
  */
@@ -30,13 +29,18 @@ public class SmartDashboardSubsystem extends Subsystem {
     // Set the default command for a subsystem here.
     setDefaultCommand(new SmartDashboardUpdateAllCommand());
   }
-//private double prevPan = 0;
+
+  // private double prevPan = 0;
   public void updateShooterValues() {
-  /*  if (Robot.shooterSubsystem.getPanEncoder() > prevPan)
-    {SmartDashboard.putNumber("Pan Encoder High Score", Robot.shooterSubsystem.getPanEncoder());
-    prevPan = Robot.shooterSubsystem.getPanEncoder();}*/
+    /*
+     * if (Robot.shooterSubsystem.getPanEncoder() > prevPan)
+     * {SmartDashboard.putNumber("Pan Encoder High Score",
+     * Robot.shooterSubsystem.getPanEncoder()); prevPan =
+     * Robot.shooterSubsystem.getPanEncoder();}
+     */
     SmartDashboard.putNumber("Pan Encoder", Robot.shooterSubsystem.getPanEncoder());
-    //SmartDashboard.putNumber("Tilt Encoder", Robot.shooterSubsystem.gettiltEncoder());
+    // SmartDashboard.putNumber("Tilt Encoder",
+    // Robot.shooterSubsystem.gettiltEncoder());
   }
 
   public void updateEncoderValue() {
@@ -56,19 +60,21 @@ public class SmartDashboardSubsystem extends Subsystem {
     SmartDashboard.putNumber("ultrasonic 2 raw value", Robot.ultrasonicSubsystem.getSensor2DistanceInRaw());
     SmartDashboard.putNumber("ultrasonic 2 mm value", Robot.ultrasonicSubsystem.getSensor2DistanceInMM());
   }
+
   public void updateControlPanelValues() {
-    SmartDashboard.putNumber("control panel quad encoder raw value", Robot.controlPanelSubsystem.readEncoderRaw() );
-    SmartDashboard.putNumber("control panel quad encoder in revolutions ", Robot.controlPanelSubsystem.readEncoderRevolutions());
- 
+    SmartDashboard.putNumber("control panel quad encoder raw value", Robot.controlPanelSubsystem.readEncoderRaw());
+    SmartDashboard.putNumber("control panel quad encoder in revolutions ",
+        Robot.controlPanelSubsystem.readEncoderRevolutions());
+
     Robot.controlPanelSubsystem.updateColorState();
-    SmartDashboard.putNumber("Spotted Color: Red", Robot.controlPanelSubsystem.getCurrentColor().red );
-    SmartDashboard.putNumber("Spotted Color: Green", Robot.controlPanelSubsystem.getCurrentColor().green );
+    SmartDashboard.putNumber("Spotted Color: Red", Robot.controlPanelSubsystem.getCurrentColor().red);
+    SmartDashboard.putNumber("Spotted Color: Green", Robot.controlPanelSubsystem.getCurrentColor().green);
     SmartDashboard.putNumber("Spotted Color: Blue", Robot.controlPanelSubsystem.getCurrentColor().blue);
     SmartDashboard.putNumber("Spotted Distance: ", Robot.controlPanelSubsystem.getProximity());
     if (Robot.controlPanelSubsystem.getSuspectedColor() != null) {
       SmartDashboard.putString("SuspectedColor: ", Robot.controlPanelSubsystem.getSuspectedColor().toString());
     }
- 
+
   }
 
   public void updateMatchTimeAndBatteryVoltage() {

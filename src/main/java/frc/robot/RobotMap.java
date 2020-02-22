@@ -34,25 +34,27 @@ public class RobotMap {
   public final static int shooterPanMotorController = 6;
   public final static int ShooterTiltMotorController = 7;
 
-  //shooter constants
+  // shooter constants
   /* TODO: get a more accurate value for this */
   public final static int shooterPanMotorEncoderTicksPerRotation = 3977;
-  public final static int shooterPanMotorEncoderTicksBeforeRollover = 3977;
-  public static final int shooterPanMotorEncoderFacingRobotFront = 1;//TODO : change, change ShooterSubsystem.getWhichWayToTurn methods updated according to this value
-  public final static double shooterXResolution = 640;
-  public final static double shooterYResolution = 480; 
-  public final static double shooterResolutionAcceptableError = 20;
+  public final static int shooterPanMotorEncoderOffset = 0;
+  public final static int shooterXResolution = 640;
+  public final static int shooterYResolution = 480;
+  public final static int shooterResolutionAcceptableError = 20;
 
   // Control panel constants
   // TODO: Get actual motor ID
   public static final int diskSpinnerMotorID = 52;
-  //quadrature motor controller ticks per revolution
+  // quadrature motor controller ticks per revolution
   public static final int quadratureEncoderTicksPerRev = 178;
   // diameter of the wheel which spins the control panel wheel, in cm
   public static final double diskSpinnerDiameter = 81.28;
   // diameter of the control panel disk in cm
   public static final double controlPanelDiameter = 81.28;
-  /** factor to indicate the direction on the motor that the encoder ticks are positive. If clockwise, keep 1; if counterclockwise, change to -1. */
+  /**
+   * factor to indicate the direction on the motor that the encoder ticks are
+   * positive. If clockwise, keep 1; if counterclockwise, change to -1.
+   */
   public static final int controlPanelDirectionFactor = -1;
 
   // Climber constants
@@ -84,12 +86,13 @@ public class RobotMap {
   // constant conversion factor: ultrasonic sensor value to inches
   public static double ultrasonicValueToInchesConversionFactor = 0.125;
 
-  public static double distancefromWall = 1500; //Stay 1500 mm from wall
-/*
-   * at around 1800 mm away, the raw value was 1471, while the converted mm value was 467; this is not the right factor.
-   * Therefore, the ideal conversion factorshould be between 1 and 1.5
-   * 4 consistent tests (mm/raw unit ratios of 1.255,1.22,1.276, and 1.25, discarding an 0.7058 from measurements 240/340)
-   *  suggest the correct factor is around 1.25
+  public static double distancefromWall = 1500; // Stay 1500 mm from wall
+  /*
+   * at around 1800 mm away, the raw value was 1471, while the converted mm value
+   * was 467; this is not the right factor. Therefore, the ideal conversion
+   * factorshould be between 1 and 1.5 4 consistent tests (mm/raw unit ratios of
+   * 1.255,1.22,1.276, and 1.25, discarding an 0.7058 from measurements 240/340)
+   * suggest the correct factor is around 1.25
    */
   public static double ultrasonicValueToMMConversionFactor = 1.25;
   public static int falconBotSwitchPortNumber = 0;
@@ -107,8 +110,6 @@ public class RobotMap {
   // Allowable error to exit movement methods
   public static int defaultAcceptableError = 1000;
 
-
-
   // Closed loop constants
   // How long we wait for a configuration change to happen before we give up and
   // report a failure in milliseconds
@@ -122,22 +123,25 @@ public class RobotMap {
   // MotionMagic curve smoothing parameter [0 - 8]
   public final static int smoothing = 3;
   // MotionMagic curve smoothing parameter [0 - 8]
- 
+
   public final static double encoderUnitsPerJEMotorRotation = 178;
 
-
-  /** ------- EXAMPLE OF SOME GAINS SETTINGS FOR OTHER ROBOTS ------
-	 * PID Gains may have to be adjusted based on the responsiveness of control loop.
-     * kF: 1023 represents output value to Talon at 100%, 6800 represents Velocity units at 100% output
-     * Not all set of Gains are used in this project and may be removed as desired.
-     * 
-	 * 	                                    	        		  kP   kI   kD   kF               Iz    PeakOut */
+  /**
+   * ------- EXAMPLE OF SOME GAINS SETTINGS FOR OTHER ROBOTS ------ PID Gains may
+   * have to be adjusted based on the responsiveness of control loop. kF: 1023
+   * represents output value to Talon at 100%, 6800 represents Velocity units at
+   * 100% output Not all set of Gains are used in this project and may be removed
+   * as desired.
+   * 
+   * kP kI kD kF Iz PeakOut
+   */
   /*
-	public final static Gains kGains_Distance = new Gains( 0.1, 0.0,  0.0, 0.0,            100,  0.50 );
-	public final static Gains kGains_Turning  = new Gains( 2.0, 0.0,  4.0, 0.0,            200,  1.00 );
-	public final static Gains kGains_Velocity = new Gains( 0.1, 0.0, 20.0, 1023.0/6800.0,  300,  0.50 );
-	public final static Gains kGains_MotProf  = new Gains( 1.0, 0.0,  0.0, 1023.0/6800.0,  400,  1.00 );
-  */
+   * public final static Gains kGains_Distance = new Gains( 0.1, 0.0, 0.0, 0.0,
+   * 100, 0.50 ); public final static Gains kGains_Turning = new Gains( 2.0, 0.0,
+   * 4.0, 0.0, 200, 1.00 ); public final static Gains kGains_Velocity = new Gains(
+   * 0.1, 0.0, 20.0, 1023.0/6800.0, 300, 0.50 ); public final static Gains
+   * kGains_MotProf = new Gains( 1.0, 0.0, 0.0, 1023.0/6800.0, 400, 1.00 );
+   */
 
   // Closed loop PID parameter values TODO: replace F values with measured values
   public final static double P_0 = 0.75 * fullMotorOutput / encoderUnitsPerShaftRotation; // 75% motor output when
@@ -173,6 +177,5 @@ public class RobotMap {
   public final static int SLOT_3 = 3;
 
   // ---- End closed loop parameter constants ----
-
 
 }
