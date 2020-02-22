@@ -90,6 +90,10 @@ return (getX() -( RobotMap.shooterXResolution/2));
 return (getY() - ( RobotMap.shooterXResolution/2));
  }
 
+ /**the Pi returns 1000 when it doesn't see an object, so if the parameter is not 1000, the object is visible.
+  * @param num the value to test for visibility from the pi.
+  * @return true if visible.
+ */
 
  public boolean inBounds (double num) {
     boolean state = false; 
@@ -98,12 +102,24 @@ return (getY() - ( RobotMap.shooterXResolution/2));
    }
    return state;
  }
+
+/**
+ * checks if the object the pi detects is within a predefined center range.
+ * @return true if the object is in the acceptable center range.
+ */
+
  public boolean getCenteredX() {
    boolean retVal = false;
    if(Math.abs(differenceFromMiddleX()) <= RobotMap.shooterResolutionAcceptableError)
    {retVal = true;}
    return retVal;
  }
+
+/**
+ * checks if the object detected by the pi is in bounds, and which side of center it is on (including in the center)
+ * @param num the value to test
+ * @return a string stating the object's location (either "Left", "Center", "Right", or "Out Of Bounds")
+ */
 
  public String whichSide(double num) {
    String state = "";
@@ -119,34 +135,6 @@ return (getY() - ( RobotMap.shooterXResolution/2));
      state = "Out Of Bounds";
    }
    return state;
- }
-
- public void centerShooterOnTarget(int num) {
-  switch (whichSide(num)) {
-    case "Left" : {
-      panMotorController.set(RobotMap.shooterPanSpeed);
-      System.out.println("TARGET LEFT OF CENTER");
-    }
-    break;
-    case "Center" : {
-      panMotorController.set(0);
-      System.out.println("TARGET IN CENTER");
-    }
-    break;
-    case "Right" : {
-      panMotorController.set((RobotMap.shooterPanSpeed)*-1);
-      System.out.println("TARGET RIGHT OF CENTER");
-    }
-    break;
-    case "Out Of Bounds" : {
-      panMotorController.set(0);
-      System.out.println("TARGET OUT OF BOUNDS");
-    }
-    default : {
-      panMotorController.set(0);
-      System.out.println("DEFAULT");
-    }
-  }
  }
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
