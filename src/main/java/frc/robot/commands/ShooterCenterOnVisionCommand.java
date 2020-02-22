@@ -35,7 +35,7 @@ public class ShooterCenterOnVisionCommand extends Command {
   @Override
   protected boolean isFinished() {
     boolean retVal = false;
-    retVal = Robot.shooterSubsystem.getCenteredX();
+    retVal = (Robot.shooterSubsystem.getCenteredX() && Robot.shooterSubsystem.inBounds());
     return retVal;
   }
 

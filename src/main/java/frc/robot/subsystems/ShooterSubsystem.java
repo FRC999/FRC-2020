@@ -60,7 +60,7 @@ public class ShooterSubsystem extends Subsystem {
   public int adjustTurretPosition(int absolute) {
     int relative = absolute - RobotMap.shooterPanMotorEncoderOffset;
     if (relative < 0) {
-      relative += RobotMap.shooterPanMotorEncoderTicksPerRotation + 1;
+      relative += RobotMap.shooterPanMotorEncoderTicksPerTurretRotation + 1;
     }
     return relative;
   }
@@ -74,8 +74,8 @@ public class ShooterSubsystem extends Subsystem {
    */
   public int deAdjustTurretPosition(int relative) {
     int absolute = relative + RobotMap.shooterPanMotorEncoderOffset;
-    if (absolute > RobotMap.shooterPanMotorEncoderTicksPerRotation) {
-      absolute -= RobotMap.shooterPanMotorEncoderTicksPerRotation + 1;
+    if (absolute > RobotMap.shooterPanMotorEncoderTicksPerTurretRotation) {
+      absolute -= RobotMap.shooterPanMotorEncoderTicksPerTurretRotation + 1;
     }
     return absolute;
   }
@@ -148,18 +148,18 @@ public class ShooterSubsystem extends Subsystem {
     }
     return retVal;
   }
-
+/**"zero" in this case is the front of the robot. If it is shorter to turn the motor forwards, return 1. If it is shorter to turn reverse, return -1. */
   public int getWhichWayToTurnToGetToZero() {
     int retVal = 0;
-    if (getPanEncoder() <= RobotMap.shooterPanMotorEncoderTicksPerRotation / 2) {
+    if (adjustTurretPosition(getPanEncoder()) <= RobotMap.shooterPanMotorEncoderTicksPerTurretRotation / 2) {
       retVal = -1;
     } else {
       retVal = 1;
     }
     return retVal;
   }
-
-  public int getWhichWayToTurnToGetToAngle(double encoderTicksRequested) {
+/**uses the corrected encoder scale */
+  public int getWhichWayToTurnToGetToAdjustedEncoderValue(double encoderTicksRequested) {
     int retVal = 0;
     double target = encoderTicksRequested;
     if (encoderTicksRequested > RobotMap.shooterPanMotorEncoderTicksBeforeRollover) {
@@ -168,21 +168,22 @@ public class ShooterSubsystem extends Subsystem {
       target = RobotMap.shooterPanMotorEncoderTicksBeforeRollover + encoderTicksRequested;
     }
 
-    if ((getPanEncoder() <= 20 + RobotMap.shooterPanMotorEncoderTicksPerRotation / 2)
-        && (getPanEncoder() >= RobotMap.shooterPanMotorEncoderTicksPerRotation / 2 - 20)) {
-      if (target > getPanEncoder()) {
+    int adjTurrPos =adjustTurretPosition(getPanEncoder());
+    if ((adjTurrPos <= 20 + RobotMap.shooterPanMotorEncoderTicksPerTurretRotation / 2)
+        && (adjTurrPos >= RobotMap.shooterPanMotorEncoderTicksPerTurretRotation / 2 - 20)) {
+      if (target > adjTurrPos) {
         retVal = 1;
       } else {
         retVal = -1;
       }
-    } else if (target > getPanEncoder()) {
-      if (target > getPanEncoder() + RobotMap.shooterPanMotorEncoderTicksPerRotation / 2) {
+    } else if (target > adjTurrPos) {
+      if (target > adjTurrPos + RobotMap.shooterPanMotorEncoderTicksPerTurretRotation / 2) {
         retVal = -1;
       } else {
         retVal = 1;
       }
-    } else if (target < getPanEncoder()) {
-      if (target > getPanEncoder() - RobotMap.shooterPanMotorEncoderTicksPerRotation / 2) {
+    } else if (target < adjTurrPos) {
+      if (target > adjTurrPos - RobotMap.shooterPanMotorEncoderTicksPerTurretRotation / 2) {
         retVal = -1;
       } else {
         retVal = 1;
@@ -192,9 +193,15 @@ public class ShooterSubsystem extends Subsystem {
     return retVal;
   }
 
-  public double getHeadingDegreesFromPanEncoderValue() {
+  public double getHeadingDegreesFromPanEncoderAdjustValue() {
     double retVal = 0;
-    retVal = getPanEncoder() * (360. / RobotMap.shooterPanMotorEncoderTicksPerRotation);
+    retVal =adjustTurretPosition( getPanEncoder()) * (360. / RobotMap.shooterPanMotorEncoderTicksPerTurretRotation);
+    return retVal;
+  }
+
+  public double getPanEncoderAdjustValueFromHeading(double heading) {
+    double retVal = 0;
+    retVal = heading * (RobotMap.shooterPanMotorEncoderTicksPerTurretRotation/360);
     return retVal;
   }
 

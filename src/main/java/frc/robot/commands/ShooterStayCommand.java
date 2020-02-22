@@ -40,16 +40,19 @@ public class ShooterStayCommand extends Command {
   @Override
   protected void initialize() {
     initialThetaBotToField = Robot.navXSubsystem.getYaw();
-    initialThetaShooterToBot = Robot.shooterSubsystem.getHeadingDegreesFromPanEncoderValue();
+    initialThetaShooterToBot = Robot.shooterSubsystem.getHeadingDegreesFromPanEncoderAdjustValue();
     idealThetaShooterToField = initialThetaBotToField + initialThetaShooterToBot;
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    currentThetaBotToField = Robot.navXSubsystem.getYaw();
-    currentThetaShooterToBot = Robot.shooterSubsystem.getHeadingDegreesFromPanEncoderValue();
+    currentThetaBotToField = Robot.navXSubsystem.getYaw();//TODO: make sure these scales sync
+    currentThetaShooterToBot = Robot.shooterSubsystem.getHeadingDegreesFromPanEncoderAdjustValue();
     idealThetaShooterToBot = idealThetaShooterToField - currentThetaBotToField;
+    if ((currentThetaShooterToBot < idealThetaShooterToBot + 10) && (currentThetaShooterToBot > idealThetaShooterToBot - 10))
+    {Robot.shooterSubsystem.pan(0);}
+    else{Robot.shooterSubsystem.pan(Robot.shooterSubsystem.getWhichWayToTurnToGetToAdjustedEncoderValue(Robot.shooterSubsystem.getPanEncoderAdjustValueFromHeading(idealThetaShooterToBot)) * 0.5);}
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -61,11 +64,13 @@ public class ShooterStayCommand extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    Robot.shooterSubsystem.pan(0);
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    Robot.shooterSubsystem.pan(0);
   }
 }

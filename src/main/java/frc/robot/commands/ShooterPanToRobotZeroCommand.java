@@ -37,7 +37,7 @@ public class ShooterPanToRobotZeroCommand extends Command {
   @Override
   protected boolean isFinished() {
     boolean retVal = false;
-    if ((Robot.shooterSubsystem.getPanEncoder() <= 20) || (Robot.shooterSubsystem.getPanEncoder() >= (RobotMap.shooterPanMotorEncoderTicksPerRotation -20)) ) {
+    if ((Robot.shooterSubsystem.getPanEncoder() <= 20) || (Robot.shooterSubsystem.getPanEncoder() >= (RobotMap.shooterPanMotorEncoderTicksPerTurretRotation -20)) ) {
 retVal = true;
     }
 
