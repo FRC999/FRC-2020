@@ -90,6 +90,14 @@ return (getX() -( RobotMap.shooterXResolution/2));
 return (getY() - ( RobotMap.shooterXResolution/2));
  }
 
+
+ public boolean inBounds (int num) {
+    boolean state = false; 
+  if (num != 1000) {
+    state = true;
+   }
+   return state;
+ }
  public boolean getCenteredX() {
    boolean retVal = false;
    if(Math.abs(differenceFromMiddleX()) <= RobotMap.shooterResolutionAcceptableError)
@@ -97,22 +105,24 @@ return (getY() - ( RobotMap.shooterXResolution/2));
    return retVal;
  }
 
- public String whichSide() {
+ public String whichSide(int num) {
    String state = "";
-   if(!getCenteredX()) {
-     if (getX() < ((RobotMap.shooterXResolution/2)-(RobotMap.shooterResolutionAcceptableError))) { //310
-       state = "Left";
-     } else if (getX() > ((RobotMap.shooterXResolution)+(RobotMap.shooterResolutionAcceptableError))) { //330
-       state = "Right";
-     }
-     else {
-       state = "Center";
-     }
+   if(inBounds(num)) {
+    if(getCenteredX()) {
+      state = "Center";
+    } else if (differenceFromMiddleX() < 0){
+      state = "Left";
+    } else {
+      state = "Right";
+    }
+   } else {
+     state = "Out Of Bounds";
    }
    return state;
  }
- public void centerShooter() {
-  switch (whichSide()) {
+
+ public void centerShooterOnTarget(int num) {
+  switch (whichSide(num)) {
     case "Left" : {
       panMotorController.set(RobotMap.shooterPanSpeed);
       System.out.println("TARGET LEFT OF CENTER");
@@ -128,6 +138,10 @@ return (getY() - ( RobotMap.shooterXResolution/2));
       System.out.println("TARGET RIGHT OF CENTER");
     }
     break;
+    case "Out Of Bounds" : {
+      panMotorController.set(0);
+      System.out.println("TARGET OUT OF BOUNDS");
+    }
     default : {
       panMotorController.set(0);
       System.out.println("DEFAULT");
