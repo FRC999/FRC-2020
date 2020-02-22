@@ -35,6 +35,7 @@ public class OI {
 
   Button climbExtendButton = new JoystickButton(buttonBox, 1);
   Button climbRetractButton = new JoystickButton(buttonBox, 2);
+  Button wallFollowButton = new JoystickButton(buttonBox, 10);
 
 
   public OI() { // Setup All Commands Here
@@ -53,5 +54,8 @@ public class OI {
 
     climbExtendButton.whenPressed(new ClimbExtendCommand());
     climbRetractButton.whenPressed(new ClimbRetractCommand());
+    wallFollowButton.whenActive(new DriveFollowWallCommand());
   }
+
+
 }

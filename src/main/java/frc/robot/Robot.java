@@ -53,6 +53,7 @@ public class Robot extends TimedRobot {
   
   public boolean TestBool = false;
   public static OI oi;
+
   Command autonomousCommand;
 
   // Sendable choosers belowP
@@ -79,7 +80,7 @@ public class Robot extends TimedRobot {
     NetworkTableEntry testEntry = table.getEntry("test");
     testEntry.setDouble(10.5);
     System.out.println("Hit robotInit");
-
+    
     DigitalInput falconBotSwitch = new DigitalInput(RobotMap.falconBotSwitchPortNumber);
     RobotMap.isFalconBot = !falconBotSwitch.get();
     if(RobotMap.isFalconBot){
