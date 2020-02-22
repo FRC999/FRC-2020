@@ -12,9 +12,9 @@ import frc.robot.RobotMap;
 
 public class ShooterSubsystem extends Subsystem {
 
-  static WPI_TalonSRX shooterMotorController = new WPI_TalonSRX(RobotMap.shooterWheelMotorControllerID);
-  static WPI_TalonSRX panMotorController = new WPI_TalonSRX(RobotMap.shooterPanMotorControllerID);
-  static WPI_TalonSRX tiltMotorController = new WPI_TalonSRX(RobotMap.ShooterTiltMotorControllerID);
+  public static WPI_TalonSRX shooterMotorController = new WPI_TalonSRX(RobotMap.shooterWheelMotorControllerID);
+  public static WPI_TalonSRX panMotorController = new WPI_TalonSRX(RobotMap.shooterPanMotorControllerID);
+  public static WPI_TalonSRX tiltMotorController = new WPI_TalonSRX(RobotMap.ShooterTiltMotorControllerID);
   //public SensorCollection turretEncoder;
 
   // double shooterSpeed = 0.5;
@@ -91,7 +91,7 @@ return (getY() - ( RobotMap.shooterXResolution/2));
  }
 
 
- public boolean inBounds (int num) {
+ public boolean inBounds (double num) {
     boolean state = false; 
   if (num != 1000) {
     state = true;
@@ -105,7 +105,7 @@ return (getY() - ( RobotMap.shooterXResolution/2));
    return retVal;
  }
 
- public String whichSide(int num) {
+ public String whichSide(double num) {
    String state = "";
    if(inBounds(num)) {
     if(getCenteredX()) {
