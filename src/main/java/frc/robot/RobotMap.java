@@ -33,8 +33,11 @@ public class RobotMap {
   // Shooter motor controllers
 
   public final static int shooterWheelMotorControllerID = 20;
-  public final static int shooterPanMotorControllerID = 21;
-  public final static int ShooterTiltMotorControllerID = 22;
+  //temporary change of pan motor ID for testing
+//  public final static int shooterPanMotorControllerID = 21;
+  public final static int ShooterTiltMotorControllerID = 23;
+
+  public final static int shooterPanMotorControllerID = 22;
 
   //shooter constants
   /* TODO: get a more accurate value for this */
@@ -46,7 +49,7 @@ public class RobotMap {
 
   // Control panel constants
   // TODO: Get actual motor ID
-  public static final int diskSpinnerMotorControllerID = 30;
+  public static final int diskSpinnerMotorControllerID = 31;
   //quadrature motor controller ticks per revolution
   public static final int quadratureEncoderTicksPerRev = 178;
   // diameter of the wheel which spins the control panel wheel, in cm
@@ -166,6 +169,24 @@ public class RobotMap {
   public final static double D_U = 0;
   public final static double F_U = 0.01; // just a guesstimate
   
+  // Closed loop PAN PID parameter values TODO: replace F values with measured values
+  public final static double P_PAN = 0.1;
+  public final static double I_PAN = 0.1;
+  public final static double D_PAN = .01;
+  public final static double F_PAN = 0.1; // just a guesstimate
+  public final static int Izone_PAN = 500;
+  public static int panCruiseVelocity = 50;
+  // MotionMagic curve smoothing parameter [0 - 8]
+  public static int panAcceleration = 50;
+  // Allowable error to exit movement methods
+  public static int panDefaultAcceptableError = 2;
+  public final static int PID_PAN = 0;
+  public final static double encoderTicksPerDegreeX = 0.5;  // for Johnson Encoder
+  //public final static double encoderTicksPerDegreeX = 11;  // for Johnson Encoder
+  public final static double pixelsPerDegreeX = 12;  //based on lifecam having a 53 degree viewing angle and 640 horizontal pixels
+  
+// END of pan pid code
+
 
   // ---- Flat constants, you should not need to change these ----
   // We allow either a 0 or 1 when selecting an ordinal for remote devices [You

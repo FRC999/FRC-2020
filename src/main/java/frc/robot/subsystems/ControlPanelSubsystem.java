@@ -34,7 +34,8 @@ public class ControlPanelSubsystem extends Subsystem {
 
   public ControlPanelSubsystem()
   {
-    resetMotorController();
+    //TODO uncomment after testing
+   // resetMotorController();
   }
 
   public  void resetMotorController() {

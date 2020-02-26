@@ -70,7 +70,7 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     
     //Set up shuffleboard
-    shuffleBoardSubsystem.setupShuffleboard();
+    //shuffleBoardSubsystem.setupShuffleboard();
 
 
     NetworkTableInstance ntInst = NetworkTableInstance.getDefault();
@@ -108,6 +108,7 @@ public class Robot extends TimedRobot {
     Robot.driveSubsystem.driveTrainBrakeMode();
     Robot.navXSubsystem.zeroYaw();
     Robot.shooterSubsystem.configureShooterControllers();
+    Robot.shooterSubsystem.configurePanMotorControllerForMagic();
     //Robot.shooterSubsystem.zeroShooterEncoders();
     //Robot.controlPanelSubsystem.resetMotorController();
     

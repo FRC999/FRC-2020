@@ -31,10 +31,11 @@ public class OI {
   Button zeroControlPanelEncoderButton = new JoystickButton(leftJoystick, 9);
   Button setControlPanelPositionButton = new JoystickButton(leftJoystick, 10);
   Button moveControlPanelAlongColorPathButton = new JoystickButton(leftJoystick, 11);
-  Button shooterManualControlButton = new JoystickButton(leftJoystick, 12);
 
   Button climbExtendButton = new JoystickButton(buttonBox, 1);
   Button climbRetractButton = new JoystickButton(buttonBox, 2);
+  Button visionTestButton = new JoystickButton(buttonBox, 4);
+  Button shooterManualControlButton = new JoystickButton(buttonBox, 5);
 
 
   public OI() { // Setup All Commands Here
@@ -53,5 +54,6 @@ public class OI {
 
     climbExtendButton.whenPressed(new ClimbExtendCommand());
     climbRetractButton.whenPressed(new ClimbRetractCommand());
+    visionTestButton.whenPressed(new ShooterVisionCommand());
   }
 }

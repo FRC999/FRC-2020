@@ -15,7 +15,6 @@ public class ShootManuallyCommand extends Command {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(Robot.shooterSubsystem);
-    requires(Robot.shooterSubsystem);
     
   }
 
