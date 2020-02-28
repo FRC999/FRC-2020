@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.MedianFilter;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
+import frc.robot.OI;
 
 public class DriveFollowWallCommand extends Command {
 
@@ -44,15 +45,28 @@ public class DriveFollowWallCommand extends Command {
     double PIDOutput = UltasonicPID.calculate(filteredDistance);
     // read joystick
     double move = Robot.oi.leftJoystick.getY() * -1; // inverts sign for Y axis
-    
-    Robot.driveSubsystem.manualDrive(move, PIDOutput);
+    if (move==0){
+      PIDOutput *= -1;
+    }
+
+
+    Robot.driveSubsystem.manualDrive(move, PIDOutput); //PID turning makes it work -Peter
+    //Todo: Review code
+    //Todo: Test
     
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
+
+  if (Robot.oi.buttonBox.getRawButtonReleased(10))
+    return true;
+  else{
     return false;
+  }
+
+
   }
 
   // Called once after isFinished returns true

@@ -32,10 +32,10 @@ public class RobotMap {
   public final static int loaderMotor2ControllerID = 13;
   // Shooter motor controllers
 
-  public final static int shooterWheelMotorControllerID = 20;
+  public final static int shooterWheelMotorControllerID = 23;
   //temporary change of pan motor ID for testing
 //  public final static int shooterPanMotorControllerID = 21;
-  public final static int ShooterTiltMotorControllerID = 23;
+  public final static int ShooterTiltMotorControllerID = 20;
 
   public final static int shooterPanMotorControllerID = 22;
 

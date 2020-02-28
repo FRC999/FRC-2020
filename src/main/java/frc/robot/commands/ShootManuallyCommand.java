@@ -28,6 +28,7 @@ public class ShootManuallyCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    Robot.shooterSubsystem.shoot(1);
     //use the twist and throttle to control shooter pan and tilt
     double pan = Robot.oi.leftJoystick.getZ();
     //double tilt = Robot.oi.leftJoystick.getThrottle();

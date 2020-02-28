@@ -36,6 +36,7 @@ public class OI {
   Button climbRetractButton = new JoystickButton(buttonBox, 2);
   Button visionTestButton = new JoystickButton(buttonBox, 4);
   Button shooterManualControlButton = new JoystickButton(buttonBox, 5);
+  Button shooterWheelControlButton = new JoystickButton(buttonBox, 12);
 
 
   public OI() { // Setup All Commands Here
@@ -55,5 +56,7 @@ public class OI {
     climbExtendButton.whenPressed(new ClimbExtendCommand());
     climbRetractButton.whenPressed(new ClimbRetractCommand());
     visionTestButton.whenPressed(new ShooterVisionCommand());
+    shooterWheelControlButton.whenPressed(new ShooterWheelCommand());
+
   }
 }

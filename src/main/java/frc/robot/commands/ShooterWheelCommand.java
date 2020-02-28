@@ -10,8 +10,8 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class ShooterCenterOnVisionCommand extends Command {
-  public ShooterCenterOnVisionCommand() {
+public class ShooterWheelCommand extends Command {
+  public ShooterWheelCommand() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(Robot.shooterSubsystem);
@@ -20,6 +20,7 @@ public class ShooterCenterOnVisionCommand extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    Robot.shooterSubsystem.shoot(1);
   }
 
   // Called repeatedly when this Command is scheduled to run
