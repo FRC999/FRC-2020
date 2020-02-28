@@ -14,7 +14,7 @@ public class ShooterSubsystem extends Subsystem {
 
   public static WPI_TalonSRX shooterMotorController = new WPI_TalonSRX(RobotMap.shooterWheelMotorControllerID);
   public static WPI_TalonSRX panMotorController = new WPI_TalonSRX(RobotMap.shooterPanMotorControllerID);
-  public static WPI_TalonSRX tiltMotorController = new WPI_TalonSRX(RobotMap.ShooterTiltMotorControllerID);
+  public static WPI_TalonSRX tiltMotorController = new WPI_TalonSRX(RobotMap.shooterTiltMotorControllerID);
   //public SensorCollection turretEncoder;
 
   // double shooterSpeed = 0.5;
@@ -25,7 +25,8 @@ public class ShooterSubsystem extends Subsystem {
     //this.turretEncoder = turretEncoder;
     shooterMotorController.configFactoryDefault();
     panMotorController.configFactoryDefault();
-    panMotorController.configSelectedFeedbackSensor(FeedbackDevice.PulseWidthEncodedPosition);
+    panMotorController.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
+    //panMotorController.configSelectedFeedbackSensor(FeedbackDevice.PulseWidthEncodedPosition); //FOR TURRET
     panMotorController.configFeedbackNotContinuous(true, RobotMap.configureTimeoutMs);
     //panMotorController.turretEncoder.getPulseWidthRiseToFallUs()
     tiltMotorController.configFactoryDefault();

@@ -33,16 +33,16 @@ public class RobotMap {
   // Shooter motor controllers
 
   public final static int shooterWheelMotorControllerID = 20;
-  public final static int shooterPanMotorControllerID = 21;
-  public final static int ShooterTiltMotorControllerID = 22;
-
+  public final static int shooterTiltMotorControllerID = 21;
+  public final static int shooterPanMotorControllerID = 22;
+  public static int shooterPanEncoderValue = 0;
   //shooter constants
   /* TODO: get a more accurate value for this */
   public final static int shooterPanMotorEncoderTicksPerRotation = 3977;
   public final static int shooterXResolution = 640;
   public final static int shooterYResolution = 480; 
-  public final static int shooterResolutionAcceptableError = 10;
-  public final static double shooterPanSpeed = 0.4;
+  public final static int shooterResolutionAcceptableError = 5;
+  public final static double shooterPanSpeed = -.1;
 
   // Control panel constants
   // TODO: Get actual motor ID

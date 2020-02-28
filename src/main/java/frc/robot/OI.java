@@ -35,8 +35,8 @@ public class OI {
 
   Button climbExtendButton = new JoystickButton(buttonBox, 1);
   Button climbRetractButton = new JoystickButton(buttonBox, 2);
-  Button shooterCryBabyButton = new JoystickButton(buttonBox, 4);
-  Button wallFollowButton = new JoystickButton(buttonBox, 10);
+  Button shooterCryBabyButton = new JoystickButton(buttonBox, 3);
+  //Button wallFollowButton = new JoystickButton(buttonBox, 10);
 
 
   public OI() { // Setup All Commands Here
@@ -56,7 +56,7 @@ public class OI {
     climbExtendButton.whenPressed(new ClimbExtendCommand());
     climbRetractButton.whenPressed(new ClimbRetractCommand());
     shooterCryBabyButton.whenPressed(new ShooterCenterOnVisionCrybabyCommand());
-    wallFollowButton.whenActive(new DriveFollowWallCommand());
+    //wallFollowButton.whenActive(new DriveFollowWallCommand());
   }
 
 
