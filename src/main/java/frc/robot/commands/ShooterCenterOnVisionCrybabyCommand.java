@@ -7,6 +7,8 @@
 
 package frc.robot.commands;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
@@ -23,6 +25,7 @@ public class ShooterCenterOnVisionCrybabyCommand extends Command {
   public int counterNum = 5;
   public boolean bounds = false;
   public String side = "";
+  public double pos = 0;
 
   // Called just before this Command runs the first time
   @Override
@@ -39,40 +42,41 @@ public class ShooterCenterOnVisionCrybabyCommand extends Command {
 
     switch (side) {
       case "Left" : {
-        Robot.shooterSubsystem.panMotorController.set(RobotMap.shooterPanSpeed);
+        pos = ShooterSubsystem.panMotorController.getSelectedSensorPosition()+3;
+        ShooterSubsystem.panMotorController.set(ControlMode.Position, pos);
         System.out.println("TARGET LEFT OF CENTER");
         loc = "Left";
         counter = 0;
       }
       break;
       case "Center" : {
-        Robot.shooterSubsystem.panMotorController.set(0);
+        ShooterSubsystem.panMotorController.set(0);
         System.out.println("TARGET IN CENTER");
         loc = "Center";
         counter+=1;
       }
       break;
       case "Right" : {
-        Robot.shooterSubsystem.panMotorController.set((RobotMap.shooterPanSpeed)*-1);
+        pos = ShooterSubsystem.panMotorController.getSelectedSensorPosition()-3;
+        ShooterSubsystem.panMotorController.set(ControlMode.Position, pos);
+
         System.out.println("TARGET RIGHT OF CENTER");
         loc = "Right";
         counter = 0;
       }
       break;
       case "Out Of Bounds" : {
-        Robot.shooterSubsystem.panMotorController.set(0);
+        ShooterSubsystem.panMotorController.set(0);
         System.out.println("TARGET OUT OF BOUNDS");
         loc = "Out Of Bounds";
         counter = 0;
       }
       default : {
-        Robot.shooterSubsystem.panMotorController.set(0);
+        ShooterSubsystem.panMotorController.set(0);
         System.out.println("DEFAULT");
         loc = "Default";
         counter = 0;
       }
-    }
-    if (Robot.shooterSubsystem.panMotorController.get() == 0) {
     }
   }
   // Make this return true when this Command no longer needs to run execute()

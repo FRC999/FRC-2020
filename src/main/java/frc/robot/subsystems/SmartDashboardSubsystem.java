@@ -76,7 +76,7 @@ public class SmartDashboardSubsystem extends Subsystem {
   public void updateAllDisplays() {
     updateNavXValues();
     updateUltrasonicValues();
-    updateControlPanelValues();
+   // updateControlPanelValues();
     updateMatchTimeAndBatteryVoltage();
   }
 }

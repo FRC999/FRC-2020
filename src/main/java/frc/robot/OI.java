@@ -37,7 +37,7 @@ public class OI {
   Button visionTestButton = new JoystickButton(buttonBox, 4);
   Button shooterManualControlButton = new JoystickButton(buttonBox, 5);
   Button shooterWheelControlButton = new JoystickButton(buttonBox, 12);
-
+  Button shooterCryBabyButton = new JoystickButton(buttonBox, 3);
 
   public OI() { // Setup All Commands Here
     zeroEncoderButton.whenPressed(new DriveZeroEncodersCommand());
@@ -57,6 +57,9 @@ public class OI {
     climbRetractButton.whenPressed(new ClimbRetractCommand());
     visionTestButton.whenPressed(new ShooterVisionCommand());
     shooterWheelControlButton.whenPressed(new ShooterWheelCommand());
-
+    shooterCryBabyButton.whenPressed(new ShooterCenterOnVisionCrybabyCommand());
+    //wallFollowButton.whenActive(new DriveFollowWallCommand());
   }
+
+
 }
