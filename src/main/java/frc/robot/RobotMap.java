@@ -41,7 +41,8 @@ public class RobotMap {
 
   //shooter constants
   /* TODO: get a more accurate value for this */
-  public final static int shooterPanMotorEncoderTicksPerRotation = 3977;
+  //public final static int shooterPanMotorEncoderTicksPerRotation = 3977;
+  public final static int shooterPanMotorEncoderTicksPerRotation = 178;
   public final static int shooterXResolution = 640;
   public final static int shooterYResolution = 480; 
   public final static int shooterResolutionAcceptableError = 5;
@@ -170,7 +171,7 @@ public class RobotMap {
   public final static double F_U = 0.01; // just a guesstimate
   
   // Closed loop PAN PID parameter values TODO: replace F values with measured values
-  public final static double P_PAN = 0.1;
+  public final static double P_PAN = 0.01;
   public final static double I_PAN = 0.1;
   public final static double D_PAN = .01;
   public final static double F_PAN = 0.1; // just a guesstimate
@@ -181,8 +182,8 @@ public class RobotMap {
   // Allowable error to exit movement methods
   public static int panDefaultAcceptableError = 2;
   public final static int PID_PAN = 0;
-  public final static double encoderTicksPerDegreeX = 0.5;  // for Johnson Encoder
-  //public final static double encoderTicksPerDegreeX = 11;  // for Johnson Encoder
+  public final static double encoderTicksPerDegreeX = 0.25;  // for Johnson Encoder
+  //public final static double encoderTicksPerDegreeX = 11;  // for Turret Encoder
   public final static double pixelsPerDegreeX = 12;  //based on lifecam having a 53 degree viewing angle and 640 horizontal pixels
   
 // END of pan pid code

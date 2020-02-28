@@ -144,7 +144,7 @@ public class ShooterSubsystem extends Subsystem {
   /**tests whether the current x-value of the object the robot sees is in the center of its field of view. Outputs the difference (current value - 320). */
   public double differenceFromMiddleX()
   {
-return (getX() -( RobotMap.shooterXResolution/2));
+return Math.abs((getX() -(RobotMap.shooterXResolution/2)));
   }
  /**tests whether the current y-value of the object the robot sees is in the center of its field of view. Outputs the difference (current value - 240). */
  public double differenceFromMiddleY()
@@ -180,26 +180,26 @@ return (getY() - ( RobotMap.shooterXResolution/2));
   switch (whichSide()) {
     case "Left" : {
       
-      panMotorController.set(ControlMode.MotionMagic, Math.round(getpanEncoder() + (differenceFromMiddleX() / RobotMap.pixelsPerDegreeX * RobotMap.encoderTicksPerDegreeX)));
+      panMotorController.set(ControlMode.MotionMagic, Math.round(getpanEncoder() - (differenceFromMiddleX() / RobotMap.pixelsPerDegreeX * RobotMap.encoderTicksPerDegreeX)));
       //panMotorController.set(RobotMap.shooterPanSpeed);
-      System.out.println("TARGET LEFT OF CENTER");
+     // System.out.println("TARGET LEFT OF CENTER");
     }
     break;
     case "Center" : {
       panMotorController.set(ControlMode.PercentOutput, 0);
       //panMotorController.set(0);
-      System.out.println("TARGET IN CENTER " + getX() +" PanEncoder " +Math.round(getpanEncoder() - (differenceFromMiddleX() / RobotMap.pixelsPerDegreeX * RobotMap.encoderTicksPerDegreeX))) ;
+     // System.out.println("TARGET IN CENTER " + getX() +" PanEncoder " +Math.round(getpanEncoder() - (differenceFromMiddleX() / RobotMap.pixelsPerDegreeX * RobotMap.encoderTicksPerDegreeX))) ;
     }
     break;
     case "Right" : {
-      panMotorController.set(ControlMode.MotionMagic, Math.round(getpanEncoder() - (differenceFromMiddleX() / RobotMap.pixelsPerDegreeX * RobotMap.encoderTicksPerDegreeX)));
+      panMotorController.set(ControlMode.MotionMagic, Math.round(getpanEncoder() + (differenceFromMiddleX() / RobotMap.pixelsPerDegreeX * RobotMap.encoderTicksPerDegreeX)));
       //panMotorController.set((RobotMap.shooterPanSpeed)*-1);
-      System.out.println("TARGET RIGHT OF CENTER");
+     // System.out.println("TARGET RIGHT OF CENTER");
     }
     break;
     default : {
       panMotorController.set(ControlMode.PercentOutput, 0);
-      System.out.println("DEFAULT");
+     // System.out.println("DEFAULT");
     }
   }
  }
