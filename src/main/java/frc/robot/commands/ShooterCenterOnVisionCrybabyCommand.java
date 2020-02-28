@@ -26,7 +26,9 @@ public class ShooterCenterOnVisionCrybabyCommand extends Command {
   public boolean bounds = false;
   public String side = "";
   public double pos = 0;
-
+  public int stagnant = 0;
+  public double locExact = 0;
+  public double lastLoc = 0;
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
@@ -39,13 +41,13 @@ public class ShooterCenterOnVisionCrybabyCommand extends Command {
     
     //bounds = Robot.shooterSubsystem.inBounds(Robot.shooterSubsystem.getX());
     //side = Robot.shooterSubsystem.whichSide(Robot.shooterSubsystem.getX());
-
     switch (side) {
       case "Left" : {
         pos = ShooterSubsystem.panMotorController.getSelectedSensorPosition()+3;
         ShooterSubsystem.panMotorController.set(ControlMode.Position, pos);
         System.out.println("TARGET LEFT OF CENTER");
         loc = "Left";
+        locExact = Robot.shooterSubsystem.getX();
         counter = 0;
       }
       break;
@@ -53,15 +55,16 @@ public class ShooterCenterOnVisionCrybabyCommand extends Command {
         ShooterSubsystem.panMotorController.set(0);
         System.out.println("TARGET IN CENTER");
         loc = "Center";
+        locExact = Robot.shooterSubsystem.getX();
         counter+=1;
       }
       break;
       case "Right" : {
         pos = ShooterSubsystem.panMotorController.getSelectedSensorPosition()-3;
         ShooterSubsystem.panMotorController.set(ControlMode.Position, pos);
-
         System.out.println("TARGET RIGHT OF CENTER");
         loc = "Right";
+        locExact = Robot.shooterSubsystem.getX();
         counter = 0;
       }
       break;
@@ -69,14 +72,25 @@ public class ShooterCenterOnVisionCrybabyCommand extends Command {
         ShooterSubsystem.panMotorController.set(0);
         System.out.println("TARGET OUT OF BOUNDS");
         loc = "Out Of Bounds";
+        locExact = Robot.shooterSubsystem.getX();
         counter = 0;
       }
       default : {
         ShooterSubsystem.panMotorController.set(0);
         System.out.println("DEFAULT");
         loc = "Default";
+        locExact = Robot.shooterSubsystem.getX();
         counter = 0;
       }
+    }
+    if ((locExact != lastLoc) && loc == "Center") {
+      stagnant = 0;
+    } else {
+      stagnant += 1;
+    }
+
+    if ((loc != "Center" || loc != "Default") && stagnant >= 3) {
+      loc = "Default";
     }
   }
   // Make this return true when this Command no longer needs to run execute()

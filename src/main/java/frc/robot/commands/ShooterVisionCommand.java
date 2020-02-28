@@ -26,14 +26,19 @@ public class ShooterVisionCommand extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.shooterSubsystem.centerShooter();
     counter = 0;
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    
+    Robot.shooterSubsystem.centerShooter();
+    side = Robot.shooterSubsystem.whichSide();
+    if (side == ("Center")) {
+      counter +=1;
+    } else {
+      counter = 0;
+    }
     //bounds = Robot.shooterSubsystem.inBounds(Robot.shooterSubsystem.getX());
     //side = Robot.shooterSubsystem.whichSide();
 /*
@@ -83,10 +88,10 @@ public class ShooterVisionCommand extends Command {
   @Override
   protected boolean isFinished() {
     boolean state = false;
-    if(loc == "Center" && counter >= counterNum) {
+    if (counter >= 3) {
+      System.out.println("FINISHED TRACKING");
       state = true;
     }
-    System.out.println("FINISHED TRACKING");
     return state;
   }
 

@@ -161,7 +161,7 @@ return (getY() - ( RobotMap.shooterXResolution/2));
 
  public String whichSide() {
    String state = "";
-   if(!getCenteredX()) {
+   if(!getCenteredX() && getX() != 1000) {
      if (getX() <= ((RobotMap.shooterXResolution/2)-(RobotMap.shooterResolutionAcceptableError))) { //310
        state = "Left";
      } else if (getX() >= ((RobotMap.shooterXResolution/2)+(RobotMap.shooterResolutionAcceptableError))) { //330
