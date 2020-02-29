@@ -94,7 +94,7 @@ public class RobotMap {
   public static double distanceFromWallTolerance = 20;
 /*
    * at around 1800 mm away, the raw value was 1471, while the converted mm value was 467; this is not the right factor.
-   * Therefore, the ideal conversion factorshould be between 1 and 1.5
+   * Therefore, the ideal conversion factor should be between 1 and 1.5
    * 4 consistent tests (mm/raw unit ratios of 1.255,1.22,1.276, and 1.25, discarding an 0.7058 from measurements 240/340)
    *  suggest the correct factor is around 1.25
    */
@@ -113,6 +113,7 @@ public class RobotMap {
   public static int acceleration = 2250;
   // Allowable error to exit movement methods
   public static int defaultAcceptableError = 1000;
+public static int neckMotor;
 
 
 
@@ -203,6 +204,7 @@ public class RobotMap {
   public final static int SLOT_1 = 1;
   public final static int SLOT_2 = 2;
   public final static int SLOT_3 = 3;
+public static final int hopperMotorPort = 0;
 
   // ---- End closed loop parameter constants ----
 
