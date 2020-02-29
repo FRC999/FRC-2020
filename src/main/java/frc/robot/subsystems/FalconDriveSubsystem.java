@@ -32,10 +32,10 @@ public class FalconDriveSubsystem extends DriveSubsystemBase {
   static WPI_TalonFX backRightDriveTalonFX = new WPI_TalonFX(RobotMap.backRightDriveMotorControllerID);
 
   public FalconDriveSubsystem(){
-	frontLeftDriveMotorController = frontLeftDriveTalonFX;
-	backLeftDriveMotorController = backLeftDriveTalonFX;
-	frontRightDriveMotorController = frontRightDriveTalonFX;
-	backRightDriveMotorController = backRightDriveTalonFX;
+	  frontLeftDriveMotorController = frontLeftDriveTalonFX;
+	  backLeftDriveMotorController = backLeftDriveTalonFX;
+	  frontRightDriveMotorController = frontRightDriveTalonFX;
+	  backRightDriveMotorController = backRightDriveTalonFX;
   }
 
   //public static DifferentialDrive drive = new DifferentialDrive(frontLeftDriveTalonFX, frontRightDriveTalonFX);
@@ -44,6 +44,19 @@ public class FalconDriveSubsystem extends DriveSubsystemBase {
   public void manualDrive(double move, double turn) {
     frontLeftDriveTalonFX.set(ControlMode.PercentOutput, move, DemandType.ArbitraryFeedForward, +turn);
     frontRightDriveTalonFX.set(ControlMode.PercentOutput, move, DemandType.ArbitraryFeedForward, -turn);
+  }
+
+  public void zeroDriveEncoders() {
+    frontLeftDriveTalonFX.setSelectedSensorPosition(0);
+    frontRightDriveTalonFX.setSelectedSensorPosition(0);
+  }
+
+  public int getLeftEncoder() {
+    return frontLeftDriveTalonFX.getSelectedSensorPosition();
+  }
+
+  public int getRightEncoder() {
+    return frontRightDriveTalonFX.getSelectedSensorPosition();
   }
 
   /**

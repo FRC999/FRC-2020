@@ -27,20 +27,19 @@ public class ShooterSubsystem extends Subsystem {
     shooterMotorController.configFactoryDefault();
     panMotorController.configFactoryDefault();
 
-if(RobotMap.isFalconBot) {
- //  this.turretEncoder = turretEncoder;
-        panMotorController.configSelectedFeedbackSensor(FeedbackDevice.PulseWidthEncodedPosition);
-    panMotorController.configFeedbackNotContinuous(true, RobotMap.configureTimeoutMs);
-   // panMotorController.turretEncoder.getPulseWidthRiseToFallUs();
-}
-else {
-    panMotorController.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
-    panMotorController.setSelectedSensorPosition(0); 
-  }
-
+    if(RobotMap.isFalconBot) {
+      //this.turretEncoder = turretEncoder;
+      panMotorController.configSelectedFeedbackSensor(FeedbackDevice.PulseWidthEncodedPosition);
+      panMotorController.configFeedbackNotContinuous(true, RobotMap.configureTimeoutMs);
+      // panMotorController.turretEncoder.getPulseWidthRiseToFallUs();
+    }
+    else {
+      panMotorController.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
+      panMotorController.setSelectedSensorPosition(0); 
+    }
 
     tiltMotorController.configFactoryDefault();
-    tiltMotorController.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
+    tiltMotorController.configSelectedFeedbackSensor(FeedbackDevice.Analog);
     tiltMotorController.setSelectedSensorPosition(0);
      /*Johnson motors have a quadrature encoder with 178 ticks per revolution. Notes on wiring them to talons:
       type   |motor | breakout board
@@ -54,52 +53,52 @@ else {
 
   }
 
- // replace with configure controllers for aux closed loop PID when ready
- public void configurePanMotorControllerForMagic(){
+  // replace with configure controllers for aux closed loop PID when ready
+  public void configurePanMotorControllerForMagic(){
 
-	// Configure the encoders for PID control
-	panMotorController.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, RobotMap.PID_PAN,	RobotMap.configureTimeoutMs);
+	  // Configure the encoders for PID control
+	  panMotorController.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, RobotMap.PID_PAN,	RobotMap.configureTimeoutMs);
 	
-	/* Set status frame periods to ensure we don't have stale data */
-	panMotorController.setStatusFramePeriod(StatusFrame.Status_13_Base_PIDF0, 20, RobotMap.configureTimeoutMs);
-	panMotorController.setStatusFramePeriod(StatusFrame.Status_10_MotionMagic, 20, RobotMap.configureTimeoutMs);
+	  /* Set status frame periods to ensure we don't have stale data */
+	  panMotorController.setStatusFramePeriod(StatusFrame.Status_13_Base_PIDF0, 20, RobotMap.configureTimeoutMs);
+	  panMotorController.setStatusFramePeriod(StatusFrame.Status_10_MotionMagic, 20, RobotMap.configureTimeoutMs);
 
-	/* Configure motor neutral deadband */
-	panMotorController.configNeutralDeadband(RobotMap.NeutralDeadband, RobotMap.configureTimeoutMs);
-
-    /**
-	 * Max out the peak output (for all modes).  
-	 * However you can limit the output of a given PID object with configClosedLoopPeakOutput().
-	 */
-	panMotorController.configPeakOutputForward(+1.0, RobotMap.configureTimeoutMs);
-	panMotorController.configPeakOutputReverse(-1.0, RobotMap.configureTimeoutMs);
-	panMotorController.configNominalOutputForward(0, RobotMap.configureTimeoutMs);
-	panMotorController.configNominalOutputReverse(0, RobotMap.configureTimeoutMs);
-
-	/* FPID Gains for each side of drivetrain */
-
-	panMotorController.config_kP(RobotMap.SLOT_0, RobotMap.P_PAN, RobotMap.configureTimeoutMs);
-	panMotorController.config_kI(RobotMap.SLOT_0, RobotMap.I_PAN, RobotMap.configureTimeoutMs);
-	panMotorController.config_kD(RobotMap.SLOT_0, RobotMap.D_PAN, RobotMap.configureTimeoutMs);
-	panMotorController.config_kF(RobotMap.SLOT_0, RobotMap.F_PAN, RobotMap.configureTimeoutMs);
-	panMotorController.config_IntegralZone(RobotMap.SLOT_0, RobotMap.Izone_PAN, RobotMap.configureTimeoutMs);
-	panMotorController.configClosedLoopPeakOutput(RobotMap.SLOT_0, RobotMap.PeakOutput_0, RobotMap.configureTimeoutMs);
-	panMotorController.configAllowableClosedloopError(RobotMap.SLOT_0, 0, RobotMap.configureTimeoutMs);
+	  /* Configure motor neutral deadband */
+	  panMotorController.configNeutralDeadband(RobotMap.NeutralDeadband, RobotMap.configureTimeoutMs);
 
     /**
-	 * 1ms per loop.  PID loop can be slowed down if need be.
-	 * For example,
-	 * - if sensor updates are too slow
-	 * - sensor deltas are very small per update, so derivative error never gets large enough to be useful.
-	 * - sensor movement is very slow causing the derivative error to be near zero.
-	 */
-	panMotorController.configClosedLoopPeriod(0, RobotMap.closedLoopPeriodMs, RobotMap.configureTimeoutMs);
+	  * Max out the peak output (for all modes).  
+	  * However you can limit the output of a given PID object with configClosedLoopPeakOutput().
+	  */
+	  panMotorController.configPeakOutputForward(+1.0, RobotMap.configureTimeoutMs);
+	  panMotorController.configPeakOutputReverse(-1.0, RobotMap.configureTimeoutMs);
+	  panMotorController.configNominalOutputForward(0, RobotMap.configureTimeoutMs);
+	  panMotorController.configNominalOutputReverse(0, RobotMap.configureTimeoutMs);
+
+	  /* FPID Gains for each side of drivetrain */
+
+	  panMotorController.config_kP(RobotMap.SLOT_0, RobotMap.P_PAN, RobotMap.configureTimeoutMs);
+	  panMotorController.config_kI(RobotMap.SLOT_0, RobotMap.I_PAN, RobotMap.configureTimeoutMs);
+	  panMotorController.config_kD(RobotMap.SLOT_0, RobotMap.D_PAN, RobotMap.configureTimeoutMs);
+	  panMotorController.config_kF(RobotMap.SLOT_0, RobotMap.F_PAN, RobotMap.configureTimeoutMs);
+	  panMotorController.config_IntegralZone(RobotMap.SLOT_0, RobotMap.Izone_PAN, RobotMap.configureTimeoutMs);
+	  panMotorController.configClosedLoopPeakOutput(RobotMap.SLOT_0, RobotMap.PeakOutput_0, RobotMap.configureTimeoutMs);
+	  panMotorController.configAllowableClosedloopError(RobotMap.SLOT_0, 0, RobotMap.configureTimeoutMs);
+
+    /**
+	  * 1ms per loop.  PID loop can be slowed down if need be.
+	  * For example,
+	  * - if sensor updates are too slow
+	  * - sensor deltas are very small per update, so derivative error never gets large enough to be useful.
+	  * - sensor movement is very slow causing the derivative error to be near zero.
+	  */
+	  panMotorController.configClosedLoopPeriod(0, RobotMap.closedLoopPeriodMs, RobotMap.configureTimeoutMs);
 
     /* Motion Magic Configurations */
     /**Need to replace numbers with real measured values for acceleration and cruise vel. */
 
     panMotorController.configMotionAcceleration(RobotMap.panAcceleration, RobotMap.configureTimeoutMs);
-	panMotorController.configMotionCruiseVelocity(RobotMap.panCruiseVelocity, RobotMap.configureTimeoutMs);
+	  panMotorController.configMotionCruiseVelocity(RobotMap.panCruiseVelocity, RobotMap.configureTimeoutMs);
     panMotorController.configMotionSCurveStrength(RobotMap.smoothing);
 
   } // End configureDriveTrainControllersForSimpleMagic
@@ -113,8 +112,9 @@ else {
  
 
   //public int gettiltEncoder() {
-   // return tiltMotorController.getSelectedSensorPosition();
+    // return tiltMotorController.getSelectedSensorPosition();
   //}
+
   /** stops the shooter motor. */
   public void standby() {
     shooterMotorController.set(ControlMode.PercentOutput, 0);
@@ -143,67 +143,69 @@ else {
   }
 
   /**tests whether the current x-value of the object the robot sees is in the center of its field of view. Outputs the difference (current value - 320). */
-  public double differenceFromMiddleX()
-  {
-return Math.abs((getX() -(RobotMap.shooterXResolution/2)));
+  public double differenceFromMiddleX() {
+    return Math.abs((getX() -(RobotMap.shooterXResolution/2)));
   }
- /**tests whether the current y-value of the object the robot sees is in the center of its field of view. Outputs the difference (current value - 240). */
- public double differenceFromMiddleY()
- {
-return (getY() - ( RobotMap.shooterXResolution/2));
- }
+ 
+  /**tests whether the current y-value of the object the robot sees is in the center of its field of view. Outputs the difference (current value - 240). */
+  public double differenceFromMiddleY() {
+    return (getY() - ( RobotMap.shooterXResolution/2));
+  }
 
- public boolean getCenteredX() {
-   boolean retVal = false;
-   if(Math.abs(differenceFromMiddleX()) <= RobotMap.shooterResolutionAcceptableError)
-   {retVal = true;}
-   return retVal;
- }
+  public boolean getCenteredX() {
+    boolean retVal = false;
+    if(Math.abs(differenceFromMiddleX()) <= RobotMap.shooterResolutionAcceptableError) {
+      retVal = true;
+    }
+    return retVal;
+  }
 
- public String whichSide() {
-   String state = "";
-   if(!getCenteredX() && getX() != 1000) {
-     if (getX() <= ((RobotMap.shooterXResolution/2)-(RobotMap.shooterResolutionAcceptableError))) { //310
-       state = "Left";
-     } else if (getX() >= ((RobotMap.shooterXResolution/2)+(RobotMap.shooterResolutionAcceptableError))) { //330
-       state = "Right";
-     }
-     else {
-       state = "Center";
-     }
-   }
-   return state;
- }
+  public String whichSide() {
+    String state = "";
+    if(!getCenteredX() && getX() != 1000) {
+      if (getX() <= ((RobotMap.shooterXResolution/2)-(RobotMap.shooterResolutionAcceptableError))) { //310
+        state = "Left";
+      } else if (getX() >= ((RobotMap.shooterXResolution/2)+(RobotMap.shooterResolutionAcceptableError))) { //330
+        state = "Right";
+      }
+      else {
+        state = "Center";
+      }
+    }
+    return state;
+  }
 
 
 
- public void centerShooter() {
-  switch (whichSide()) {
-    case "Left" : {
+  public void centerShooter() {
+    switch (whichSide()) {
+      case "Left" : {
+        panMotorController.set(ControlMode.MotionMagic, Math.round(getpanEncoder() - (differenceFromMiddleX() / RobotMap.pixelsPerDegreeX * RobotMap.encoderTicksPerDegreeX)));
+        //panMotorController.set(RobotMap.shooterPanSpeed);
+        // System.out.println("TARGET LEFT OF CENTER");
+      }
+      break;
+
+      case "Center" : {
+        panMotorController.set(ControlMode.PercentOutput, 0);
+        //panMotorController.set(0);
+        // System.out.println("TARGET IN CENTER " + getX() +" PanEncoder " +Math.round(getpanEncoder() - (differenceFromMiddleX() / RobotMap.pixelsPerDegreeX * RobotMap.encoderTicksPerDegreeX))) ;
+      }
+      break;
+
+      case "Right" : {
+        panMotorController.set(ControlMode.MotionMagic, Math.round(getpanEncoder() + (differenceFromMiddleX() / RobotMap.pixelsPerDegreeX * RobotMap.encoderTicksPerDegreeX)));
+        //panMotorController.set((RobotMap.shooterPanSpeed)*-1);
+        // System.out.println("TARGET RIGHT OF CENTER");
+      }
+      break;
       
-      panMotorController.set(ControlMode.MotionMagic, Math.round(getpanEncoder() - (differenceFromMiddleX() / RobotMap.pixelsPerDegreeX * RobotMap.encoderTicksPerDegreeX)));
-      //panMotorController.set(RobotMap.shooterPanSpeed);
-     // System.out.println("TARGET LEFT OF CENTER");
-    }
-    break;
-    case "Center" : {
-      panMotorController.set(ControlMode.PercentOutput, 0);
-      //panMotorController.set(0);
-     // System.out.println("TARGET IN CENTER " + getX() +" PanEncoder " +Math.round(getpanEncoder() - (differenceFromMiddleX() / RobotMap.pixelsPerDegreeX * RobotMap.encoderTicksPerDegreeX))) ;
-    }
-    break;
-    case "Right" : {
-      panMotorController.set(ControlMode.MotionMagic, Math.round(getpanEncoder() + (differenceFromMiddleX() / RobotMap.pixelsPerDegreeX * RobotMap.encoderTicksPerDegreeX)));
-      //panMotorController.set((RobotMap.shooterPanSpeed)*-1);
-     // System.out.println("TARGET RIGHT OF CENTER");
-    }
-    break;
-    default : {
-      panMotorController.set(ControlMode.PercentOutput, 0);
-     // System.out.println("DEFAULT");
+      default : {
+        panMotorController.set(ControlMode.PercentOutput, 0);
+        // System.out.println("DEFAULT");
+      }
     }
   }
- }
 
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
