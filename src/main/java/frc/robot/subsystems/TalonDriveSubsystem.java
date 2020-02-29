@@ -7,6 +7,7 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -43,6 +44,11 @@ public class TalonDriveSubsystem extends DriveSubsystemBase {
    */
   public void resetDriveTrainControllers() {
     super.resetDriveTrainControllers();
+  }
+
+  public void configureEncoders(){
+    frontLeftDriveMotorController.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
+    frontRightDriveMotorController.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
   }
 
   // replace with configure controllers for aux closed loop PID when ready
