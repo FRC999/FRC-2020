@@ -123,6 +123,10 @@ public abstract class DriveSubsystemBase extends Subsystem {
     drive.setRightSideInverted(false);
   }
 
+  /**
+   * This had to be factored out because the Falcon has a different sensor than
+   * is used by a TalonBot.
+   */
   public abstract void configureEncoders();
 
   // replace with configure controllers for aux closed loop PID when ready

@@ -44,6 +44,7 @@ public class FalconDriveSubsystem extends DriveSubsystemBase {
 
   @Override
   public void configureEncoders() {
+    //empty, because the default for the Falcon is to use the integrated controller
   }
 
   /**
