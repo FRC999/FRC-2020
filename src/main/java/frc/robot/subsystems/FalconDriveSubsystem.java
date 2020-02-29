@@ -44,22 +44,6 @@ public class FalconDriveSubsystem extends DriveSubsystemBase {
 
   @Override
   public void configureEncoders() {
-    frontLeftDriveMotorController.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
-    frontRightDriveMotorController.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
-  }
-  
-
-  public void zeroDriveEncoders() {
-    frontLeftDriveTalonFX.setSelectedSensorPosition(0);
-    frontRightDriveTalonFX.setSelectedSensorPosition(0);
-  }
-
-  public int getLeftEncoder() {
-    return frontLeftDriveTalonFX.getSelectedSensorPosition();
-  }
-
-  public int getRightEncoder() {
-    return frontRightDriveTalonFX.getSelectedSensorPosition();
   }
 
   /**

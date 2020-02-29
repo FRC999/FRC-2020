@@ -92,7 +92,9 @@ public abstract class DriveSubsystemBase extends Subsystem {
     frontLeftDriveMotorController.configFactoryDefault();
     backLeftDriveMotorController.configFactoryDefault();
     frontRightDriveMotorController.configFactoryDefault();
-	  backRightDriveMotorController.configFactoryDefault();
+    backRightDriveMotorController.configFactoryDefault();
+    
+    configureEncoders();
 	
 	  //Set all drive motors to brake mode
     frontLeftDriveMotorController.setNeutralMode(NeutralMode.Brake);
@@ -125,11 +127,6 @@ public abstract class DriveSubsystemBase extends Subsystem {
 
   // replace with configure controllers for aux closed loop PID when ready
   public void configureDriveTrainControllersForSimpleMagic(){
-
-    // Configure the encoders for PID control
-    frontLeftDriveMotorController.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, RobotMap.PID_PRIMARY, RobotMap.configureTimeoutMs);			
-    frontRightDriveMotorController.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, RobotMap.PID_PRIMARY,	RobotMap.configureTimeoutMs);
-    
     /* Set status frame periods to ensure we don't have stale data */
     frontRightDriveMotorController.setStatusFramePeriod(StatusFrame.Status_13_Base_PIDF0, 20, RobotMap.configureTimeoutMs);
     frontRightDriveMotorController.setStatusFramePeriod(StatusFrame.Status_10_MotionMagic, 20, RobotMap.configureTimeoutMs);
