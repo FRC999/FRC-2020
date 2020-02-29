@@ -10,7 +10,6 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
-import frc.robot.commands.SmartDashboardUpdateAllCommand;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotController;
 
@@ -28,7 +27,6 @@ public class SmartDashboardSubsystem extends Subsystem {
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
-    setDefaultCommand(new SmartDashboardUpdateAllCommand());
   }
 
   public void updateShooterValues() {
@@ -76,7 +74,8 @@ public class SmartDashboardSubsystem extends Subsystem {
   public void updateAllDisplays() {
     updateNavXValues();
     updateUltrasonicValues();
-   // updateControlPanelValues();
+    //updateControlPanelValues();
     updateMatchTimeAndBatteryVoltage();
+    updateEncoderValue();
   }
 }
