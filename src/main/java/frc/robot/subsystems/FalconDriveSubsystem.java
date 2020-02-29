@@ -24,13 +24,13 @@ public class FalconDriveSubsystem extends DriveSubsystemBase {
   boolean wasOnTarget = false;
   int withinAcceptableErrorLoops = 0;
 
-  static WPI_TalonFX frontLeftDriveTalonFX = new WPI_TalonFX(RobotMap.frontLeftDriveMotorController);
-  static WPI_TalonFX backLeftDriveTalonFX = new WPI_TalonFX(RobotMap.backLeftDriveMotorController);
-  static WPI_TalonFX frontRightDriveTalonFX = new WPI_TalonFX(RobotMap.frontRightDriveMotorController);
-  static WPI_TalonFX backRightDriveTalonFX = new WPI_TalonFX(RobotMap.backRightDriveMotorController);
+  static WPI_TalonFX frontLeftDriveTalonFX = new WPI_TalonFX(RobotMap.frontLeftDriveMotorControllerID);
+  static WPI_TalonFX backLeftDriveTalonFX = new WPI_TalonFX(RobotMap.backLeftDriveMotorControllerID);
+  static WPI_TalonFX frontRightDriveTalonFX = new WPI_TalonFX(RobotMap.frontRightDriveMotorControllerID);
+  static WPI_TalonFX backRightDriveTalonFX = new WPI_TalonFX(RobotMap.backRightDriveMotorControllerID);
 
   public FalconDriveSubsystem(){
-    IAmFalconBot();
+    RobotMap.IAmFalconBot();
 	  frontLeftDriveMotorController = frontLeftDriveTalonFX;
 	  backLeftDriveMotorController = backLeftDriveTalonFX;
 	  frontRightDriveMotorController = frontRightDriveTalonFX;
@@ -41,6 +41,19 @@ public class FalconDriveSubsystem extends DriveSubsystemBase {
   //public static DifferentialDrive drive = new DifferentialDrive(frontLeftDriveTalonFX, frontRightDriveTalonFX);
   // No differential or arcade drive for falcons
   
+
+  public void zeroDriveEncoders() {
+    frontLeftDriveTalonFX.setSelectedSensorPosition(0);
+    frontRightDriveTalonFX.setSelectedSensorPosition(0);
+  }
+
+  public int getLeftEncoder() {
+    return frontLeftDriveTalonFX.getSelectedSensorPosition();
+  }
+
+  public int getRightEncoder() {
+    return frontRightDriveTalonFX.getSelectedSensorPosition();
+  }
 
   /**
    * Sets the talons to our preferred defaults

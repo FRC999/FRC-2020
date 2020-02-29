@@ -10,15 +10,11 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.RobotController;
-import edu.wpi.first.wpilibj.Sendable;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.shuffleboard.*;
 
 import frc.robot.commands.*;
 import frc.robot.Robot;
-import edu.wpi.first.wpilibj.shuffleboard.*;
-import frc.robot.commands.ShuffleboardSetupCommand;
-import frc.robot.commands.SmartDashboardUpdateAllCommand;
 
 import java.util.Map;
 
@@ -88,12 +84,73 @@ public class ShuffleboardSubsystem extends Subsystem {
 
         wallFollowerLayout = Shuffleboard.getTab("Displays").getLayout("Wall Follower", BuiltInLayouts.kList).withSize(2,2).withPosition(4, 0);
         //Can we activate wall follower?  If so, shows Green Light
-        wallFollowerPossibleEntry = Shuffleboard.getTab("Displays").getLayout("Wall Follower").add("Wall Follow Possible", false).withWidget(BuiltInWidgets.kBooleanBox).getEntry();
-        Shuffleboard.getTab("Displays").getLayout("Wall Follower").add("Wall Follow", new MaintainDistanceCommand());
+        // wallFollowerPossibleEntry = Shuffleboard.getTab("Displays").getLayout("Wall Follower").add("Wall Follow Possible", false).withWidget(BuiltInWidgets.kBooleanBox).getEntry();
 
        //Test Entry
         Shuffleboard.getTab("Displays").add("Test", 3.14);
-        
+    }
+
+    public void setupCommandsForTesting(){
+      ShuffleboardTab testCommands = Shuffleboard.getTab("Test Commands");
+      Shuffleboard.selectTab("Test Commands");
+      //Run every motor forwards and backwards and solenoids up and down
+
+      //Intake Motors Test
+      ShuffleboardLayout intakeCommands = Shuffleboard.getTab("Test Commands")
+       .getLayout("Intake", BuiltInLayouts.kList)
+       .withSize(2, 9)
+       .withPosition(0, 0);
+     //  .withProperties(Map.of("Label position", "HIDDEN")); // hide labels for commands
+
+        intakeCommands.add(new IntakeInCommand());
+        intakeCommands.add(new IntakeReverseCommand());
+        intakeCommands.add(new IntakeUpCommand());
+        intakeCommands.add(new IntakeDownCommand());
+        intakeCommands.add(new IntakeLoaderUpCommand());
+        intakeCommands.add(new IntakeLoaderDownCommand());
+        intakeCommands.add(new IntakeMagazineInCommand());
+        intakeCommands.add(new IntakeMagazineOutCommand());   
+        intakeCommands.add(new IntakeStandbyCommand());
+
+      //Shooter Motors Test
+      ShuffleboardLayout shooterCommands = Shuffleboard.getTab("Test Commands")
+       .getLayout("Shooter", BuiltInLayouts.kList)
+       .withSize(2, 4)
+       .withPosition(2, 0);
+  //  .withProperties(Map.of("Label position", "HIDDEN")); // hide labels for commands
+
+        shooterCommands.add(new ShootCommand());
+        shooterCommands.add(new ShootManuallyCommand());
+        shooterCommands.add(new ShootEndCommand());
+        shooterCommands.add(new ShooterCenterOnVisionCrybabyCommand());
+ 
+        //Drive Train Motors Test
+
+        ShuffleboardLayout driveCommands = Shuffleboard.getTab("Test Commands")
+        .getLayout("Drive", BuiltInLayouts.kList)
+        .withSize(2, 4)
+        .withPosition(4, 0);
+   //  .withProperties(Map.of("Label position", "HIDDEN")); // hide labels for commands
+ 
+        driveCommands.add(new DriveManuallyCommand());
+        driveCommands.add(new DriveStopCommand());
+        driveCommands.add(new DriveFollowWallCommand());
+        driveCommands.add(new DriveZeroEncodersCommand());
+ 
+        //Climber Test
+
+        ShuffleboardLayout climberCommands = Shuffleboard.getTab("Test Commands")
+        .getLayout("Climber", BuiltInLayouts.kList)
+        .withSize(2, 4)
+        .withPosition(6, 0);
+   //  .withProperties(Map.of("Label position", "HIDDEN")); // hide labels for commands
+ 
+        climberCommands.add(new ClimbExtendCommand());
+        climberCommands.add(new ClimbRetractCommand());
+        climberCommands.add(new ClimbWinchUpCommand());
+        climberCommands.add(new ClimbWinchDownCommand());
+        climberCommands.add(new ClimbEndClimbCommand());
+
     }
 
     public void updateShuffleboardEntries(){
@@ -101,7 +158,7 @@ public class ShuffleboardSubsystem extends Subsystem {
         rightSpeedEntry.setDouble(Robot.driveSubsystem.getRightEncoderSpeed());
         voltageEntry.setDouble(RobotController.getBatteryVoltage());
         turretEntry.setDouble(240);
-        wallFollowerPossibleEntry.setBoolean(Robot.ultrasonicSubsystem.checkWallFollowerPossible());
+        //wallFollowerPossibleEntry.setBoolean(Robot.ultrasonicSubsystem.checkWallFollowerPossible());
     }
 
     public void initDefaultCommand() {

@@ -31,11 +31,13 @@ public class OI {
   Button zeroControlPanelEncoderButton = new JoystickButton(leftJoystick, 9);
   Button setControlPanelPositionButton = new JoystickButton(leftJoystick, 10);
   Button moveControlPanelAlongColorPathButton = new JoystickButton(leftJoystick, 11);
-  Button shooterManualControlButton = new JoystickButton(leftJoystick, 12);
 
   Button climbExtendButton = new JoystickButton(buttonBox, 1);
   Button climbRetractButton = new JoystickButton(buttonBox, 2);
-
+  Button visionTestButton = new JoystickButton(buttonBox, 4);
+  Button shooterManualControlButton = new JoystickButton(buttonBox, 5);
+  Button shooterWheelControlButton = new JoystickButton(buttonBox, 12);
+  Button shooterCryBabyButton = new JoystickButton(buttonBox, 3);
 
   public OI() { // Setup All Commands Here
     zeroEncoderButton.whenPressed(new DriveZeroEncodersCommand());
@@ -53,5 +55,11 @@ public class OI {
 
     climbExtendButton.whenPressed(new ClimbExtendCommand());
     climbRetractButton.whenPressed(new ClimbRetractCommand());
+    visionTestButton.whenPressed(new ShooterVisionCommand());
+    shooterWheelControlButton.whenPressed(new ShooterWheelCommand());
+    shooterCryBabyButton.whenPressed(new ShooterCenterOnVisionCrybabyCommand());
+    //wallFollowButton.whenActive(new DriveFollowWallCommand());
   }
+
+
 }

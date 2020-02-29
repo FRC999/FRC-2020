@@ -20,30 +20,37 @@ public class RobotMap {
   // following variables to use with your drivetrain subsystem.
 
   // Drivetrain Motor Controllers
-  public final static int frontLeftDriveMotorController = 1;
-  public final static int backLeftDriveMotorController = 2;
-  public final static int frontRightDriveMotorController = 3;
-  public final static int backRightDriveMotorController = 4;
+  public final static int frontLeftDriveMotorControllerID = 1;
+  public final static int backLeftDriveMotorControllerID = 2;
+  public final static int frontRightDriveMotorControllerID = 3;
+  public final static int backRightDriveMotorControllerID = 4;
 
   // Intake motor controllers
-  public final static int intakeMotor1Controller = 8;
-  public final static int intakeMotor2Controller = 9;
-
+  public final static int intakeMotorControllerID = 10;
+  public final static int magazineMotorControllerID = 11;
+  public final static int loaderMotor1ControllerID = 12;
+  public final static int loaderMotor2ControllerID = 13;
   // Shooter motor controllers
-  public final static int shooterWheelMotorController = 5;
-  public final static int shooterPanMotorController = 6;
-  public final static int ShooterTiltMotorController = 7;
+
+  public final static int shooterWheelMotorControllerID = 23;
+  //temporary change of pan motor ID for testing
+//  public final static int shooterPanMotorControllerID = 21;
+  public final static int ShooterTiltMotorControllerID = 20;
+
+  public final static int shooterPanMotorControllerID = 22;
 
   //shooter constants
   /* TODO: get a more accurate value for this */
-  public final static int shooterPanMotorEncoderTicksPerRotation = 3977;
+  //public final static int shooterPanMotorEncoderTicksPerRotation = 3977;
+  public  static int shooterPanMotorEncoderTicksPerRotation = 178;
   public final static int shooterXResolution = 640;
   public final static int shooterYResolution = 480; 
-  public final static int shooterResolutionAcceptableError = 20;
+  public final static int shooterResolutionAcceptableError = 5;
+  public  static double shooterPanSpeed = -.1;
 
   // Control panel constants
   // TODO: Get actual motor ID
-  public static final int diskSpinnerMotorID = 52;
+  public static final int diskSpinnerMotorControllerID = 31;
   //quadrature motor controller ticks per revolution
   public static final int quadratureEncoderTicksPerRev = 178;
   // diameter of the wheel which spins the control panel wheel, in cm
@@ -54,7 +61,7 @@ public class RobotMap {
   public static final int controlPanelDirectionFactor = -1;
 
   // Climber constants
-  public final static int climberMotorController = 10;
+  public final static int climberMotorControllerID = 40;
 
   // Driver Input Devices
   public final static int leftJoystickPort = 0;
@@ -70,19 +77,21 @@ public class RobotMap {
 
   // ULTRASONIC CONSTANTS
   // RoboRIO channel for the ultrasonic sensor's analog input
-  public static final int ultrasonicInputChannel1 = 0;
-  public static final int ultrasonicInputChannel2 = 1;
+  public static final int ultrasonicInputChannelLeft = 0;
+  public static final int ultrasonicInputChannelRight = 1;
   // channel on the roborio section DIO, to trigger a reading from the ultrasonic
   // sensor
-  public static final int ultrasonicTriggerChannel1 = 0;
-  public static final int ultrasonicTriggerChannel2 = 1;
+  //public static final int ultrasonicTriggerChannel1 = 0;
+  //public static final int ultrasonicTriggerChannel2 = 1;
   // minimum time to send a pulse to trigger the sensor(20 microseconds); max time
   // is 96 ms.
-  public static final double ultrasonicTriggerTime = 20E-6;
+  //public static final double ultrasonicTriggerTime = 20E-6;
+  
   // constant conversion factor: ultrasonic sensor value to inches
   public static double ultrasonicValueToInchesConversionFactor = 0.125;
 
-  public static double distancefromWall = 1500; //Stay 1500 mm from wall
+  public static double distanceFromWall = 1500; //Stay 1500 mm from wall
+  public static double distanceFromWallTolerance = 20;
 /*
    * at around 1800 mm away, the raw value was 1471, while the converted mm value was 467; this is not the right factor.
    * Therefore, the ideal conversion factor should be between 1 and 1.5
@@ -156,6 +165,31 @@ public static int neckMotor;
   public final static int Izone_1 = 500;
   public final static double PeakOutput_1 = 1;
 
+  // Ultrasonic Open loop PID parameter values TODO: replace F values with measured values
+  public final static double P_U = 0.01; 
+  public final static double I_U = 0.0;
+  public final static double D_U = 0;
+  public final static double F_U = 0.01; // just a guesstimate
+  
+  // Closed loop PAN PID parameter values TODO: replace F values with measured values
+  public final static double P_PAN = 0.01;
+  public final static double I_PAN = 0.1;
+  public final static double D_PAN = .01;
+  public final static double F_PAN = 0.1; // just a guesstimate
+  public final static int Izone_PAN = 500;
+  public static int panCruiseVelocity = 50;
+  // MotionMagic curve smoothing parameter [0 - 8]
+  public static int panAcceleration = 50;
+  // Allowable error to exit movement methods
+  public static int panDefaultAcceptableError = 2;
+  public final static int PID_PAN = 0;
+  public final static double encoderTicksPerDegreeX = 0.25;  // for Johnson Encoder
+  //public final static double encoderTicksPerDegreeX = 11;  // for Turret Encoder
+  public final static double pixelsPerDegreeX = 12;  //based on lifecam having a 53 degree viewing angle and 640 horizontal pixels
+  
+// END of pan pid code
+
+
   // ---- Flat constants, you should not need to change these ----
   // We allow either a 0 or 1 when selecting an ordinal for remote devices [You
   // can have up to 2 devices assigned remotely to a talon/victor]
@@ -174,5 +208,25 @@ public static final int hopperMotorPort = 0;
 
   // ---- End closed loop parameter constants ----
 
+  public static void IAmFalconBot() {
+    // How many encoder clicks per revolution (change to 2048 for falcon 500
+    // encoders)
+    encoderUnitsPerShaftRotation = 2048;
+    // with 6 in wheels estimate 10 feet = 13038 encoder ticks
+
+    // The difference between the left and right side encoder values when the robot
+    // is rotated 180 degrees
+    encoderUnitsPerRobotRotation = 3925;// thats the SUM of the two (this is just a rough guess)
+    //these values are just guesses at the moment
+    cruiseVelocity = 2250;
+    acceleration = 2250;
+    // Allowable error to exit movement methods
+    defaultAcceptableError = 250;
+
+    shooterPanMotorEncoderTicksPerRotation = 3977;
+    //TODO: may need to be negative if turns the wrong way
+    shooterPanSpeed = 1;
+    System.out.println("I AM FALCONBOT! CACAW! CACAAAAAWWWWW!");
+  } 
 
 }

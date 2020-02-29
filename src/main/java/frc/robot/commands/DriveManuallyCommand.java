@@ -15,6 +15,8 @@ public class DriveManuallyCommand extends Command {
   public DriveManuallyCommand() {
     // Use requires() here to declare subsystem dependencies
     requires(Robot.driveSubsystem);
+    setInterruptible(true);
+    
   }
 
   // Called just before this Command runs the first time
@@ -49,4 +51,8 @@ public class DriveManuallyCommand extends Command {
   @Override
   protected void interrupted() {
   }
+
+
+  
+
 }

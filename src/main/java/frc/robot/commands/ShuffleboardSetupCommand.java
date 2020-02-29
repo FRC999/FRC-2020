@@ -27,7 +27,9 @@ public class ShuffleboardSetupCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.shuffleBoardSubsystem.updateShuffleboardEntries();
+   
+   // commented out because behaving badly TODO fix
+    // Robot.shuffleBoardSubsystem.updateShuffleboardEntries();
 
   }
 
