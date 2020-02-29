@@ -188,7 +188,7 @@ public abstract class DriveSubsystemBase extends Subsystem {
 
   } // End configureDriveTrainControllersForSimpleMagic
 
-  public void simpleMotionMagicTest(int leftEncoderVal, int rightEncoderVal) {
+  public void simpleMotionMagic(int leftEncoderVal, int rightEncoderVal) {
 	// Test method that moves robot forward a given number of wheel rotations  
     frontLeftDriveMotorController.set(ControlMode.MotionMagic, leftEncoderVal);
 	frontRightDriveMotorController.set(ControlMode.MotionMagic, rightEncoderVal);
@@ -247,20 +247,7 @@ public abstract class DriveSubsystemBase extends Subsystem {
     backRightDriveMotorController.setNeutralMode(NeutralMode.Brake);
   }
 
-  public void IAmFalconBot() {
-    // How many encoder clicks per revolution (change to 2048 for falcon 500
-    // encoders)
-    RobotMap.encoderUnitsPerShaftRotation = 2048;
-    // The difference between the left and right side encoder values when the robot
-    // is rotated 180 degrees
-    RobotMap.encoderUnitsPerRobotRotation = 3755;// thats the SUM of the two (this is just a rough guess)
-    //these values are just guesses at the moment
-    RobotMap.cruiseVelocity = 2250;
-    RobotMap.acceleration = 2250;
-    // Allowable error to exit movement methods
-    RobotMap.defaultAcceptableError = 500;
-    System.out.println("I AM FALCONBOT! CACAW! CACAAAAAWWWWW!");
-  } 
+  
 
   @Override
   public void initDefaultCommand() {

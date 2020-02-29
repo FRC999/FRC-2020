@@ -70,7 +70,7 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     
     //Set up shuffleboard
-    shuffleBoardSubsystem.setupShuffleboard();
+    //shuffleBoardSubsystem.setupShuffleboard();
 
 
     NetworkTableInstance ntInst = NetworkTableInstance.getDefault();
@@ -85,7 +85,7 @@ public class Robot extends TimedRobot {
     if(RobotMap.isFalconBot){
       driveSubsystem = new FalconDriveSubsystem();
       // the IAmFalconBot method resets some RobotMap constants for the FalconBot chassis
-      driveSubsystem.IAmFalconBot();
+      RobotMap.IAmFalconBot();
       System.out.println("We're a FALCON");
     }
     else{
@@ -108,7 +108,8 @@ public class Robot extends TimedRobot {
     Robot.driveSubsystem.driveTrainBrakeMode();
     Robot.navXSubsystem.zeroYaw();
     Robot.shooterSubsystem.configureShooterControllers();
-    Robot.shooterSubsystem.zeroShooterEncoders();
+    Robot.shooterSubsystem.configurePanMotorControllerForMagic();
+    //Robot.shooterSubsystem.zeroShooterEncoders();
     //Robot.controlPanelSubsystem.resetMotorController();
     
 
@@ -195,10 +196,6 @@ public class Robot extends TimedRobot {
     // continue until interrupted by another command, remove
     // this line or comment it out.
 
-    System.out.println(ultrasonicSubsystem.getSensor1DistanceInMM());
-    System.out.println(ultrasonicSubsystem.getSensor1DistanceInRaw());
-    System.out.println(ultrasonicSubsystem.getSensor2DistanceInMM());
-    System.out.println(ultrasonicSubsystem.getSensor2DistanceInRaw());
 
     if (autonomousCommand != null) {
       autonomousCommand.cancel();

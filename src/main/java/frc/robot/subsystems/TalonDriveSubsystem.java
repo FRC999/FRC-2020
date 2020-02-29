@@ -28,10 +28,10 @@ public class TalonDriveSubsystem extends DriveSubsystemBase {
   boolean wasOnTarget = false;
   int withinAcceptableErrorLoops = 0;
 
-  static WPI_TalonSRX frontLeftDriveTalonSRX = new WPI_TalonSRX(RobotMap.frontLeftDriveMotorController);
-  static WPI_TalonSRX backLeftDriveTalonSRX = new WPI_TalonSRX(RobotMap.backLeftDriveMotorController);
-  static WPI_TalonSRX frontRightDriveTalonSRX = new WPI_TalonSRX(RobotMap.frontRightDriveMotorController);
-  static WPI_TalonSRX backRightDriveTalonSRX = new WPI_TalonSRX(RobotMap.backRightDriveMotorController);
+  static WPI_TalonSRX frontLeftDriveTalonSRX = new WPI_TalonSRX(RobotMap.frontLeftDriveMotorControllerID);
+  static WPI_TalonSRX backLeftDriveTalonSRX = new WPI_TalonSRX(RobotMap.backLeftDriveMotorControllerID);
+  static WPI_TalonSRX frontRightDriveTalonSRX = new WPI_TalonSRX(RobotMap.frontRightDriveMotorControllerID);
+  static WPI_TalonSRX backRightDriveTalonSRX = new WPI_TalonSRX(RobotMap.backRightDriveMotorControllerID);
 
   public static DifferentialDrive drive = new DifferentialDrive(frontLeftDriveTalonSRX, frontRightDriveTalonSRX);
 
@@ -189,7 +189,7 @@ public class TalonDriveSubsystem extends DriveSubsystemBase {
 
   } // End configureDriveTrainControllersForSimpleMagic
 
-  public void simpleMotionMagicTest(int leftEncoderVal, int rightEncoderVal) {
+  public void simpleMotionMagic(int leftEncoderVal, int rightEncoderVal) {
 	// Test method that moves robot forward a given number of wheel rotations  
     frontLeftDriveTalonSRX.set(ControlMode.MotionMagic, leftEncoderVal);
 	frontRightDriveTalonSRX.set(ControlMode.MotionMagic, rightEncoderVal);

@@ -19,7 +19,7 @@ public class ControlPanelSubsystem extends Subsystem {
   private final I2C.Port i2cPort = I2C.Port.kOnboard;
   private final ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort);
 
-  private WPI_TalonSRX diskSpinnerTalon = new WPI_TalonSRX(RobotMap.diskSpinnerMotorID);
+  private WPI_TalonSRX diskSpinnerTalon = new WPI_TalonSRX(RobotMap.diskSpinnerMotorControllerID);
   private DoubleSolenoid diskSpinnerSolenoid = new DoubleSolenoid(RobotMap.ColorWheelSolenoidForwardChannel,RobotMap.ColorWheelSolenoidReverseChannel);
 
   private PanelColors targetColor;
@@ -34,7 +34,8 @@ public class ControlPanelSubsystem extends Subsystem {
 
   public ControlPanelSubsystem()
   {
-    resetMotorController();
+    //TODO uncomment after testing
+   // resetMotorController();
   }
 
   public  void resetMotorController() {
