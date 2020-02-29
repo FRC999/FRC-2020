@@ -27,7 +27,7 @@ public class SmartDashboardUpdateAllCommand extends CommandGroup {
     addParallel(new SmartDashboardUpdateNavXCommand());
     addParallel(new SmartDashboardUpdateUltrasonicCommand());
     addParallel(new SmartDashboardUpdateControlPanelCommand());
-    //addParallel(new DisplayDriveEncodersCommand());
+    addParallel(new SmartDashboardUpdateDriveEncodersCommand());
 
     // A command group will require all of the subsystems that each member
     // would require.
