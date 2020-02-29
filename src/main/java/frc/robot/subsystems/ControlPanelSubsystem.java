@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.util.Color;
-import edu.wpi.first.wpilibj.util.Color8Bit;
+
 import frc.robot.RobotMap;
 
 public class ControlPanelSubsystem extends Subsystem {
@@ -83,30 +83,16 @@ System.out.println(target + " * " + RobotMap.controlPanelDiameter + " * " + Robo
 }
 /** moves the motor at 0.5 power in the direction specified by the sign of the input. */
 public void moveTalonInDirection(double position) {
- // diskSpinnerTalon.set(ControlMode.Position,position);
-
  diskSpinnerTalon.set(0.20 * Math.signum(position));
-
 }
-/**basically just for test debugging */public void stopTalon() {diskSpinnerTalon.set(0);}
+
+/**basically just for test debugging */
+public void stopTalon() {diskSpinnerTalon.set(0);}
 
 /**gets the raw color that the color sensor detects. Put into getSuspectedColor for the pure panel-recognition color. */
 public Color getSeenColor() {
   return colorSensor.getColor();
 }
-
-
-// transferred this to the SmartDashboard class
-  /*public void putSeenColor() {
-    updateColorState();
-    SmartDashboard.putNumber("Spotted Color: Red", currentColor.red * 255);
-    SmartDashboard.putNumber("Spotted Color: Green", currentColor.green * 255);
-    SmartDashboard.putNumber("Spotted Color: Blue", currentColor.blue * 255);
-    SmartDashboard.putNumber("Spotted Distance: ", getProximity());
-    if (suspectedColor != null) {
-      SmartDashboard.putString("SuspectedColor: ", suspectedColor.toString());
-    }
-  } */
   
   public boolean hasReceivedGameColor(){
     return receivedGameColor;
