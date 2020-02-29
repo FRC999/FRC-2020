@@ -70,7 +70,7 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     
     //Set up shuffleboard
-    //shuffleBoardSubsystem.setupShuffleboard();
+    shuffleBoardSubsystem.setupShuffleboard();
 
 
     NetworkTableInstance ntInst = NetworkTableInstance.getDefault();

@@ -50,7 +50,10 @@ public abstract class DriveSubsystemBase extends Subsystem {
   public void zeroDriveEncoders() {
     frontLeftDriveMotorController.setSelectedSensorPosition(0);
     frontRightDriveMotorController.setSelectedSensorPosition(0);
-  }
+    frontLeftDriveMotorController.setNeutralMode(NeutralMode.Coast);
+    backLeftDriveMotorController.setNeutralMode(NeutralMode.Coast);
+    frontRightDriveMotorController.setNeutralMode(NeutralMode.Coast);
+    backRightDriveMotorController.setNeutralMode(NeutralMode.Coast);  }
 
   public int getLeftEncoder() {
     return frontLeftDriveMotorController.getSelectedSensorPosition();
