@@ -9,6 +9,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.DemandType;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
@@ -40,6 +41,12 @@ public class FalconDriveSubsystem extends DriveSubsystemBase {
 
   //public static DifferentialDrive drive = new DifferentialDrive(frontLeftDriveTalonFX, frontRightDriveTalonFX);
   // No differential or arcade drive for falcons
+
+  @Override
+  public void configureEncoders() {
+    frontLeftDriveMotorController.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
+    frontRightDriveMotorController.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
+  }
   
 
   public void zeroDriveEncoders() {

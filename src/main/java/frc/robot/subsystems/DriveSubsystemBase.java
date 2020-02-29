@@ -114,10 +114,6 @@ public abstract class DriveSubsystemBase extends Subsystem {
     backLeftDriveMotorController.setInverted(InvertType.FollowMaster);
     backRightDriveMotorController.setInverted(InvertType.FollowMaster);
 
-    // Configure Encoders
-    frontLeftDriveMotorController.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
-    frontRightDriveMotorController.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
-
     // Set encoder phase so values increase when controller LEDs are green
     frontLeftDriveMotorController.setSensorPhase(true);
     frontRightDriveMotorController.setSensorPhase(true);
@@ -125,7 +121,7 @@ public abstract class DriveSubsystemBase extends Subsystem {
     drive.setRightSideInverted(false);
   }
 
-
+  public abstract void configureEncoders();
 
   // replace with configure controllers for aux closed loop PID when ready
   public void configureDriveTrainControllersForSimpleMagic(){
