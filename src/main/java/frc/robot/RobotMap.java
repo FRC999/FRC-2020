@@ -210,14 +210,16 @@ public class RobotMap {
     // How many encoder clicks per revolution (change to 2048 for falcon 500
     // encoders)
     encoderUnitsPerShaftRotation = 2048;
+    // with 6 in wheels estimate 10 feet = 13038 encoder ticks
+
     // The difference between the left and right side encoder values when the robot
     // is rotated 180 degrees
-    encoderUnitsPerRobotRotation = 3755;// thats the SUM of the two (this is just a rough guess)
+    encoderUnitsPerRobotRotation = 3925;// thats the SUM of the two (this is just a rough guess)
     //these values are just guesses at the moment
     cruiseVelocity = 2250;
     acceleration = 2250;
     // Allowable error to exit movement methods
-    defaultAcceptableError = 500;
+    defaultAcceptableError = 250;
 
     shooterPanMotorEncoderTicksPerRotation = 3977;
     //TODO: may need to be negative if turns the wrong way
