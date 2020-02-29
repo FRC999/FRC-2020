@@ -45,7 +45,6 @@ public class OI {
     testMotionMagicButton.whenPressed(new DriveForwardCommand(50000));
     spin.whenPressed(new DriveTurnCommand(90));
     stopButton.whileActive(new DriveStopCommand());
-    showAllButton.whileActive(new SmartDashboardUpdateAllCommand());
     turnAbsoluteTestButton.whenActive(new DriveTurnAbsoluteCommand(90));
     zeroControlPanelEncoderButton.whenPressed(new ControlPanelZeroEncoderCommand());
     setControlPanelPositionButton.whenPressed(new ControlPanelMoveToTargetCommand(3.5));
