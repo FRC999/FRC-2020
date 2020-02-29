@@ -42,11 +42,11 @@ public class RobotMap {
   //shooter constants
   /* TODO: get a more accurate value for this */
   //public final static int shooterPanMotorEncoderTicksPerRotation = 3977;
-  public final static int shooterPanMotorEncoderTicksPerRotation = 178;
+  public  static int shooterPanMotorEncoderTicksPerRotation = 178;
   public final static int shooterXResolution = 640;
   public final static int shooterYResolution = 480; 
   public final static int shooterResolutionAcceptableError = 5;
-  public final static double shooterPanSpeed = -.1;
+  public  static double shooterPanSpeed = -.1;
 
   // Control panel constants
   // TODO: Get actual motor ID
@@ -206,5 +206,23 @@ public class RobotMap {
 
   // ---- End closed loop parameter constants ----
 
+  public static void IAmFalconBot() {
+    // How many encoder clicks per revolution (change to 2048 for falcon 500
+    // encoders)
+    encoderUnitsPerShaftRotation = 2048;
+    // The difference between the left and right side encoder values when the robot
+    // is rotated 180 degrees
+    encoderUnitsPerRobotRotation = 3755;// thats the SUM of the two (this is just a rough guess)
+    //these values are just guesses at the moment
+    cruiseVelocity = 2250;
+    acceleration = 2250;
+    // Allowable error to exit movement methods
+    defaultAcceptableError = 500;
+
+    shooterPanMotorEncoderTicksPerRotation = 3977;
+    //TODO: may need to be negative if turns the wrong way
+    shooterPanSpeed = 1;
+    System.out.println("I AM FALCONBOT! CACAW! CACAAAAAWWWWW!");
+  } 
 
 }

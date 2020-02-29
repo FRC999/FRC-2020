@@ -16,7 +16,7 @@ public class ShooterSubsystem extends Subsystem {
   static WPI_TalonSRX shooterMotorController = new WPI_TalonSRX(RobotMap.shooterWheelMotorControllerID);
   public static WPI_TalonSRX panMotorController = new WPI_TalonSRX(RobotMap.shooterPanMotorControllerID);
   static WPI_TalonSRX tiltMotorController = new WPI_TalonSRX(RobotMap.ShooterTiltMotorControllerID);
-  //public SensorCollection turretEncoder;
+ // public SensorCollection turretEncoder;
 
   // double shooterSpeed = 0.5;
 
@@ -27,15 +27,16 @@ public class ShooterSubsystem extends Subsystem {
     shooterMotorController.configFactoryDefault();
     panMotorController.configFactoryDefault();
 
-// TODO  Temporarily commented out for testing, uncomment for actual turret 
-    //    panMotorController.configSelectedFeedbackSensor(FeedbackDevice.PulseWidthEncodedPosition);
-//    panMotorController.configFeedbackNotContinuous(true, RobotMap.configureTimeoutMs);
-    //panMotorController.turretEncoder.getPulseWidthRiseToFallUs()
-
-//TODO remove when done testing vision system
+if(RobotMap.isFalconBot) {
+ //  this.turretEncoder = turretEncoder;
+        panMotorController.configSelectedFeedbackSensor(FeedbackDevice.PulseWidthEncodedPosition);
+    panMotorController.configFeedbackNotContinuous(true, RobotMap.configureTimeoutMs);
+   // panMotorController.turretEncoder.getPulseWidthRiseToFallUs();
+}
+else {
     panMotorController.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
-    panMotorController.setSelectedSensorPosition(0);
-// end of block to remove
+    panMotorController.setSelectedSensorPosition(0); 
+  }
 
 
     tiltMotorController.configFactoryDefault();
