@@ -263,6 +263,7 @@ public void configureTiltMotorControllerForMagic(){
   
   public int gettiltEncoder() {
     return tiltMotorController.getSelectedSensorPosition();
+    //1024 units per rotation
   }
 
   public void tiltStandby() {
@@ -272,29 +273,31 @@ public void configureTiltMotorControllerForMagic(){
   public void tiltFangDeployToggle(){
     if (fangsActivated==false)
     {
-    tiltMotorController.set(ControlMode.MotionMagic, RobotMap.shooterTiltMotorEncoderTicksAtActivated);
+    tiltMotorController.set(ControlMode.MotionMagic, RobotMap.shooterTiltMotorTicksAtActivated);
     fangsActivated = true;
     }
 
     else if (fangsActivated==true)
     {
       tiltMotorController.set(ControlMode.MotionMagic, 0);
+      fangsActivated = false;
     }
   } 
 
   public void manualAimTiltFangs(){
     double tiltValue = ((Robot.oi.leftJoystick.getThrottle()*-1) + 1) / 2;
+    double output = tiltValue*RobotMap.shooterTiltMotorTicksPerRotation;
 
     if (fangsActivated==true)
     {
-    tiltMotorController.set(ControlMode.MotionMagic, tiltValue*RobotMap.shooterTiltMotorConversionFactor+RobotMap.shooterTiltMotorEncoderTicksAtActivated );
+    tiltMotorController.set(ControlMode.MotionMagic, output);
     }
     //Use a constant for the activated position of the encoders and then add to it.  
   }
 
   public void testTiltFangs(){
     System.out.println("Testing");
-    double conversionFactor = 0.15;
+    double conversionFactor = 0.25;
     double output = (Robot.oi.leftJoystick.getThrottle()*-1) * conversionFactor;
 
     System.out.println(output);
@@ -306,7 +309,6 @@ public void configureTiltMotorControllerForMagic(){
   }
 
   public void initDefaultCommand() {
-    setDefaultCommand(new ShootManuallyCommand());
     // Set the default command for a subsystem here.
   }
 

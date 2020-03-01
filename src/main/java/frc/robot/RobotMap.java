@@ -50,8 +50,8 @@ public class RobotMap {
 
 
   public static int shooterTiltMotorConversionFactor = 100;
-  public static int shooterTiltMotorEncoderTicksPerRotation = 178;
-  public static int shooterTiltMotorEncoderTicksAtActivated = 500;
+  public static int shooterTiltMotorTicksPerRotation = 178;
+  public static int shooterTiltMotorTicksAtActivated = 500;
 
   // Control panel constants
   // TODO: Get actual motor ID
@@ -246,8 +246,8 @@ public static final int hopperMotorPort = 0;
     shooterPanSpeed = 1;
 
     shooterTiltMotorConversionFactor = 100;
-    shooterTiltMotorEncoderTicksPerRotation = 178;  
-    shooterTiltMotorEncoderTicksAtActivated = 500;
+    shooterTiltMotorTicksPerRotation = 1024;   //Analog potentiometer 1024 units per rotation.
+    shooterTiltMotorTicksAtActivated = 500;
 
     //TODO: This is a random value.  Find this through testing!
 
