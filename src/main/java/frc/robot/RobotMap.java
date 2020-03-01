@@ -48,6 +48,11 @@ public class RobotMap {
   public final static int shooterResolutionAcceptableError = 5;
   public  static double shooterPanSpeed = -.1;
 
+
+  public static int shooterTiltMotorConversionFactor = 100;
+  public static int shooterTiltMotorEncoderTicksPerRotation = 178;
+  public static int shooterTiltMotorEncoderTicksAtActivated = 500;
+
   // Control panel constants
   // TODO: Get actual motor ID
   public static final int diskSpinnerMotorControllerID = 31;
@@ -189,6 +194,19 @@ public static int neckMotor;
   
 // END of pan pid code
 
+//Tilt Motor Pid Code
+    public final static double P_TILT = 0.01;
+    public final static double I_TILT = 0.1;
+    public final static double D_TILT = .01;
+    public final static double F_TILT = 0.1; // just a guesstimate
+    public final static int Izone_TILT = 500;
+    public static int tiltCruiseVelocity = 50;
+    // MotionMagic curve smoothing parameter [0 - 8]
+    public static int tiltAcceleration = 50;
+    // Allowable error to exit movement methods
+    public static int tiltDefaultAcceptableError = 2;
+    public final static int PID_TILT = 0;
+
 
   // ---- Flat constants, you should not need to change these ----
   // We allow either a 0 or 1 when selecting an ordinal for remote devices [You
@@ -226,6 +244,14 @@ public static final int hopperMotorPort = 0;
     shooterPanMotorEncoderTicksPerRotation = 3977;
     //TODO: may need to be negative if turns the wrong way
     shooterPanSpeed = 1;
+
+    shooterTiltMotorConversionFactor = 100;
+    shooterTiltMotorEncoderTicksPerRotation = 178;  
+    shooterTiltMotorEncoderTicksAtActivated = 500;
+
+    //TODO: This is a random value.  Find this through testing!
+
+
     System.out.println("I AM FALCONBOT! CACAW! CACAAAAAWWWWW!");
   } 
 

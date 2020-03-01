@@ -22,19 +22,16 @@ public class ShootManuallyCommand extends Command {
   @Override
   protected void initialize() {
     //set shooter wheel to full speed
-    Robot.shooterSubsystem.shoot(1);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.shooterSubsystem.shoot(1);
     //use the twist and throttle to control shooter pan and tilt
     double pan = Robot.oi.leftJoystick.getZ();
-    //double tilt = Robot.oi.leftJoystick.getThrottle();
     Robot.shooterSubsystem.pan(pan);
-    //Robot.shooterSubsystem.tilt(tilt);
-    
+
+    Robot.shooterSubsystem.manualAimTiltFangs();
     Robot.smartDashboardSubsystem.updateShooterValues();
   }
 
