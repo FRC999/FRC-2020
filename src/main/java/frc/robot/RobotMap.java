@@ -49,7 +49,6 @@ public class RobotMap {
   public  static double shooterPanSpeed = -.1;
 
 
-  public static int shooterTiltMotorConversionFactor = 100;
   public static int shooterTiltMotorTicksPerRotation = 178;
   public static int shooterTiltMotorTicksAtActivated = 500;
 
@@ -245,13 +244,14 @@ public static final int hopperMotorPort = 0;
     //TODO: may need to be negative if turns the wrong way
     shooterPanSpeed = 1;
 
-    shooterTiltMotorConversionFactor = 100;
     shooterTiltMotorTicksPerRotation = 1024;   //Analog potentiometer 1024 units per rotation.
-    shooterTiltMotorTicksAtActivated = 500;
-
-    //TODO: This is a random value.  Find this through testing!
+    shooterTiltMotorTicksAtActivated = 500; //Random Value
 
 
+    //For Encoders: 10 FT = 149083 Encoder units
+    //1 FT = 14908 Units
+    //1 Inch = 1242 Units
+    
     System.out.println("I AM FALCONBOT! CACAW! CACAAAAAWWWWW!");
   } 
 

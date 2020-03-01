@@ -42,6 +42,10 @@ public class OI {
   Button shooterZeroTiltFangsButton = new JoystickButton(buttonBox, 6);
   Button shooterFangsTestButton = new JoystickButton(buttonBox, 7);
 
+  Button autoDriveForwardButton = new JoystickButton(buttonBox, 8);
+  Button autoTurnButton = new JoystickButton(buttonBox, 9);
+
+
   public OI() { // Setup All Commands Here
     zeroEncoderButton.whenPressed(new DriveZeroEncodersCommand());
     zeroYawButton.whenPressed(new NavXZeroYawCommand());
@@ -65,6 +69,12 @@ public class OI {
     shooterWheelControlButton.whenPressed(new ShooterWheelCommand());
     shooterCryBabyButton.whenPressed(new ShooterCenterOnVisionCrybabyCommand());
     //wallFollowButton.whenActive(new DriveFollowWallCommand());
+
+
+    autoDriveForwardButton.whenPressed(new RealSmartAutoDriveForward());
+    autoTurnButton.whenPressed(new RealSmartAutoTurnCommand());
+
+
   }
 
 
