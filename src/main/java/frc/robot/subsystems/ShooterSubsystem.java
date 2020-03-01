@@ -283,7 +283,7 @@ public void configureTiltMotorControllerForMagic(){
   } 
 
   public void manualAimTiltFangs(){
-    double tiltValue = ((Robot.oi.leftJoystick.getRawAxis(3)*-1) + 1) / 2;
+    double tiltValue = ((Robot.oi.leftJoystick.getThrottle()*-1) + 1) / 2;
 
     if (fangsActivated==true)
     {
@@ -294,8 +294,9 @@ public void configureTiltMotorControllerForMagic(){
 
   public void testTiltFangs(){
     double conversionFactor = 0.15;
-    double output = (Robot.oi.leftJoystick.getRawAxis(3)*-1) * conversionFactor;
+    double output = (Robot.oi.leftJoystick.getThrottle()*-1) * conversionFactor;
 
+    System.out.println(output);
     tiltMotorController.set(ControlMode.PercentOutput, output);
   }
 

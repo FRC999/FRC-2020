@@ -30,7 +30,7 @@ public class ShootManuallyCommand extends Command {
     //use the twist and throttle to control shooter pan and tilt
     double pan = Robot.oi.leftJoystick.getZ();
     Robot.shooterSubsystem.pan(pan);
-
+    
     Robot.shooterSubsystem.manualAimTiltFangs();
     Robot.smartDashboardSubsystem.updateShooterValues();
   }
