@@ -57,7 +57,7 @@ public class OI {
 
     shooterDeployTiltFangsButton.whenPressed(new ShooterDeployTiltFangsCommand());    
     shooterZeroTiltFangsButton.whenPressed(new ShooterZeroTiltEncoderCommand());
-    shooterFangsTestButton.whenPressed(new ShooterTestFangsCommand());
+    shooterFangsTestButton.whileActive(new ShooterTestFangsCommand());
 
     climbExtendButton.whenPressed(new ClimbExtendCommand());
     climbRetractButton.whenPressed(new ClimbRetractCommand());

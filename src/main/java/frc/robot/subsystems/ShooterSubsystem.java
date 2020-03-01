@@ -293,6 +293,7 @@ public void configureTiltMotorControllerForMagic(){
   }
 
   public void testTiltFangs(){
+    System.out.println("Testing");
     double conversionFactor = 0.15;
     double output = (Robot.oi.leftJoystick.getThrottle()*-1) * conversionFactor;
 
