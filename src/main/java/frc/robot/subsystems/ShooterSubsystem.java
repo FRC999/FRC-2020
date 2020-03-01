@@ -292,6 +292,13 @@ public void configureTiltMotorControllerForMagic(){
     //Use a constant for the activated position of the encoders and then add to it.  
   }
 
+  public void testTiltFangs(){
+    double conversionFactor = 0.15;
+    double output = (Robot.oi.leftJoystick.getRawAxis(3)*-1) * conversionFactor;
+
+    tiltMotorController.set(ControlMode.PercentOutput, output);
+  }
+
   public void zeroTiltFangsEncoder(){
     tiltMotorController.setSelectedSensorPosition(0);
   }

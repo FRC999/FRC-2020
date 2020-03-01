@@ -40,6 +40,7 @@ public class OI {
   Button shooterWheelControlButton = new JoystickButton(buttonBox, 12);
   Button shooterCryBabyButton = new JoystickButton(buttonBox, 3);
   Button shooterZeroTiltFangsButton = new JoystickButton(buttonBox, 6);
+  Button shooterFangsTestButton = new JoystickButton(buttonBox, 7);
 
   public OI() { // Setup All Commands Here
     zeroEncoderButton.whenPressed(new DriveZeroEncodersCommand());
@@ -56,6 +57,7 @@ public class OI {
 
     shooterDeployTiltFangsButton.whenPressed(new ShooterDeployTiltFangsCommand());    
     shooterZeroTiltFangsButton.whenPressed(new ShooterZeroTiltEncoderCommand());
+    shooterFangsTestButton.whenPressed(new ShooterTestFangsCommand());
 
     climbExtendButton.whenPressed(new ClimbExtendCommand());
     climbRetractButton.whenPressed(new ClimbRetractCommand());
