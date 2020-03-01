@@ -98,7 +98,7 @@ public class ShooterSubsystem extends Subsystem {
     /**Need to replace numbers with real measured values for acceleration and cruise vel. */
 
     panMotorController.configMotionAcceleration(RobotMap.panAcceleration, RobotMap.configureTimeoutMs);
-	panMotorController.configMotionCruiseVelocity(RobotMap.panCruiseVelocity, RobotMap.configureTimeoutMs);
+	  panMotorController.configMotionCruiseVelocity(RobotMap.panCruiseVelocity, RobotMap.configureTimeoutMs);
     panMotorController.configMotionSCurveStrength(RobotMap.smoothing);
 
   } // End configureDriveTrainControllersForSimpleMagic

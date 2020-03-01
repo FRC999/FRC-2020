@@ -8,62 +8,45 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
-import frc.robot.subsystems.ShooterSubsystem;
 
-public class ShootManuallyCommand extends Command {
-  public ShootManuallyCommand() {
+public class DriveEachSideCommand extends Command {
+ 
+  public int l;
+  public int r;
+
+  public DriveEachSideCommand(int left, int right) {
+    l = left;
+    r = right;
+    requires(Robot.driveSubsystem);
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.shooterSubsystem);
-    
   }
-  public double panVal() {
-    double pan = 0;
-      if (Robot.oi.leftJoystick.getZ() > 0) { // Panning right (clockwise)
-      if (Robot.shooterSubsystem.getpanEncoder() >= 1406) {
-    pan = 0;
-    return pan;
-      } else {
-        pan = 0;
-        return pan;
-      }
-    } else { //Panning left (counterclockwise)
-      if (Robot.shooterSubsystem.getpanEncoder() > 435) {
-        if (Robot.shooterSubsystem.getpanEncoder() <= 3340) {
-         pan = 0;
-        return pan;
-        }
-      } else {
-        pan = Robot.oi.leftJoystick.getZ();
-        return pan;
-      }
-    }
-    return pan;
-  }
+
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    //set shooter wheel to full speed
-    Robot.shooterSubsystem.shoot(1);
+    int lEncoder = Robot.driveSubsystem.getLeftEncoder();
+    int rEncoder = Robot.driveSubsystem.getRightEncoder();
+    l = l + lEncoder;
+    r = r + rEncoder;
+    Robot.driveSubsystem.simpleMotionMagic(l, r);
+    
+    SmartDashboard.putNumber("leftTarget", l);
+    SmartDashboard.putNumber("RightTarget", r);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-
-    Robot.shooterSubsystem.shoot(1);
-    //use the twist and throttle to control shooter pan and tilt
-    //double tilt = Robot.oi.leftJoystick.getThrottle();
-    Robot.shooterSubsystem.pan(panVal());
-    //Robot.shooterSubsystem.tilt(tilt);
-    Robot.smartDashboardSubsystem.updateShooterValues();
+    Robot.smartDashboardSubsystem.updateEncoderValue();
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return Robot.driveSubsystem.isOnTarget(l,r,300);
   }
 
   // Called once after isFinished returns true
