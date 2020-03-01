@@ -63,7 +63,13 @@ public class SmartDashboardSubsystem extends Subsystem {
     if (Robot.controlPanelSubsystem.getSuspectedColor() != null) {
       SmartDashboard.putString("SuspectedColor: ", Robot.controlPanelSubsystem.getSuspectedColor().toString());
     }
+    SmartDashboard.putString("testColors",Robot.controlPanelSubsystem.getGameTargetColor().getName()); // "want "+Robot.controlPanelSubsystem.getGameTargetColor().getName() +" now " +  Robot.controlPanelSubsystem.getSuspectedColor(Robot.controlPanelSubsystem.getSeenColor()).getName()
  
+  }
+
+  public void stackTrace(String s)
+  {
+    SmartDashboard.putString("print stack trace", s);
   }
 
   public void updateMatchTimeAndBatteryVoltage() {
@@ -74,7 +80,7 @@ public class SmartDashboardSubsystem extends Subsystem {
   public void updateAllDisplays() {
     updateNavXValues();
     updateUltrasonicValues();
-    //updateControlPanelValues();
+    updateControlPanelValues();
     updateMatchTimeAndBatteryVoltage();
     updateEncoderValue();
   }

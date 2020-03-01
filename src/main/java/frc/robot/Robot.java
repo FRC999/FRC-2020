@@ -82,7 +82,7 @@ public class Robot extends TimedRobot {
 
     DigitalInput falconBotSwitch = new DigitalInput(RobotMap.falconBotSwitchPortNumber);
     RobotMap.isFalconBot = falconBotSwitch.get();
-    if(RobotMap.isFalconBot){
+    if(!RobotMap.isFalconBot){
       driveSubsystem = new FalconDriveSubsystem();
       // the IAmFalconBot method reset some RobotMap constants for the FalconBot chassis
       // but the call to it was moved into the FalconDriveSubsystem constructor

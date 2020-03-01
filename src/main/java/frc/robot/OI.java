@@ -49,7 +49,6 @@ public class OI {
     zeroControlPanelEncoderButton.whenPressed(new ControlPanelZeroEncoderCommand());
     setControlPanelPositionButton.whenPressed(new ControlPanelMoveToTargetCommand(3.5));
     moveControlPanelAlongColorPathButton.whenPressed(new ControlPanelMoveTargetColorCommand());
-    moveControlPanelAlongColorPathButton.whenPressed(new ControlPanelMoveTargetColorCommand());
     shooterManualControlButton.whenPressed(new ShootManuallyCommand());
 
     climbExtendButton.whenPressed(new ClimbExtendCommand());

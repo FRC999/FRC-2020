@@ -37,7 +37,7 @@ public class RobotMap {
 //  public final static int shooterPanMotorControllerID = 21;
   public final static int ShooterTiltMotorControllerID = 20;
 
-  public final static int shooterPanMotorControllerID = 22;
+  public final static int shooterPanMotorControllerID = 77;//22;//TODO:being used to test diskspinner
 
   //shooter constants
   /* TODO: get a more accurate value for this */
@@ -50,7 +50,7 @@ public class RobotMap {
 
   // Control panel constants
   // TODO: Get actual motor ID
-  public static final int diskSpinnerMotorControllerID = 31;
+  public static final int diskSpinnerMotorControllerID = 22;// 31;//TODO: change back after testing
   //quadrature motor controller ticks per revolution
   public static final int quadratureEncoderTicksPerRev = 178;
   // diameter of the wheel which spins the control panel wheel, in cm

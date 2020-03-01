@@ -8,6 +8,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 import frc.robot.subsystems.ControlPanelSubsystem;
 
@@ -25,12 +26,18 @@ public class ControlPanelMoveTargetColorCommand extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    try {
     Robot.controlPanelSubsystem.zeroEncoder();
     Robot.controlPanelSubsystem.updateColorState();
     colorWantedUnderSensor = Robot.controlPanelSubsystem.getGameTargetColor();
+    
     colorUnderSensor = Robot.controlPanelSubsystem.getSuspectedColor(Robot.controlPanelSubsystem.getSeenColor());
+   
+    SmartDashboard.putString("testColors", "want "+colorWantedUnderSensor.getName() +" now " +  colorUnderSensor.getName());
     encoderTarget = Robot.controlPanelSubsystem.getPathToDesiredColor(colorUnderSensor, colorWantedUnderSensor);
     Robot.controlPanelSubsystem.moveTalonInDirection(encoderTarget);
+    } catch (NullPointerException n)
+    {Robot.smartDashboardSubsystem.stackTrace(n.getMessage());}
   }
 
   
