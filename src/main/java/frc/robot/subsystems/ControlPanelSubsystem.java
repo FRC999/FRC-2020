@@ -80,11 +80,14 @@ System.out.println("target:" + target);
 System.out.println(target + " * " + RobotMap.controlPanelDiameter + " * " + RobotMap.quadratureEncoderTicksPerRev + " / " + RobotMap.diskSpinnerDiameter + " = " + retVal);
  return retVal;
 }
-/** moves the motor at 0.5 power in the direction specified by the sign of the input. */
-public void moveTalonInDirection(double position) {
+/** moves the motor at specified power in the direction specified by the sign of the input. 
+ * @param power the motor output, 0-1
+ * @param position the number whose sign specifies direction
+*/
+public void moveTalonInDirection(double position, double power) {
  // diskSpinnerTalon.set(ControlMode.Position,position);
 
- diskSpinnerTalon.set(0.20 * Math.signum(position));
+ diskSpinnerTalon.set(power * Math.signum(position));
 
 }
 /**basically just for test debugging */public void stopTalon() {diskSpinnerTalon.set(0);}
@@ -141,6 +144,7 @@ public Color getSeenColor() {
 
   public Color getCurrentColor() {return currentColor;}
 
+  PanelColors lastSeenPanelColor;
   /**
    * Converts from 'color' to 'PanelColor': assumes no overlap
    * 
@@ -148,12 +152,17 @@ public Color getSeenColor() {
    * @return the determined color (may be null)
    */
   public PanelColors getSuspectedColor(Color colour) { // Mr. Wertz approved -CMM
+   PanelColors p = lastSeenPanelColor;
     for (PanelColors isItMe : PanelColors.values()) {
       if (isItMe.withinTolerance(colour.red, colour.green, colour.blue)) {
-        return isItMe;
+        lastSeenPanelColor = p = isItMe;
       }
     }
-    return null;
+    if (p == null && lastSeenPanelColor != null)
+    {p = lastSeenPanelColor;}
+    if (p == null && lastSeenPanelColor == null)
+    {p = PanelColors.nocolor;}
+    return p;
   }
 /** find the last updated value for the suspected colors. */
   public PanelColors getSuspectedColor() {return suspectedColor;}
@@ -195,11 +204,11 @@ public Color getSeenColor() {
       case 'Y':
         return PanelColors.green;
       default:
-        return null; // corrupt data! uh oh!
+        return PanelColors.nocolor; // corrupt data! uh oh!
       }
     } else {
       receivedGameColor = false;
-      return null;// we haven't gotten it yet
+      return PanelColors.nocolor;// we haven't gotten it yet
     }
   }
 
@@ -286,7 +295,7 @@ retVal = controlPanelTargetRevolutionsToQuadEncoderTicks(RobotMap.controlPanelDi
   }
 
   public enum PanelColors {
-    blue(0.13, 0.44, 0.43, "blue"), green(0.17, 0.59, 0.25, "green"), red(0.5, 0.36, 0.14, "red"), yellow(0.32, 0.57, 0.12, "yellow");
+    blue(0.13, 0.44, 0.43, "blue"), green(0.17, 0.59, 0.25, "green"), red(0.5, 0.36, 0.14, "red"), yellow(0.32, 0.57, 0.12, "yellow"), nocolor(0,0,0,"no color");
     // TODO: Find more accurate values, also reformat
     // Maybe use HSV for tolerance check?
 

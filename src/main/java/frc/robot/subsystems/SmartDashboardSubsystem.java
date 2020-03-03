@@ -69,6 +69,7 @@ public class SmartDashboardSubsystem extends Subsystem {
 
   public void stackTrace(String s)
   {
+    if (s != null)
     SmartDashboard.putString("print stack trace", s);
   }
 

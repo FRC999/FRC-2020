@@ -54,7 +54,7 @@ public class RobotMap {
   //quadrature motor controller ticks per revolution
   public static final int quadratureEncoderTicksPerRev = 178;
   // diameter of the wheel which spins the control panel wheel, in cm
-  public static final double diskSpinnerDiameter = 81.28;
+  public static final double diskSpinnerDiameter = 10.16;
   // diameter of the control panel disk in cm
   public static final double controlPanelDiameter = 81.28;
   /** factor to indicate the direction on the motor that the encoder ticks are positive. If clockwise, keep 1; if counterclockwise, change to -1. */
