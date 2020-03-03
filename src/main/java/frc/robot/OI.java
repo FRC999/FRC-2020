@@ -31,6 +31,7 @@ public class OI {
   Button zeroControlPanelEncoderButton = new JoystickButton(leftJoystick, 9);
   Button setControlPanelPositionButton = new JoystickButton(leftJoystick, 10);
   Button moveControlPanelAlongColorPathButton = new JoystickButton(leftJoystick, 11);
+  Button shooterDeployTiltFangsButton = new JoystickButton(leftJoystick, 12);
 
   Button climbExtendButton = new JoystickButton(buttonBox, 1);
   Button climbRetractButton = new JoystickButton(buttonBox, 2);
@@ -38,6 +39,12 @@ public class OI {
   Button shooterManualControlButton = new JoystickButton(buttonBox, 5);
   Button shooterWheelControlButton = new JoystickButton(buttonBox, 12);
   Button shooterCryBabyButton = new JoystickButton(buttonBox, 3);
+  Button shooterZeroTiltFangsButton = new JoystickButton(buttonBox, 6);
+  Button shooterFangsTestButton = new JoystickButton(buttonBox, 7);
+
+  Button autoDriveForwardButton = new JoystickButton(buttonBox, 8);
+  Button autoTurnButton = new JoystickButton(buttonBox, 9);
+
 
   public OI() { // Setup All Commands Here
     zeroEncoderButton.whenPressed(new DriveZeroEncodersCommand());
@@ -52,12 +59,22 @@ public class OI {
     moveControlPanelAlongColorPathButton.whenPressed(new ControlPanelMoveTargetColorCommand());
     shooterManualControlButton.whenPressed(new ShootManuallyCommand());
 
+    shooterDeployTiltFangsButton.whenPressed(new ShooterDeployTiltFangsCommand());    
+    shooterZeroTiltFangsButton.whenPressed(new ShooterZeroTiltEncoderCommand());
+    shooterFangsTestButton.whileActive(new ShooterTestFangsCommand());
+
     climbExtendButton.whenPressed(new ClimbExtendCommand());
     climbRetractButton.whenPressed(new ClimbRetractCommand());
     visionTestButton.whenPressed(new ShooterVisionCommand());
     shooterWheelControlButton.whenPressed(new ShooterWheelCommand());
     shooterCryBabyButton.whenPressed(new ShooterCenterOnVisionCrybabyCommand());
     //wallFollowButton.whenActive(new DriveFollowWallCommand());
+
+
+    autoDriveForwardButton.whenPressed(new RealSmartAutoDriveForward());
+    autoTurnButton.whenPressed(new RealSmartAutoTurnCommand());
+
+
   }
 
 
