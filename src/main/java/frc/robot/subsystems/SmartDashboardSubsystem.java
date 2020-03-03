@@ -10,7 +10,6 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
-import frc.robot.commands.SmartDashboardUpdateAllCommand;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotController;
 
@@ -28,12 +27,11 @@ public class SmartDashboardSubsystem extends Subsystem {
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
-    setDefaultCommand(new SmartDashboardUpdateAllCommand());
   }
 
   public void updateShooterValues() {
     SmartDashboard.putNumber("Pan Encoder", Robot.shooterSubsystem.getpanEncoder());
-    //SmartDashboard.putNumber("Tilt Encoder", Robot.shooterSubsystem.gettiltEncoder());
+    SmartDashboard.putNumber("Tilt Encoder", Robot.shooterSubsystem.gettiltEncoder());
   }
 
   public void updateEncoderValue() {
@@ -65,7 +63,14 @@ public class SmartDashboardSubsystem extends Subsystem {
     if (Robot.controlPanelSubsystem.getSuspectedColor() != null) {
       SmartDashboard.putString("SuspectedColor: ", Robot.controlPanelSubsystem.getSuspectedColor().toString());
     }
+    SmartDashboard.putString("testColors",Robot.controlPanelSubsystem.getGameTargetColor().getName()); // "want "+Robot.controlPanelSubsystem.getGameTargetColor().getName() +" now " +  Robot.controlPanelSubsystem.getSuspectedColor(Robot.controlPanelSubsystem.getSeenColor()).getName()
  
+  }
+
+  public void stackTrace(String s)
+  {
+    if (s != null)
+    SmartDashboard.putString("print stack trace", s);
   }
 
   public void updateMatchTimeAndBatteryVoltage() {
@@ -76,7 +81,8 @@ public class SmartDashboardSubsystem extends Subsystem {
   public void updateAllDisplays() {
     updateNavXValues();
     updateUltrasonicValues();
-   // updateControlPanelValues();
+    updateControlPanelValues();
     updateMatchTimeAndBatteryVoltage();
+    updateEncoderValue();
   }
 }

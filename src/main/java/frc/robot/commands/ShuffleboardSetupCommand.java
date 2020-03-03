@@ -29,7 +29,7 @@ public class ShuffleboardSetupCommand extends Command {
   protected void execute() {
    
    // commented out because behaving badly TODO fix
-    // Robot.shuffleBoardSubsystem.updateShuffleboardEntries();
+    Robot.shuffleBoardSubsystem.updateShuffleboardEntries();
 
   }
 

@@ -10,7 +10,6 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.util.Color;
-import edu.wpi.first.wpilibj.util.Color8Bit;
 import frc.robot.RobotMap;
 
 public class ControlPanelSubsystem extends Subsystem {
@@ -20,7 +19,7 @@ public class ControlPanelSubsystem extends Subsystem {
   private final ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort);
 
   private WPI_TalonSRX diskSpinnerTalon = new WPI_TalonSRX(RobotMap.diskSpinnerMotorControllerID);
-  private DoubleSolenoid diskSpinnerSolenoid = new DoubleSolenoid(RobotMap.ColorWheelSolenoidForwardChannel,RobotMap.ColorWheelSolenoidReverseChannel);
+  //private DoubleSolenoid diskSpinnerSolenoid = new DoubleSolenoid(RobotMap.ColorWheelSolenoidForwardChannel,RobotMap.ColorWheelSolenoidReverseChannel);
 
   private PanelColors targetColor;
   private boolean receivedGameColor = false;
@@ -35,7 +34,7 @@ public class ControlPanelSubsystem extends Subsystem {
   public ControlPanelSubsystem()
   {
     //TODO uncomment after testing
-   // resetMotorController();
+    resetMotorController();
   }
 
   public  void resetMotorController() {
@@ -81,32 +80,24 @@ System.out.println("target:" + target);
 System.out.println(target + " * " + RobotMap.controlPanelDiameter + " * " + RobotMap.quadratureEncoderTicksPerRev + " / " + RobotMap.diskSpinnerDiameter + " = " + retVal);
  return retVal;
 }
-/** moves the motor at 0.5 power in the direction specified by the sign of the input. */
-public void moveTalonInDirection(double position) {
+/** moves the motor at specified power in the direction specified by the sign of the input. 
+ * @param power the motor output, 0-1
+ * @param position the number whose sign specifies direction
+*/
+public void moveTalonInDirection(double position, double power) {
  // diskSpinnerTalon.set(ControlMode.Position,position);
 
- diskSpinnerTalon.set(0.20 * Math.signum(position));
+ diskSpinnerTalon.set(power * Math.signum(position));
 
 }
 /**basically just for test debugging */public void stopTalon() {diskSpinnerTalon.set(0);}
-
+Color lastSeenColor;
 /**gets the raw color that the color sensor detects. Put into getSuspectedColor for the pure panel-recognition color. */
 public Color getSeenColor() {
-  return colorSensor.getColor();
+  if (colorSensor.getColor() != null)
+  {lastSeenColor =colorSensor.getColor(); }
+  return lastSeenColor;
 }
-
-
-// transferred this to the SmartDashboard class
-  /*public void putSeenColor() {
-    updateColorState();
-    SmartDashboard.putNumber("Spotted Color: Red", currentColor.red * 255);
-    SmartDashboard.putNumber("Spotted Color: Green", currentColor.green * 255);
-    SmartDashboard.putNumber("Spotted Color: Blue", currentColor.blue * 255);
-    SmartDashboard.putNumber("Spotted Distance: ", getProximity());
-    if (suspectedColor != null) {
-      SmartDashboard.putString("SuspectedColor: ", suspectedColor.toString());
-    }
-  } */
   
   public boolean hasReceivedGameColor(){
     return receivedGameColor;
@@ -144,12 +135,14 @@ public Color getSeenColor() {
   public void updateColorState() {
     targetColor = getGameTargetColor();
     currentColor = colorSensor.getColor();
+  if (getSuspectedColor(currentColor) != null)
     suspectedColor = getSuspectedColor(currentColor);
 
   }
 
   public Color getCurrentColor() {return currentColor;}
 
+  PanelColors lastSeenPanelColor;
   /**
    * Converts from 'color' to 'PanelColor': assumes no overlap
    * 
@@ -157,12 +150,17 @@ public Color getSeenColor() {
    * @return the determined color (may be null)
    */
   public PanelColors getSuspectedColor(Color colour) { // Mr. Wertz approved -CMM
+   PanelColors p = lastSeenPanelColor;
     for (PanelColors isItMe : PanelColors.values()) {
       if (isItMe.withinTolerance(colour.red, colour.green, colour.blue)) {
-        return isItMe;
+        lastSeenPanelColor = p = isItMe;
       }
     }
-    return null;
+    if (p == null && lastSeenPanelColor != null)
+    {p = lastSeenPanelColor;}
+    if (p == null && lastSeenPanelColor == null)
+    {p = PanelColors.nocolor;}
+    return p;
   }
 /** find the last updated value for the suspected colors. */
   public PanelColors getSuspectedColor() {return suspectedColor;}
@@ -190,7 +188,7 @@ public Color getSeenColor() {
    */
   public PanelColors getGameTargetColor() {
     String gameData = DriverStation.getInstance().getGameSpecificMessage();
-    // ONLY FOR TESTING, DO NOT KEEP IN FINAL CODE 
+    //TODO: ONLY FOR TESTING, DO NOT KEEP IN FINAL CODE 
     gameData = "B";
     if (gameData.length() > 0) {
       receivedGameColor = true;
@@ -204,11 +202,11 @@ public Color getSeenColor() {
       case 'Y':
         return PanelColors.green;
       default:
-        return null; // corrupt data! uh oh!
+        return PanelColors.nocolor; // corrupt data! uh oh!
       }
     } else {
       receivedGameColor = false;
-      return null;// we haven't gotten it yet
+      return PanelColors.nocolor;// we haven't gotten it yet
     }
   }
 
@@ -216,10 +214,10 @@ public Color getSeenColor() {
    * Returns the approximate distance from the color scanner (At a high value,
    * color may not be accurate)
    * 
-   * @return distance from color scanner from 0-2047
+   * @return distance from color scanner from 0-2047. In practice, it only goes from about 95 anywhere over 8 1/2 in, exponentially increasing to 2047 as it gets closer.
    */
   public int getProximity() {
-    return colorSensor.getProximity();
+    return colorSensor.getProximity();// approximate effective range: 8 and 1/2 inches
   }
 
   /** given the color under the wheel now and the color we want to be under the wheel, calculate the minimum number of encoder ticks 
@@ -243,82 +241,42 @@ public Color getSeenColor() {
 int slicesVal;
 if (colorNow != null) {
 switch (colorNow) {
-case red:
+          case red:
           switch (colorWant) {
-            case red:
-            slicesVal = 0;
-            break;
-            case green:
-            slicesVal = -1;
-            break;
-            case blue:
-            slicesVal = 2;
-            break;
-            case yellow:
-            slicesVal = 1;
-            break;
-            default: 
-            slicesVal = 0;
-            break;
+            case red:    slicesVal = 0; break;
+            case green:  slicesVal = -1; break;
+            case blue:   slicesVal = 2; break;
+            case yellow: slicesVal = 1; break;
+            default:     slicesVal = 0; break;
           }
-break;
+          break;
 
-case green:
+          case green:
           switch (colorWant) {
-            case red:
-            slicesVal = 1;
-            break;
-            case green:
-            slicesVal = 0;
-            break;
-            case blue:
-            slicesVal = -1;
-            break;
-            case yellow:
-            slicesVal = 2;
-            break;
-            default: 
-            slicesVal = 0;
-            break;
-          }
-break;
+            case red: slicesVal = 1; break;
+            case green: slicesVal = 0; break;
+            case blue: slicesVal = -1; break;
+            case yellow: slicesVal = 2; break;
+            default:   slicesVal = 0;  break;
+            }
+          break;
 
-case blue:
+          case blue:
           switch (colorWant) {
-            case red:
-            slicesVal = 2;
-            break;
-            case green:
-            slicesVal = 1;
-            break;
-            case blue:
-            slicesVal = 0;
+            case red:  slicesVal = 2;  break; 
+            case green: slicesVal = 1;  break;
+            case blue:  slicesVal = 0;  break;
+            case yellow:   slicesVal = -1;  break;
+            default:   slicesVal = 0; break;
+            }
             break;
             case yellow:
-            slicesVal = -1;
-            break;
-            default: 
-            slicesVal = 0;
-            break;
-          }
-break;
-case yellow:
-          switch (colorWant) {
-            case red:
-            slicesVal = -1;
-            break;
-            case green:
-            slicesVal = 2;
-            break;
-            case blue:
-            slicesVal = 1;
-            break;
-            case yellow:
-            slicesVal = 0;
-            break;
-            default: 
-            slicesVal = 0;
-            break;
+            switch (colorWant) {
+            case red:  slicesVal = -1;  break;
+            case green:  slicesVal = 2; break;
+            case blue:  slicesVal = 1;  break;
+            case yellow:  slicesVal = 0;  break;
+            default:   slicesVal = 0;   break;
           }
 break;
 default:
@@ -335,23 +293,26 @@ retVal = controlPanelTargetRevolutionsToQuadEncoderTicks(RobotMap.controlPanelDi
   }
 
   public enum PanelColors {
-    blue(0.13, 0.44, 0.43), green(0.17, 0.59, 0.25), red(0.5, 0.36, 0.14), yellow(0.32, 0.57, 0.12);
+    blue(0.13, 0.44, 0.43, "blue"), green(0.17, 0.59, 0.25, "green"), red(0.5, 0.36, 0.14, "red"), yellow(0.32, 0.57, 0.12, "yellow"), nocolor(0,0,0,"no color");
     // TODO: Find more accurate values, also reformat
     // Maybe use HSV for tolerance check?
 
     // numbers gotten from game manual + online converter
     final private double redVal, greenVal, blueVal;
 
-    PanelColors(double r, double g, double b) {
+    final private String name;
+    PanelColors(double r, double g, double b, String n) {
       redVal = r;
       greenVal = g;
       blueVal = b;
+      name = n;
     }
 
     public Color getColor() {
       Color c = new Color(redVal, greenVal, blueVal);
       return c;
     }
+    public String getName() {return name;}
 
     boolean withinTolerance(double r, double g, double b) {
       if (Math.abs(redVal - r) < toleranceSize && Math.abs(greenVal - g) < toleranceSize

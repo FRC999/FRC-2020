@@ -20,10 +20,8 @@ import java.util.Map;
 
 import edu.wpi.first.networktables.NetworkTableEntry;
 
-//Shuffleboard (show info as widgets and get driving camera feeds from Pi) (Jack and I)
-
 /**
- * Add your docs here.
+ * Shuffleboard (show info as widgets and get driving camera feeds from Pi) (Jack and Peter)
  */
 public class ShuffleboardSubsystem extends Subsystem {
   // Put methods for controlling this subsystem
@@ -41,26 +39,6 @@ public class ShuffleboardSubsystem extends Subsystem {
 
   ShuffleboardLayout wallFollowerLayout;
   NetworkTableEntry wallFollowerPossibleEntry;
-  
-// Constructor
-  public ShuffleboardSubsystem() {
-    test=5;
-  }
-
-/*
-
-  public void initializeShuffleboard(){
-    //Create Tabs
-    ShuffleboardTab dataValuesTab = Shuffleboard.getTab("Data Values");
-    ShuffleboardTab cameraTab = Shuffleboard.getTab("Camera");
-
-
-    //Send Simple Data to Tabs
-    //Data Tab
-    Shuffleboard.getTab("Data Values").add("Test", Robot.shuffleBoardSubsystem.test);
-  }
-  
-  */
 
     public void setupShuffleboard(){
 
@@ -68,35 +46,37 @@ public class ShuffleboardSubsystem extends Subsystem {
          Shuffleboard.selectTab("Displays");
 
         //Speed of Encoders
-        speedometerLayout = Shuffleboard.getTab("Displays").getLayout("Speedometers", BuiltInLayouts.kList).withSize(2,3).withPosition(0,0);
-        leftSpeedEntry = Shuffleboard.getTab("Displays").getLayout("Speedometers").add("Speed of Left Encoder", 40).withWidget(BuiltInWidgets.kDial).getEntry();
-        rightSpeedEntry = Shuffleboard.getTab("Displays").getLayout("Speedometers").add("Speed of Right Encoder", 60).withWidget(BuiltInWidgets.kDial).getEntry();
+        speedometerLayout = displays.getLayout("Speedometers", BuiltInLayouts.kList).withSize(2,3).withPosition(0,0);
+        leftSpeedEntry = displays.getLayout("Speedometers").add("Speed of Left Encoder", 40).withWidget(BuiltInWidgets.kDial).getEntry();
+        rightSpeedEntry = displays.getLayout("Speedometers").add("Speed of Right Encoder", 60).withWidget(BuiltInWidgets.kDial).getEntry();
        
         //Voltage
         voltageEntry = 
-        Shuffleboard.getTab("Displays").add("Battery Voltage", 20).withPosition(3,0).withWidget(BuiltInWidgets.kNumberBar).withProperties(Map.of("min", 0, "max", 14)).getEntry();
+        displays.add("Battery Voltage", 20).withPosition(3,0).withWidget(BuiltInWidgets.kNumberBar).withProperties(Map.of("min", 0, "max", 14)).getEntry();
 
         //Gyro
-        Shuffleboard.getTab("Displays").add("Gyro Yaw", Robot.navXSubsystem.getNavX()).withWidget(BuiltInWidgets.kGyro);
+        displays.add("Gyro Yaw", Robot.navXSubsystem.getNavX()).withWidget(BuiltInWidgets.kGyro);
 
         //Turret Rotation
-        turretEntry = Shuffleboard.getTab("Displays").add("Turret Rotation", 10).withWidget(BuiltInWidgets.kDial).withProperties(Map.of("min", 0, "max",360)).getEntry();
+        turretEntry = displays.add("Turret Rotation", 10).withWidget(BuiltInWidgets.kDial).withProperties(Map.of("min", 0, "max",360)).getEntry();
 
-        wallFollowerLayout = Shuffleboard.getTab("Displays").getLayout("Wall Follower", BuiltInLayouts.kList).withSize(2,2).withPosition(4, 0);
+        wallFollowerLayout = displays.getLayout("Wall Follower", BuiltInLayouts.kList).withSize(2,2).withPosition(4, 0);
         //Can we activate wall follower?  If so, shows Green Light
-        // wallFollowerPossibleEntry = Shuffleboard.getTab("Displays").getLayout("Wall Follower").add("Wall Follow Possible", false).withWidget(BuiltInWidgets.kBooleanBox).getEntry();
+        // wallFollowerPossibleEntry = displays.getLayout("Wall Follower").add("Wall Follow Possible", false).withWidget(BuiltInWidgets.kBooleanBox).getEntry();
 
-       //Test Entry
-        Shuffleboard.getTab("Displays").add("Test", 3.14);
     }
 
+    /**
+     * Create buttons that trigger commands on SmartDashboard. 
+     * Currently nonfunctional
+     */
     public void setupCommandsForTesting(){
       ShuffleboardTab testCommands = Shuffleboard.getTab("Test Commands");
       Shuffleboard.selectTab("Test Commands");
       //Run every motor forwards and backwards and solenoids up and down
 
       //Intake Motors Test
-      ShuffleboardLayout intakeCommands = Shuffleboard.getTab("Test Commands")
+      ShuffleboardLayout intakeCommands = testCommands
        .getLayout("Intake", BuiltInLayouts.kList)
        .withSize(2, 9)
        .withPosition(0, 0);
@@ -113,7 +93,7 @@ public class ShuffleboardSubsystem extends Subsystem {
         intakeCommands.add(new IntakeStandbyCommand());
 
       //Shooter Motors Test
-      ShuffleboardLayout shooterCommands = Shuffleboard.getTab("Test Commands")
+      ShuffleboardLayout shooterCommands = testCommands
        .getLayout("Shooter", BuiltInLayouts.kList)
        .withSize(2, 4)
        .withPosition(2, 0);
