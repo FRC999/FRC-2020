@@ -40,9 +40,8 @@ public class OI {
   Button shooterManualControlButton = new JoystickButton(buttonBox, 5);
   Button shooterWheelControlButton = new JoystickButton(buttonBox, 12);
   Button shooterCryBabyButton = new JoystickButton(buttonBox, 3);
-  Button shooterZeroTiltFangsButton = new JoystickButton(buttonBox, 6);
+  Button ShooterTiltGoToSetpointButton = new JoystickButton(buttonBox, 6);
   Button shooterFangsTestButton = new JoystickButton(buttonBox, 7);
-
   Button autoDriveForwardButton = new JoystickButton(buttonBox, 8);
   Button autoTurnButton = new JoystickButton(buttonBox, 9);
 
@@ -59,8 +58,7 @@ public class OI {
     moveControlPanelAlongColorPathButton.whenPressed(new ControlPanelMoveTargetColorCommand());
     shooterManualControlButton.whenPressed(new ShootManuallyCommand());
 
-    shooterDeployTiltFangsButton.whenPressed(new ShooterDeployTiltFangsCommand());    
-    shooterZeroTiltFangsButton.whenPressed(new ShooterZeroTiltEncoderCommand());
+    ShooterTiltGoToSetpointButton.whenPressed(new ShooterTiltGoToSetpointCommand());   
     shooterFangsTestButton.whileActive(new ShooterTestFangsCommand());
 
     climbExtendButton.whenPressed(new ClimbExtendCommand());

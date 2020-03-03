@@ -41,7 +41,7 @@ public class RobotMap {
 //  public final static int shooterPanMotorControllerID = 21;
   public final static int ShooterTiltMotorControllerID = 20;
 
-  public final static int shooterPanMotorControllerID = 77;//22;//TODO:being used to test diskspinner
+  public final static int shooterPanMotorControllerID = 22;//TODO:being used to test diskspinner
 
   //shooter constants
   /* TODO: get a more accurate value for this */
@@ -54,7 +54,8 @@ public class RobotMap {
 
 
   public static int shooterTiltMotorTicksPerRotation = 178;
-  public static int shooterTiltMotorTicksAtActivated = 500;
+  public static double tiltFangsUpperLimit = 140;
+  public static double tiltFangsLowerLimit = -570;
 
   // Control panel constants
   // TODO: Get actual motor ID
@@ -254,7 +255,8 @@ public static final int hopperMotorPort = 0;
     shooterPanSpeed = 1;
 
     shooterTiltMotorTicksPerRotation = 1024;   //Analog potentiometer 1024 units per rotation.
-    shooterTiltMotorTicksAtActivated = 500; //Random Value
+    tiltFangsUpperLimit = 720; //Random Value
+    tiltFangsLowerLimit = 0; //Random Value
 
 
     //For Encoders: 10 FT = 149083 Encoder units

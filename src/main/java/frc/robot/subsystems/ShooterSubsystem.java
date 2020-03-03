@@ -117,8 +117,13 @@ public class ShooterSubsystem extends Subsystem {
   }
 
   public  double deadbandPan(double pan) {
-    if (pan >= RobotMap.deadbandZ){
-      pan = pan - (RobotMap.deadbandZ) /(1-RobotMap.deadbandZ); 
+    if (Math.abs(pan) >= RobotMap.deadbandZ){
+      if (pan > 0) {
+        pan = (pan - RobotMap.deadbandZ) /(1-RobotMap.deadbandZ); 
+      }
+      else{
+        pan = (pan + RobotMap.deadbandZ) /(1-RobotMap.deadbandZ);  
+      }
     }
     else {
       pan = 0;
@@ -262,7 +267,7 @@ public void configureTiltMotorControllerForMagic(){
 
   } 
   
-  public int gettiltEncoder() {
+  public int getTiltPot() {
     return tiltMotorController.getSelectedSensorPosition();
     //1024 units per rotation
   }
@@ -271,16 +276,23 @@ public void configureTiltMotorControllerForMagic(){
     tiltMotorController.set(ControlMode.PercentOutput, 0);
   }
 
+  public void tiltGoToSetpoint() {
+    configureTiltMotorControllerForMagic();
+    tiltMotorController.set(ControlMode.MotionMagic, 500);
+
+  }
+
+
   public void tiltFangDeployToggle(){
     if (fangsActivated==false)
     {
-    tiltMotorController.set(ControlMode.MotionMagic, RobotMap.shooterTiltMotorTicksAtActivated);
+    tiltMotorController.set(ControlMode.MotionMagic, RobotMap.tiltFangsUpperLimit);
     fangsActivated = true;
     }
 
     else if (fangsActivated==true)
     {
-      tiltMotorController.set(ControlMode.MotionMagic, 0);
+      tiltMotorController.set(ControlMode.MotionMagic, RobotMap.tiltFangsLowerLimit);
       fangsActivated = false;
     }
   } 
@@ -297,16 +309,15 @@ public void configureTiltMotorControllerForMagic(){
   }
 
   public void testTiltFangs(){
-    System.out.println("Testing");
-    double conversionFactor = 0.25;
-    double output = (Robot.oi.leftJoystick.getThrottle()*-1) * conversionFactor;
-
-    System.out.println(output);
+    //System.out.println("Testing");
+    double maxSpeed = 0; //sets motorspeed to 0 if tilt is against stops
+    if (getTiltPot() >= RobotMap.tiltFangsLowerLimit &&  getTiltPot() <= RobotMap.tiltFangsUpperLimit) {
+      maxSpeed = 0.25;
+    }
+    double output = (Robot.oi.leftJoystick.getThrottle()*1) * maxSpeed;
+    Robot.smartDashboardSubsystem.updateShooterValues();
+   // System.out.println(output);
     tiltMotorController.set(ControlMode.PercentOutput, output);
-  }
-
-  public void zeroTiltFangsEncoder(){
-    tiltMotorController.setSelectedSensorPosition(0);
   }
 
   public void initDefaultCommand() {

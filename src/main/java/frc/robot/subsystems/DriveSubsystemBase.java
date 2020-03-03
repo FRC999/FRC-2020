@@ -42,25 +42,35 @@ public abstract class DriveSubsystemBase extends Subsystem {
   }
 
   public  double deadbandMove(double move) {
-    if (move >= RobotMap.deadbandY){
-      move = move - (RobotMap.deadbandY) /(1-RobotMap.deadbandY); 
+    if (Math.abs(move) >= RobotMap.deadbandY){
+      if (move > 0) {
+        move = (move - RobotMap.deadbandY) /(1-RobotMap.deadbandY); 
+      }
+      else{
+        move = (move + RobotMap.deadbandY) /(1-RobotMap.deadbandY);  
+      }
     }
     else {
       move = 0;
     } 
     return move;
   }
-
-public  double deadbandTurn(double turn) {
-    if (turn >= RobotMap.deadbandX){
-      turn = turn - (RobotMap.deadbandX) /(1-RobotMap.deadbandX); 
-    }
-    else {
-      turn = 0;
-    } 
-    return turn;
-  }
   
+public  double deadbandTurn(double turn) {
+  if (Math.abs(turn) >= RobotMap.deadbandX){
+    if (turn > 0) {
+      turn = (turn - RobotMap.deadbandX) /(1-RobotMap.deadbandX); 
+    }
+    else{
+      turn = (turn + RobotMap.deadbandX) /(1-RobotMap.deadbandX);  
+    }
+  }
+  else {
+    turn = 0;
+  } 
+  return turn;
+}
+
   public void manualDrive(double move, double turn) {
 	  drive.arcadeDrive(deadbandMove(move), deadbandTurn(turn));
   }
