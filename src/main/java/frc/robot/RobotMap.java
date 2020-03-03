@@ -20,10 +20,9 @@ public class RobotMap {
   // following variables to use with your drivetrain subsystem.
 
   // Autonomous constants
-
   public final static int robotLength = 35;
   public final static int robotWidth = 23;
-  public final static int encoderTicksPerInch = 1;
+  public static int encoderTicksPerInch = 0;
   // TODO: find encoder ticks per inch and confirm robot dimensions
 
   // Drivetrain Motor Controllers
@@ -258,6 +257,7 @@ public static final int hopperMotorPort = 0;
     //For Encoders: 10 FT = 149083 Encoder units
     //1 FT = 14908 Units
     //1 Inch = 1242 Units
+    encoderTicksPerInch = 1242;
     
     System.out.println("I AM FALCONBOT! CACAW! CACAAAAAWWWWW!");
   } 

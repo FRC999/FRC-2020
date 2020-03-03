@@ -13,9 +13,7 @@ import frc.robot.RobotMap;
 
 public class ShootAndRunAuto extends CommandGroup {
 
-  /**
-   * Add your docs here.
-   */
+  //TODO: Add shooting code to autonomous sequence
 
   public static int startingRotation = 1;
   // 1 is pointing towards the target, 2 is 90 degrees to the right of 1, 3 is 180 degrees, 4 is 270 degrees
@@ -120,7 +118,7 @@ public class ShootAndRunAuto extends CommandGroup {
       // — — — — PUT SHOOTING CODE (ANGLED) HERE — — — —
     }
     
-    /* Robot pushes a poor non-autonomous friend */
+    /* Robot prepares to push non-autonomous friend */
     addSequential(new WaitCommand(.1));
     switch(startingRotation) {
       case 1:
@@ -154,6 +152,23 @@ public class ShootAndRunAuto extends CommandGroup {
       addSequential(new WaitCommand(.1));
       addSequential(new DriveTurnCommand(-90));
       addSequential(new DriveStopCommand());
+      /* Robot pushes poor non-autonomous friend*/
+      addSequential(new WaitCommand(.1));
+      addSequential(new DriveForwardCommand((int) Math.round(Math.abs(xPositionIn * 2.25) * RobotMap.encoderTicksPerInch)));
+      addSequential(new DriveStopCommand());
+
+      /* Robot positions itself for game start*/
+      addSequential(new WaitCommand(.1));
+      addSequential(new DriveTurnCommand(-90));
+      addSequential(new DriveStopCommand());
+
+      addSequential(new WaitCommand(.1));
+      addSequential(new DriveForwardCommand(RobotMap.robotLength * RobotMap.encoderTicksPerInch));
+      addSequential(new DriveStopCommand());
+
+      addSequential(new WaitCommand(.1));
+      addSequential(new DriveTurnCommand(-90));
+      addSequential(new DriveStopCommand());
     } else {
       addSequential(new WaitCommand(.1));
       addSequential(new DriveTurnCommand(90));
@@ -167,44 +182,27 @@ public class ShootAndRunAuto extends CommandGroup {
       addSequential(new WaitCommand(.1));
       addSequential(new DriveTurnCommand(90));
       addSequential(new DriveStopCommand());
+
+      /* Robot pushes poor non-autonomous friend*/
+      addSequential(new WaitCommand(.1));
+      addSequential(new DriveForwardCommand((int) Math.round(Math.abs(xPositionIn * 2.25) * RobotMap.encoderTicksPerInch)));
+      addSequential(new DriveStopCommand());
+
+      /* Robot positions itself for game start*/
+      addSequential(new WaitCommand(.1));
+      addSequential(new DriveTurnCommand(90));
+      addSequential(new DriveStopCommand());
+
+      addSequential(new WaitCommand(.1));
+      addSequential(new DriveForwardCommand(RobotMap.robotLength * RobotMap.encoderTicksPerInch));
+      addSequential(new DriveStopCommand());
+
+      addSequential(new WaitCommand(.1));
+      addSequential(new DriveTurnCommand(90));
+      addSequential(new DriveStopCommand());
     }
-    
-    addSequential(new WaitCommand(.1));
-    addSequential(new DriveForwardCommand((int) Math.round(Math.abs(xPositionIn * 2.25) * RobotMap.encoderTicksPerInch)));
-    addSequential(new DriveStopCommand());
 
-    
 
-    
-
-    /* Robot gets out of the way 
-
-    addSequential(new WaitCommand(.1));
-    switch(startingRotation) {
-      case 1:
-        addSequential(new DriveTurnCommand(-30));
-        break;
-      case 2:
-        addSequential(new DriveTurnCommand(-120));
-        break;
-      case 3:
-        addSequential(new DriveTurnCommand(120));
-        break;
-      case 4:
-        addSequential(new DriveTurnCommand(60));
-        break;
-    }
-    addSequential(new DriveStopCommand());
-
-    addSequential(new WaitCommand(.1));
-    addSequential(new DriveForwardCommand(80 * RobotMap.encoderTicksPerInch));
-    addSequential(new DriveStopCommand());
-    addSequential(new WaitCommand(0.1));
-
-    addSequential(new DriveTurnCommand(-150));
-    addSequential(new DriveStopCommand());
-    addSequential(new WaitCommand(0.1)); */
-    
     // To run multiple commands at the same time,
     // use addParallel()
     // e.g. addParallel(new Command1());
