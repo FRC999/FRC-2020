@@ -19,6 +19,7 @@ import frc.robot.commands.*;
  */
 public class OI {
   public Joystick leftJoystick = new Joystick(RobotMap.leftJoystickPort);
+  public Joystick rightJoystick = new Joystick(RobotMap.rightJoystickPort);
   public Joystick buttonBox = new Joystick(RobotMap.buttonBoxPort);
   Button stopButton = new JoystickButton(leftJoystick, 1);
   Button showAllButton = new JoystickButton(leftJoystick, 2);
@@ -72,9 +73,6 @@ public class OI {
 
     autoDriveForwardButton.whenPressed(new RealSmartAutoDriveForward());
     autoTurnButton.whenPressed(new RealSmartAutoTurnCommand());
-
-
   }
-
 
 }

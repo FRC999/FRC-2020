@@ -38,12 +38,35 @@ public abstract class DriveSubsystemBase extends Subsystem {
 
   DriveSubsystemBase(){
 	  super();
-	  System.out.println("Made a DriveSubsystem");
+    System.out.println("Made a DriveSubsystem");
   }
 
-  public void manualDrive(double move, double turn) {
-	  drive.arcadeDrive(move, turn);
+  public  double deadbandMove(double move) {
+    if (move >= RobotMap.deadbandY){
+      move = move - (RobotMap.deadbandY) /(1-RobotMap.deadbandY); 
+    }
+    else {
+      move = 0;
+    } 
+    return move;
   }
+
+public  double deadbandTurn(double turn) {
+    if (turn >= RobotMap.deadbandX){
+      turn = turn - (RobotMap.deadbandX) /(1-RobotMap.deadbandX); 
+    }
+    else {
+      turn = 0;
+    } 
+    return turn;
+  }
+  
+  public void manualDrive(double move, double turn) {
+	  drive.arcadeDrive(deadbandMove(move), deadbandTurn(turn));
+  }
+
+
+
 
   public void zeroDriveEncoders() {
     frontLeftDriveMotorController.setSelectedSensorPosition(0);
@@ -51,7 +74,8 @@ public abstract class DriveSubsystemBase extends Subsystem {
     frontLeftDriveMotorController.setNeutralMode(NeutralMode.Coast);
     backLeftDriveMotorController.setNeutralMode(NeutralMode.Coast);
     frontRightDriveMotorController.setNeutralMode(NeutralMode.Coast);
-    backRightDriveMotorController.setNeutralMode(NeutralMode.Coast);  }
+    backRightDriveMotorController.setNeutralMode(NeutralMode.Coast);  
+  }
 
   public int getLeftEncoder() {
     return frontLeftDriveMotorController.getSelectedSensorPosition();

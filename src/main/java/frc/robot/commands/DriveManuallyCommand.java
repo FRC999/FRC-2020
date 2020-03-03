@@ -9,6 +9,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.RobotMap;
 
 public class DriveManuallyCommand extends Command {
 
@@ -29,7 +30,13 @@ public class DriveManuallyCommand extends Command {
   @Override
   protected void execute() {
     // Read joystick values
-    double move = Robot.oi.leftJoystick.getY() * -1; // inverts sign for Y axis
+    double move = (Robot.oi.leftJoystick.getY() * -1); // inverts sign for Y axis
+    if (RobotMap.isSplitStick) {
+      double turn = Robot.oi.rightJoystick.getX();
+    }
+    else{
+      double turn = Robot.oi.leftJoystick.getX();
+    }
     double turn = Robot.oi.leftJoystick.getX();
     Robot.driveSubsystem.manualDrive(move, turn);
     Robot.smartDashboardSubsystem.updateEncoderValue();

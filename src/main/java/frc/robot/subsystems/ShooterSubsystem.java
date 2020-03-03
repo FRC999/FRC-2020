@@ -8,6 +8,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.commands.ShootManuallyCommand;
 
@@ -112,10 +113,22 @@ public class ShooterSubsystem extends Subsystem {
 
   public void shoot(double shooterSpeed) {
     shooterMotorController.set(ControlMode.PercentOutput, shooterSpeed);
+  
   }
 
+  public  double deadbandPan(double pan) {
+    if (pan >= RobotMap.deadbandZ){
+      pan = pan - (RobotMap.deadbandZ) /(1-RobotMap.deadbandZ); 
+    }
+    else {
+      pan = 0;
+    } 
+    return pan;
+  }
+
+
   public void pan(double pan) {
-    panMotorController.set(ControlMode.PercentOutput, pan);
+    panMotorController.set(ControlMode.PercentOutput, deadbandPan(pan));
   }
 
   /**

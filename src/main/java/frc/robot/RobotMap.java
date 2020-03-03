@@ -20,7 +20,7 @@ public class RobotMap {
   // Autonomous constants
   public final static int robotLength = 35;
   public final static int robotWidth = 23;
-  public static int encoderTicksPerInch = 0;
+  public static int encoderTicksPerInch = 326;
   // TODO: find encoder ticks per inch and confirm robot dimensions
 
   // Drivetrain Motor Controllers
@@ -74,6 +74,11 @@ public class RobotMap {
   // Driver Input Devices
   public final static int leftJoystickPort = 0;
   public final static int buttonBoxPort = 1;
+  public final static int rightJoystickPort = 2;
+  public final static double deadbandX = 0.1;
+  public final static double deadbandY = 0.1;
+  public final static double deadbandZ = 0.1;
+  
 
   // PCM forward, reverse channels for doubleSolenoids
   public static int ColorWheelSolenoidForwardChannel = 0;
@@ -109,6 +114,7 @@ public class RobotMap {
   public static double ultrasonicValueToMMConversionFactor = 1.25;
   public static int falconBotSwitchPortNumber = 0;
   public static boolean isFalconBot;
+  public static boolean isSplitStick;
 
   // How many encoder clicks per revolution (change to 2048 for falcon 500
   // encoders)
