@@ -211,7 +211,6 @@ public class Robot extends TimedRobot {
     Scheduler.getInstance().run();
     smartDashboardSubsystem.updateNavXValues();
     smartDashboardSubsystem.updateEncoderValue();
-    System.out.println("Encoder: " + driveSubsystem.getRightEncoder());
     
     //controlPanelSubsystem.putSeenColor();
   }

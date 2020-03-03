@@ -19,6 +19,12 @@ public class RobotMap {
   // For example to map the left and right motors, you could define the
   // following variables to use with your drivetrain subsystem.
 
+  // Autonomous constants
+  public final static int robotLength = 35;
+  public final static int robotWidth = 23;
+  public static int encoderTicksPerInch = 0;
+  // TODO: find encoder ticks per inch and confirm robot dimensions
+
   // Drivetrain Motor Controllers
   public final static int frontLeftDriveMotorControllerID = 1;
   public final static int backLeftDriveMotorControllerID = 2;
@@ -47,6 +53,10 @@ public class RobotMap {
   public final static int shooterYResolution = 480; 
   public final static int shooterResolutionAcceptableError = 5;
   public  static double shooterPanSpeed = -.1;
+
+
+  public static int shooterTiltMotorTicksPerRotation = 178;
+  public static int shooterTiltMotorTicksAtActivated = 500;
 
   // Control panel constants
   // TODO: Get actual motor ID
@@ -189,6 +199,19 @@ public static int neckMotor;
   
 // END of pan pid code
 
+//Tilt Motor Pid Code
+    public final static double P_TILT = 0.01;
+    public final static double I_TILT = 0.1;
+    public final static double D_TILT = .01;
+    public final static double F_TILT = 0.1; // just a guesstimate
+    public final static int Izone_TILT = 500;
+    public static int tiltCruiseVelocity = 50;
+    // MotionMagic curve smoothing parameter [0 - 8]
+    public static int tiltAcceleration = 50;
+    // Allowable error to exit movement methods
+    public static int tiltDefaultAcceptableError = 2;
+    public final static int PID_TILT = 0;
+
 
   // ---- Flat constants, you should not need to change these ----
   // We allow either a 0 or 1 when selecting an ordinal for remote devices [You
@@ -226,6 +249,16 @@ public static final int hopperMotorPort = 0;
     shooterPanMotorEncoderTicksPerRotation = 3977;
     //TODO: may need to be negative if turns the wrong way
     shooterPanSpeed = 1;
+
+    shooterTiltMotorTicksPerRotation = 1024;   //Analog potentiometer 1024 units per rotation.
+    shooterTiltMotorTicksAtActivated = 500; //Random Value
+
+
+    //For Encoders: 10 FT = 149083 Encoder units
+    //1 FT = 14908 Units
+    //1 Inch = 1242 Units
+    encoderTicksPerInch = 1242;
+    
     System.out.println("I AM FALCONBOT! CACAW! CACAAAAAWWWWW!");
   } 
 

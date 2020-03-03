@@ -4,12 +4,14 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.SensorCollection;
 import com.ctre.phoenix.motorcontrol.StatusFrame;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
+import frc.robot.commands.ShootManuallyCommand;
 
 public class ShooterSubsystem extends Subsystem {
 
@@ -205,6 +207,105 @@ public class ShooterSubsystem extends Subsystem {
         // System.out.println("DEFAULT");
       }
     }
+  }
+
+//Start of work on the FANGS
+  Boolean fangsActivated = false;
+
+public void configureTiltMotorControllerForMagic(){
+
+  // Configure the encoders for PID control
+  tiltMotorController.configSelectedFeedbackSensor(FeedbackDevice.Analog, RobotMap.PID_TILT,	RobotMap.configureTimeoutMs);
+
+  /* Set status frame periods to ensure we don't have stale data */
+  tiltMotorController.setStatusFramePeriod(StatusFrame.Status_13_Base_PIDF0, 20, RobotMap.configureTimeoutMs);
+  tiltMotorController.setStatusFramePeriod(StatusFrame.Status_10_Targets, 20, RobotMap.configureTimeoutMs);
+
+  /* Configure motor neutral deadband */
+  tiltMotorController.configNeutralDeadband(RobotMap.NeutralDeadband, RobotMap.configureTimeoutMs);
+
+  /**
+  * Max out the peak output (for all modes).  
+  * However you can limit the output of a given PID object with configClosedLoopPeakOutput().
+  */
+  tiltMotorController.configPeakOutputForward(+1.0, RobotMap.configureTimeoutMs);
+  tiltMotorController.configPeakOutputReverse(-1.0, RobotMap.configureTimeoutMs);
+  tiltMotorController.configNominalOutputForward(0, RobotMap.configureTimeoutMs);
+  tiltMotorController.configNominalOutputReverse(0, RobotMap.configureTimeoutMs);
+
+  /* FPID Gains for each side of drivetrain */
+
+  tiltMotorController.config_kP(RobotMap.SLOT_0, RobotMap.P_PAN, RobotMap.configureTimeoutMs);
+  tiltMotorController.config_kI(RobotMap.SLOT_0, RobotMap.I_PAN, RobotMap.configureTimeoutMs);
+  tiltMotorController.config_kD(RobotMap.SLOT_0, RobotMap.D_PAN, RobotMap.configureTimeoutMs);
+  tiltMotorController.config_kF(RobotMap.SLOT_0, RobotMap.F_PAN, RobotMap.configureTimeoutMs);
+  tiltMotorController.config_IntegralZone(RobotMap.SLOT_0, RobotMap.Izone_TILT, RobotMap.configureTimeoutMs);
+  tiltMotorController.configClosedLoopPeakOutput(RobotMap.SLOT_0, RobotMap.PeakOutput_0, RobotMap.configureTimeoutMs);
+  tiltMotorController.configAllowableClosedloopError(RobotMap.SLOT_0, 0, RobotMap.configureTimeoutMs);
+
+  /**
+  * 1ms per loop.  PID loop can be slowed down if need be.
+  * For example,
+  * - if sensor updates are too slow
+  * - sensor deltas are very small per update, so derivative error never gets large enough to be useful.
+  * - sensor movement is very slow causing the derivative error to be near zero.
+  */
+  tiltMotorController.configClosedLoopPeriod(0, RobotMap.closedLoopPeriodMs, RobotMap.configureTimeoutMs);
+
+  /* Motion Magic Configurations */
+  /**Need to replace numbers with real measured values for acceleration and cruise vel. */
+
+  tiltMotorController.configMotionAcceleration(RobotMap.tiltAcceleration, RobotMap.configureTimeoutMs);
+  tiltMotorController.configMotionCruiseVelocity(RobotMap.tiltCruiseVelocity, RobotMap.configureTimeoutMs);
+  tiltMotorController.configMotionSCurveStrength(RobotMap.smoothing);
+
+  } 
+  
+  public int gettiltEncoder() {
+    return tiltMotorController.getSelectedSensorPosition();
+    //1024 units per rotation
+  }
+
+  public void tiltStandby() {
+    tiltMotorController.set(ControlMode.PercentOutput, 0);
+  }
+
+  public void tiltFangDeployToggle(){
+    if (fangsActivated==false)
+    {
+    tiltMotorController.set(ControlMode.MotionMagic, RobotMap.shooterTiltMotorTicksAtActivated);
+    fangsActivated = true;
+    }
+
+    else if (fangsActivated==true)
+    {
+      tiltMotorController.set(ControlMode.MotionMagic, 0);
+      fangsActivated = false;
+    }
+  } 
+
+  public void manualAimTiltFangs(){
+    double tiltValue = ((Robot.oi.leftJoystick.getThrottle()*-1) + 1) / 2;
+    double output = tiltValue*RobotMap.shooterTiltMotorTicksPerRotation;
+
+    if (fangsActivated==true)
+    {
+    tiltMotorController.set(ControlMode.MotionMagic, output);
+    }
+    //Use a constant for the activated position of the encoders and then add to it.  
+  }
+
+  public void testTiltFangs(){
+    System.out.println("Testing");
+    double conversionFactor = 0.25;
+    double output = (Robot.oi.leftJoystick.getThrottle()*-1) * conversionFactor;
+
+    System.out.println(output);
+    tiltMotorController.set(ControlMode.PercentOutput, output);
+  }
+
+  public void zeroTiltFangsEncoder(){
+    tiltMotorController.setSelectedSensorPosition(0);
   }
 
   public void initDefaultCommand() {
