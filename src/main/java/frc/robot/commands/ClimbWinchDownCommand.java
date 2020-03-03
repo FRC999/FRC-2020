@@ -10,11 +10,11 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class FalconManualDrivingCommand extends Command {
-  public FalconManualDrivingCommand() {
+public class ClimbWinchDownCommand extends Command {
+  public ClimbWinchDownCommand() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.falconDriveSubsystem);
+    requires(Robot.climberSubsystem);
   }
 
   // Called just before this Command runs the first time
@@ -25,14 +25,8 @@ public class FalconManualDrivingCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-      // Read joystick values
-      double move = Robot.oi.leftJoystick.getY() * -1; // inverts sign for Y axis
-      double turn = Robot.oi.leftJoystick.getX();
-      Robot.falconDriveSubsystem.manualDrive(move, turn);
-      Robot.smartDashboardSubsystem.updateEncoderValue();
-  
+    Robot.climberSubsystem.climb(-0.5);
   }
-
 
   // Make this return true when this Command no longer needs to run execute()
   @Override

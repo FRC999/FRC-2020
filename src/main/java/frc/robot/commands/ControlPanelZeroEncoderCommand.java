@@ -10,8 +10,8 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class ZeroDriveEncodersCommand extends Command {
-  public ZeroDriveEncodersCommand() {
+public class ControlPanelZeroEncoderCommand extends Command {
+  public ControlPanelZeroEncoderCommand() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(Robot.driveSubsystem);
@@ -20,15 +20,15 @@ public class ZeroDriveEncodersCommand extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.driveSubsystem.zeroDriveEncoders();
-    System.out.println("Zeroed Encoders");
+    Robot.controlPanelSubsystem.zeroEncoder();
+    System.out.println("Zeroed control panel Encoder");
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.driveSubsystem.zeroDriveEncoders();
-    System.out.println("Zeroed Encoders Again");
+    Robot.controlPanelSubsystem.zeroEncoder();
+    System.out.println("Zeroed control panel encoder Again");
   }
 
   // Make this return true when this Command no longer needs to run execute()

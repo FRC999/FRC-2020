@@ -6,7 +6,8 @@ Code for the 2020 FIRST Robotics Competition!
 
 The "Pro Git" book is an excellent piece of free documentation for Git.  I highly recommend you read it, because if you do, you will have a comprehensive knowledge of git.  
 
-TODO: Add link to book
+The Pro Git book can be found [here.](https://git-scm.com/book/en/v2)
+Additionally, please check out this article on writing commits: [How to Write a Git Commit Message](https://chris.beams.io/posts/git-commit/).  Although having an expansive body as described in that post is less vital for us, *please* follow the rules for the subject line.  That means never titling them "Commit": **ever.**
 
 ### Git for the busy Gits who won't read the book
 
@@ -16,7 +17,7 @@ So, a tree is the directory structure: think of it as a tree, whose base is the 
 
 (It's worth noting that just doing that is inefficient: after all, changing one character in a large file will drastically change the hash, and so the large file would be stored all over again.  Git has a quite clever way of packing those together: it's called packing, and it's what is going on whenever git talks about deltas)
 
-Now, the next up in the hierarchy of git objects is the commit.  A commit contains a pointer to a tree, but it also states what commit it is based on, who committed it and when, and a custom message that they would have added.  Commits are what you work with a lot in git: while trees and blobs are good to know about, because they are how git works, it's important to understand commits as well.  However, the author is getting tired, and so they won't go further.
+Now, the next up in the hierarchy of git objects is the commit.  A commit contains a pointer to a tree, but it also states what commit it is based on, who committed it and when, and a custom message that they would have added.  Commits are what you work with a lot in git: while trees and blobs are good to know about, because they are how git works, it's important to understand commits first.  However, the author is getting tired, and so they won't go further.
 
 TODO: expand on the above, and explain branches and such
 
@@ -30,7 +31,7 @@ useless relic.
 
 Thus, I am introducing a new system of branching, with three main branches, and all
 development taking place in sub-branches.  We attempted to do development in sub-branches
-last year, however, this year, we will do this slightly differently.  The branches are
+last year, however, this year, we will do this slightly differently.  The main branches are
 as follows: (totally not based on the three-releases model of Debian)
 
 #### 'Stable' branch

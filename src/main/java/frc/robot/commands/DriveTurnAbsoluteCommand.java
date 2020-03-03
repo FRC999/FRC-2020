@@ -8,33 +8,31 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import edu.wpi.first.wpilibj.command.WaitCommand;
+import frc.robot.Robot;
 
-public class RealSmartAutoCommand extends CommandGroup {
+public class DriveTurnAbsoluteCommand extends CommandGroup {
+
+  static double curOrientation = Robot.navXSubsystem.getYaw();
   /**
    * Add your docs here.
    */
-  public RealSmartAutoCommand() {
+  public DriveTurnAbsoluteCommand(int target) {
     // Add Commands here:
     // e.g. addSequential(new Command1());
     // addSequential(new Command2());
     // these will run in order.
-
-    //What we want to do
+    /**
+     * Okay, so here is what I have figured out
+     * This is a java constructor: so my technique wont work for primitive double
+     * It might work for an updating object: basically, what will be happening is that
+     * the CommandGroup code is tracking not the current state of curOrientation, but rather
+     * the state that it was during initialization.
+     * We might be able to accomplish this with the Double type (capital D), but I am not certain.
+     * This code will defiantly not work, however.
+     * - Calum McConnell
+     */
+    addSequential(new DriveTurnCommand(target-curOrientation));
     
-    addSequential(new DriveZeroEncodersCommand());
-    addSequential(new WaitCommand(0.1));
-    addSequential(new DriveStopCommand());
-    addSequential(new DriveForwardCommand(50000));
-    addSequential(new DriveStopCommand());
-    addSequential(new WaitCommand(0.1));
-    addSequential(new DriveTurnCommand(180));
-    addSequential(new DriveStopCommand());
-    addSequential(new WaitCommand(0.1));
-    addSequential(new DriveForwardCommand(50000));
-    addSequential(new DriveStopCommand());
-    addSequential(new WaitCommand(0.1));
-
 
     // To run multiple commands at the same time,
     // use addParallel()
@@ -48,10 +46,8 @@ public class RealSmartAutoCommand extends CommandGroup {
     // a CommandGroup containing them would require both the chassis and the
     // arm.
   }
-  
-  @Override 
-  public void initialize() {
-    System.out.println("++++++++++ AUTO INIT ++++++++++");
-    super.initialize();
+  public void initialize(){
+    curOrientation = Robot.navXSubsystem.getYaw();
   }
+  
 }

@@ -10,50 +10,33 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class MoveControlPanelToTargetRevolutionsCommand extends Command {
-  double targetRev;
-  double targetTicks;
-  /** @param target the number of revolutions, positive or negative, to turn the control panel */
-  public MoveControlPanelToTargetRevolutionsCommand(double target) {
-    targetRev = target;
+public class ShooterWheelCommand extends Command {
+  public ShooterWheelCommand() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.controlPanelSubsystem);
-    targetTicks = Robot.controlPanelSubsystem.controlPanelTargetRevolutionsToQuadEncoderTicks(target);
-
+    requires(Robot.shooterSubsystem);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-Robot.controlPanelSubsystem.zeroEncoder();
+    Robot.shooterSubsystem.shoot(1);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-
-    
-      Robot.controlPanelSubsystem.moveTalonToPosition(targetTicks);
-
-
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-   boolean retVal = false;
-    if (( (Math.signum(targetTicks) == 1) && (Robot.controlPanelSubsystem.readEncoderRaw() <= targetTicks)) || ((Math.signum(targetTicks) == -1) && (Robot.controlPanelSubsystem.readEncoderRaw() >= targetTicks)))
-     {retVal = false;}
-      else {retVal = true;}
-   
-    return retVal;
+    return false;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.controlPanelSubsystem.stopTalon();
   }
 
   // Called when another command which requires one or more of the same

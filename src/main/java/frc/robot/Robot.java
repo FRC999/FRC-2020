@@ -7,22 +7,29 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.commands.ManualDrivingCommand;
+import frc.robot.commands.DriveManuallyCommand;
 import frc.robot.commands.RealSmartAutoCommand;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.ControlPanelSubsystem;
-import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.DriveSubsystemBase;
+import frc.robot.subsystems.TalonDriveSubsystem;
 import frc.robot.subsystems.FalconDriveSubsystem;
 import frc.robot.subsystems.NavXSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.ShuffleboardSubsystem;
 import frc.robot.subsystems.SmartDashboardSubsystem;
 import frc.robot.subsystems.UltrasonicSensorSubsystem;
+import edu.wpi.first.networktables.*;
+
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -32,21 +39,23 @@ import frc.robot.subsystems.UltrasonicSensorSubsystem;
  * project.
  */
 public class Robot extends TimedRobot {
-  public static DriveSubsystem driveSubsystem = new DriveSubsystem();
+  NetworkTable table;
+  public static DriveSubsystemBase driveSubsystem;
   public static ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
   public static ClimberSubsystem climberSubsystem = new ClimberSubsystem();
-  public static ManualDrivingCommand manualDrivingCommand = new ManualDrivingCommand(); // FOR CHOOSER TESTING
   public static SmartDashboardSubsystem smartDashboardSubsystem = new SmartDashboardSubsystem();
   public static NavXSubsystem navXSubsystem = new NavXSubsystem();
   public static UltrasonicSensorSubsystem ultrasonicSubsystem = new UltrasonicSensorSubsystem();
   public static IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   public static ControlPanelSubsystem controlPanelSubsystem = new ControlPanelSubsystem();
-  public static FalconDriveSubsystem falconDriveSubsystem = new FalconDriveSubsystem();
+  public static ShuffleboardSubsystem shuffleBoardSubsystem = new ShuffleboardSubsystem();
+
+  
   public boolean TestBool = false;
-  public static OI oi = new OI();
+  public static OI oi;
   Command autonomousCommand;
 
-  // Sendable choosers below
+  // Sendable choosers belowP
   SendableChooser<Command> sendableCommandChooser = new SendableChooser<Command>();
   SendableChooser<String> sendableStringChooser = new SendableChooser<String>();
   SendableChooser<Integer> sendableIntegerChooser = new SendableChooser<Integer>();
@@ -59,12 +68,36 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+    
+    //Set up shuffleboard
+    shuffleBoardSubsystem.setupShuffleboard();
+
+
+    NetworkTableInstance ntInst = NetworkTableInstance.getDefault();
+    ntInst.startClientTeam(999);
+    NetworkTable table = ntInst.getTable("TestTable");
+    NetworkTableEntry testEntry = table.getEntry("test");
+    testEntry.setDouble(10.5);
     System.out.println("Hit robotInit");
+
+    DigitalInput falconBotSwitch = new DigitalInput(RobotMap.falconBotSwitchPortNumber);
+    RobotMap.isFalconBot = falconBotSwitch.get();
+    if(RobotMap.isFalconBot){
+      driveSubsystem = new FalconDriveSubsystem();
+      // the IAmFalconBot method reset some RobotMap constants for the FalconBot chassis
+      // but the call to it was moved into the FalconDriveSubsystem constructor
+      System.out.println("We're a FALCON");
+    }
+    else{
+      driveSubsystem = new TalonDriveSubsystem();
+      System.out.println("We're a TALON");
+    }
+    driveSubsystem.setDefaultCommand(new DriveManuallyCommand());
+    falconBotSwitch.close();
 
     sendableCommandChooser.setDefaultOption("Default Auto", new RealSmartAutoCommand());
     sendableCommandChooser.addOption("Really Smart Auto", new RealSmartAutoCommand());
-    SmartDashboard.putData("Auto mode", sendableCommandChooser);
-    SmartDashboard.putBoolean("Test Boolean", TestBool);
+
     Robot.driveSubsystem.resetDriveTrainControllers();
 
     // after testing run only the second configure method
@@ -74,7 +107,13 @@ public class Robot extends TimedRobot {
     Robot.driveSubsystem.zeroDriveEncoders();
     Robot.driveSubsystem.driveTrainBrakeMode();
     Robot.navXSubsystem.zeroYaw();
-    Robot.controlPanelSubsystem.resetMotorController();
+    Robot.shooterSubsystem.configureShooterControllers();
+    Robot.shooterSubsystem.configurePanMotorControllerForMagic();
+    //Robot.shooterSubsystem.zeroShooterEncoders();
+    //Robot.controlPanelSubsystem.resetMotorController();
+    
+
+    oi = new OI();
   }
 
   /**
@@ -88,6 +127,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
+    smartDashboardSubsystem.updateAllDisplays();
   }
 
   /**
@@ -98,7 +138,7 @@ public class Robot extends TimedRobot {
   @Override
   public void disabledInit() {
     driveSubsystem.DriveTrainCoastMode();
-    controlPanelSubsystem.stopTalon();
+    //controlPanelSubsystem.stopTalon();
   }
 
   @Override
@@ -146,12 +186,18 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-    driveSubsystem.driveTrainBrakeMode();
 
+    driveSubsystem.driveTrainBrakeMode();
+    //ShuffleboardTab displays = Shuffleboard.getTab("Displays");
+    //Shuffleboard.selectTab("Displays");
+    //Shuffleboard.getTab("Displays")
+    // .add("PiTest", 3.14);
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
+
+
     if (autonomousCommand != null) {
       autonomousCommand.cancel();
     }
@@ -163,7 +209,10 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
-    controlPanelSubsystem.putSeenColor();
+    smartDashboardSubsystem.updateNavXValues();
+    smartDashboardSubsystem.updateEncoderValue();
+    
+    //controlPanelSubsystem.putSeenColor();
   }
 
   /**

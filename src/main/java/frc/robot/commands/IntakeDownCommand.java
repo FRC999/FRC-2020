@@ -7,31 +7,32 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class UpdateControlPanelSmartDashboardCommand extends Command {
-  public UpdateControlPanelSmartDashboardCommand() {
+public class IntakeDownCommand extends Command {
+  public IntakeDownCommand() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.smartDashboardSubsystem);
+    requires(Robot.intakeSubsystem);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    Robot.intakeSubsystem.SetIntakeSolenoid(Value.kForward);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.smartDashboardSubsystem.updateControlPanelValues();
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return true;
+    return false;
   }
 
   // Called once after isFinished returns true

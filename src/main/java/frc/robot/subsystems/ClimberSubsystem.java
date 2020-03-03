@@ -7,9 +7,13 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.Solenoid;
+import frc.robot.RobotMap;
 
 /**
  * An example subsystem. You can replace me with your own Subsystem.
@@ -18,28 +22,25 @@ public class ClimberSubsystem extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
-  static WPI_VictorSPX climberMotor;// = new WPI_VictorSPX(RobotMap.climberMotorID);
-  static Solenoid climberSolenoid1;// = new Solenoid(RobotMap.climberSolenoidForwardChannel);
-  static Solenoid climberSolenoid2;// = new Solenoid(RobotMap.climberSolenoidReverseChannel);
+  static WPI_VictorSPX climberMotorController = new WPI_VictorSPX(RobotMap.climberMotorControllerID);
+  static DoubleSolenoid climberSolenoid = new DoubleSolenoid(RobotMap.climberSolenoidForwardChannel, RobotMap.climberSolenoidReverseChannel);
 
-  double climbSpeed = 0.5;
+  //double climbSpeed = 0.5;
 
   public void extend() {
-    climberSolenoid1.set(true);
-    climberSolenoid2.set(true);
+    climberSolenoid.set(Value.kForward);
   }
 
   public void retract() {
-    climberSolenoid1.set(false);
-    climberSolenoid2.set(false);
+    climberSolenoid.set(Value.kReverse);
   }
 
-  public void climb() {
-    climberMotor.set(climbSpeed);
+  public void climb(double climbSpeed) {
+    climberMotorController.set(ControlMode.PercentOutput, climbSpeed);
   }
 
   public void standby() {
-    climberMotor.set(0);
+    climberMotorController.set(ControlMode.PercentOutput, 0);
   }
 
   public void initDefaultCommand() {

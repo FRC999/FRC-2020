@@ -8,53 +8,42 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
-import frc.robot.RobotMap;
 
-public class TurnRightX extends Command {
-  private int leftTarget;
-  private int rightTarget;
-  private double turnDegrees;
-  
-  public TurnRightX(double degrees) {
+public class ShootManuallyCommand extends Command {
+  public ShootManuallyCommand() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.driveSubsystem);
-    turnDegrees = degrees;
+    requires(Robot.shooterSubsystem);
+    
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.driveSubsystem.driveTrainBrakeMode();
-    //NOTE: This is *not* configured to work with the NavX anymore: it is purely based on encoder tics
-    //We could (and maybe should) rewrite it to use the NavX as an auxiliary input for more accuracy.
-    leftTarget = Robot.driveSubsystem.getLeftEncoder() + (int) Math.round(RobotMap.encoderUnitsPerRobotRotation * turnDegrees / 360);
-    rightTarget = Robot.driveSubsystem.getRightEncoder() - (int) Math.round(RobotMap.encoderUnitsPerRobotRotation * turnDegrees / 360);
-    Robot.driveSubsystem.simpleMotionMagicTest(leftTarget, rightTarget);
-    System.out.println("Turning init done.");
+    //set shooter wheel to full speed
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.driveSubsystem.feed();
-    Robot.smartDashboardSubsystem.updateEncoderValue();
-    SmartDashboard.putNumber("leftTarget",leftTarget);
-    SmartDashboard.putNumber("RightTarget", rightTarget);
+    //use the twist and throttle to control shooter pan and tilt
+    double pan = Robot.oi.leftJoystick.getZ();
+    Robot.shooterSubsystem.pan(pan);
+    
+    Robot.shooterSubsystem.manualAimTiltFangs();
+    Robot.smartDashboardSubsystem.updateShooterValues();
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return Robot.driveSubsystem.isOnTarget(leftTarget,rightTarget,100);
+    return false;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    System.out.println("Done turning.");
   }
 
   // Called when another command which requires one or more of the same

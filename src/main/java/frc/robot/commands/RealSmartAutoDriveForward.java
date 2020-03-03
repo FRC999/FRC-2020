@@ -10,11 +10,11 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.WaitCommand;
 
-public class RealSmartAutoCommand extends CommandGroup {
+public class RealSmartAutoDriveForward extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public RealSmartAutoCommand() {
+  public RealSmartAutoDriveForward() {
     // Add Commands here:
     // e.g. addSequential(new Command1());
     // addSequential(new Command2());
@@ -25,15 +25,10 @@ public class RealSmartAutoCommand extends CommandGroup {
     addSequential(new DriveZeroEncodersCommand());
     addSequential(new WaitCommand(0.1));
     addSequential(new DriveStopCommand());
-    addSequential(new DriveForwardCommand(50000));
+    addSequential(new DriveForwardCommand(149083));  //149083 is the value for 10 ft.
     addSequential(new DriveStopCommand());
     addSequential(new WaitCommand(0.1));
-    addSequential(new DriveTurnCommand(180));
-    addSequential(new DriveStopCommand());
-    addSequential(new WaitCommand(0.1));
-    addSequential(new DriveForwardCommand(50000));
-    addSequential(new DriveStopCommand());
-    addSequential(new WaitCommand(0.1));
+
 
 
     // To run multiple commands at the same time,
