@@ -40,7 +40,7 @@ public class ShootAndRunAuto extends CommandGroup {
       if(yPositionIn == 228.59) {
         // — — — — PUT SHOOTING CODE (for sweetspot) HERE — — — —
       } else {
-        addSequential(new WaitCommand(0));
+        addSequential(new WaitCommand(.1));
         if(startingRotation == 4 && yPositionIn > 228.59 || startingRotation == 2 && yPositionIn < 228.59){
           addSequential(new DriveForwardCommand((int) Math.round(Math.abs(228.59 - yPositionIn) * RobotMap.encoderTicksPerInch)));
           addSequential(new DriveStopCommand());
@@ -120,6 +120,7 @@ public class ShootAndRunAuto extends CommandGroup {
     
     /* Robot prepares to push non-autonomous friend */
     addSequential(new WaitCommand(.1));
+    if(shootingFromCenter == true) {
     switch(startingRotation) {
       case 1:
         addSequential(new DriveTurnCommand(180));
@@ -131,6 +132,7 @@ public class ShootAndRunAuto extends CommandGroup {
         break;
       case 4:
       addSequential(new DriveTurnCommand(-90));
+      }
     }
     addSequential(new DriveStopCommand());
 
@@ -201,6 +203,8 @@ public class ShootAndRunAuto extends CommandGroup {
       addSequential(new DriveTurnCommand(90));
       addSequential(new DriveStopCommand());
     }
+
+    
 
 
     // To run multiple commands at the same time,
