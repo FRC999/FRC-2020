@@ -26,7 +26,7 @@ public class ClimberSubsystem extends Subsystem {
   static DoubleSolenoid climberSolenoid = new DoubleSolenoid(RobotMap.climberSolenoidForwardChannel, RobotMap.climberSolenoidReverseChannel);
 
   //double climbSpeed = 0.5;
-
+  //TODO: Figure out why we have a solenoid and a motor
   public void extend() {
     climberSolenoid.set(Value.kForward);
   }

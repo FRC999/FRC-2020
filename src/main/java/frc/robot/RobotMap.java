@@ -7,8 +7,6 @@
 
 package frc.robot;
 
-import com.ctre.phoenix.motorcontrol.can.BaseTalon;
-
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
  * to a variable name. This provides flexibility changing wiring, makes checking
@@ -123,7 +121,7 @@ public class RobotMap {
   public static int acceleration = 2250;
   // Allowable error to exit movement methods
   public static int defaultAcceptableError = 1000;
-public static int neckMotor;
+  public static int neckMotor;
 
 
 
@@ -167,8 +165,7 @@ public static int neckMotor;
   public final static double PeakOutput_0 = 1;
 
   // Closed loop Aux PID parameter values
-  public final static double P_1 = 0.75 * fullMotorOutput / encoderUnitsPerShaftRotation; // 75% motor output when
-                                                                                          // error = one rotation
+  public final static double P_1 = 0.75 * fullMotorOutput / encoderUnitsPerShaftRotation; // 75% motor output when error = one rotation
   public final static double I_1 = 0.005 * fullMotorOutput / encoderUnitsPerShaftRotation;
   public final static double D_1 = 0.1;
   public final static double F_1 = 0.227; // just a guesstimate

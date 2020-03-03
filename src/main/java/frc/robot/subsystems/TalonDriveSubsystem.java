@@ -12,8 +12,6 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.robot.RobotMap;
-import frc.robot.commands.DriveManuallyCommand;
-
 /**
  * Add your docs here. TODO: Add docs
  */
@@ -51,7 +49,6 @@ public class TalonDriveSubsystem extends DriveSubsystemBase {
     frontRightDriveMotorController.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
   }
 
-  // replace with configure controllers for aux closed loop PID when ready
   public void configureDriveTrainControllersForSimpleMagic(){
     super.configureDriveTrainControllersForSimpleMagic();
   } // End configureDriveTrainControllersForSimpleMagic

@@ -98,8 +98,6 @@ public Color getSeenColor() {
   {lastSeenColor =colorSensor.getColor(); }
   return lastSeenColor;
 }
-
-
   
   public boolean hasReceivedGameColor(){
     return receivedGameColor;
