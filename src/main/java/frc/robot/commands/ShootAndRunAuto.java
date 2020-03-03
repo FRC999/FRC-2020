@@ -38,7 +38,7 @@ public class ShootAndRunAuto extends CommandGroup {
     addSequential(new DriveZeroEncodersCommand());
     if(shootingFromCenter == true) {
       if(yPositionIn == 228.59) {
-        // — — — — PUT SHOOTING CODE HERE — — — —
+        // — — — — PUT SHOOTING CODE (for sweetspot) HERE — — — —
       } else {
         addSequential(new WaitCommand(0));
         if(startingRotation == 4 && yPositionIn > 228.59 || startingRotation == 2 && yPositionIn < 228.59){
@@ -46,10 +46,10 @@ public class ShootAndRunAuto extends CommandGroup {
           addSequential(new DriveStopCommand());
           yPositionIn = 228.59;
         } else {System.out.println("Auto: Something's wrong with initial position");}
-        // — — — — PUT SHOOTING CODE HERE — — — —
+        // — — — — PUT SHOOTING CODE (for sweetspot) HERE — — — —
       }
     } else {
-      // — — — — PUT SHOOTING CODE (ANGLED) HERE — — — —
+      // — — — — PUT SHOOTING CODE (for non-sweetspot / angled) HERE — — — —
     }
     
     /* Robot gets out of the way */
@@ -103,7 +103,7 @@ public class ShootAndRunAuto extends CommandGroup {
     addSequential(new DriveZeroEncodersCommand());
     if(shootingFromCenter == true) {
       if(yPositionIn == 228.59) {
-        // — — — — PUT SHOOTING CODE HERE — — — —
+        // — — — — PUT SHOOTING CODE (for sweetspot) HERE — — — —
       } else {
         addSequential(new WaitCommand(.1));
         // Can add delay here if needed
@@ -112,10 +112,10 @@ public class ShootAndRunAuto extends CommandGroup {
           addSequential(new DriveStopCommand());
           yPositionIn = 228.59;
         } else {System.out.println("Auto: Something's wrong with initial position");}
-        // — — — — PUT SHOOTING CODE HERE — — — —
+        // — — — — PUT SHOOTING (for sweetspot) CODE HERE — — — —
       }
     } else {
-      // — — — — PUT SHOOTING CODE (ANGLED) HERE — — — —
+      // — — — — PUT SHOOTING CODE (for non-sweetspot / angled) HERE — — — —
     }
     
     /* Robot prepares to push non-autonomous friend */
