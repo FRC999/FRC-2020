@@ -17,6 +17,13 @@ public class RobotMap {
   // For example to map the left and right motors, you could define the
   // following variables to use with your drivetrain subsystem.
 
+  // Autonomous constants
+
+  public final static int robotLength = 35;
+  public final static int robotWidth = 23;
+  public final static int encoderTicksPerInch = 1;
+  // TODO: find encoder ticks per inch and confirm robot dimensions
+
   // Drivetrain Motor Controllers
   public final static int frontLeftDriveMotorController = 1;
   public final static int backLeftDriveMotorController = 2;
