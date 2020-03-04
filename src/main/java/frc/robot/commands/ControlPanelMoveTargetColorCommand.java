@@ -39,7 +39,7 @@ public class ControlPanelMoveTargetColorCommand extends Command {
     Robot.controlPanelSubsystem.moveTalonInDirection(encoderTarget,0.5);
     } catch (NullPointerException n)
     {Robot.smartDashboardSubsystem.stackTrace(n.getMessage());}
-    
+    encoderDone = false;
   }
 
   boolean encoderDone = false;
