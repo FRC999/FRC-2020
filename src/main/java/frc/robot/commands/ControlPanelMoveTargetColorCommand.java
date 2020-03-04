@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 import frc.robot.subsystems.ControlPanelSubsystem;
+import frc.robot.subsystems.SmartDashboardSubsystem;
 
 public class ControlPanelMoveTargetColorCommand extends Command {
   
@@ -38,6 +39,7 @@ public class ControlPanelMoveTargetColorCommand extends Command {
     Robot.controlPanelSubsystem.moveTalonInDirection(encoderTarget,0.5);
     } catch (NullPointerException n)
     {Robot.smartDashboardSubsystem.stackTrace(n.getMessage());}
+    encoderDone = false;
   }
 
   boolean encoderDone = false;
@@ -49,11 +51,13 @@ public class ControlPanelMoveTargetColorCommand extends Command {
       if (( (Math.signum(encoderTarget) == 1) && (Robot.controlPanelSubsystem.readEncoderRaw() <= encoderTarget)) || ((Math.signum(encoderTarget) == -1) && (Robot.controlPanelSubsystem.readEncoderRaw() >= encoderTarget)))
       {Robot.controlPanelSubsystem.moveTalonInDirection(encoderTarget, 0.5);
        } else
-      {encoderDone = true;}
+      {encoderDone = true;
+      }
   }
   else if (Robot.controlPanelSubsystem.getSuspectedColor(Robot.controlPanelSubsystem.getSeenColor()) != colorWantedUnderSensor)
   Robot.controlPanelSubsystem.moveTalonInDirection(encoderTarget, 0.2);
     
+  //System.out.println(encoderTarget + " : "+Robot.controlPanelSubsystem.readEncoderRaw() +encoderDone);
   }
 
   // Make this return true when this Command no longer needs to run execute()
