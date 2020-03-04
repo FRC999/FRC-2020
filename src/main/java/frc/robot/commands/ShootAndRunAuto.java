@@ -8,7 +8,6 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import edu.wpi.first.wpilibj.command.WaitCommand;
 import frc.robot.RobotMap;
 
 public class ShootAndRunAuto extends CommandGroup {
@@ -22,7 +21,7 @@ public class ShootAndRunAuto extends CommandGroup {
   public static double yPositionIn = 228.59;
   // X position is distance from the starting line (negative X pointing towards the target)
   /* Y position is distance from the far wall of the field -- the side with the other team's ball dispenser
-      Field is 323.5 in long
+      Field is 323.25 in tall
       228.59 when starting in the big shot zone
       276.75 + RobotMap.robotLength / 2 when the front is aligned with the outer line of the trench
       161.75 when the center of the robot is aligned with the center of the starting line*/
