@@ -120,13 +120,13 @@ public class ShootAndRunAuto extends CommandGroup {
       addSequential(new DriveSequentialTurn(-90));
 
       /* Robot pushes poor non-autonomous friend*/
-      addSequential(new DriveSequentialForward(xPositionIn * 2)); // 2 is a bit of an arbitrary multiplier; might be a good idea to test it
+      addSequential(new DriveSequentialForward(xPositionIn * 3)); // 2 is a bit of an arbitrary multiplier; might be a good idea to test it
 
       /* Robot positions itself for game start*/
       addSequential(new DriveSequentialTurn(-90));
       addSequential(new DriveSequentialForward(RobotMap.robotLength));
       addSequential(new DriveSequentialTurn(-90));
-      addSequential(new DriveSequentialForward(RobotMap.robotLength + 10));
+      addSequential(new DriveSequentialForward(RobotMap.robotLength));
 
     } else {
       /* Continues positioning */
@@ -136,13 +136,13 @@ public class ShootAndRunAuto extends CommandGroup {
       addSequential(new DriveSequentialTurn(90));
 
       /* Robot pushes poor non-autonomous friend*/
-      addSequential(new DriveSequentialForward(xPositionIn * 2)); // 2 is a bit of an arbitrary multiplier; might be a good idea to test it
+      addSequential(new DriveSequentialForward(xPositionIn * 3)); // 3 is a bit of an arbitrary multiplier; might be a good idea to test it
 
       /* Robot positions itself for game start*/
       addSequential(new DriveSequentialTurn(90));
       addSequential(new DriveSequentialForward(RobotMap.robotLength));
       addSequential(new DriveSequentialTurn(90));
-      addSequential(new DriveSequentialForward(RobotMap.robotLength + 10));
+      addSequential(new DriveSequentialForward(RobotMap.robotLength));
     }
   }
 
