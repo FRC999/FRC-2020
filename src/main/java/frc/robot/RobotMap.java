@@ -21,7 +21,7 @@ public class RobotMap {
   public static int robotLength = 18;
   public static int robotWidth = 33;
   public static int encoderTicksPerInch = 326;
-  // TODO: confirm robot dimensions
+  
 
   // Drivetrain Motor Controllers
   public final static int frontLeftDriveMotorControllerID = 1;
