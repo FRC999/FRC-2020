@@ -59,7 +59,7 @@ public class ShootAndRunAuto extends CommandGroup {
         addSequential(new DriveSequentialTurn(60));
         break;
     }
-    addSequential(new DriveSequentialForward(80 * RobotMap.encoderTicksPerInch));
+    addSequential(new DriveSequentialForward(80));
     addSequential(new DriveSequentialTurn(-150));
   }
 
