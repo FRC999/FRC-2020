@@ -28,22 +28,15 @@ public class ShootAndRunAuto extends CommandGroup {
       161.75 when the center of the robot is aligned with the center of the starting line*/
 
   public ShootAndRunAuto(boolean shootingFromCenter) {
-    // Add Commands here:
-    // e.g. addSequential(new Command1());
-    // addSequential(new Command2());
-    // these will run in order.
-
 
     /* Robot shoots its pre-loaded balls */
-    addSequential(new DriveZeroEncodersCommand());
+    addSequential(new DriveSequentialZeroEncoders());
     if(shootingFromCenter == true) {
       if(yPositionIn == 228.59) {
         // — — — — PUT SHOOTING CODE (for sweetspot) HERE — — — —
       } else {
-        addSequential(new WaitCommand(.1));
         if(startingRotation == 4 && yPositionIn > 228.59 || startingRotation == 2 && yPositionIn < 228.59){
-          addSequential(new DriveForwardCommand((int) Math.round(Math.abs(228.59 - yPositionIn) * RobotMap.encoderTicksPerInch)));
-          addSequential(new DriveStopCommand());
+          addSequential(new DriveSequentialForward(228.59, yPositionIn));
           yPositionIn = 228.59;
         } else {System.out.println("Auto: Something's wrong with initial position");}
         // — — — — PUT SHOOTING CODE (for sweetspot) HERE — — — —
@@ -53,171 +46,93 @@ public class ShootAndRunAuto extends CommandGroup {
     }
     
     /* Robot gets out of the way */
-    addSequential(new WaitCommand(.1));
     switch(startingRotation) {
       case 1:
-        addSequential(new DriveTurnCommand(-30));
+        addSequential(new DriveSequentialTurn(-30));
         break;
       case 2:
-        addSequential(new DriveTurnCommand(-120));
+        addSequential(new DriveSequentialTurn(-120));
         break;
       case 3:
-        addSequential(new DriveTurnCommand(120));
+        addSequential(new DriveSequentialTurn(120));
         break;
       case 4:
-        addSequential(new DriveTurnCommand(60));
+        addSequential(new DriveSequentialTurn(60));
         break;
     }
-    addSequential(new DriveStopCommand());
-
-    addSequential(new WaitCommand(.1));
-    addSequential(new DriveForwardCommand(80 * RobotMap.encoderTicksPerInch));
-    addSequential(new DriveStopCommand());
-    addSequential(new WaitCommand(0.1));
-
-    addSequential(new DriveTurnCommand(-150));
-    addSequential(new DriveStopCommand());
-    addSequential(new WaitCommand(0.1));
-    
-    // To run multiple commands at the same time,
-    // use addParallel()
-    // e.g. addParallel(new Command1());
-    // addSequential(new Command2());
-    // Command1 and Command2 will run in parallel.
-
-    // A command group will require all of the subsystems that each member
-    // would require.
-    // e.g. if Command1 requires chassis, and Command2 requires arm,
-    // a CommandGroup containing them would require both the chassis and the
-    // arm.
+    addSequential(new DriveSequentialForward(80 * RobotMap.encoderTicksPerInch));
+    addSequential(new DriveSequentialTurn(-150));
   }
 
   public ShootAndRunAuto(boolean shootingFromCenter, double yPositionBuddy) {
-    // Add Commands here:
-    // e.g. addSequential(new Command1());
-    // addSequential(new Command2());
-    // these will run in order.
-
 
     /* Robot shoots its pre-loaded balls */
-    addSequential(new DriveZeroEncodersCommand());
+    addSequential(new DriveSequentialZeroEncoders());
     if(shootingFromCenter == true) {
       if(yPositionIn == 228.59) {
         // — — — — PUT SHOOTING CODE (for sweetspot) HERE — — — —
       } else {
-        addSequential(new WaitCommand(.1));
-        // Can add delay here if needed
         if(startingRotation == 4 && yPositionIn > 228.59 || startingRotation == 2 && yPositionIn < 228.59){
-          addSequential(new DriveForwardCommand((int) Math.round(Math.abs(228.59 - yPositionIn) * RobotMap.encoderTicksPerInch)));
-          addSequential(new DriveStopCommand());
+          addSequential(new DriveSequentialForward(228.59, yPositionIn));
           yPositionIn = 228.59;
         } else {System.out.println("Auto: Something's wrong with initial position");}
-        // — — — — PUT SHOOTING (for sweetspot) CODE HERE — — — —
+        // — — — — PUT SHOOTING CODE (for sweetspot) HERE — — — —
       }
     } else {
       // — — — — PUT SHOOTING CODE (for non-sweetspot / angled) HERE — — — —
     }
     
-    /* Robot prepares to push non-autonomous friend */
-    addSequential(new WaitCommand(.1));
-    if(shootingFromCenter == true) {
+    /* Robot positions itself to push non-autonomous friend */
+    
     switch(startingRotation) {
-      case 1:
-        addSequential(new DriveTurnCommand(180));
+       case 1:
+        addSequential(new DriveSequentialTurn(180));
         break;
       case 2:
-        addSequential(new DriveTurnCommand(90));
+        addSequential(new DriveSequentialTurn(90));
         break;
-      case 3:
+       case 3:
         break;
-      case 4:
-      addSequential(new DriveTurnCommand(-90));
-      }
+       case 4:
+         addSequential(new DriveSequentialTurn(-90));
+         break;
     }
-    addSequential(new DriveStopCommand());
-
-    addSequential(new WaitCommand(.1));
-    addSequential(new DriveForwardCommand((int) Math.round(Math.abs(50 - xPositionIn) * RobotMap.encoderTicksPerInch)));
-    addSequential(new DriveStopCommand());
+    
+    addSequential(new DriveSequentialForward(50, xPositionIn));
     xPositionIn = 50;
 
     if(yPositionBuddy > yPositionIn) {
-      addSequential(new WaitCommand(.1));
-      addSequential(new DriveTurnCommand(-90));
-      addSequential(new DriveStopCommand());
-
-      addSequential(new WaitCommand(.1));
-      addSequential(new DriveForwardCommand((int) Math.round(Math.abs(yPositionBuddy - yPositionIn) * RobotMap.encoderTicksPerInch)));
-      addSequential(new DriveStopCommand());
+      /* Continues positioning */
+      addSequential(new DriveSequentialTurn(-90));
+      addSequential(new DriveSequentialForward(yPositionBuddy, yPositionIn));
       yPositionIn = yPositionBuddy;
+      addSequential(new DriveSequentialTurn(-90));
 
-      addSequential(new WaitCommand(.1));
-      addSequential(new DriveTurnCommand(-90));
-      addSequential(new DriveStopCommand());
       /* Robot pushes poor non-autonomous friend*/
-      addSequential(new WaitCommand(.1));
-      addSequential(new DriveForwardCommand((int) Math.round(Math.abs(xPositionIn * 2.25) * RobotMap.encoderTicksPerInch)));
-      addSequential(new DriveStopCommand());
+      addSequential(new DriveSequentialForward(xPositionIn * 2)); // 2 is a bit of an arbitrary multiplier; might be a good idea to test it
 
       /* Robot positions itself for game start*/
-      addSequential(new WaitCommand(.1));
-      addSequential(new DriveTurnCommand(-90));
-      addSequential(new DriveStopCommand());
+      addSequential(new DriveSequentialTurn(-90));
+      addSequential(new DriveSequentialForward(RobotMap.robotLength));
+      addSequential(new DriveSequentialTurn(-90));
+      addSequential(new DriveSequentialForward(RobotMap.robotLength + 10));
 
-      addSequential(new WaitCommand(.1));
-      addSequential(new DriveForwardCommand(RobotMap.robotLength * RobotMap.encoderTicksPerInch));
-      addSequential(new DriveStopCommand());
-
-      addSequential(new WaitCommand(.1));
-      addSequential(new DriveTurnCommand(-90));
-      addSequential(new DriveStopCommand());
     } else {
-      addSequential(new WaitCommand(.1));
-      addSequential(new DriveTurnCommand(90));
-      addSequential(new DriveStopCommand());
-
-      addSequential(new WaitCommand(.1));
-      addSequential(new DriveForwardCommand((int) Math.round(Math.abs(yPositionBuddy - yPositionIn) * RobotMap.encoderTicksPerInch)));
-      addSequential(new DriveStopCommand());
+      /* Continues positioning */
+      addSequential(new DriveSequentialTurn(90));
+      addSequential(new DriveSequentialForward(yPositionBuddy, yPositionIn));
       yPositionIn = yPositionBuddy;
-
-      addSequential(new WaitCommand(.1));
-      addSequential(new DriveTurnCommand(90));
-      addSequential(new DriveStopCommand());
+      addSequential(new DriveSequentialTurn(90));
 
       /* Robot pushes poor non-autonomous friend*/
-      addSequential(new WaitCommand(.1));
-      addSequential(new DriveForwardCommand((int) Math.round(Math.abs(xPositionIn * 2.25) * RobotMap.encoderTicksPerInch)));
-      addSequential(new DriveStopCommand());
+      addSequential(new DriveSequentialForward(xPositionIn * 2)); // 2 is a bit of an arbitrary multiplier; might be a good idea to test it
 
       /* Robot positions itself for game start*/
-      addSequential(new WaitCommand(.1));
-      addSequential(new DriveTurnCommand(90));
-      addSequential(new DriveStopCommand());
-
-      addSequential(new WaitCommand(.1));
-      addSequential(new DriveForwardCommand(RobotMap.robotLength * RobotMap.encoderTicksPerInch));
-      addSequential(new DriveStopCommand());
-
-      addSequential(new WaitCommand(.1));
-      addSequential(new DriveTurnCommand(90));
-      addSequential(new DriveStopCommand());
+      addSequential(new DriveSequentialTurn(90));
+      addSequential(new DriveSequentialForward(RobotMap.robotLength));
+      addSequential(new DriveSequentialTurn(90));
+      addSequential(new DriveSequentialForward(RobotMap.robotLength + 10));
     }
-
-    
-
-
-    // To run multiple commands at the same time,
-    // use addParallel()
-    // e.g. addParallel(new Command1());
-    // addSequential(new Command2());
-    // Command1 and Command2 will run in parallel.
-
-    // A command group will require all of the subsystems that each member
-    // would require.
-    // e.g. if Command1 requires chassis, and Command2 requires arm,
-    // a CommandGroup containing them would require both the chassis and the
-    // arm.
   }
 
   @Override 
