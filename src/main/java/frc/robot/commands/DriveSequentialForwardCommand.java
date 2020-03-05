@@ -11,11 +11,11 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.WaitCommand;
 import frc.robot.RobotMap;
 
-public class DriveSequentialForward extends CommandGroup {
+public class DriveSequentialForwardCommand extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public DriveSequentialForward(double inches) {
+  public DriveSequentialForwardCommand(double inches) {
     // Add Commands here:
     // e.g. addSequential(new Command1());
     // addSequential(new Command2());
@@ -36,7 +36,7 @@ public class DriveSequentialForward extends CommandGroup {
     // arm.
   }
 
-  public DriveSequentialForward(double start, double end){
+  public DriveSequentialForwardCommand(double start, double end){
     addSequential(new WaitCommand(.1));
     addSequential(new DriveForwardCommand((int) Math.round(Math.abs(end - start) * RobotMap.encoderTicksPerInch)));
     addSequential(new DriveStopCommand());
