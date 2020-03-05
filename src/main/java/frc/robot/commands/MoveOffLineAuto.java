@@ -8,7 +8,6 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import edu.wpi.first.wpilibj.command.WaitCommand;
 import frc.robot.RobotMap;
 
 public class MoveOffLineAuto extends CommandGroup {
@@ -38,7 +37,7 @@ public class MoveOffLineAuto extends CommandGroup {
   }
   @Override 
   public void initialize() {
-    System.out.println("WE GOIN WE GOIN OFF THE LINE — AUTO START!");
+    System.out.println("++++++++++ AUTO INIT ++++++++++");
     super.initialize();
   }
 }
