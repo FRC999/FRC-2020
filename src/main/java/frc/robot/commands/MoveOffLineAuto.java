@@ -21,8 +21,8 @@ public class MoveOffLineAuto extends CommandGroup {
     // addSequential(new Command2());
     // these will run in order.
 
-    addSequential(new DriveSequentialZeroEncoders());
-    addSequential(new DriveSequentialForward(RobotMap.robotLength + 3));
+    addSequential(new DriveSequentialZeroEncodersCommand());
+    addSequential(new DriveSequentialForwardCommand(RobotMap.robotLength + 3));
 
     // To run multiple commands at the same time,
     // use addParallel()

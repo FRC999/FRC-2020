@@ -35,13 +35,13 @@ public class ShootAndRunAuto extends CommandGroup {
     }
 
     /* Robot shoots its pre-loaded balls */
-    addSequential(new DriveSequentialZeroEncoders());
+    addSequential(new DriveSequentialZeroEncodersCommand());
     if(shootingFromCenter == true) {
       if(yPositionIn == 228.59) {
         // — — — — PUT SHOOTING CODE (for sweetspot) HERE — — — —
       } else {
         if(startingRotation == 4 && yPositionIn > 228.59 || startingRotation == 2 && yPositionIn < 228.59){
-          addSequential(new DriveSequentialForward(228.59, yPositionIn));
+          addSequential(new DriveSequentialForwardCommand(228.59, yPositionIn));
           yPositionIn = 228.59;
         } else {System.out.println("Auto: Something's wrong with initial position");}
         // — — — — PUT SHOOTING CODE (for sweetspot) HERE — — — —
@@ -53,20 +53,20 @@ public class ShootAndRunAuto extends CommandGroup {
     /* Robot gets out of the way */
     switch(startingRotation) {
       case 1:
-        addSequential(new DriveSequentialTurn(-30));
+        addSequential(new DriveSequentialTurnCommand(-30));
         break;
       case 2:
-        addSequential(new DriveSequentialTurn(-120));
+        addSequential(new DriveSequentialTurnCommand(-120));
         break;
       case 3:
-        addSequential(new DriveSequentialTurn(120));
+        addSequential(new DriveSequentialTurnCommand(120));
         break;
       case 4:
-        addSequential(new DriveSequentialTurn(60));
+        addSequential(new DriveSequentialTurnCommand(60));
         break;
     }
-    addSequential(new DriveSequentialForward(80));
-    addSequential(new DriveSequentialTurn(-150));
+    addSequential(new DriveSequentialForwardCommand(80));
+    addSequential(new DriveSequentialTurnCommand(-150));
   }
 
   public ShootAndRunAuto(double startingYPosition, int initialRotation, boolean shootingFromCenter, double yPositionBuddy) {
@@ -78,13 +78,13 @@ public class ShootAndRunAuto extends CommandGroup {
     }
 
     /* Robot shoots its pre-loaded balls */
-    addSequential(new DriveSequentialZeroEncoders());
+    addSequential(new DriveSequentialZeroEncodersCommand());
     if(shootingFromCenter == true) {
       if(yPositionIn == 228.59) {
         // — — — — PUT SHOOTING CODE (for sweetspot) HERE — — — —
       } else {
         if(startingRotation == 4 && yPositionIn > 228.59 || startingRotation == 2 && yPositionIn < 228.59){
-          addSequential(new DriveSequentialForward(228.59, yPositionIn));
+          addSequential(new DriveSequentialForwardCommand(228.59, yPositionIn));
           yPositionIn = 228.59;
         } else {System.out.println("Auto: Something's wrong with initial position");}
         // — — — — PUT SHOOTING CODE (for sweetspot) HERE — — — —
@@ -97,54 +97,54 @@ public class ShootAndRunAuto extends CommandGroup {
     
     switch(startingRotation) {
        case 1:
-        addSequential(new DriveSequentialTurn(180));
+        addSequential(new DriveSequentialTurnCommand(180));
         break;
       case 2:
-        addSequential(new DriveSequentialTurn(90));
+        addSequential(new DriveSequentialTurnCommand(90));
         break;
        case 3:
         break;
        case 4:
-         addSequential(new DriveSequentialTurn(-90));
+         addSequential(new DriveSequentialTurnCommand(-90));
          break;
     }
     
-    addSequential(new DriveSequentialForward(50, xPositionIn));
+    addSequential(new DriveSequentialForwardCommand(50, xPositionIn));
     xPositionIn = 50;
 
     if(yPositionBuddy > yPositionIn) {
       /* Continues positioning */
-      addSequential(new DriveSequentialTurn(-90));
-      addSequential(new DriveSequentialForward(yPositionBuddy, yPositionIn));
+      addSequential(new DriveSequentialTurnCommand(-90));
+      addSequential(new DriveSequentialForwardCommand(yPositionBuddy, yPositionIn));
       yPositionIn = yPositionBuddy;
-      addSequential(new DriveSequentialTurn(-90));
+      addSequential(new DriveSequentialTurnCommand(-90));
 
       /* Robot pushes poor non-autonomous friend*/
-      addSequential(new DriveSequentialForward(xPositionIn * 3)); // 3 is a bit of an arbitrary multiplier; might be a good idea to test it
+      addSequential(new DriveSequentialForwardCommand(xPositionIn * 3)); // 3 is a bit of an arbitrary multiplier; might be a good idea to test it
 
       /* Robot positions itself for game start*/
-      addSequential(new DriveSequentialForward(-10));
-      addSequential(new DriveSequentialTurn(-90));
-      addSequential(new DriveSequentialForward(RobotMap.robotLength));
-      addSequential(new DriveSequentialTurn(-90));
-      addSequential(new DriveSequentialForward(RobotMap.robotLength));
+      addSequential(new DriveSequentialForwardCommand(-10));
+      addSequential(new DriveSequentialTurnCommand(-90));
+      addSequential(new DriveSequentialForwardCommand(RobotMap.robotLength));
+      addSequential(new DriveSequentialTurnCommand(-90));
+      addSequential(new DriveSequentialForwardCommand(RobotMap.robotLength));
 
     } else {
       /* Continues positioning */
-      addSequential(new DriveSequentialTurn(90));
-      addSequential(new DriveSequentialForward(yPositionBuddy, yPositionIn));
+      addSequential(new DriveSequentialTurnCommand(90));
+      addSequential(new DriveSequentialForwardCommand(yPositionBuddy, yPositionIn));
       yPositionIn = yPositionBuddy;
-      addSequential(new DriveSequentialTurn(90));
+      addSequential(new DriveSequentialTurnCommand(90));
 
       /* Robot pushes poor non-autonomous friend*/
-      addSequential(new DriveSequentialForward(xPositionIn * 3)); // 3 is a bit of an arbitrary multiplier; might be a good idea to test it
+      addSequential(new DriveSequentialForwardCommand(xPositionIn * 3)); // 3 is a bit of an arbitrary multiplier; might be a good idea to test it
 
       /* Robot positions itself for game start*/
-      addSequential(new DriveSequentialForward(-10));
-      addSequential(new DriveSequentialTurn(90));
-      addSequential(new DriveSequentialForward(RobotMap.robotLength));
-      addSequential(new DriveSequentialTurn(90));
-      addSequential(new DriveSequentialForward(RobotMap.robotLength));
+      addSequential(new DriveSequentialForwardCommand(-10));
+      addSequential(new DriveSequentialTurnCommand(90));
+      addSequential(new DriveSequentialForwardCommand(RobotMap.robotLength));
+      addSequential(new DriveSequentialTurnCommand(90));
+      addSequential(new DriveSequentialForwardCommand(RobotMap.robotLength));
     }
   }
 
