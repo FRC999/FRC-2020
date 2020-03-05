@@ -23,7 +23,7 @@ public class ShootAndRunAuto extends CommandGroup {
   /* Y position is distance from the far wall of the field -- the side with the other team's ball dispenser
       Field is 323.25 in tall
       228.59 when starting in the big shot zone
-      276.75 + RobotMap.robotLength / 2 when the front is aligned with the outer line of the trench
+      276.75 - RobotMap.robotLength / 2 (259.25) when the front is aligned with the outer line of the trench
       161.75 when the center of the robot is aligned with the center of the starting line*/
 
   public ShootAndRunAuto(double startingYPosition, int initialRotation, boolean shootingFromCenter) {
