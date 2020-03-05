@@ -31,6 +31,7 @@ public class SmartDashboardSubsystem extends Subsystem {
 
   public void updateShooterValues() {
     SmartDashboard.putNumber("Pan Encoder", Robot.shooterSubsystem.getpanEncoder());
+    SmartDashboard.putString("Target Side", Robot.shooterSubsystem.whichSide());
     //SmartDashboard.putNumber("Tilt Encoder", Robot.shooterSubsystem.gettiltEncoder());
   }
 
