@@ -25,6 +25,8 @@ public class MoveOffLineAuto extends CommandGroup {
     addSequential(new WaitCommand(0.1));
     addSequential(new DriveStopCommand());
     addSequential(new DriveForwardCommand(36 * RobotMap.encoderTicksPerInch));
+    System.out.println("Encoder Ticks Per Inch" + RobotMap.encoderTicksPerInch);
+    System.out.println("Value passed to Drive Forward Command: " + 36*RobotMap.encoderTicksPerInch);
     addSequential(new DriveStopCommand());
     addSequential(new WaitCommand(0.1));
 
