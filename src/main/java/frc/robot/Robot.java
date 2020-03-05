@@ -70,7 +70,7 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     
     //Set up shuffleboard
-    //shuffleBoardSubsystem.setupShuffleboard();
+    shuffleBoardSubsystem.setupShuffleboard();
 
 
     NetworkTableInstance ntInst = NetworkTableInstance.getDefault();
@@ -81,11 +81,11 @@ public class Robot extends TimedRobot {
     System.out.println("Hit robotInit");
 
     DigitalInput falconBotSwitch = new DigitalInput(RobotMap.falconBotSwitchPortNumber);
-    RobotMap.isFalconBot = !falconBotSwitch.get();
+    RobotMap.isFalconBot = falconBotSwitch.get();
     if(RobotMap.isFalconBot){
       driveSubsystem = new FalconDriveSubsystem();
-      // the IAmFalconBot method resets some RobotMap constants for the FalconBot chassis
-      driveSubsystem.IAmFalconBot();
+      // the IAmFalconBot method reset some RobotMap constants for the FalconBot chassis
+      // but the call to it was moved into the FalconDriveSubsystem constructor
       System.out.println("We're a FALCON");
     }
     else{
@@ -128,6 +128,7 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {
     shooterSubsystem.getpanEncoder();
+    smartDashboardSubsystem.updateAllDisplays();
   }
 
   /**
@@ -210,6 +211,9 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
     smartDashboardSubsystem.updateNavXValues();
+    smartDashboardSubsystem.updateEncoderValue();
+    System.out.println("Encoder: " + driveSubsystem.getRightEncoder());
+    
     //controlPanelSubsystem.putSeenColor();
   }
 

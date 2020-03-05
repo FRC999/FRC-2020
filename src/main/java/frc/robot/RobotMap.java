@@ -42,11 +42,11 @@ public class RobotMap {
   //shooter constants
   /* TODO: get a more accurate value for this */
   //public final static int shooterPanMotorEncoderTicksPerRotation = 3977;
-  public final static int shooterPanMotorEncoderTicksPerRotation = 178;
+  public  static int shooterPanMotorEncoderTicksPerRotation = 178;
   public final static int shooterXResolution = 640;
   public final static int shooterYResolution = 480; 
   public final static int shooterResolutionAcceptableError = 5;
-  public final static double shooterPanSpeed = -.1;
+  public  static double shooterPanSpeed = -.1;
 
   // Control panel constants
   // TODO: Get actual motor ID
@@ -94,7 +94,7 @@ public class RobotMap {
   public static double distanceFromWallTolerance = 20;
 /*
    * at around 1800 mm away, the raw value was 1471, while the converted mm value was 467; this is not the right factor.
-   * Therefore, the ideal conversion factorshould be between 1 and 1.5
+   * Therefore, the ideal conversion factor should be between 1 and 1.5
    * 4 consistent tests (mm/raw unit ratios of 1.255,1.22,1.276, and 1.25, discarding an 0.7058 from measurements 240/340)
    *  suggest the correct factor is around 1.25
    */
@@ -113,6 +113,7 @@ public class RobotMap {
   public static int acceleration = 2250;
   // Allowable error to exit movement methods
   public static int defaultAcceptableError = 1000;
+public static int neckMotor;
 
 
 
@@ -203,8 +204,29 @@ public class RobotMap {
   public final static int SLOT_1 = 1;
   public final static int SLOT_2 = 2;
   public final static int SLOT_3 = 3;
+public static final int hopperMotorPort = 0;
 
   // ---- End closed loop parameter constants ----
 
+  public static void IAmFalconBot() {
+    // How many encoder clicks per revolution (change to 2048 for falcon 500
+    // encoders)
+    encoderUnitsPerShaftRotation = 2048;
+    // with 6 in wheels estimate 10 feet = 13038 encoder ticks
+
+    // The difference between the left and right side encoder values when the robot
+    // is rotated 180 degrees
+    encoderUnitsPerRobotRotation = 3925;// thats the SUM of the two (this is just a rough guess)
+    //these values are just guesses at the moment
+    cruiseVelocity = 2250;
+    acceleration = 2250;
+    // Allowable error to exit movement methods
+    defaultAcceptableError = 250;
+
+    shooterPanMotorEncoderTicksPerRotation = 3977;
+    //TODO: may need to be negative if turns the wrong way
+    shooterPanSpeed = 1;
+    System.out.println("I AM FALCONBOT! CACAW! CACAAAAAWWWWW!");
+  } 
 
 }
