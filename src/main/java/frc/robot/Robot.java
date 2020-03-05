@@ -11,10 +11,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.DriveManuallyCommand;
 import frc.robot.commands.RealSmartAutoCommand;
 import frc.robot.subsystems.ClimberSubsystem;
@@ -82,6 +79,7 @@ public class Robot extends TimedRobot {
 
     DigitalInput falconBotSwitch = new DigitalInput(RobotMap.falconBotSwitchPortNumber);
     RobotMap.isFalconBot = falconBotSwitch.get();
+    System.out.println("falconBotSwitch = "+ RobotMap.isFalconBot);
     if(RobotMap.isFalconBot){
       driveSubsystem = new FalconDriveSubsystem();
       // the IAmFalconBot method reset some RobotMap constants for the FalconBot chassis
@@ -102,7 +100,6 @@ public class Robot extends TimedRobot {
 
     // after testing run only the second configure method
     Robot.driveSubsystem.configureDriveTrainControllersForSimpleMagic();
-    //Robot.driveSubsystem.configureDriveTrainControllersForAuxClosedLoopPID();
 
     Robot.driveSubsystem.zeroDriveEncoders();
     Robot.driveSubsystem.driveTrainBrakeMode();
@@ -189,16 +186,11 @@ public class Robot extends TimedRobot {
   public void teleopInit() {
 
     driveSubsystem.driveTrainBrakeMode();
-    //ShuffleboardTab displays = Shuffleboard.getTab("Displays");
-    //Shuffleboard.selectTab("Displays");
-    //Shuffleboard.getTab("Displays")
-    // .add("PiTest", 3.14);
+    
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
-
-
     if (autonomousCommand != null) {
       autonomousCommand.cancel();
     }
@@ -212,7 +204,6 @@ public class Robot extends TimedRobot {
     Scheduler.getInstance().run();
     smartDashboardSubsystem.updateNavXValues();
     smartDashboardSubsystem.updateEncoderValue();
-    System.out.println("Encoder: " + driveSubsystem.getRightEncoder());
     
     //controlPanelSubsystem.putSeenColor();
   }
