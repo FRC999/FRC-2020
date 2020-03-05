@@ -7,23 +7,21 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-
-public class IntakeDownCommand extends Command {
-  public IntakeDownCommand() {
+public class ShooterTiltToggleCommand extends Command {
+  public ShooterTiltToggleCommand() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.intakeSubsystem);
+    requires(Robot.shooterSubsystem);
+
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.intakeSubsystem.SetIntakeSolenoid(Value.kForward);
-    Robot.intakeSubsystem.loader(0.5);
-    
+
+    Robot.shooterSubsystem.tiltFangDeployToggle();
   }
 
   // Called repeatedly when this Command is scheduled to run
