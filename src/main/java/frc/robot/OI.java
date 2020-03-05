@@ -59,7 +59,7 @@ public class OI {
     setControlPanelPositionButton.whenPressed(new ControlPanelMoveToTargetCommand(3.5));
     moveControlPanelAlongColorPathButton.whenPressed(new ControlPanelMoveTargetColorCommand());
     shooterManualControlButton.whenPressed(new ShootManuallyCommand());
-    moveOffLineAutoButton.whenPressed(new MoveOffLineAuto());
+    moveOffLineAutoButton.whenPressed(new ShootAndPushFriendAuto(228.59, 1, true, 190));
 
     ShooterTiltGoToSetpointButton.whenPressed(new ShooterTiltGoToSetpointCommand());   
     shooterFangsTestButton.whileActive(new ShooterTestFangsCommand());
