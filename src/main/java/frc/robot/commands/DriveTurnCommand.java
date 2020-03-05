@@ -39,7 +39,6 @@ public class DriveTurnCommand extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    //Robot.driveSubsystem.driveTrainBrakeMode();
     TalonDriveSubsystem.drive.setSafetyEnabled(false);
     //NOTE: This is *not* configured to work with the NavX anymore: it is purely based on encoder tics
     //We could (and maybe should) rewrite it to use the NavX as an auxiliary input for more accuracy.
@@ -58,16 +57,12 @@ public class DriveTurnCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    // Robot.driveSubsystem.feed();
     Robot.smartDashboardSubsystem.updateEncoderValue();
-    //SmartDashboard.putNumber("leftTarget",leftTarget);
-    //SmartDashboard.putNumber("RightTarget", rightTarget);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    //return Robot.driveSubsystem.isOnTarget(leftTarget,rightTarget,100);
     return Robot.driveSubsystem.isOnTarget(leftTarget,rightTarget,100, targetHeading);
   }
 

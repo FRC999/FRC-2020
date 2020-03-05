@@ -10,30 +10,28 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-
-public class IntakeReverseCommand extends Command {
-  public IntakeReverseCommand() {
+public class ShooterTiltGoToSetpointCommand extends Command {
+  public ShooterTiltGoToSetpointCommand() {
     // Use requires() here to declare subsystem dependencies
-    requires(Robot.intakeSubsystem);
-  
+    // eg. requires(chassis);
+    requires(Robot.shooterSubsystem);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.intakeSubsystem.intake(-0.5);
+    Robot.shooterSubsystem.tiltGoToSetpoint();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return true;
+    return false;
   }
 
   // Called once after isFinished returns true
@@ -45,6 +43,5 @@ public class IntakeReverseCommand extends Command {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    Robot.intakeSubsystem.intake(0);
   }
 }

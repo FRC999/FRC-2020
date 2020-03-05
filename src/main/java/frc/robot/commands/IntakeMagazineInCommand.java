@@ -9,7 +9,6 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.subsystems.IntakeSubsystem;
 
 public class IntakeMagazineInCommand extends Command {
   public IntakeMagazineInCommand() {
@@ -21,18 +20,19 @@ public class IntakeMagazineInCommand extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    Robot.intakeSubsystem.magazine(0.5);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.intakeSubsystem.magazine(0.5);
+   
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return true;
   }
 
   // Called once after isFinished returns true
@@ -44,5 +44,6 @@ public class IntakeMagazineInCommand extends Command {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    Robot.intakeSubsystem.magazine(0);
   }
 }

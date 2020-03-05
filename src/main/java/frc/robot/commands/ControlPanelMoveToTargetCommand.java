@@ -34,7 +34,7 @@ Robot.controlPanelSubsystem.zeroEncoder();
   protected void execute() {
 
     
-      Robot.controlPanelSubsystem.moveTalonInDirection(targetTicks);
+      Robot.controlPanelSubsystem.moveTalonInDirection(targetTicks,0.5);
 
 
   }

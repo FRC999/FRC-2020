@@ -30,9 +30,10 @@ public class SmartDashboardSubsystem extends Subsystem {
   }
 
   public void updateShooterValues() {
-    SmartDashboard.putNumber("Pan Encoder", Robot.shooterSubsystem.getpanEncoder());
     SmartDashboard.putString("Target Side", Robot.shooterSubsystem.whichSide());
     //SmartDashboard.putNumber("Tilt Encoder", Robot.shooterSubsystem.gettiltEncoder());
+    SmartDashboard.putNumber("Pan Encoder", Robot.shooterSubsystem.getPanEncoder());
+    SmartDashboard.putNumber("Tilt Pot", Robot.shooterSubsystem.getTiltPot());
   }
 
   public void updateEncoderValue() {
@@ -64,7 +65,14 @@ public class SmartDashboardSubsystem extends Subsystem {
     if (Robot.controlPanelSubsystem.getSuspectedColor() != null) {
       SmartDashboard.putString("SuspectedColor: ", Robot.controlPanelSubsystem.getSuspectedColor().toString());
     }
+    SmartDashboard.putString("testColors",Robot.controlPanelSubsystem.getGameTargetColor().getName()); // "want "+Robot.controlPanelSubsystem.getGameTargetColor().getName() +" now " +  Robot.controlPanelSubsystem.getSuspectedColor(Robot.controlPanelSubsystem.getSeenColor()).getName()
  
+  }
+
+  public void stackTrace(String s)
+  {
+    if (s != null)
+    SmartDashboard.putString("print stack trace", s);
   }
 
   public void updateMatchTimeAndBatteryVoltage() {
@@ -75,7 +83,7 @@ public class SmartDashboardSubsystem extends Subsystem {
   public void updateAllDisplays() {
     updateNavXValues();
     updateUltrasonicValues();
-    //updateControlPanelValues();
+    updateControlPanelValues();
     updateMatchTimeAndBatteryVoltage();
     updateEncoderValue();
   }

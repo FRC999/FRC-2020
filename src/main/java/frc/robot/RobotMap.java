@@ -7,8 +7,6 @@
 
 package frc.robot;
 
-import com.ctre.phoenix.motorcontrol.can.BaseTalon;
-
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
  * to a variable name. This provides flexibility changing wiring, makes checking
@@ -18,6 +16,12 @@ import com.ctre.phoenix.motorcontrol.can.BaseTalon;
 public class RobotMap {
   // For example to map the left and right motors, you could define the
   // following variables to use with your drivetrain subsystem.
+
+  // Autonomous constants
+  public static int robotLength = 18;
+  public static int robotWidth = 33;
+  public static int encoderTicksPerInch = 326;
+  
 
   // Drivetrain Motor Controllers
   public final static int frontLeftDriveMotorControllerID = 1;
@@ -37,7 +41,7 @@ public class RobotMap {
 //  public final static int shooterPanMotorControllerID = 21;
   public final static int ShooterTiltMotorControllerID = 20;
 
-  public final static int shooterPanMotorControllerID = 22;
+  public final static int shooterPanMotorControllerID = 22;//TODO:being used to test diskspinner
 
   //shooter constants
   /* TODO: get a more accurate value for this */
@@ -48,13 +52,18 @@ public class RobotMap {
   public final static int shooterResolutionAcceptableError = 5;
   public  static double shooterPanSpeed = -.1;
 
+
+  public static int shooterTiltMotorTicksPerRotation = 178;
+  public static double tiltFangsUpperLimit = 140;
+  public static double tiltFangsLowerLimit = -570;
+
   // Control panel constants
   // TODO: Get actual motor ID
-  public static final int diskSpinnerMotorControllerID = 31;
+  public static final int diskSpinnerMotorControllerID = 22;// 31;//TODO: change back after testing
   //quadrature motor controller ticks per revolution
   public static final int quadratureEncoderTicksPerRev = 178;
   // diameter of the wheel which spins the control panel wheel, in cm
-  public static final double diskSpinnerDiameter = 81.28;
+  public static final double diskSpinnerDiameter = 10.16;
   // diameter of the control panel disk in cm
   public static final double controlPanelDiameter = 81.28;
   /** factor to indicate the direction on the motor that the encoder ticks are positive. If clockwise, keep 1; if counterclockwise, change to -1. */
@@ -66,6 +75,11 @@ public class RobotMap {
   // Driver Input Devices
   public final static int leftJoystickPort = 0;
   public final static int buttonBoxPort = 1;
+  public final static int rightJoystickPort = 2;
+  public final static double deadbandX = 0.1;
+  public final static double deadbandY = 0.1;
+  public final static double deadbandZ = 0.1;
+  
 
   // PCM forward, reverse channels for doubleSolenoids
   public static int ColorWheelSolenoidForwardChannel = 0;
@@ -101,6 +115,7 @@ public class RobotMap {
   public static double ultrasonicValueToMMConversionFactor = 1.25;
   public static int falconBotSwitchPortNumber = 0;
   public static boolean isFalconBot;
+  public static boolean isSplitStick;
 
   // How many encoder clicks per revolution (change to 2048 for falcon 500
   // encoders)
@@ -113,7 +128,7 @@ public class RobotMap {
   public static int acceleration = 2250;
   // Allowable error to exit movement methods
   public static int defaultAcceptableError = 1000;
-public static int neckMotor;
+  public static int neckMotor;
 
 
 
@@ -157,8 +172,7 @@ public static int neckMotor;
   public final static double PeakOutput_0 = 1;
 
   // Closed loop Aux PID parameter values
-  public final static double P_1 = 0.75 * fullMotorOutput / encoderUnitsPerShaftRotation; // 75% motor output when
-                                                                                          // error = one rotation
+  public final static double P_1 = 0.75 * fullMotorOutput / encoderUnitsPerShaftRotation; // 75% motor output when error = one rotation
   public final static double I_1 = 0.005 * fullMotorOutput / encoderUnitsPerShaftRotation;
   public final static double D_1 = 0.1;
   public final static double F_1 = 0.227; // just a guesstimate
@@ -188,6 +202,19 @@ public static int neckMotor;
   public final static double pixelsPerDegreeX = 12;  //based on lifecam having a 53 degree viewing angle and 640 horizontal pixels
   
 // END of pan pid code
+
+//Tilt Motor Pid Code
+    public final static double P_TILT = 0.01;
+    public final static double I_TILT = 0.1;
+    public final static double D_TILT = .01;
+    public final static double F_TILT = 0.1; // just a guesstimate
+    public final static int Izone_TILT = 500;
+    public static int tiltCruiseVelocity = 50;
+    // MotionMagic curve smoothing parameter [0 - 8]
+    public static int tiltAcceleration = 50;
+    // Allowable error to exit movement methods
+    public static int tiltDefaultAcceptableError = 2;
+    public final static int PID_TILT = 0;
 
 
   // ---- Flat constants, you should not need to change these ----
@@ -226,6 +253,19 @@ public static final int hopperMotorPort = 0;
     shooterPanMotorEncoderTicksPerRotation = 3977;
     //TODO: may need to be negative if turns the wrong way
     shooterPanSpeed = 1;
+
+    shooterTiltMotorTicksPerRotation = 1024;   //Analog potentiometer 1024 units per rotation.
+    tiltFangsUpperLimit = 720; //Random Value
+    tiltFangsLowerLimit = 0; //Random Value
+
+
+    //For Encoders: 10 FT = 149083 Encoder units
+    //1 FT = 14908 Units
+    //1 Inch = 1242 Units
+    encoderTicksPerInch = 1242;
+    robotLength = 35;
+    robotWidth = 23;
+    
     System.out.println("I AM FALCONBOT! CACAW! CACAAAAAWWWWW!");
   } 
 

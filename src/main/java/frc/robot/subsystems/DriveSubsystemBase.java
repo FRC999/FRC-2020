@@ -8,7 +8,6 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.StatusFrame;
@@ -17,7 +16,6 @@ import com.ctre.phoenix.motorcontrol.can.BaseTalon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.commands.DriveManuallyCommand;
 
@@ -40,12 +38,45 @@ public abstract class DriveSubsystemBase extends Subsystem {
 
   DriveSubsystemBase(){
 	  super();
-	  System.out.println("Made a DriveSubsystem");
+    System.out.println("Made a DriveSubsystem");
   }
 
-  public void manualDrive(double move, double turn) {
-	  drive.arcadeDrive(move, turn);
+  public  double deadbandMove(double move) {
+    if (Math.abs(move) >= RobotMap.deadbandY){
+      if (move > 0) {
+        move = (move - RobotMap.deadbandY) /(1-RobotMap.deadbandY); 
+      }
+      else{
+        move = (move + RobotMap.deadbandY) /(1-RobotMap.deadbandY);  
+      }
+    }
+    else {
+      move = 0;
+    } 
+    return move;
   }
+  
+public  double deadbandTurn(double turn) {
+  if (Math.abs(turn) >= RobotMap.deadbandX){
+    if (turn > 0) {
+      turn = (turn - RobotMap.deadbandX) /(1-RobotMap.deadbandX); 
+    }
+    else{
+      turn = (turn + RobotMap.deadbandX) /(1-RobotMap.deadbandX);  
+    }
+  }
+  else {
+    turn = 0;
+  } 
+  return turn;
+}
+
+  public void manualDrive(double move, double turn) {
+	  drive.arcadeDrive(deadbandMove(move), deadbandTurn(turn));
+  }
+
+
+
 
   public void zeroDriveEncoders() {
     frontLeftDriveMotorController.setSelectedSensorPosition(0);
@@ -53,7 +84,8 @@ public abstract class DriveSubsystemBase extends Subsystem {
     frontLeftDriveMotorController.setNeutralMode(NeutralMode.Coast);
     backLeftDriveMotorController.setNeutralMode(NeutralMode.Coast);
     frontRightDriveMotorController.setNeutralMode(NeutralMode.Coast);
-    backRightDriveMotorController.setNeutralMode(NeutralMode.Coast);  }
+    backRightDriveMotorController.setNeutralMode(NeutralMode.Coast);  
+  }
 
   public int getLeftEncoder() {
     return frontLeftDriveMotorController.getSelectedSensorPosition();
@@ -69,29 +101,20 @@ public abstract class DriveSubsystemBase extends Subsystem {
   public int getRightEncoder() {
     return frontRightDriveMotorController.getSelectedSensorPosition();
   }
-  /*
-  // encoder positions for aux closed loop PID (driving straight)
-  public int getHeadingPosition() {
-    return frontRightDriveMotorController.getSelectedSensorPosition(1);
-  }
-  
-  public int getDistancePosition() {
-    return frontRightDriveMotorController.getSelectedSensorPosition(0);
-  }
-  */
+
   public void DriveTrainCoastMode() {
     frontLeftDriveMotorController.setNeutralMode(NeutralMode.Coast);
     backLeftDriveMotorController.setNeutralMode(NeutralMode.Coast);
     frontRightDriveMotorController.setNeutralMode(NeutralMode.Coast);
     backRightDriveMotorController.setNeutralMode(NeutralMode.Coast);
   }
+
   /**
    * Sets the talons to our preferred defaults
    * We are going away from controller-groups, and back to master-slave
    * Call this in robot-init: it preforms basic setup for ArcadeDrive
    */
   public void resetDriveTrainControllers() {
-	  //System.out.println("Hit  resetDriveTrainControllers");
     frontLeftDriveMotorController.configFactoryDefault();
     backLeftDriveMotorController.configFactoryDefault();
     frontRightDriveMotorController.configFactoryDefault();
@@ -132,7 +155,6 @@ public abstract class DriveSubsystemBase extends Subsystem {
    */
   public abstract void configureEncoders();
 
-  // replace with configure controllers for aux closed loop PID when ready
   public void configureDriveTrainControllersForSimpleMagic(){
     /* Set status frame periods to ensure we don't have stale data */
     frontRightDriveMotorController.setStatusFramePeriod(StatusFrame.Status_13_Base_PIDF0, 20, RobotMap.configureTimeoutMs);
@@ -192,8 +214,8 @@ public abstract class DriveSubsystemBase extends Subsystem {
       frontLeftDriveMotorController.configMotionCruiseVelocity(RobotMap.cruiseVelocity, RobotMap.configureTimeoutMs);
       frontLeftDriveMotorController.configMotionSCurveStrength(RobotMap.smoothing);
 
-      frontRightDriveMotorController.configMotionAcceleration(RobotMap.acceleration, RobotMap.configureTimeoutMs);
-    frontRightDriveMotorController.configMotionCruiseVelocity(RobotMap.cruiseVelocity, RobotMap.configureTimeoutMs);
+    frontRightDriveMotorController.configMotionAcceleration(RobotMap.acceleration, RobotMap.configureTimeoutMs);
+      frontRightDriveMotorController.configMotionCruiseVelocity(RobotMap.cruiseVelocity, RobotMap.configureTimeoutMs);
       frontRightDriveMotorController.configMotionSCurveStrength(RobotMap.smoothing);
 
   } // End configureDriveTrainControllersForSimpleMagic
@@ -210,18 +232,9 @@ public abstract class DriveSubsystemBase extends Subsystem {
   }
 
   public boolean isOnTarget(int leftEncoderTarget, int rightEncoderTarget, int acceptableError){
-	// stuff parameters and call again (-200 is an impossible heading)
-    return isOnTarget(leftEncoderTarget, rightEncoderTarget, acceptableError, -200);
-  }
-  
-  public boolean isOnTarget(int leftEncoderTarget, int rightEncoderTarget, int acceptableError, double targetHeading){
+    // stuff parameters and call again (-200 is an impossible heading)
     int leftError = Math.abs(leftEncoderTarget - getLeftEncoder());
 	  int rightError = Math.abs(rightEncoderTarget - getRightEncoder());
-	  if (targetHeading != -200){
-		  double headingError = Math.abs(Robot.navXSubsystem.getYaw()) - Math.abs(targetHeading);
-		  //just show angle error for now to get an idea of if thee is an issue.
-		  SmartDashboard.putNumber("Error Heading", headingError);
-	  }
 	  SmartDashboard.putNumber("Error L", leftError);
 	  SmartDashboard.putNumber("Error R", rightError);
     if(leftError <= acceptableError && rightError <= acceptableError){
@@ -233,7 +246,11 @@ public abstract class DriveSubsystemBase extends Subsystem {
 	  else{
 		  wasOnTarget=false;
 	  }
-	  return false;
+    return false;
+  }
+  
+  public boolean isOnTarget(int leftEncoderTarget, int rightEncoderTarget, int acceptableError, double targetHeading){
+    return isOnTarget(leftEncoderTarget, rightEncoderTarget, acceptableError);
   }
   
   public boolean isOnTargetMagicMotion(int driveTarget, int acceptableError){
@@ -260,8 +277,6 @@ public abstract class DriveSubsystemBase extends Subsystem {
     frontRightDriveMotorController.setNeutralMode(NeutralMode.Brake);
     backRightDriveMotorController.setNeutralMode(NeutralMode.Brake);
   }
-
-  
 
   @Override
   public void initDefaultCommand() {

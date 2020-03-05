@@ -21,7 +21,7 @@ public class ShootManuallyCommand extends Command {
   public double panVal() {
     double pan = 0;
       if (Robot.oi.leftJoystick.getZ() > 0) { // Panning right (clockwise)
-      if (Robot.shooterSubsystem.getpanEncoder() >= 1406) {
+      if (Robot.shooterSubsystem.getPanEncoder() >= 1406) {
     pan = 0;
     return pan;
       } else {
@@ -29,8 +29,8 @@ public class ShootManuallyCommand extends Command {
         return pan;
       }
     } else { //Panning left (counterclockwise)
-      if (Robot.shooterSubsystem.getpanEncoder() > 435) {
-        if (Robot.shooterSubsystem.getpanEncoder() <= 3340) {
+      if (Robot.shooterSubsystem.getPanEncoder() > 435) {
+        if (Robot.shooterSubsystem.getPanEncoder() <= 3340) {
          pan = 0;
         return pan;
         }
@@ -45,7 +45,6 @@ public class ShootManuallyCommand extends Command {
   @Override
   protected void initialize() {
     //set shooter wheel to full speed
-    Robot.shooterSubsystem.shoot(1);
   }
 
   // Called repeatedly when this Command is scheduled to run
