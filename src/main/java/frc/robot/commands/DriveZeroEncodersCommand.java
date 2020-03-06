@@ -28,7 +28,7 @@ public class DriveZeroEncodersCommand extends Command {
   @Override
   protected void execute() {
     Robot.driveSubsystem.zeroDriveEncoders();
-    System.out.println("Zeroed Encoders Again");
+   // System.out.println("Zeroed Encoders Again");
   }
 
   // Make this return true when this Command no longer needs to run execute()

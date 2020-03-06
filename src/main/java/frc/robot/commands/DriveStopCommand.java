@@ -27,8 +27,8 @@ public class DriveStopCommand extends Command {
   @Override
   protected void execute() {
     Robot.driveSubsystem.manualDrive(0, 0);
-    System.out.println("HALT!");
-    System.out.println(Robot.driveSubsystem.getLeftEncoder() + "  " + Robot.driveSubsystem.getRightEncoder());
+ //   System.out.println("HALT!");
+  //  System.out.println(Robot.driveSubsystem.getLeftEncoder() + "  " + Robot.driveSubsystem.getRightEncoder());
   }
 
   // Make this return true when this Command no longer needs to run execute()

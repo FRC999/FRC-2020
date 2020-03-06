@@ -28,7 +28,7 @@ public class ControlPanelZeroEncoderCommand extends Command {
   @Override
   protected void execute() {
     Robot.controlPanelSubsystem.zeroEncoder();
-    System.out.println("Zeroed control panel encoder Again");
+   // System.out.println("Zeroed control panel encoder Again");
   }
 
   // Make this return true when this Command no longer needs to run execute()
