@@ -137,6 +137,15 @@ public class ShooterSubsystem extends Subsystem {
     panMotorController.set(ControlMode.PercentOutput, deadbandPan(pan));
   }
 
+  /** do not use in a context in which it would be outside the encoder values 0-1406. Boolean indicates whether it is. */
+  public boolean panToRobotFront()
+  { boolean retVal =false;
+    if ((getPanEncoder() <1406) && ( getPanEncoder() >0) )
+    {panMotorController.set(ControlMode.MotionMagic, 435);
+    retVal = true;}
+    return retVal;
+  }
+
   /**
    * gets the x-value of the center of the object the camera is looking at. 640 is
    * the maximum; if it returns 1000, the pi is not posting to networktables.

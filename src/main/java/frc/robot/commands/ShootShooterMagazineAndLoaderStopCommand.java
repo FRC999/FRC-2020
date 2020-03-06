@@ -5,25 +5,27 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
+
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class IntakeDownCommand extends Command {
-  public IntakeDownCommand() {
+
+public class ShootShooterMagazineAndLoaderStopCommand extends Command {
+  public ShootShooterMagazineAndLoaderStopCommand() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(Robot.intakeSubsystem);
+    requires(Robot.shooterSubsystem);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.intakeSubsystem.SetIntakeSolenoid(Value.kForward);
-    Robot.intakeSubsystem.loader(0.5);
-    
+Robot.intakeSubsystem.loader(0);
+Robot.intakeSubsystem.magazine(0);
+Robot.shooterSubsystem.standby();
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -46,6 +48,5 @@ public class IntakeDownCommand extends Command {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-   
   }
 }

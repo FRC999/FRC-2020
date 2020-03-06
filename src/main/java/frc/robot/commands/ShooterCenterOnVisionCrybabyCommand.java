@@ -44,7 +44,7 @@ public class ShooterCenterOnVisionCrybabyCommand extends Command {
       case "Left" : {
         pos = ShooterSubsystem.panMotorController.getSelectedSensorPosition()+3;
         ShooterSubsystem.panMotorController.set(ControlMode.Position, pos);
-        System.out.println("TARGET LEFT OF CENTER");
+        //System.out.println("TARGET LEFT OF CENTER");
         loc = "Left";
         locExact = Robot.shooterSubsystem.getX();
         counter = 0;
@@ -52,7 +52,7 @@ public class ShooterCenterOnVisionCrybabyCommand extends Command {
       break;
       case "Center" : {
         ShooterSubsystem.panMotorController.set(0);
-        System.out.println("TARGET IN CENTER");
+      //  System.out.println("TARGET IN CENTER");
         loc = "Center";
         locExact = Robot.shooterSubsystem.getX();
         counter+=1;
@@ -61,7 +61,7 @@ public class ShooterCenterOnVisionCrybabyCommand extends Command {
       case "Right" : {
         pos = ShooterSubsystem.panMotorController.getSelectedSensorPosition()-3;
         ShooterSubsystem.panMotorController.set(ControlMode.Position, pos);
-        System.out.println("TARGET RIGHT OF CENTER");
+      //  System.out.println("TARGET RIGHT OF CENTER");
         loc = "Right";
         locExact = Robot.shooterSubsystem.getX();
         counter = 0;
@@ -69,14 +69,14 @@ public class ShooterCenterOnVisionCrybabyCommand extends Command {
       break;
       case "Out Of Bounds" : {
         ShooterSubsystem.panMotorController.set(0);
-        System.out.println("TARGET OUT OF BOUNDS");
+      //  System.out.println("TARGET OUT OF BOUNDS");
         loc = "Out Of Bounds";
         locExact = Robot.shooterSubsystem.getX();
         counter = 0;
       }
       default : {
         ShooterSubsystem.panMotorController.set(0);
-        System.out.println("DEFAULT");
+      //  System.out.println("DEFAULT");
         loc = "Default";
         locExact = Robot.shooterSubsystem.getX();
         counter = 0;
@@ -99,7 +99,7 @@ public class ShooterCenterOnVisionCrybabyCommand extends Command {
     if(loc == "Center" && counter >= counterNum) {
       state = true;
     }
-    System.out.println("FINISHED TRACKING");
+  //  System.out.println("FINISHED TRACKING");
     return state;
   }
 
@@ -112,5 +112,6 @@ public class ShooterCenterOnVisionCrybabyCommand extends Command {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    ShooterSubsystem.panMotorController.set(0);
   }
 }

@@ -7,23 +7,17 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.Robot;
 
-public class IntakeDownCommand extends Command {
-  public IntakeDownCommand() {
+public class ShooterTiltFloorCommand extends Command {
+  public ShooterTiltFloorCommand() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.intakeSubsystem);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.intakeSubsystem.SetIntakeSolenoid(Value.kForward);
-    Robot.intakeSubsystem.loader(0.5);
-    
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -34,7 +28,7 @@ public class IntakeDownCommand extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return true;
+    return false;
   }
 
   // Called once after isFinished returns true
@@ -46,6 +40,5 @@ public class IntakeDownCommand extends Command {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-   
   }
 }

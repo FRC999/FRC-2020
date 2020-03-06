@@ -22,6 +22,7 @@ public class IntakeUpCommand extends Command {
   @Override
   protected void initialize() {
     Robot.intakeSubsystem.SetIntakeSolenoid(Value.kReverse); 
+    Robot.intakeSubsystem.intake(0);
   }
 
   // Called repeatedly when this Command is scheduled to run
