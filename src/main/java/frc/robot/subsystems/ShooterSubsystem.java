@@ -15,9 +15,9 @@ import frc.robot.commands.ShootManuallyCommand;
 
 public class ShooterSubsystem extends Subsystem {
 
-  static WPI_TalonSRX shooterMotorController = new WPI_TalonSRX(RobotMap.shooterWheelMotorControllerID);
+  public static WPI_TalonSRX shooterMotorController = new WPI_TalonSRX(RobotMap.shooterWheelMotorControllerID);
   public static WPI_TalonSRX panMotorController = new WPI_TalonSRX(RobotMap.shooterPanMotorControllerID);
-  static WPI_TalonSRX tiltMotorController = new WPI_TalonSRX(RobotMap.ShooterTiltMotorControllerID);
+  public static WPI_TalonSRX tiltMotorController = new WPI_TalonSRX(RobotMap.ShooterTiltMotorControllerID);
 
   // double shooterSpeed = 0.5;
 
@@ -308,7 +308,7 @@ public void configureTiltMotorControllerForMagic(){
     if (getTiltPot() >= RobotMap.tiltFangsLowerLimit &&  getTiltPot() <= RobotMap.tiltFangsUpperLimit) {
       maxSpeed = 0.25;
     }
-    double output = (Robot.oi.leftJoystick.getThrottle()*1) * maxSpeed;
+    double output = (Robot.oi.leftJoystick.getThrottle()*-1) * maxSpeed;
     Robot.smartDashboardSubsystem.updateShooterValues();
    // System.out.println(output);
     tiltMotorController.set(ControlMode.PercentOutput, output);

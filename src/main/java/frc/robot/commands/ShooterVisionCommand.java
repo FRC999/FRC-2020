@@ -26,6 +26,9 @@ public class ShooterVisionCommand extends Command {
   @Override
   protected void initialize() {
     counter = 0;
+    loc = "";
+    bounds = false;
+    side = "";
   }
 
   public static int getCounter() {

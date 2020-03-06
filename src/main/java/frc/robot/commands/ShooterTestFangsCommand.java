@@ -11,27 +11,33 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
 public class ShooterTestFangsCommand extends Command{
+  public int c = 0;
   public ShooterTestFangsCommand(){
-
   }
   @Override
   protected void initialize(){
- 
+    c = 0;
   }
 
   @Override
   protected void execute(){
       Robot.shooterSubsystem.testTiltFangs();
+      c++;
   }
 
 
   @Override
   protected boolean isFinished(){
-      return true;
+    boolean t = false;  
+    if (c >= 1) {
+        t = true;
+      }
+      return t;
   }
 
   @Override
   protected void end() {
+    Robot.shooterSubsystem.tiltMotorController.set(0);
   }
 
   // Called when another command which requires one or more of the same
