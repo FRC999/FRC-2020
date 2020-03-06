@@ -17,7 +17,7 @@ public class ShooterVisionCommand extends Command {
     requires(Robot.shooterSubsystem);
   }
   public String loc = "";
-  public int counter = 0;
+  public static int counter = 0;
   public int counterNum = 5;
   public boolean bounds = false;
   public String side = "";
@@ -28,6 +28,9 @@ public class ShooterVisionCommand extends Command {
     counter = 0;
   }
 
+  public static int getCounter() {
+    return counter;
+  }
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
@@ -87,7 +90,7 @@ public class ShooterVisionCommand extends Command {
   @Override
   protected boolean isFinished() {
     boolean state = false;
-    if (counter >= 3) {
+    if (counter >= counterNum) {
       System.out.println("FINISHED TRACKING");
       state = true;
     }

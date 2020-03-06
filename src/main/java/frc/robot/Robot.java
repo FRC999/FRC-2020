@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import frc.robot.commands.DriveManuallyCommand;
 import frc.robot.commands.RealSmartAutoCommand;
+import frc.robot.commands.ShooterVisionCommand;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.ControlPanelSubsystem;
 import frc.robot.subsystems.DriveSubsystemBase;
@@ -46,6 +47,7 @@ public class Robot extends TimedRobot {
   public static IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   public static ControlPanelSubsystem controlPanelSubsystem = new ControlPanelSubsystem();
   public static ShuffleboardSubsystem shuffleBoardSubsystem = new ShuffleboardSubsystem();
+  public static Command visionCommand = new ShooterVisionCommand();
 
   
   public boolean TestBool = false;
@@ -124,7 +126,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
-    shooterSubsystem.getpanEncoder();
+    shooterSubsystem.getPanEncoder();
     smartDashboardSubsystem.updateAllDisplays();
   }
 
@@ -136,6 +138,7 @@ public class Robot extends TimedRobot {
   @Override
   public void disabledInit() {
     driveSubsystem.DriveTrainCoastMode();
+    visionCommand.cancel();
     //controlPanelSubsystem.stopTalon();
   }
 

@@ -169,22 +169,15 @@ public class ShooterSubsystem extends Subsystem {
     return (getY() - (RobotMap.shooterXResolution / 2));
   }
 
-  public boolean getCenteredX() {
-    boolean retVal = false;
-    if (Math.abs(differenceFromMiddleX()) <= RobotMap.shooterResolutionAcceptableError) {
-      retVal = true;
-    }
-    return retVal;
-  }
-
   public String whichSide() {
     String state = "";
-    if (!getCenteredX() && getX() != 1000) {
-      if (getX() <= ((RobotMap.shooterXResolution / 2) - (RobotMap.shooterResolutionAcceptableError))) { // 310
+    if (getX() != 1000) {
+      state = "Center";
+      if (getX() <= (RobotMap.allowableLeft)) { // 310
         state = "Left";
-      } else if (getX() >= ((RobotMap.shooterXResolution / 2) + (RobotMap.shooterResolutionAcceptableError))) { // 330
+      } else if (getX() >= (RobotMap.allowableRight)) { // 330
         state = "Right";
-      } else {
+      } else if (getX() > RobotMap.allowableLeft && getX() < RobotMap.allowableRight) {
         state = "Center";
       }
     }

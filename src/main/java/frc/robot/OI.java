@@ -66,9 +66,9 @@ public class OI {
 
     climbExtendButton.whenPressed(new ClimbExtendCommand());
     climbRetractButton.whenPressed(new ClimbRetractCommand());
-    visionTestButton.whenPressed(new ShooterVisionCommand());
+    visionTestButton.whileActive(Robot.visionCommand);
     shooterWheelControlButton.whenPressed(new ShooterWheelCommand());
-    shooterCryBabyButton.whenPressed(new ShooterCenterOnVisionCrybabyCommand());
+    shooterCryBabyButton.whileActive(new ShooterCenterOnVisionCrybabyCommand());
     //wallFollowButton.whenActive(new DriveFollowWallCommand());
 
 
