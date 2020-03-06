@@ -279,7 +279,6 @@ public void configureTiltMotorControllerForMagic(){
   public void tiltGoToSetpoint() {
     configureTiltMotorControllerForMagic();
     tiltMotorController.set(ControlMode.MotionMagic, 500);
-
   }
 
 

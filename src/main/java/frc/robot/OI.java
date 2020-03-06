@@ -44,6 +44,9 @@ public class OI {
   Button shooterFangsTestButton = new JoystickButton(buttonBox, 7);
   Button autoDriveForwardButton = new JoystickButton(buttonBox, 8);
   Button autoTurnButton = new JoystickButton(buttonBox, 9);
+  Button climbWinchUpButton = new JoystickButton(buttonBox, 10);
+  Button climbWinchDownButton = new JoystickButton(buttonBox, 11);
+  Button climbEndClimbButton = new JoystickButton(buttonBox, 12);
 
 
   public OI() { // Setup All Commands Here
@@ -71,6 +74,9 @@ public class OI {
 
     autoDriveForwardButton.whenPressed(new RealSmartAutoDriveForward());
     autoTurnButton.whenPressed(new RealSmartAutoTurnCommand());
+    climbWinchUpButton.whenPressed(new ClimbWinchUpCommand());
+    climbWinchDownButton.whenPressed(new ClimbWinchDownCommand());
+    climbEndClimbButton.whenPressed(new ClimbEndClimbCommand());
   }
 
 }
