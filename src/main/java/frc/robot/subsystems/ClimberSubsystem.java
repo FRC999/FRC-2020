@@ -8,7 +8,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
@@ -22,7 +22,7 @@ public class ClimberSubsystem extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
-  static WPI_VictorSPX climberMotorController = new WPI_VictorSPX(RobotMap.climberMotorControllerID);
+  static WPI_TalonSRX climberMotorController = new WPI_TalonSRX(RobotMap.climberMotorControllerID);
   static DoubleSolenoid climberSolenoid = new DoubleSolenoid(RobotMap.climberSolenoidForwardChannel, RobotMap.climberSolenoidReverseChannel);
 
   //double climbSpeed = 0.5;
