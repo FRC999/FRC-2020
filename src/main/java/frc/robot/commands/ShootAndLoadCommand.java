@@ -8,20 +8,25 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import edu.wpi.first.wpilibj.command.WaitCommand;
+import frc.robot.Robot;
 
-public class DriveSequentialTurn extends CommandGroup {
+public class ShootAndLoadCommand extends CommandGroup {
   /**
    * Add your docs here.
+   * MS 03/04/2020
    */
-  public DriveSequentialTurn(double degrees) {
+  public ShootAndLoadCommand() {
     // Add Commands here:
     // e.g. addSequential(new Command1());
     // addSequential(new Command2());
     // these will run in order.
-    addSequential(new WaitCommand(.1));
-    addSequential(new DriveTurnCommand(degrees));
-    addSequential(new DriveStopCommand());
+    requires(Robot.intakeSubsystem);
+    requires (Robot.shooterSubsystem);
+    addParallel (new IntakeMagazineInCommand());
+    addParallel (new IntakeLoaderUpCommand());
+    addParallel (new ShooterWheelCommand());
+
+    
     // To run multiple commands at the same time,
     // use addParallel()
     // e.g. addParallel(new Command1());

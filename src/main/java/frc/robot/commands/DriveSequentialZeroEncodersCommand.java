@@ -10,11 +10,11 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.WaitCommand;
 
-public class DriveSequentialZeroEncoders extends CommandGroup {
+public class DriveSequentialZeroEncodersCommand extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public DriveSequentialZeroEncoders() {
+  public DriveSequentialZeroEncodersCommand() {
     // Add Commands here:
     // e.g. addSequential(new Command1());
     // addSequential(new Command2());
