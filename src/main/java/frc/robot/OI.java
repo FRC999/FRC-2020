@@ -88,10 +88,14 @@ public class OI {
     climbWinchUpButton.whenPressed(new ClimbWinchUpCommand());
     climbRetractButton.whenPressed(new ClimbRetractCommand());
 
-    intakeMagazineInButton.whenPressed(new IntakeMagazineInCommand());
-    intakeMagazineOutButton.whenPressed(new IntakeMagazineOutCommand());
-    intakeLoaderUpButton.whenPressed(new IntakeLoaderUpCommand());
-    intakeLoaderDownButton.whenPressed(new IntakeLoaderDownCommand());
+    intakeMagazineInButton.whileHeld(new IntakeMagazineInCommand());
+  //  intakeMagazineInButton.whenReleased(new IntakeStandbyCommand());
+    intakeMagazineOutButton.whileHeld(new IntakeMagazineOutCommand());
+   // intakeMagazineOutButton.whenReleased(new IntakeStandbyCommand());
+    intakeLoaderUpButton.whileHeld(new IntakeLoaderUpCommand());
+    //intakeLoaderUpButton.whenReleased(new IntakeStandbyCommand());
+    intakeLoaderDownButton.whileHeld(new IntakeLoaderDownCommand());
+    //intakeLoaderDownButton.whenReleased(new IntakeStandbyCommand());
 
     intakeExtendButton.whenPressed(new IntakeDownCommand());
     intakeExtendButton.whenReleased( new IntakeUpCommand());
