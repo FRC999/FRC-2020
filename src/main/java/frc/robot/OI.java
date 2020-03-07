@@ -58,7 +58,7 @@ public class OI {
     Button visionTestButton = new JoystickButton(buttonBox, 4);
   Button shooterManualControlButton = new JoystickButton(buttonBox, 5);
  
-  Button shooterTiltButton = new JoystickButton(buttonBox, 11); // most recent tilt 3/5/2020
+  Button shooterTiltButton = new JoystickButton(rightJoystick, 11); // most recent tilt 3/5/2020
   
   Button ShooterTiltGoToSetpointButton = new JoystickButton(buttonBox, 6);
   Button shooterFangsTestButton = new JoystickButton(rightJoystick, 9);

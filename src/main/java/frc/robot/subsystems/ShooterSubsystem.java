@@ -50,7 +50,7 @@ public class ShooterSubsystem extends Subsystem {
 
   public void configurePanMotorControllerForMagic() {
     // Configure the encoders for PID control
-    panMotorController.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, RobotMap.PID_PAN,
+    panMotorController.configSelectedFeedbackSensor(FeedbackDevice.PulseWidthEncodedPosition, RobotMap.PID_PAN,
         RobotMap.configureTimeoutMs);
 
     /* Set status frame periods to ensure we don't have stale data */
