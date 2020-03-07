@@ -21,7 +21,7 @@ public class ShooterCenterOnVisionCrybabyCommand extends Command {
   }
   public String loc = "";
   public int counter = 0;
-  public int counterNum = 5;
+  public int counterNum = 0;
   public boolean bounds = false;
   public String side = "";
   public double pos = 0;
@@ -86,10 +86,6 @@ public class ShooterCenterOnVisionCrybabyCommand extends Command {
       stagnant = 0;
     } else {
       stagnant += 1;
-    }
-
-    if ((loc != "Center" || loc != "Default") && stagnant >= 3) {
-      loc = "Default";
     }
   }
   // Make this return true when this Command no longer needs to run execute()

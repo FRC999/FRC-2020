@@ -15,9 +15,9 @@ import frc.robot.commands.ShootManuallyCommand;
 
 public class ShooterSubsystem extends Subsystem {
 
-  static WPI_TalonSRX shooterMotorController = new WPI_TalonSRX(RobotMap.shooterWheelMotorControllerID);
+  public static WPI_TalonSRX shooterMotorController = new WPI_TalonSRX(RobotMap.shooterWheelMotorControllerID);
   public static WPI_TalonSRX panMotorController = new WPI_TalonSRX(RobotMap.shooterPanMotorControllerID);
-  static WPI_TalonSRX tiltMotorController = new WPI_TalonSRX(RobotMap.ShooterTiltMotorControllerID);
+  public static WPI_TalonSRX tiltMotorController = new WPI_TalonSRX(RobotMap.ShooterTiltMotorControllerID);
 
   // double shooterSpeed = 0.5;
 
@@ -178,22 +178,15 @@ public class ShooterSubsystem extends Subsystem {
     return (getY() - (RobotMap.shooterXResolution / 2));
   }
 
-  public boolean getCenteredX() {
-    boolean retVal = false;
-    if (Math.abs(differenceFromMiddleX()) <= RobotMap.shooterResolutionAcceptableError) {
-      retVal = true;
-    }
-    return retVal;
-  }
-
   public String whichSide() {
     String state = "";
-    if (!getCenteredX() && getX() != 1000) {
-      if (getX() <= ((RobotMap.shooterXResolution / 2) - (RobotMap.shooterResolutionAcceptableError))) { // 310
+    if (getX() != 1000) {
+      state = "Center";
+      if (getX() <= (RobotMap.allowableLeft)) { // 310
         state = "Left";
-      } else if (getX() >= ((RobotMap.shooterXResolution / 2) + (RobotMap.shooterResolutionAcceptableError))) { // 330
+      } else if (getX() >= (RobotMap.allowableRight)) { // 330
         state = "Right";
-      } else {
+      } else if (getX() > RobotMap.allowableLeft && getX() < RobotMap.allowableRight) {
         state = "Center";
       }
     }
@@ -324,7 +317,7 @@ public void configureTiltMotorControllerForMagic(){
     if (getTiltPot() >= RobotMap.tiltFangsLowerLimit &&  getTiltPot() <= RobotMap.tiltFangsUpperLimit) {
       maxSpeed = 0.25;
     }
-    double output = (Robot.oi.leftJoystick.getThrottle()*1) * maxSpeed;
+    double output = (Robot.oi.leftJoystick.getThrottle()*-1) * maxSpeed;
     Robot.smartDashboardSubsystem.updateShooterValues();
    // System.out.println(output);
     tiltMotorController.set(ControlMode.PercentOutput, output);

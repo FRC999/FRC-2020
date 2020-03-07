@@ -49,7 +49,7 @@ public class RobotMap {
   public  static int shooterPanMotorEncoderTicksPerRotation = 178;
   public final static int shooterXResolution = 640;
   public final static int shooterYResolution = 480; 
-  public final static int shooterResolutionAcceptableError = 5;
+  public final static int shooterResolutionAcceptableError = 15;
   public  static double shooterPanSpeed = -.1;
 
 
@@ -192,6 +192,8 @@ public class RobotMap {
   public final static double F_PAN = 0; // just a guesstimate
   public final static int Izone_PAN = 500;
   public static int panCruiseVelocity = 50;
+  public static int allowableLeft = ((RobotMap.shooterXResolution / 2) - (RobotMap.shooterResolutionAcceptableError));
+  public static int allowableRight = ((RobotMap.shooterXResolution / 2) + (RobotMap.shooterResolutionAcceptableError));
   // MotionMagic curve smoothing parameter [0 - 8]
   public static int panAcceleration = 50;
   // Allowable error to exit movement methods

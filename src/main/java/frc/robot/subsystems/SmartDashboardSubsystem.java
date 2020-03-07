@@ -10,6 +10,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
+import frc.robot.commands.ShooterVisionCommand;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotController;
 
@@ -34,6 +35,7 @@ public class SmartDashboardSubsystem extends Subsystem {
     //SmartDashboard.putNumber("Tilt Encoder", Robot.shooterSubsystem.gettiltEncoder());
     SmartDashboard.putNumber("Pan Encoder", Robot.shooterSubsystem.getPanEncoder());
     SmartDashboard.putNumber("Tilt Pot", Robot.shooterSubsystem.getTiltPot());
+    SmartDashboard.putNumber("CounterForVision", ShooterVisionCommand.getCounter());
   }
 
   public void updateEncoderValue() {
@@ -86,5 +88,6 @@ public class SmartDashboardSubsystem extends Subsystem {
     updateControlPanelValues();
     updateMatchTimeAndBatteryVoltage();
     updateEncoderValue();
+    updateShooterValues();
   }
 }
