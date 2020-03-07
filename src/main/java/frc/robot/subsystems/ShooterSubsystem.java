@@ -113,7 +113,7 @@ public class ShooterSubsystem extends Subsystem {
   }
 
   public void shoot(double shooterSpeed) {
-    shooterMotorController.set(ControlMode.PercentOutput, shooterSpeed);
+    shooterMotorController.set(ControlMode.PercentOutput, -shooterSpeed);
   
   }
 

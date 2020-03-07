@@ -27,13 +27,6 @@ public class RealSmartAutoCommand extends CommandGroup {
     addSequential(new DriveStopCommand());
     addSequential(new DriveForwardCommand(50000));
     addSequential(new DriveStopCommand());
-    addSequential(new WaitCommand(0.1));
-    addSequential(new DriveTurnCommand(180));
-    addSequential(new DriveStopCommand());
-    addSequential(new WaitCommand(0.1));
-    addSequential(new DriveForwardCommand(50000));
-    addSequential(new DriveStopCommand());
-    addSequential(new WaitCommand(0.1));
 
 
     // To run multiple commands at the same time,
