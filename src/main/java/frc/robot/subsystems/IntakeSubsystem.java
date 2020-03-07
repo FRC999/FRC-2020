@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
+import frc.robot.commands.IntakeStandbyCommand;
 
 
 public class IntakeSubsystem extends Subsystem {
@@ -43,13 +44,13 @@ public class IntakeSubsystem extends Subsystem {
   }
 
   public void magazine(double motorSpeed){
-    magazineLeftMotorController.set(ControlMode.PercentOutput, motorSpeed);
-    magazineRightMotorController.set(ControlMode.PercentOutput, motorSpeed);
+    magazineLeftMotorController.set(ControlMode.PercentOutput, -motorSpeed);
+    magazineRightMotorController.set(ControlMode.PercentOutput, -motorSpeed);
   }
 
   public void loader(double motorSpeed){
-    loaderMotor1Controller.set(ControlMode.PercentOutput, motorSpeed);
-    loaderMotor2Controller.set(ControlMode.PercentOutput, motorSpeed);
+    loaderMotor1Controller.set(ControlMode.PercentOutput, -motorSpeed);
+    loaderMotor2Controller.set(ControlMode.PercentOutput, -motorSpeed);
   }
 
   public void IntakeUp() {
@@ -67,6 +68,6 @@ public class IntakeSubsystem extends Subsystem {
 
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
-  
+    setDefaultCommand(new IntakeStandbyCommand());
   }
 }

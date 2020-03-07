@@ -85,8 +85,8 @@ public class RobotMap {
   // PCM forward, reverse channels for doubleSolenoids
   public static int ColorWheelSolenoidForwardChannel = 0;
   public static int ColorWheelSolenoidReverseChannel = 1;
-  public static int IntakeSolenoidForwardChannel = 4;
-  public static int IntakeSolenoidReverseChannel = 5;
+  public static int IntakeSolenoidForwardChannel = 1;
+  public static int IntakeSolenoidReverseChannel = 0;
   public static int climberSolenoidForwardChannel = 3;
   public static int climberSolenoidReverseChannel = 2;
 

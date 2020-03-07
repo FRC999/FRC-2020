@@ -85,7 +85,6 @@ public class ShuffleboardSubsystem extends Subsystem {
         intakeCommands.add(new IntakeInCommand());
         intakeCommands.add(new IntakeReverseCommand());
         intakeCommands.add(new IntakeUpCommand());
-        intakeCommands.add(new IntakeDownCommand());
         intakeCommands.add(new IntakeLoaderUpCommand());
         intakeCommands.add(new IntakeLoaderDownCommand());
         intakeCommands.add(new IntakeMagazineInCommand());

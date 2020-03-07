@@ -21,7 +21,7 @@ public class IntakeInCommand extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.intakeSubsystem.intake(0.5);
+    Robot.intakeSubsystem.intake(1);
     Robot.intakeSubsystem.IntakeDown();
   }
 
