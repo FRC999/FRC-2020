@@ -30,9 +30,9 @@ public class RobotMap {
   public final static int backRightDriveMotorControllerID = 4;
 
   // Intake motor controllers
-  public final static int intakeLeftMotorControllerID = 40;
-  public final static int intakeRightMotorControllerID = 11;
-  public final static int magazineMotorControllerID = 11;
+  public final static int magazineLeftMotorControllerID = 40;
+  public final static int magazineRightMotorControllerID = 11;
+  public final static int intakeMotorControllerID = 10;
   public final static int loaderMotor1ControllerID = 12;
   public final static int loaderMotor2ControllerID = 13;
   // Shooter motor controllers

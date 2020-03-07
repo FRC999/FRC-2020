@@ -14,16 +14,15 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
-import frc.robot.commands.IntakeStandbyCommand;
 
 
 public class IntakeSubsystem extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
-  static WPI_VictorSPX intakeRightMotorController = new WPI_VictorSPX(RobotMap.intakeRightMotorControllerID);
-  static WPI_TalonSRX intakeLeftMotorController = new WPI_TalonSRX(RobotMap.intakeLeftMotorControllerID);
-  static WPI_VictorSPX magazineMotorController = new WPI_VictorSPX(RobotMap.magazineMotorControllerID);
+  static WPI_VictorSPX magazineRightMotorController = new WPI_VictorSPX(RobotMap.magazineRightMotorControllerID);
+  static WPI_TalonSRX magazineLeftMotorController = new WPI_TalonSRX(RobotMap.magazineLeftMotorControllerID);
+  static WPI_VictorSPX intakeMotorController = new WPI_VictorSPX(RobotMap.intakeMotorControllerID);
   static WPI_VictorSPX loaderMotor1Controller = new WPI_VictorSPX(RobotMap.loaderMotor1ControllerID);
   static WPI_VictorSPX loaderMotor2Controller = new WPI_VictorSPX(RobotMap.loaderMotor2ControllerID);
 
@@ -31,21 +30,21 @@ public class IntakeSubsystem extends Subsystem {
 
 
   public void standby(){
-    System.out.println("standbyIntake");
-    intakeLeftMotorController.set(ControlMode.PercentOutput, 0);
-    intakeRightMotorController.set(ControlMode.PercentOutput, 0);
-    magazineMotorController.set(ControlMode.PercentOutput, 0);
+    magazineLeftMotorController.set(ControlMode.PercentOutput, 0);
+    magazineRightMotorController.set(ControlMode.PercentOutput, 0);
+    intakeMotorController.set(ControlMode.PercentOutput, 0);
     loaderMotor1Controller.set(ControlMode.PercentOutput, 0);
     loaderMotor2Controller.set(ControlMode.PercentOutput, 0);
   }
 
   public void intake(double motorSpeed){
-    intakeLeftMotorController.set(ControlMode.PercentOutput, motorSpeed);
-    intakeRightMotorController.set(ControlMode.PercentOutput, motorSpeed);
+    
+    intakeMotorController.set(ControlMode.PercentOutput, motorSpeed);
   }
 
   public void magazine(double motorSpeed){
-    magazineMotorController.set(ControlMode.PercentOutput, motorSpeed);
+    magazineLeftMotorController.set(ControlMode.PercentOutput, motorSpeed);
+    magazineRightMotorController.set(ControlMode.PercentOutput, motorSpeed);
   }
 
   public void loader(double motorSpeed){
@@ -68,6 +67,6 @@ public class IntakeSubsystem extends Subsystem {
 
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
-    setDefaultCommand(new IntakeStandbyCommand());
+  
   }
 }
