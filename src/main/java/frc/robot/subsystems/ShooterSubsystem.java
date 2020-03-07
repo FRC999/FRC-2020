@@ -12,6 +12,7 @@ import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.Robot;
 import frc.robot.commands.ShootManuallyCommand;
+import frc.robot.commands.ShooterHalt;
 
 public class ShooterSubsystem extends Subsystem {
 
@@ -325,6 +326,7 @@ public void configureTiltMotorControllerForMagic(){
 
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
+    setDefaultCommand(new ShooterHalt());
   }
 
 }

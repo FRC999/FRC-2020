@@ -10,6 +10,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.subsystems.ShooterSubsystem;
 
 public class IntakeUpCommand extends Command {
   public IntakeUpCommand() {
@@ -22,7 +23,7 @@ public class IntakeUpCommand extends Command {
   @Override
   protected void initialize() {
     Robot.intakeSubsystem.SetIntakeSolenoid(Value.kReverse); 
-    Robot.intakeSubsystem.intake(0);
+   // Robot.intakeSubsystem.intake(0);
   }
 
   // Called repeatedly when this Command is scheduled to run

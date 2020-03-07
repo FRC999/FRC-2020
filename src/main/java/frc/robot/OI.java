@@ -29,6 +29,7 @@ public class OI {
 //  Button climberClimbButton = new JoystickButton(leftJoystick, 6); // not used
   Button testMotionMagicButton = new JoystickButton(leftJoystick , 7);
   Button spin = new JoystickButton(leftJoystick, 8);
+  Button intakeInbutton = new JoystickButton(rightJoystick, 1);
  /*
   Button zeroControlPanelEncoderButton = new JoystickButton(leftJoystick, 9);
   Button setControlPanelPositionButton = new JoystickButton(leftJoystick, 10);
@@ -36,8 +37,6 @@ public class OI {
  */ // TODO: Put these back in when we have a control panel.
   // Button shooterDeployTiltFangsButton = new JoystickButton(leftJoystick, 12);
   Button bigManAuto = new JoystickButton(leftJoystick, 12);
-
-  Button intakeExtendButton = new JoystickButton(rightJoystick, 1);
 
   
 
@@ -64,7 +63,6 @@ public class OI {
   Button shooterFangsTestButton = new JoystickButton(rightJoystick, 9);
  // Button autoDriveForwardButton = new JoystickButton(buttonBox, 8);
   //Button autoTurnButton = new JoystickButton(buttonBox, 9);
-  
 
 
   public OI() { // Setup All Commands Here
@@ -74,7 +72,8 @@ public class OI {
     spin.whenPressed(new DriveTurnCommand(90));
     stopButton.whileActive(new DriveStopCommand());
     turnAbsoluteTestButton.whenActive(new DriveTurnAbsoluteCommand(90));
- /*
+
+    /*
     zeroControlPanelEncoderButton.whenPressed(new ControlPanelZeroEncoderCommand());
     setControlPanelPositionButton.whenPressed(new ControlPanelMoveToTargetCommand(3.5));
     moveControlPanelAlongColorPathButton.whenPressed(new ControlPanelMoveTargetColorCommand());
@@ -82,7 +81,8 @@ public class OI {
     //shooterManualControlButton.whenPressed(new ShootManuallyCommand());
     bigManAuto.whenPressed(new ShootAndRunAuto(228.59, 1, true));
 
-  
+    intakeInbutton.whileActive(new IntakeInCommand());
+    intakeInbutton.whileActive(new IntakeDownCommand());
 
     climbExtendButton.whenPressed(new ClimbExtendCommand());
     climbWinchUpButton.whenPressed(new ClimbWinchUpCommand());
@@ -97,10 +97,10 @@ public class OI {
     intakeLoaderDownButton.whileHeld(new IntakeLoaderDownCommand());
     //intakeLoaderDownButton.whenReleased(new IntakeStandbyCommand());
 
-    intakeExtendButton.whenPressed(new IntakeDownCommand());
-    intakeExtendButton.whenReleased( new IntakeUpCommand());
+    //intakeExtendButton.whenPressed(new IntakeDownCommand());
+//    intakeExtendButton.whenReleased( new IntakeUpCommand());
 
-    shooterWheelControlButton.whenPressed(new ShooterWheelCommand());
+    shooterWheelControlButton.whileHeld(new ShooterWheelCommand());
     shooterCryBabyButton.whileHeld(new ShooterVisionCommand());
 
     shootAndLoadButton.whenPressed(new ShootAndLoadCommand());

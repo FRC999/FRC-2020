@@ -85,10 +85,10 @@ public class RobotMap {
   // PCM forward, reverse channels for doubleSolenoids
   public static int ColorWheelSolenoidForwardChannel = 0;
   public static int ColorWheelSolenoidReverseChannel = 1;
-  public static int IntakeSolenoidForwardChannel = 2;
-  public static int IntakeSolenoidReverseChannel = 3;
-  public static int climberSolenoidForwardChannel = 4;
-  public static int climberSolenoidReverseChannel = 5;
+  public static int IntakeSolenoidForwardChannel = 4;
+  public static int IntakeSolenoidReverseChannel = 5;
+  public static int climberSolenoidForwardChannel = 3;
+  public static int climberSolenoidReverseChannel = 2;
 
   // ULTRASONIC CONSTANTS
   // RoboRIO channel for the ultrasonic sensor's analog input
