@@ -21,13 +21,13 @@ public class ControlPanelMoveTargetColorCommand extends Command {
   public ControlPanelMoveTargetColorCommand() {
     // Use requires() here to declare subsystem dependencie
     // eg. requires(chassis);
-    requires(Robot.controlPanelSubsystem);
+   /* requires(Robot.controlPanelSubsystem);*/
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    try {
+/*    try {
     Robot.controlPanelSubsystem.zeroEncoder();
     Robot.controlPanelSubsystem.updateColorState();
     colorWantedUnderSensor = Robot.controlPanelSubsystem.getGameTargetColor();
@@ -40,12 +40,14 @@ public class ControlPanelMoveTargetColorCommand extends Command {
     } catch (NullPointerException n)
     {Robot.smartDashboardSubsystem.stackTrace(n.getMessage());}
     encoderDone = false;
+    */
   }
 
   boolean encoderDone = false;
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+ /*
     if (encoderDone == false)
     {
       if (( (Math.signum(encoderTarget) == 1) && (Robot.controlPanelSubsystem.readEncoderRaw() <= encoderTarget)) || ((Math.signum(encoderTarget) == -1) && (Robot.controlPanelSubsystem.readEncoderRaw() >= encoderTarget)))
@@ -56,34 +58,38 @@ public class ControlPanelMoveTargetColorCommand extends Command {
   }
   else if (Robot.controlPanelSubsystem.getSuspectedColor(Robot.controlPanelSubsystem.getSeenColor()) != colorWantedUnderSensor)
   Robot.controlPanelSubsystem.moveTalonInDirection(encoderTarget, 0.2);
-    
-  //System.out.println(encoderTarget + " : "+Robot.controlPanelSubsystem.readEncoderRaw() +encoderDone);
+    */
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
+   
     boolean retVal = false;
+    /*
     if (Robot.controlPanelSubsystem.getSuspectedColor(Robot.controlPanelSubsystem.getSeenColor()) != colorWantedUnderSensor)
     {retVal = false;}
      else {retVal = true;}
-     
+     */
     return retVal;
+    
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
+ /*
     Robot.controlPanelSubsystem.moveTalonInDirection(0,0);
     Robot.controlPanelSubsystem.zeroEncoder();
-
+*/
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    Robot.controlPanelSubsystem.moveTalonInDirection(0,0);
-    Robot.controlPanelSubsystem.zeroEncoder();
+  /*  Robot.controlPanelSubsystem.moveTalonInDirection(0,0);
+    Robot.controlPanelSubsystem.zeroEncoder(); */
   }
+  
 }

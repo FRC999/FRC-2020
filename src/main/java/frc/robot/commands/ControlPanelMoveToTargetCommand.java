@@ -18,15 +18,15 @@ public class ControlPanelMoveToTargetCommand extends Command {
     targetRev = target;
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.controlPanelSubsystem);
+   /* requires(Robot.controlPanelSubsystem);
     targetTicks = Robot.controlPanelSubsystem.controlPanelTargetRevolutionsToQuadEncoderTicks(target);
-
+*/
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-Robot.controlPanelSubsystem.zeroEncoder();
+//Robot.controlPanelSubsystem.zeroEncoder();
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -34,7 +34,7 @@ Robot.controlPanelSubsystem.zeroEncoder();
   protected void execute() {
 
     
-      Robot.controlPanelSubsystem.moveTalonInDirection(targetTicks,0.5);
+  //    Robot.controlPanelSubsystem.moveTalonInDirection(targetTicks,0.5);
 
 
   }
@@ -42,18 +42,21 @@ Robot.controlPanelSubsystem.zeroEncoder();
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-   boolean retVal = false;
+  
+    boolean retVal = false;
+  /*
     if (( (Math.signum(targetTicks) == 1) && (Robot.controlPanelSubsystem.readEncoderRaw() <= targetTicks)) || ((Math.signum(targetTicks) == -1) && (Robot.controlPanelSubsystem.readEncoderRaw() >= targetTicks)))
      {retVal = false;}
       else {retVal = true;}
-   
+   */
     return retVal;
+    
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.controlPanelSubsystem.stopTalon();
+  //  Robot.controlPanelSubsystem.stopTalon();
   }
 
   // Called when another command which requires one or more of the same

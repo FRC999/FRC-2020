@@ -56,7 +56,7 @@ public class SmartDashboardSubsystem extends Subsystem {
     SmartDashboard.putNumber("ultrasonic 2 mm value", Robot.ultrasonicSubsystem.getUltrosonicRightDistanceInMM());
   }
   public void updateControlPanelValues() {
-    SmartDashboard.putNumber("control panel quad encoder raw value", Robot.controlPanelSubsystem.readEncoderRaw() );
+   /* SmartDashboard.putNumber("control panel quad encoder raw value", Robot.controlPanelSubsystem.readEncoderRaw() );
     SmartDashboard.putNumber("control panel quad encoder in revolutions ", Robot.controlPanelSubsystem.readEncoderRevolutions());
  
     Robot.controlPanelSubsystem.updateColorState();
@@ -68,7 +68,7 @@ public class SmartDashboardSubsystem extends Subsystem {
       SmartDashboard.putString("SuspectedColor: ", Robot.controlPanelSubsystem.getSuspectedColor().toString());
     }
     SmartDashboard.putString("testColors",Robot.controlPanelSubsystem.getGameTargetColor().getName()); // "want "+Robot.controlPanelSubsystem.getGameTargetColor().getName() +" now " +  Robot.controlPanelSubsystem.getSuspectedColor(Robot.controlPanelSubsystem.getSeenColor()).getName()
- 
+ */
   }
 
   public void stackTrace(String s)

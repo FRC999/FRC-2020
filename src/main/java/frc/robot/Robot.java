@@ -45,7 +45,7 @@ public class Robot extends TimedRobot {
   public static NavXSubsystem navXSubsystem = new NavXSubsystem();
   public static UltrasonicSensorSubsystem ultrasonicSubsystem = new UltrasonicSensorSubsystem();
   public static IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
-  public static ControlPanelSubsystem controlPanelSubsystem = new ControlPanelSubsystem();
+  //public static ControlPanelSubsystem controlPanelSubsystem = new ControlPanelSubsystem();
   public static ShuffleboardSubsystem shuffleBoardSubsystem = new ShuffleboardSubsystem();
   public static Command visionCommand = new ShooterVisionCommand();
 
