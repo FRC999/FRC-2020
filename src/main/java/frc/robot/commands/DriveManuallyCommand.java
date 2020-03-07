@@ -31,13 +31,14 @@ public class DriveManuallyCommand extends Command {
   protected void execute() {
     // Read joystick values
     double move = (Robot.oi.leftJoystick.getY() * -1); // inverts sign for Y axis
+    double turn = 0;
     if (RobotMap.isSplitStick) {
-      double turn = Robot.oi.rightJoystick.getX();
+      turn = Robot.oi.rightJoystick.getX();
     }
-    else{
-      double turn = Robot.oi.leftJoystick.getX();
+   else{
+     turn = Robot.oi.leftJoystick.getX();
     }
-    double turn = Robot.oi.leftJoystick.getX();
+    //double turn = Robot.oi.leftJoystick.getX();
     Robot.driveSubsystem.manualDrive(move, turn);
     Robot.smartDashboardSubsystem.updateEncoderValue();
   }
