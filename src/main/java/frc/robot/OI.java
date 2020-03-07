@@ -53,13 +53,13 @@ public class OI {
   //TODO: this command needs to be tested
   Button shootTurretHomeButton = new JoystickButton(buttonBox, 12);
 
-  //  Button visionTestButton = new JoystickButton(buttonBox, 4);
- // Button shooterManualControlButton = new JoystickButton(buttonBox, 5);
+    Button visionTestButton = new JoystickButton(buttonBox, 4);
+  Button shooterManualControlButton = new JoystickButton(buttonBox, 5);
  
-  //Button shooterTiltButton = new JoystickButton(buttonBox, 11); // most recent tilt 3/5/2020
+  Button shooterTiltButton = new JoystickButton(buttonBox, 11); // most recent tilt 3/5/2020
   
  // Button ShooterTiltGoToSetpointButton = new JoystickButton(buttonBox, 6);
-  //Button shooterFangsTestButton = new JoystickButton(buttonBox, 7);
+  Button shooterFangsTestButton = new JoystickButton(buttonBox, 7);
  // Button autoDriveForwardButton = new JoystickButton(buttonBox, 8);
   //Button autoTurnButton = new JoystickButton(buttonBox, 9);
   
@@ -83,7 +83,6 @@ public class OI {
     climbExtendButton.whenPressed(new ClimbExtendCommand());
     climbWinchUpButton.whenPressed(new ClimbWinchUpCommand());
     climbRetractButton.whenPressed(new ClimbRetractCommand());
-    //visionTestButton.whenPressed(new ShooterVisionCommand());
 
     intakeMagazineInButton.whenPressed(new IntakeMagazineInCommand());
     intakeMagazineOutButton.whenPressed(new IntakeMagazineOutCommand());
@@ -104,6 +103,10 @@ public class OI {
    shooterTiltFloorButton.whenPressed(new ShooterTiltFloorCommand());  
    // shooterTiltButton.whileActive(new ShooterTestFangsCommand()); 
    //wallFollowButton.whenActive(new DriveFollowWallCommand());
+    visionTestButton.whileActive(Robot.visionCommand);
+    shooterWheelControlButton.whenPressed(new ShooterWheelCommand());
+    shooterCryBabyButton.whileActive(new ShooterCenterOnVisionCrybabyCommand());
+    //wallFollowButton.whenActive(new DriveFollowWallCommand());
 
 
     //autoDriveForwardButton.whenPressed(new RealSmartAutoDriveForward());

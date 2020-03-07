@@ -49,7 +49,7 @@ public class RobotMap {
   public  static int shooterPanMotorEncoderTicksPerRotation = 178;
   public final static int shooterXResolution = 640;
   public final static int shooterYResolution = 480; 
-  public final static int shooterResolutionAcceptableError = 5;
+  public final static int shooterResolutionAcceptableError = 15;
   public  static double shooterPanSpeed = -.1;
 
 
@@ -59,7 +59,7 @@ public class RobotMap {
 
   // Control panel constants
   // TODO: Get actual motor ID
-  public static final int diskSpinnerMotorControllerID = 22;// 31;//TODO: change back after testing
+  public static final int diskSpinnerMotorControllerID = 31;// 31;//TODO: change back after testing
   //quadrature motor controller ticks per revolution
   public static final int quadratureEncoderTicksPerRev = 178;
   // diameter of the wheel which spins the control panel wheel, in cm
@@ -186,16 +186,18 @@ public class RobotMap {
   public final static double F_U = 0.01; // just a guesstimate
   
   // Closed loop PAN PID parameter values TODO: replace F values with measured values
-  public final static double P_PAN = 0.01;
-  public final static double I_PAN = 0.1;
-  public final static double D_PAN = .01;
-  public final static double F_PAN = 0.1; // just a guesstimate
+  public final static double P_PAN = 0.2;
+  public final static double I_PAN = 0.01;
+  public final static double D_PAN = 0.01;
+  public final static double F_PAN = 0; // just a guesstimate
   public final static int Izone_PAN = 500;
   public static int panCruiseVelocity = 50;
+  public static int allowableLeft = ((RobotMap.shooterXResolution / 2) - (RobotMap.shooterResolutionAcceptableError));
+  public static int allowableRight = ((RobotMap.shooterXResolution / 2) + (RobotMap.shooterResolutionAcceptableError));
   // MotionMagic curve smoothing parameter [0 - 8]
   public static int panAcceleration = 50;
   // Allowable error to exit movement methods
-  public static int panDefaultAcceptableError = 2;
+  public static int panDefaultAcceptableError = 10;
   public final static int PID_PAN = 0;
   public final static double encoderTicksPerDegreeX = 0.25;  // for Johnson Encoder
   //public final static double encoderTicksPerDegreeX = 11;  // for Turret Encoder
