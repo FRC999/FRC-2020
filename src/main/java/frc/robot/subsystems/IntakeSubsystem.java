@@ -8,6 +8,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
@@ -19,7 +20,8 @@ public class IntakeSubsystem extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
-  static WPI_VictorSPX intakeMotorController = new WPI_VictorSPX(RobotMap.intakeMotorControllerID);
+  static WPI_VictorSPX intakeRightMotorController = new WPI_VictorSPX(RobotMap.intakeRightMotorControllerID);
+  static WPI_TalonSRX intakeLeftMotorController = new WPI_TalonSRX(RobotMap.intakeLeftMotorControllerID);
   static WPI_VictorSPX magazineMotorController = new WPI_VictorSPX(RobotMap.magazineMotorControllerID);
   static WPI_VictorSPX loaderMotor1Controller = new WPI_VictorSPX(RobotMap.loaderMotor1ControllerID);
   static WPI_VictorSPX loaderMotor2Controller = new WPI_VictorSPX(RobotMap.loaderMotor2ControllerID);
@@ -28,14 +30,16 @@ public class IntakeSubsystem extends Subsystem {
 
 
   public void standby(){
-    intakeMotorController.set(ControlMode.PercentOutput, 0);
+    intakeLeftMotorController.set(ControlMode.PercentOutput, 0);
+    intakeRightMotorController.set(ControlMode.PercentOutput, 0);
     magazineMotorController.set(ControlMode.PercentOutput, 0);
     loaderMotor1Controller.set(ControlMode.PercentOutput, 0);
     loaderMotor2Controller.set(ControlMode.PercentOutput, 0);
   }
 
   public void intake(double motorSpeed){
-    intakeMotorController.set(ControlMode.PercentOutput, motorSpeed);
+    intakeLeftMotorController.set(ControlMode.PercentOutput, motorSpeed);
+    intakeRightMotorController.set(ControlMode.PercentOutput, motorSpeed);
   }
 
   public void magazine(double motorSpeed){

@@ -47,7 +47,7 @@ public class Robot extends TimedRobot {
   public static IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   //public static ControlPanelSubsystem controlPanelSubsystem = new ControlPanelSubsystem();
   public static ShuffleboardSubsystem shuffleBoardSubsystem = new ShuffleboardSubsystem();
-  public static Command visionCommand = new ShooterVisionCommand();
+ // public static Command visionCommand = new ShooterVisionCommand();
 
   
   public boolean TestBool = false;
@@ -80,7 +80,7 @@ public class Robot extends TimedRobot {
     System.out.println("Hit robotInit");
 
     DigitalInput falconBotSwitch = new DigitalInput(RobotMap.falconBotSwitchPortNumber);
-    RobotMap.isFalconBot = !falconBotSwitch.get();
+    RobotMap.isFalconBot = true;// !falconBotSwitch.get();
     System.out.println("falconBotSwitch = "+ RobotMap.isFalconBot);
     if(RobotMap.isFalconBot){
       driveSubsystem = new FalconDriveSubsystem();
@@ -139,7 +139,7 @@ public class Robot extends TimedRobot {
   @Override
   public void disabledInit() {
     driveSubsystem.DriveTrainCoastMode();
-    visionCommand.cancel();
+    //visionCommand.cancel();
     //controlPanelSubsystem.stopTalon();
   }
 

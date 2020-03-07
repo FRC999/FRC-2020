@@ -30,7 +30,8 @@ public class RobotMap {
   public final static int backRightDriveMotorControllerID = 4;
 
   // Intake motor controllers
-  public final static int intakeMotorControllerID = 10;
+  public final static int intakeLeftMotorControllerID = 40;
+  public final static int intakeRightMotorControllerID = 11;
   public final static int magazineMotorControllerID = 11;
   public final static int loaderMotor1ControllerID = 12;
   public final static int loaderMotor2ControllerID = 13;
@@ -70,7 +71,7 @@ public class RobotMap {
   public static final int controlPanelDirectionFactor = -1;
 
   // Climber constants
-  public final static int climberMotorControllerID = 40;
+  public final static int climberMotorControllerID = 13;
 
   // Driver Input Devices
   public final static int leftJoystickPort = 0;
