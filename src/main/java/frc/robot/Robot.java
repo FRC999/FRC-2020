@@ -13,7 +13,10 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import frc.robot.commands.DriveManuallyCommand;
+import frc.robot.commands.MoveOffLineAuto;
 import frc.robot.commands.RealSmartAutoCommand;
+import frc.robot.commands.ShootAndLoadCommand;
+import frc.robot.commands.ShootAndRunAuto;
 import frc.robot.commands.ShooterVisionCommand;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.ControlPanelSubsystem;
@@ -96,8 +99,8 @@ public class Robot extends TimedRobot {
     driveSubsystem.setDefaultCommand(new DriveManuallyCommand());
     falconBotSwitch.close();
 
-    sendableCommandChooser.setDefaultOption("Default Auto", new RealSmartAutoCommand());
-    sendableCommandChooser.addOption("Really Smart Auto", new RealSmartAutoCommand());
+    sendableCommandChooser.setDefaultOption("Really Smart Auto", new RealSmartAutoCommand());
+    sendableCommandChooser.addOption("Move Off Line", new MoveOffLineAuto());
 
     Robot.driveSubsystem.resetDriveTrainControllers();
 
