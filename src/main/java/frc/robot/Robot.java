@@ -30,6 +30,7 @@ import frc.robot.subsystems.ShuffleboardSubsystem;
 import frc.robot.subsystems.SmartDashboardSubsystem;
 import frc.robot.subsystems.UltrasonicSensorSubsystem;
 import edu.wpi.first.networktables.*;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 /**
@@ -73,6 +74,7 @@ public class Robot extends TimedRobot {
     
     //Set up shuffleboard
     shuffleBoardSubsystem.setupShuffleboard();
+    
 
 
     NetworkTableInstance ntInst = NetworkTableInstance.getDefault();
@@ -102,6 +104,7 @@ public class Robot extends TimedRobot {
     sendableCommandChooser.setDefaultOption("Really Smart Auto", new RealSmartAutoCommand());
     sendableCommandChooser.addOption("Move Off Line", new MoveOffLineAuto());
 
+    SmartDashboard.putData("auto chooser", sendableCommandChooser);
     Robot.driveSubsystem.resetDriveTrainControllers();
 
     // after testing run only the second configure method
