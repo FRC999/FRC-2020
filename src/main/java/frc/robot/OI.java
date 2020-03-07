@@ -81,8 +81,9 @@ public class OI {
     //shooterManualControlButton.whenPressed(new ShootManuallyCommand());
     bigManAuto.whenPressed(new ShootAndRunAuto(228.59, 1, true));
 
-    intakeInbutton.whileActive(new IntakeInCommand());
-    intakeInbutton.whileActive(new IntakeDownCommand());
+    intakeInbutton.whenPressed(new IntakeInCommand());
+    intakeInbutton.whenReleased(new IntakeStandbyCommand());
+   
 
     climbExtendButton.whenPressed(new ClimbExtendCommand());
     climbWinchUpButton.whenPressed(new ClimbWinchUpCommand());
