@@ -32,6 +32,9 @@ BUTTON BOARD
 ( 12 ) Zero Turret
 
 
-Magazine ()
+Magazine ( 1 Motor Running)
 Shooter
 Loader (Backwards)
+---
+Intake Solenoid
+Intake Motor
