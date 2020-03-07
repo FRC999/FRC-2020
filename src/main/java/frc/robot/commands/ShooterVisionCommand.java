@@ -16,18 +16,18 @@ public class ShooterVisionCommand extends Command {
     // eg. requires(chassis);
     requires(Robot.shooterSubsystem);
   }
-  public String loc = "";
+  //public String loc = "";
   public static int counter = 0;
   public int counterNum = 5;
-  public boolean bounds = false;
+  //public boolean bounds = false;
   public String side = "";
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
     counter = 0;
-    loc = "";
-    bounds = false;
+  //  loc = "";
+  //  bounds = false;
     side = "";
   }
 

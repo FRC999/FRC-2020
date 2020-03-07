@@ -50,9 +50,9 @@ public class SmartDashboardSubsystem extends Subsystem {
   }
 
   public void updateUltrasonicValues() {
-    SmartDashboard.putNumber("ultrasonic 1 raw value", Robot.ultrasonicSubsystem.getUltrasonicLeftDistanceInRaw());
+ //   SmartDashboard.putNumber("ultrasonic 1 raw value", Robot.ultrasonicSubsystem.getUltrasonicLeftDistanceInRaw());
     SmartDashboard.putNumber("ultrasonic 1 mm value", Robot.ultrasonicSubsystem.getUltrasonicLeftDistanceInMM());
-    SmartDashboard.putNumber("ultrasonic 2 raw value", Robot.ultrasonicSubsystem.getUltrasonicRightDistanceInRaw());
+   // SmartDashboard.putNumber("ultrasonic 2 raw value", Robot.ultrasonicSubsystem.getUltrasonicRightDistanceInRaw());
     SmartDashboard.putNumber("ultrasonic 2 mm value", Robot.ultrasonicSubsystem.getUltrosonicRightDistanceInMM());
   }
   public void updateControlPanelValues() {

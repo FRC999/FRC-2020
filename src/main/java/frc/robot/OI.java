@@ -107,7 +107,7 @@ public class OI {
    shooterTiltFloorButton.whenPressed(new ShooterTiltFloorCommand());  
    // shooterTiltButton.whileActive(new ShooterTestFangsCommand()); 
    //wallFollowButton.whenActive(new DriveFollowWallCommand());
-    visionTestButton.whileActive(Robot.visionCommand);
+    visionTestButton.whileActive(new ShooterVisionCommand());
     shooterWheelControlButton.whenPressed(new ShooterWheelCommand());
     shooterCryBabyButton.whileActive(new ShooterCenterOnVisionCrybabyCommand());
     //wallFollowButton.whenActive(new DriveFollowWallCommand());
