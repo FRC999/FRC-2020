@@ -60,8 +60,8 @@ public class OI {
  
   Button shooterTiltButton = new JoystickButton(buttonBox, 11); // most recent tilt 3/5/2020
   
- // Button ShooterTiltGoToSetpointButton = new JoystickButton(buttonBox, 6);
-  Button shooterFangsTestButton = new JoystickButton(buttonBox, 7);
+  Button ShooterTiltGoToSetpointButton = new JoystickButton(buttonBox, 6);
+  Button shooterFangsTestButton = new JoystickButton(rightJoystick, 9);
  // Button autoDriveForwardButton = new JoystickButton(buttonBox, 8);
   //Button autoTurnButton = new JoystickButton(buttonBox, 9);
   
@@ -97,15 +97,15 @@ public class OI {
     intakeExtendButton.whenReleased( new IntakeUpCommand());
 
     shooterWheelControlButton.whenPressed(new ShooterWheelCommand());
-    shooterCryBabyButton.whileHeld(new ShooterCenterOnVisionCrybabyCommand());
+    shooterCryBabyButton.whileHeld(new ShooterVisionCommand());
 
     shootAndLoadButton.whenPressed(new ShootAndLoadCommand());
     shootAndLoadButton.whenReleased(new ShootShooterMagazineAndLoaderStopCommand());
 
     shootTurretHomeButton.whenPressed(new ShooterTurretCenterCommand());
    // shooterTiltButton.whenPressed(new ShooterTiltGoToSetpointCommand()); 
-   shooterTiltFloorButton.whenPressed(new ShooterTiltFloorCommand());  
-   // shooterTiltButton.whileActive(new ShooterTestFangsCommand()); 
+   //shooterTiltFloorButton.whenPressed(new ShooterTiltFloorCommand());  
+    shooterTiltButton.whileActive(new ShooterTestFangsCommand()); 
    //wallFollowButton.whenActive(new DriveFollowWallCommand());
     visionTestButton.whileActive(new ShooterVisionCommand());
     shooterWheelControlButton.whenPressed(new ShooterWheelCommand());
