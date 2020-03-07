@@ -24,6 +24,7 @@ public class OI {
 
   //RightJoystick
   Button runIntake = new JoystickButton(rightJoystick, 1);
+  Button intakeEject = new JoystickButton(rightJoystick, 3);
   //Left Joystick
 
   //Button Board
@@ -46,7 +47,10 @@ public class OI {
      //right Joystick
      runIntake.whileHeld(new IntakeInCommand());
      runIntake.whenReleased(new IntakeUpCommand());
+     intakeEject.whileHeld(new IntakeEject());
      //Left Joystick
+
+
 
     //Button Board
     climberSolenoidForward.whenPressed(new ClimbExtendCommand());
@@ -54,7 +58,7 @@ public class OI {
     climberSolenoidReverse.whenPressed(new ClimbRetractCommand());
     magazineInward.whileHeld(new IntakeMagazineInCommand());
     loaderUp.whileHeld(new IntakeLoaderUpCommand());
-    shooterMotor.whileHeld(new ShootManuallyCommand());
+    shooterMotor.whileHeld(new ShooterWheelCommand());
     magazineOutward.whileHeld(new IntakeMagazineInCommand());
     loaderDown.whileHeld(new IntakeLoaderDownCommand());
     fangsFullyBack.whenPressed(new ShooterTiltGoToSetpointCommand());
