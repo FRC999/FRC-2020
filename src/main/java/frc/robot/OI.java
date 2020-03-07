@@ -29,10 +29,12 @@ public class OI {
 //  Button climberClimbButton = new JoystickButton(leftJoystick, 6); // not used
   Button testMotionMagicButton = new JoystickButton(leftJoystick , 7);
   Button spin = new JoystickButton(leftJoystick, 8);
+ /*
   Button zeroControlPanelEncoderButton = new JoystickButton(leftJoystick, 9);
   Button setControlPanelPositionButton = new JoystickButton(leftJoystick, 10);
   Button moveControlPanelAlongColorPathButton = new JoystickButton(leftJoystick, 11);
- // Button shooterDeployTiltFangsButton = new JoystickButton(leftJoystick, 12);
+ */ // TODO: Put these back in when we have a control panel.
+  // Button shooterDeployTiltFangsButton = new JoystickButton(leftJoystick, 12);
   Button bigManAuto = new JoystickButton(leftJoystick, 12);
 
   Button intakeExtendButton = new JoystickButton(rightJoystick, 1);
@@ -72,9 +74,11 @@ public class OI {
     spin.whenPressed(new DriveTurnCommand(90));
     stopButton.whileActive(new DriveStopCommand());
     turnAbsoluteTestButton.whenActive(new DriveTurnAbsoluteCommand(90));
+ /*
     zeroControlPanelEncoderButton.whenPressed(new ControlPanelZeroEncoderCommand());
     setControlPanelPositionButton.whenPressed(new ControlPanelMoveToTargetCommand(3.5));
     moveControlPanelAlongColorPathButton.whenPressed(new ControlPanelMoveTargetColorCommand());
+    */
     //shooterManualControlButton.whenPressed(new ShootManuallyCommand());
     bigManAuto.whenPressed(new ShootAndRunAuto(228.59, 1, true));
 
