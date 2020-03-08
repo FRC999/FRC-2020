@@ -22,6 +22,8 @@ public class ShooterHalt extends Command {
   @Override
   protected void initialize() {
     Robot.shooterSubsystem.standby();
+    Robot.shooterSubsystem.pan(0);
+    Robot.shooterSubsystem.tiltStandby();
   }
 
   // Called repeatedly when this Command is scheduled to run
