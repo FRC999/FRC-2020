@@ -16,6 +16,7 @@ import frc.robot.commands.DriveManuallyCommand;
 import frc.robot.commands.MoveOffLineAuto;
 import frc.robot.commands.RealSmartAutoCommand;
 import frc.robot.commands.ShootAndRunAuto;
+import frc.robot.commands.ShootWithAcesCommand;
 import frc.robot.commands.ShooterVisionCommand;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.ControlPanelSubsystem;
@@ -100,8 +101,9 @@ public class Robot extends TimedRobot {
     driveSubsystem.setDefaultCommand(new DriveManuallyCommand());
     falconBotSwitch.close();
 
-    sendableCommandChooser.setDefaultOption("Really Smart Auto", new RealSmartAutoCommand());
+    sendableCommandChooser.addOption("Really Smart Auto", new RealSmartAutoCommand());
     sendableCommandChooser.addOption("Move Off Line", new MoveOffLineAuto());
+    sendableCommandChooser.setDefaultOption("Hello Alan!", new ShootWithAcesCommand());
 
     SmartDashboard.putData("auto chooser", sendableCommandChooser);
     Robot.driveSubsystem.resetDriveTrainControllers();
