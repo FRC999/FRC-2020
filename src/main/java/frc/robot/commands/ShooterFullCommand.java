@@ -7,45 +7,30 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.subsystems.ShooterSubsystem;
-import frc.robot.Robot;
-public class ShooterFullCommand extends Command {
+import edu.wpi.first.wpilibj.command.CommandGroup;
+
+public class ShooterFullCommand extends CommandGroup {
+  /**
+   * Add your docs here.
+   */
   public ShooterFullCommand() {
-    requires(Robot.shooterSubsystem);
-    requires(Robot.intakeSubsystem);
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
-  }
+    // Add Commands here:
+    // e.g. addSequential(new Command1());
+    // addSequential(new Command2());
+    // these will run in order.
 
-  // Called just before this Command runs the first time
-  @Override
-  protected void initialize() {
-    Robot.intakeSubsystem.intake(.5);
-    Robot.intakeSubsystem.magazine(.5);
-    Robot.intakeSubsystem.loader(.5);
-    Robot.shooterSubsystem.shoot(.5);
-  }
+    addSequential(new ShooterRunWheelCommand());
 
-  // Called repeatedly when this Command is scheduled to run
-  @Override
-  protected void execute() {
-  }
+    // To run multiple commands at the same time,
+    // use addParallel()
+    // e.g. addParallel(new Command1());
+    // addSequential(new Command2());
+    // Command1 and Command2 will run in parallel.
 
-  // Make this return true when this Command no longer needs to run execute()
-  @Override
-  protected boolean isFinished() {
-    return true;
-  }
-
-  // Called once after isFinished returns true
-  @Override
-  protected void end() {
-  }
-
-  // Called when another command which requires one or more of the same
-  // subsystems is scheduled to run
-  @Override
-  protected void interrupted() {
+    // A command group will require all of the subsystems that each member
+    // would require.
+    // e.g. if Command1 requires chassis, and Command2 requires arm,
+    // a CommandGroup containing them would require both the chassis and the
+    // arm.
   }
 }
