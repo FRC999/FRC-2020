@@ -48,8 +48,8 @@ public class RobotMap {
   /* TODO: get a more accurate value for this */
   //public final static int shooterPanMotorEncoderTicksPerRotation = 3977;
   public  static int shooterPanMotorEncoderTicksPerRotation = 178;
-  public final static int shooterXResolution = 640;
-  public final static int shooterYResolution = 480; 
+  public final static int shooterXResolution = 320;
+  public final static int shooterYResolution = 240; 
   public final static int shooterResolutionAcceptableError = 15;
   public  static double shooterPanSpeed = -.1;
 
