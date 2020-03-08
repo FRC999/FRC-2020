@@ -183,6 +183,7 @@ public class Robot extends TimedRobot {
     if (autonomousCommand != null) {
       autonomousCommand.start();
     }
+    else System.out.println("Auto is null.");
   }
 
   /**

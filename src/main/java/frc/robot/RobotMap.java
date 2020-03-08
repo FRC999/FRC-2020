@@ -211,8 +211,8 @@ public class RobotMap {
   public final static double encoderTicksPerDegreeX = 0.25;  // for Johnson Encoder
   //public final static double encoderTicksPerDegreeX = 11;  // for Turret Encoder
   public final static double potentiometerTicksPerDegreeY = 1;
-  public final static double pixelsPerDegreeX = 12;  //based on lifecam having a 53 degree viewing angle and 640 horizontal pixels
-  public final static double pixelsPerDegreeY = 30; //TODO: Still need to actually FIGURE OUT this value. 
+  public final static double pixelsPerDegreeX = 12;  //based on lifecam having a 53.4 degree viewing angle and 640 horizontal pixels
+  public final static double pixelsPerDegreeY = 15.2; //480 vertical pixels / 31.6 degree viewing angle
 
 // END of pan pid code
 
