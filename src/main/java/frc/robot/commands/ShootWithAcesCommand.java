@@ -31,7 +31,7 @@ public class ShootWithAcesCommand extends CommandGroup {
     addSequential(new IntakeMagazineInCommand());
     addSequential(new IntakeLoaderUpCommand());
     addSequential(new WaitCommand(3));
-    addSequential(new DriveSequentialForwardCommand(36));
+    addSequential(new DriveSequentialForwardCommand(50));
     // would require.
     // e.g. if Command1 requires chassis, and Command2 requires arm,
     // a CommandGroup containing them would require both the chassis and the
