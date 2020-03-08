@@ -7,32 +7,31 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.WaitCommand;
 
-public class ShooterFullCommand extends CommandGroup {
+public class ShootWithAcesCommand extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public ShooterFullCommand() {
+  public ShootWithAcesCommand() {
     // Add Commands here:
     // e.g. addSequential(new Command1());
     // addSequential(new Command2());
     // these will run in order.
 
-    addSequential(new ShooterRunWheelCommand());
-    addSequential(new WaitCommand(3));
-    addSequential(new IntakeMagazineInCommand());
-    addSequential(new IntakeLoaderUpCommand());
-
-    
     // To run multiple commands at the same time,
     // use addParallel()
     // e.g. addParallel(new Command1());
     // addSequential(new Command2());
     // Command1 and Command2 will run in parallel.
-
-    // A command group will require all of the subsystems that each member
+    addSequential(new ShooterRunWheelCommand());
+    addSequential(new WaitCommand(6));
+    addSequential(new IntakeMagazineInCommand());
+    addSequential(new IntakeLoaderUpCommand());
+    addSequential(new WaitCommand(3));
+    addSequential(new DriveSequentialForwardCommand(36));
     // would require.
     // e.g. if Command1 requires chassis, and Command2 requires arm,
     // a CommandGroup containing them would require both the chassis and the

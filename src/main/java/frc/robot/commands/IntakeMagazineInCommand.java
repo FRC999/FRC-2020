@@ -44,6 +44,5 @@ public class IntakeMagazineInCommand extends Command {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    Robot.intakeSubsystem.magazine(0);
   }
 }
