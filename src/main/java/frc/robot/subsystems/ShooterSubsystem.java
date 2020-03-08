@@ -178,7 +178,7 @@ public class ShooterSubsystem extends Subsystem {
    * center of its field of view. Outputs the difference (current value - 240).
    */
   public double differenceFromMiddleY() {
-    return (getY() - (RobotMap.shooterXResolution / 2));
+    return (getY() - (RobotMap.shooterYResolution / 2));
   }
 
   public String whichSide() {
@@ -215,7 +215,7 @@ public class ShooterSubsystem extends Subsystem {
     switch (whichVerticalSide()) {
       case "Below": {
         tiltMotorController.set(ControlMode.MotionMagic, Math.round(
-            getTiltPot() - (differenceFromMiddleY() / RobotMap.pixelsPerDegreeY * RobotMap.potentiometerTicksPerDegreeY)));
+            getTiltPot() + (differenceFromMiddleY() / RobotMap.pixelsPerDegreeY * RobotMap.potentiometerTicksPerDegreeY)));
       }
         break;
 
@@ -226,7 +226,7 @@ public class ShooterSubsystem extends Subsystem {
 
       case "Right": {
         panMotorController.set(ControlMode.MotionMagic, Math.round(
-            getTiltPot() + (differenceFromMiddleY() / RobotMap.pixelsPerDegreeY * RobotMap.potentiometerTicksPerDegreeY)));
+            getTiltPot() - (differenceFromMiddleY() / RobotMap.pixelsPerDegreeY * RobotMap.potentiometerTicksPerDegreeY)));
       }
         break;
 
