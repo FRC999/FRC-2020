@@ -22,7 +22,7 @@ public class IntakeUpCommand extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.intakeSubsystem.IntakeUp();; 
+    Robot.intakeSubsystem.IntakeUp(); 
     Robot.intakeSubsystem.intake(0);
   }
 

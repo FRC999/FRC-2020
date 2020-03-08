@@ -113,6 +113,8 @@ public class ShooterSubsystem extends Subsystem {
     shooterMotorController.set(ControlMode.PercentOutput, 0);
   }
 
+  
+
   public void shoot(double shooterSpeed) {
     shooterMotorController.set(ControlMode.PercentOutput, -shooterSpeed);
   
@@ -138,13 +140,13 @@ public class ShooterSubsystem extends Subsystem {
     panMotorController.set(ControlMode.PercentOutput, deadbandPan(pan));
   }
 
-  /** do not use in a context in which it would be outside the encoder values 0-1406. Boolean indicates whether it is. */
-  public boolean panToRobotFront()
-  { boolean retVal =false;
-    if ((getPanEncoder() <1406) && ( getPanEncoder() >0) )
-    {panMotorController.set(ControlMode.MotionMagic, 435);
-    retVal = true;}
-    return retVal;
+  /** do not use in a context in which it would be outside the encoder values 1178-. Boolean indicates whether it is. */
+  public void panToRobotFront()
+  { /*boolean retVal =false;
+    if ((getPanEncoder() <RobotMap.shooterEstimatedPos90PanEncoderVal) && ( getPanEncoder() >RobotMap.shooterEstimatedNeg90PanEncoderVal) )
+    { */panMotorController.set(ControlMode.MotionMagic, RobotMap.shooterPanMotorEncoderFrontVal);
+   /* retVal = true;}
+    return retVal;*/
   }
 
   /**
@@ -183,15 +185,55 @@ public class ShooterSubsystem extends Subsystem {
     String state = "";
     if (getX() != 1000) {
       state = "Center";
-      if (getX() <= (RobotMap.allowableLeft)) { // 310
+      if (getX() <= (RobotMap.allowableLeft)) { // Find Value 
         state = "Left";
-      } else if (getX() >= (RobotMap.allowableRight)) { // 330
+      } else if (getX() >= (RobotMap.allowableRight)) { // Find value 
         state = "Right";
       } else if (getX() > RobotMap.allowableLeft && getX() < RobotMap.allowableRight) {
         state = "Center";
       }
     }
     return state;
+  }
+
+  public String whichVerticalSide(){
+    String state = "";
+    if (getY() != 1000) {
+      state = "Center";
+      if (getY() <= (RobotMap.allowableBelow)) { // 310
+        state = "Below";
+      } else if (getY() >= (RobotMap.allowableAbove)) { // 330
+        state = "Above";
+      } else if (getY() > RobotMap.allowableBelow && getY() < RobotMap.allowableAbove) {
+        state = "Center";
+      }
+    }
+    return state; 
+   }
+
+   public void centerShooterVertically() {
+    switch (whichVerticalSide()) {
+      case "Below": {
+        tiltMotorController.set(ControlMode.MotionMagic, Math.round(
+            getTiltPot() - (differenceFromMiddleY() / RobotMap.pixelsPerDegreeY * RobotMap.potentiometerTicksPerDegreeY)));
+      }
+        break;
+
+      case "Center": {
+        tiltMotorController.set(ControlMode.PercentOutput, 0);
+      }
+        break;
+
+      case "Right": {
+        panMotorController.set(ControlMode.MotionMagic, Math.round(
+            getTiltPot() + (differenceFromMiddleY() / RobotMap.pixelsPerDegreeY * RobotMap.potentiometerTicksPerDegreeY)));
+      }
+        break;
+
+      default: {
+        tiltMotorController.set(ControlMode.PercentOutput, 0);
+      }
+    }
   }
 
   public void centerShooter() {
@@ -245,10 +287,10 @@ public void configureTiltMotorControllerForMagic(){
 
   /* FPID Gains for each side of drivetrain */
 
-  tiltMotorController.config_kP(RobotMap.SLOT_0, RobotMap.P_PAN, RobotMap.configureTimeoutMs);
-  tiltMotorController.config_kI(RobotMap.SLOT_0, RobotMap.I_PAN, RobotMap.configureTimeoutMs);
-  tiltMotorController.config_kD(RobotMap.SLOT_0, RobotMap.D_PAN, RobotMap.configureTimeoutMs);
-  tiltMotorController.config_kF(RobotMap.SLOT_0, RobotMap.F_PAN, RobotMap.configureTimeoutMs);
+  tiltMotorController.config_kP(RobotMap.SLOT_0, RobotMap.P_TILT, RobotMap.configureTimeoutMs);
+  tiltMotorController.config_kI(RobotMap.SLOT_0, RobotMap.I_TILT, RobotMap.configureTimeoutMs);
+  tiltMotorController.config_kD(RobotMap.SLOT_0, RobotMap.D_TILT, RobotMap.configureTimeoutMs);
+  tiltMotorController.config_kF(RobotMap.SLOT_0, RobotMap.F_TILT, RobotMap.configureTimeoutMs);
   tiltMotorController.config_IntegralZone(RobotMap.SLOT_0, RobotMap.Izone_TILT, RobotMap.configureTimeoutMs);
   tiltMotorController.configClosedLoopPeakOutput(RobotMap.SLOT_0, RobotMap.PeakOutput_0, RobotMap.configureTimeoutMs);
   tiltMotorController.configAllowableClosedloopError(RobotMap.SLOT_0, 0, RobotMap.configureTimeoutMs);

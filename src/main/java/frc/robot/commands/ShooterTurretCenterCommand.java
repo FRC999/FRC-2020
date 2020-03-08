@@ -29,10 +29,10 @@ public class ShooterTurretCenterCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if ( Robot.shooterSubsystem.panToRobotFront())
-    {canFinish = true;}
-    else if (Robot.shooterSubsystem.getPanEncoder() > 3340) // outside of range where encoders are clear
-    {Robot.shooterSubsystem.pan(0.4);}
+   Robot.shooterSubsystem.panToRobotFront();
+   // {canFinish = true;}
+    /*else if (Robot.shooterSubsystem.getPanEncoder() > 3340) // outside of range where encoders are clear
+    {Robot.shooterSubsystem.pan(0.4);}*/
     
 
 
@@ -41,7 +41,7 @@ public class ShooterTurretCenterCommand extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return canFinish;
+    return true;
   }
 
   // Called once after isFinished returns true

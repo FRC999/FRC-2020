@@ -52,6 +52,9 @@ public class RobotMap {
   public final static int shooterYResolution = 240; 
   public final static int shooterResolutionAcceptableError = 15;
   public  static double shooterPanSpeed = -.1;
+  public static double shooterPanMotorEncoderFrontVal = 2250;
+  public static double shooterEstimatedPos90PanEncoderVal = 3021;
+  public static double shooterEstimatedNeg90PanEncoderVal = 1178;
 
 
   public static int shooterTiltMotorTicksPerRotation = 178;
@@ -195,6 +198,11 @@ public class RobotMap {
   public static int panCruiseVelocity = 50;
   public static int allowableLeft = ((RobotMap.shooterXResolution / 2) - (RobotMap.shooterResolutionAcceptableError));
   public static int allowableRight = ((RobotMap.shooterXResolution / 2) + (RobotMap.shooterResolutionAcceptableError));
+
+  public static int allowableBelow = ((RobotMap.shooterYResolution / 2) - (RobotMap.shooterResolutionAcceptableError));
+  public static int allowableAbove = ((RobotMap.shooterYResolution / 2) + (RobotMap.shooterResolutionAcceptableError));
+
+
   // MotionMagic curve smoothing parameter [0 - 8]
   public static int panAcceleration = 50;
   // Allowable error to exit movement methods
@@ -202,8 +210,10 @@ public class RobotMap {
   public final static int PID_PAN = 0;
   public final static double encoderTicksPerDegreeX = 0.25;  // for Johnson Encoder
   //public final static double encoderTicksPerDegreeX = 11;  // for Turret Encoder
+  public final static double potentiometerTicksPerDegreeY = 1;
   public final static double pixelsPerDegreeX = 12;  //based on lifecam having a 53 degree viewing angle and 640 horizontal pixels
-  
+  public final static double pixelsPerDegreeY = 30; //TODO: Still need to actually FIGURE OUT this value. 
+
 // END of pan pid code
 
 //Tilt Motor Pid Code
@@ -256,6 +266,7 @@ public static final int hopperMotorPort = 0;
     shooterPanMotorEncoderTicksPerRotation = 3977;
     //TODO: may need to be negative if turns the wrong way
     shooterPanSpeed = 1;
+
 
     shooterTiltMotorTicksPerRotation = 1024;   //Analog potentiometer 1024 units per rotation.
     tiltFangsUpperLimit = 720; //Random Value
