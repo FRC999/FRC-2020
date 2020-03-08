@@ -15,7 +15,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import frc.robot.commands.DriveManuallyCommand;
 import frc.robot.commands.MoveOffLineAuto;
 import frc.robot.commands.RealSmartAutoCommand;
-import frc.robot.commands.ShootAndLoadCommand;
 import frc.robot.commands.ShootAndRunAuto;
 import frc.robot.commands.ShooterVisionCommand;
 import frc.robot.subsystems.ClimberSubsystem;

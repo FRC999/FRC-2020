@@ -33,7 +33,7 @@ public class OI {
   Button climberSolenoidReverse = new JoystickButton(buttonBox, 3);
   Button magazineInward = new JoystickButton(buttonBox, 4);
   Button loaderUp = new JoystickButton(buttonBox, 5);
-  Button shooterMotor = new JoystickButton(buttonBox, 6);
+  public Button shooterMotor = new JoystickButton(buttonBox, 6);
   Button magazineOutward = new JoystickButton(buttonBox, 7);
   Button loaderDown = new JoystickButton(buttonBox, 8);
   Button fangsFullyBack = new JoystickButton(buttonBox, 9);
@@ -58,7 +58,7 @@ public class OI {
     climberSolenoidReverse.whenPressed(new ClimbRetractCommand());
     magazineInward.whileHeld(new IntakeMagazineInCommand());
     loaderUp.whileHeld(new IntakeLoaderUpCommand());
-    shooterMotor.whileHeld(new ShooterWheelCommand());
+    shooterMotor.whileHeld(new ShooterRunWheelCommand());
     magazineOutward.whileHeld(new IntakeMagazineInCommand());
     loaderDown.whileHeld(new IntakeLoaderDownCommand());
     fangsFullyBack.whenPressed(new ShooterTiltGoToSetpointCommand());
