@@ -52,6 +52,9 @@ public class RobotMap {
   public final static int shooterYResolution = 480; 
   public final static int shooterResolutionAcceptableError = 15;
   public  static double shooterPanSpeed = -.1;
+  public static double shooterPanMotorEncoderFrontVal = 2250;
+  public static double shooterEstimatedPos90PanEncoderVal = 3021;
+  public static double shooterEstimatedNeg90PanEncoderVal = 1178;
 
 
   public static int shooterTiltMotorTicksPerRotation = 178;
@@ -256,6 +259,7 @@ public static final int hopperMotorPort = 0;
     shooterPanMotorEncoderTicksPerRotation = 3977;
     //TODO: may need to be negative if turns the wrong way
     shooterPanSpeed = 1;
+
 
     shooterTiltMotorTicksPerRotation = 1024;   //Analog potentiometer 1024 units per rotation.
     tiltFangsUpperLimit = 720; //Random Value

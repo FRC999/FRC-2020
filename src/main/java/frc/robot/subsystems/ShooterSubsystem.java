@@ -138,13 +138,13 @@ public class ShooterSubsystem extends Subsystem {
     panMotorController.set(ControlMode.PercentOutput, deadbandPan(pan));
   }
 
-  /** do not use in a context in which it would be outside the encoder values 0-1406. Boolean indicates whether it is. */
-  public boolean panToRobotFront()
-  { boolean retVal =false;
-    if ((getPanEncoder() <1406) && ( getPanEncoder() >0) )
-    {panMotorController.set(ControlMode.MotionMagic, 435);
-    retVal = true;}
-    return retVal;
+  /** do not use in a context in which it would be outside the encoder values 1178-. Boolean indicates whether it is. */
+  public void panToRobotFront()
+  { /*boolean retVal =false;
+    if ((getPanEncoder() <RobotMap.shooterEstimatedPos90PanEncoderVal) && ( getPanEncoder() >RobotMap.shooterEstimatedNeg90PanEncoderVal) )
+    { */panMotorController.set(ControlMode.MotionMagic, RobotMap.shooterPanMotorEncoderFrontVal);
+   /* retVal = true;}
+    return retVal;*/
   }
 
   /**
