@@ -98,9 +98,7 @@ public class ShuffleboardSubsystem extends Subsystem {
        .withPosition(2, 0);
   //  .withProperties(Map.of("Label position", "HIDDEN")); // hide labels for commands
 
-        shooterCommands.add(new ShootCommand());
         shooterCommands.add(new ShootManuallyCommand());
-        shooterCommands.add(new ShootEndCommand());
         shooterCommands.add(new ShooterCenterOnVisionCrybabyCommand());
  
         //Drive Train Motors Test

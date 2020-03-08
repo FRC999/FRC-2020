@@ -58,7 +58,7 @@ public class OI {
     climberSolenoidReverse.whenPressed(new ClimbRetractCommand());
     magazineInward.whileHeld(new IntakeMagazineInCommand());
     loaderUp.whileHeld(new IntakeLoaderUpCommand());
-    shooterMotor.whileHeld(new ShooterWheelCommand());
+    shooterMotor.whileHeld(new ShooterRunWheelCommand());
     magazineOutward.whileHeld(new IntakeMagazineInCommand());
     loaderDown.whileHeld(new IntakeLoaderDownCommand());
     fangsFullyBack.whenPressed(new ShooterTiltGoToSetpointCommand());

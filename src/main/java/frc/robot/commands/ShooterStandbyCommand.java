@@ -11,8 +11,8 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.subsystems.ShooterSubsystem;
 
-public class ShooterHalt extends Command {
-  public ShooterHalt() {
+public class ShooterStandbyCommand extends Command {
+  public ShooterStandbyCommand() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(Robot.shooterSubsystem);

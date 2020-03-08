@@ -11,11 +11,12 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
+import frc.robot.subsystems.DriveSubsystemBase;
 import frc.robot.subsystems.TalonDriveSubsystem;
 
 public class DriveForwardCommand extends Command {
   private int driveDistance;
-   
+
   int rightTarget;
   int leftTarget;
 
@@ -30,7 +31,7 @@ public class DriveForwardCommand extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    TalonDriveSubsystem.drive.setSafetyEnabled(false);
+    DriveSubsystemBase.drive.setSafetyEnabled(false);
     int lEncoder = Robot.driveSubsystem.getLeftEncoder();
     int rEncoder = Robot.driveSubsystem.getRightEncoder();
     leftTarget =  driveDistance + lEncoder;
