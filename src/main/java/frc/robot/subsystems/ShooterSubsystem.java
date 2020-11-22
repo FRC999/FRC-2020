@@ -10,7 +10,7 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
-
+import frc.robot.subsystems.NetworkTablesSubsystem;
 public class ShooterSubsystem extends Subsystem {
 
   static WPI_TalonSRX shooterMotorController = new WPI_TalonSRX(RobotMap.shooterWheelMotorControllerID);
@@ -19,8 +19,6 @@ public class ShooterSubsystem extends Subsystem {
  // public SensorCollection turretEncoder;
 
   // double shooterSpeed = 0.5;
-
-  NetworkTableInstance networkTableInstance = NetworkTableInstance.getDefault();
 
   public void configureShooterControllers(){
     //this.turretEncoder = turretEncoder;
@@ -130,16 +128,21 @@ public class ShooterSubsystem extends Subsystem {
 
 
   
-
+  public void setXCoords() {
+    ntInst.getTable("TestTable/PI").getEntry("X").setDouble();
+  }
+  public void setYCoords() {
+    ntInst.getTable("TestTable/PI").getEntry("Y").setDouble();
+  }
 
   /** gets the x-value of the center of the object the camera is looking at. 640 is the maximum; if it returns 1000, the pi is not posting to networktables.*/
   public double getX() {
-   return networkTableInstance.getTable("TestTable/PI").getEntry("X").getDouble(1000);// 640 is the maximum; 
+   return ntInst.getTable("TestTable/PI").getEntry("X").getDouble(1000);// 640 is the maximum; 
   }
 
   /** gets the y-value of the center of the object the camera is looking at.  480 is the maximum; if it returns 1000, the pi is not posting to networktables.*/
   public double getY() {
-    return networkTableInstance.getTable("TestTable/PI").getEntry("Y").getDouble(1000);// 480 is the maximum; 
+    return ntInst.getTable("TestTable/PI").getEntry("Y").getDouble(1000);// 480 is the maximum; 
   }
 
   /**tests whether the current x-value of the object the robot sees is in the center of its field of view. Outputs the difference (current value - 320). */

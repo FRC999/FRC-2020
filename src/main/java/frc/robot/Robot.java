@@ -221,6 +221,17 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void testPeriodic() {
-    
+    System.out.println(
+      "StopButton : " + oi.stopButton.get() + 
+      "\nShowAllButton : " + oi.showAllButton.get() + 
+      "\nZeroEncoderButton : " + oi.zeroEncoderButton.get() + 
+      "\nZeroYawButton : " + oi.zeroYawButton.get() + 
+      "\nTurnAbsoluteTestButton : " + oi.turnAbsoluteTestButton.get() + 
+      "\nClimberClimbButton : " + oi.climberClimbButton.get() + 
+      "\nTestMotionMagicButton : " + oi.testMotionMagicButton.get() + 
+      "\nSpinButton : " + oi.spin.get() + 
+      "\nZeroControlPanelEncoderButton : " + oi.zeroControlPanelEncoderButton.get() + 
+      "\nSetControlPanelPositionButton : " + oi.setControlPanelPositionButton.get() + 
+      "\nMoveControlPanelAlongColorPathButton : " + oi.moveControlPanelAlongColorPathButton.get());
   }
 }

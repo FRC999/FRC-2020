@@ -19,7 +19,7 @@ public class NetworkTablesSubsystem extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
   
-  NetworkTableInstance ntInst = NetworkTableInstance.getDefault();
+  public static NetworkTableInstance ntInst = NetworkTableInstance.getDefault();
 
   public void startNT(Boolean server, int team) {
     if (server) {
